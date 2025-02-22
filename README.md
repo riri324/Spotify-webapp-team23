@@ -361,7 +361,7 @@ npm run java:docker:arm64
 Then run:
 
 ```sh
-docker compose -f src/main/docker/app.yml up -d
+docker compose -f src/main/docker/app.yml up -d.
 ```
 
 For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the Docker Compose sub-generator (`jhipster docker-compose`), which is able to generate Docker configurations for one or several JHipster applications.
