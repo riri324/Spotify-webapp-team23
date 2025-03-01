@@ -1,0 +1,132 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-global-topsongs-heading" data-cy="GlobalTopsongsCreateUpdateHeading">Create or edit a Global Topsongs</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          @let idRef = editForm.get('id')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_id">Id</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+            @if (idRef.invalid && (idRef.dirty || idRef.touched)) {
+              <div>
+                @if (editForm.get('id')?.errors?.required) {
+                  <small class="form-text text-danger">This field is required.</small>
+                }
+                <small class="form-text text-danger" [hidden]="!editForm.get('id')?.errors?.number">This field should be a number.</small>
+              </div>
+            }
+          </div>
+        }
+
+        @let songTitleRef = editForm.get('songTitle')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_songTitle">Song Title</label>
+          <input type="text" class="form-control" name="songTitle" id="field_songTitle" data-cy="songTitle" formControlName="songTitle" />
+          @if (songTitleRef.invalid && (songTitleRef.dirty || songTitleRef.touched)) {
+            <div>
+              @if (editForm.get('songTitle')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let artistNameRef = editForm.get('artistName')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_artistName">Artist Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="artistName"
+            id="field_artistName"
+            data-cy="artistName"
+            formControlName="artistName"
+          />
+          @if (artistNameRef.invalid && (artistNameRef.dirty || artistNameRef.touched)) {
+            <div>
+              @if (editForm.get('artistName')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let playCountRef = editForm.get('playCount')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_playCount">Play Count</label>
+          <input type="number" class="form-control" name="playCount" id="field_playCount" data-cy="playCount" formControlName="playCount" />
+          @if (playCountRef.invalid && (playCountRef.dirty || playCountRef.touched)) {
+            <div>
+              @if (editForm.get('playCount')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('playCount')?.errors?.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let monthYearRef = editForm.get('monthYear')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_monthYear">Month Year</label>
+          <div class="d-flex">
+            <input
+              id="field_monthYear"
+              data-cy="monthYear"
+              type="datetime-local"
+              class="form-control"
+              name="monthYear"
+              formControlName="monthYear"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (monthYearRef.invalid && (monthYearRef.dirty || monthYearRef.touched)) {
+            <div>
+              @if (editForm.get('monthYear')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('monthYear')?.errors?.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let yearRef = editForm.get('year')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_year">Year</label>
+          <input type="number" class="form-control" name="year" id="field_year" data-cy="year" formControlName="year" />
+          @if (yearRef.invalid && (yearRef.dirty || yearRef.touched)) {
+            <div>
+              @if (editForm.get('year')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('year')?.errors?.number">This field should be a number.</small>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

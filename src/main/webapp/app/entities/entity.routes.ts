@@ -6,6 +6,11 @@ const routes: Routes = [
     data: { pageTitle: 'Authorities' },
     loadChildren: () => import('./admin/authority/authority.routes'),
   },
+  {
+    path: 'global-topsongs',
+    data: { pageTitle: 'GlobalTopsongs' },
+    loadChildren: () => import('./global-topsongs/global-topsongs.routes'),
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

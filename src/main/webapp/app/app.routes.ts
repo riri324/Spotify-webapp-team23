@@ -42,6 +42,11 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import(`./entities/entity.routes`),
   },
+  {
+    path: 'global-top-songs',
+    data: { pageTitle: 'Global Top Songs' },
+    loadChildren: () => import('./top-song/top-song.routes').then(m => m.default),
+  },
   ...errorRoute,
 ];
 
