@@ -18,6 +18,8 @@ export class TopSongsComponent {
     { songTitle: 'Shape of You', artistName: 'Ed Sheeran' },
     { songTitle: 'Blinding Lights', artistName: 'The Weeknd' },
     { songTitle: 'Rolling in the Deep', artistName: 'Adele' },
+    { songTitle: 'About Damn Time', artistName: 'Lizzo' },
+    { songTitle: 'As It Was', artistName: 'Harry Styles' },
   ];
 
   currentView: 'month' | 'year' = 'month';
