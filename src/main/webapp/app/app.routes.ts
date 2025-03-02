@@ -7,14 +7,9 @@ import { errorRoute } from './layouts/error/error.route';
 
 const routes: Routes = [
   {
-    path: 'gdpr-policy',
-    loadComponent: () => import('./gdpr-policy/gdpr-policy.component'),
-    title: 'GDPR Policy',
-  },
-  {
     path: '',
     loadComponent: () => import('./home/home.component'),
-    title: 'Team project 2024-2025 app',
+    title: 'home.title',
   },
   {
     path: '',
@@ -37,6 +32,11 @@ const routes: Routes = [
     path: 'login',
     loadComponent: () => import('./login/login.component'),
     title: 'login.title',
+  },
+  {
+    path: 'preferences',
+    data: { pageTitle: 'Preferences' },
+    loadChildren: () => import('./entities/preferences/preferences.routes').then(m => m.default),
   },
   {
     path: '',
