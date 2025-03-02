@@ -1,0 +1,20 @@
+<div class="app">
+  <h1>Select Your Preferences</h1>
+  <div class="quiz">
+    <h2 id="question">{{ questions[currentQuestionIndex].question }}</h2>
+    <div id="answer-buttons">
+      <button
+        class="btn"
+        *ngFor="let answer of questions[currentQuestionIndex].options"
+        (click)="selectPreference(answer)"
+        [ngClass]="{ selected: selectedOption === answer }"
+      >
+        {{ answer }}
+      </button>
+    </div>
+    <div id="button-container">
+      <button id="next-btn" *ngIf="!isLastQuestion()" (click)="nextQuestion()">Next</button>
+      <button id="save-btn" *ngIf="isLastQuestion()" (click)="savePreferences()">Save</button>
+    </div>
+  </div>
+</div>

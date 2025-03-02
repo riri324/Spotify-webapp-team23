@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (userPreference(); as userPreferenceRef) {
+      <div>
+        <h2 data-cy="userPreferenceDetailsHeading"><span>User Preference</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ userPreferenceRef.id }}</span>
+          </dd>
+          <dt><span>Favorite Genre</span></dt>
+          <dd>
+            <span>{{ userPreferenceRef.favoriteGenre }}</span>
+          </dd>
+          <dt><span>Music Purpose</span></dt>
+          <dd>
+            <span>{{ userPreferenceRef.musicPurpose }}</span>
+          </dd>
+          <dt><span>Music Mood</span></dt>
+          <dd>
+            <span>{{ userPreferenceRef.musicMood }}</span>
+          </dd>
+          <dt><span>Vocal Preference</span></dt>
+          <dd>
+            <span>{{ userPreferenceRef.vocalPreference }}</span>
+          </dd>
+          <dt><span>Listening Time</span></dt>
+          <dd>
+            <span>{{ userPreferenceRef.listeningTime }}</span>
+          </dd>
+          <dt><span>Listening Pattern</span></dt>
+          <dd>
+            <span>{{ userPreferenceRef.listeningPattern }}</span>
+          </dd>
+          <dt><span>Song Length</span></dt>
+          <dd>
+            <span>{{ userPreferenceRef.songLength }}</span>
+          </dd>
+          <dt><span>Lyrics Importance</span></dt>
+          <dd>
+            <span>{{ userPreferenceRef.lyricsImportance }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/user-preference', userPreferenceRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>
