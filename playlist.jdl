@@ -2,23 +2,23 @@
 
 entity Playlist {
   id Long required,              // Unique ID for Playlist
-  name String required,          
-  description String             
+  name String required,
+  description String
 }
 
 entity Song {
-  trackId String required, unique, // Unique identifier for a song
-  artists String,                
-  albumName String,              
-  trackName String,              
-  danceability Float,            
-  energy Float,                  
-  speechiness Float,             
-  acousticness Float,            
-  instrumentalness Float,        
-  liveness Float,                
-  valence Float,                 
-  tempo Float,                   
+  trackId String required, // Unique identifier for a song
+  artists String,
+  albumName String,
+  trackName String,
+  danceability Float,
+  energy Float,
+  speechiness Float,
+  acousticness Float,
+  instrumentalness Float,
+  liveness Float,
+  valence Float,
+  tempo Float,
   trackGenre String
 }
 

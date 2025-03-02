@@ -1,0 +1,159 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-song-heading" data-cy="SongCreateUpdateHeading">Create or edit a Song</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let trackIdRef = editForm.get('trackId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_trackId">Track Id</label>
+          <input type="text" class="form-control" name="trackId" id="field_trackId" data-cy="trackId" formControlName="trackId" />
+          @if (trackIdRef.invalid && (trackIdRef.dirty || trackIdRef.touched)) {
+            <div>
+              @if (editForm.get('trackId')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_artists">Artists</label>
+          <input type="text" class="form-control" name="artists" id="field_artists" data-cy="artists" formControlName="artists" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_albumName">Album Name</label>
+          <input type="text" class="form-control" name="albumName" id="field_albumName" data-cy="albumName" formControlName="albumName" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_trackName">Track Name</label>
+          <input type="text" class="form-control" name="trackName" id="field_trackName" data-cy="trackName" formControlName="trackName" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_danceability">Danceability</label>
+          <input
+            type="number"
+            class="form-control"
+            name="danceability"
+            id="field_danceability"
+            data-cy="danceability"
+            formControlName="danceability"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_energy">Energy</label>
+          <input type="number" class="form-control" name="energy" id="field_energy" data-cy="energy" formControlName="energy" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_speechiness">Speechiness</label>
+          <input
+            type="number"
+            class="form-control"
+            name="speechiness"
+            id="field_speechiness"
+            data-cy="speechiness"
+            formControlName="speechiness"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_acousticness">Acousticness</label>
+          <input
+            type="number"
+            class="form-control"
+            name="acousticness"
+            id="field_acousticness"
+            data-cy="acousticness"
+            formControlName="acousticness"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_instrumentalness">Instrumentalness</label>
+          <input
+            type="number"
+            class="form-control"
+            name="instrumentalness"
+            id="field_instrumentalness"
+            data-cy="instrumentalness"
+            formControlName="instrumentalness"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_liveness">Liveness</label>
+          <input type="number" class="form-control" name="liveness" id="field_liveness" data-cy="liveness" formControlName="liveness" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_valence">Valence</label>
+          <input type="number" class="form-control" name="valence" id="field_valence" data-cy="valence" formControlName="valence" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_tempo">Tempo</label>
+          <input type="number" class="form-control" name="tempo" id="field_tempo" data-cy="tempo" formControlName="tempo" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_trackGenre">Track Genre</label>
+          <input
+            type="text"
+            class="form-control"
+            name="trackGenre"
+            id="field_trackGenre"
+            data-cy="trackGenre"
+            formControlName="trackGenre"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="field_playlists">Playlists</label>
+          <select
+            class="form-control"
+            id="field_playlists"
+            data-cy="playlists"
+            multiple
+            name="playlists"
+            formControlName="playlists"
+            [compareWith]="comparePlaylist"
+          >
+            @for (playlistOption of playlistsSharedCollection; track $index) {
+              <option [ngValue]="playlistOption">{{ playlistOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

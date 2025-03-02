@@ -39,13 +39,12 @@ const routes: Routes = [
     title: 'login.title',
   },
   {
-    path: 'recommender',
-    loadComponent: () => import('./recommender/recommender.component'),
-    title: 'recommender.title',
-  },
-  {
     path: '',
     loadChildren: () => import(`./entities/entity.routes`),
+  },
+  {
+    path: 'recommender',
+    loadComponent: () => import('./recommender/recommender.component').then(m => m.RecommenderComponent),
   },
   ...errorRoute,
 ];
