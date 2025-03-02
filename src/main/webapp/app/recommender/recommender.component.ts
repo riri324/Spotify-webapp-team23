@@ -1,21 +1,11 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  standalone: true,
   selector: 'jhi-recommender',
+  imports: [],
   templateUrl: './recommender.component.html',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  styleUrl: './recommender.component.scss'
 })
-export default class RecommendedSongsComponent {
-  playlistInput = new FormGroup({
-    playlist: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-  });
+export class RecommenderComponent {
 
-  recommendSongs(): void {
-    const playlistValue = this.playlistInput.get('playlist')?.value;
-    console.log('Playlist Value:', playlistValue);
-  }
 }

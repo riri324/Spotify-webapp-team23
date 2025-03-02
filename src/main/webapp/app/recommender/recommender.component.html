@@ -1,23 +1,8 @@
-<div>
-  <form class="form" (ngSubmit)="recommendSongs()" [formGroup]="playlistInput">
-    <div class="d-flex justify-content-center">
-      <div class="col-lg-6 col-md-8 col-sm-10">
-        <h1 data-cy="recommenderTitle">Your recommended song here</h1>
-        <div class="mb-3">
-          <label class="playlist-label" for="playlist">Playlist</label>
-          <input
-            type="text"
-            class="form-control"
-            name="playlist"
-            id="playlist"
-            placeholder="Your playlist"
-            formControlName="playlist"
-            #playlist
-            data-cy="playlist"
-          />
-        </div>
-        <button type="submit" class="btn btn-primary" data-cy="submit">Get recommended songs here</button>
-      </div>
-    </div>
-  </form>
+<div class="container">
+  <h1>Get your recommended songs here</h1>
+  <p>Test label</p>
+  <p>Test label 2</p>
+  <label for="example">Example Label:</label>
+  <input id="example" type="text" />
+  <button>Click Me</button>
 </div>
