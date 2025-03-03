@@ -26,7 +26,7 @@ public class GlobalTopsongs implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "song_title", nullable = false)
+    @Column(name = "song_title", nullable = false, unique = true)
     private String songTitle;
 
     @NotNull
@@ -34,6 +34,7 @@ public class GlobalTopsongs implements Serializable {
     private String artistName;
 
     @NotNull
+    @Min(value = 0)
     @Column(name = "play_count", nullable = false)
     private Integer playCount;
 
@@ -42,6 +43,8 @@ public class GlobalTopsongs implements Serializable {
     private Instant monthYear;
 
     @NotNull
+    @Min(value = 2000)
+    @Max(value = 2100)
     @Column(name = "year", nullable = false)
     private Integer year;
 
