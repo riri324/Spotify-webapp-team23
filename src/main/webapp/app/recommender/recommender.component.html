@@ -7,18 +7,22 @@
       <!-- My Playlists Section -->
       <div class="playlists-section">
         <h2>My Playlists</h2>
-        <div class="playlist-card" *ngFor="let playlist of playlists">
-          <h3>{{ playlist.name }}</h3>
-          <p>{{ playlist.description }}</p>
-        </div>
+        @for (playlist of playlists; track playlist) {
+          <div class="playlist-card">
+            <h3>{{ playlist.name }}</h3>
+            <p>{{ playlist.description }}</p>
+          </div>
+        }
       </div>
       <!-- Recommended Songs Section -->
       <div class="recommended-section">
         <h2>Recommended Songs</h2>
-        <div class="song-card" *ngFor="let song of recommendedSongs">
-          <h3>{{ song.trackName }}</h3>
-          <p>by {{ song.artists }}</p>
-        </div>
+        @for (song of recommendedSongs; track song) {
+          <div class="song-card">
+            <h3>{{ song.trackName }}</h3>
+            <p>by {{ song.artists }}</p>
+          </div>
+        }
       </div>
     </div>
   </div>

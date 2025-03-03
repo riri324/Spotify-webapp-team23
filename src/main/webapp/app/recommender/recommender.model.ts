@@ -2,7 +2,7 @@ export class Playlist {
   constructor(
     public id: number,
     public name: string,
-    public description?: string
+    public description?: string,
   ) {}
 }
 
@@ -20,6 +20,6 @@ export class Song {
     public liveness?: number,
     public valence?: number,
     public tempo?: number,
-    public trackGenre?: string
+    public trackGenre?: string,
   ) {}
 }
