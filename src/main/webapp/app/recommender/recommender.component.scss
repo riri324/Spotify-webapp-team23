@@ -1,0 +1,70 @@
+.recommender-container {
+  background-color: #333;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.recommender-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.recommender-card h1 {
+  margin-bottom: 0.5rem;
+}
+
+.recommender-card p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.recommender-card hr {
+  margin: 1rem 0;
+  border: 0;
+  border-top: 1px solid #ccc;
+}
+
+.recommender-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.playlists-section,
+.recommended-section {
+  flex: 1 1 45%;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 6px;
+  text-align: left;
+}
+
+.playlist-card,
+.song-card {
+  background-color: #eaeaea;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.playlists-section h2,
+.recommended-section h2 {
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .playlists-section,
+  .recommended-section {
+    flex: 1 1 100%;
+  }
+}

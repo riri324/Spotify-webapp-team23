@@ -1,1 +1,25 @@
-<p>recommender works!</p>
+<div class="recommender-container">
+  <div class="recommender-card">
+    <h1>Song Recommender</h1>
+    <p>Welcome, {{ userName }}!</p>
+    <hr />
+    <div class="recommender-content">
+      <!-- My Playlists Section -->
+      <div class="playlists-section">
+        <h2>My Playlists</h2>
+        <div class="playlist-card" *ngFor="let playlist of playlists">
+          <h3>{{ playlist.name }}</h3>
+          <p>{{ playlist.description }}</p>
+        </div>
+      </div>
+      <!-- Recommended Songs Section -->
+      <div class="recommended-section">
+        <h2>Recommended Songs</h2>
+        <div class="song-card" *ngFor="let song of recommendedSongs">
+          <h3>{{ song.trackName }}</h3>
+          <p>by {{ song.artists }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
