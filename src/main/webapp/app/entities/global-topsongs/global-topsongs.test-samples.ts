@@ -3,38 +3,38 @@ import dayjs from 'dayjs/esm';
 import { IGlobalTopsongs, NewGlobalTopsongs } from './global-topsongs.model';
 
 export const sampleWithRequiredData: IGlobalTopsongs = {
-  id: 4988,
-  songTitle: 'along',
-  artistName: 'geez reasoning among',
-  playCount: 23381,
-  monthYear: dayjs('2025-02-28T03:56'),
-  year: 24227,
+  id: 16212,
+  songTitle: 'reasoning',
+  artistName: 'ha briskly duh',
+  playCount: 19143,
+  monthYear: dayjs('2025-02-27T23:04'),
+  year: 2013,
 };
 
 export const sampleWithPartialData: IGlobalTopsongs = {
-  id: 29882,
-  songTitle: 'since impact after',
-  artistName: 'minus scoop',
-  playCount: 11350,
-  monthYear: dayjs('2025-02-28T00:47'),
-  year: 24826,
+  id: 13963,
+  songTitle: 'once minus',
+  artistName: 'incidentally',
+  playCount: 12283,
+  monthYear: dayjs('2025-02-28T09:58'),
+  year: 2067,
 };
 
 export const sampleWithFullData: IGlobalTopsongs = {
-  id: 21889,
-  songTitle: 'seafood',
-  artistName: 'if',
-  playCount: 1969,
-  monthYear: dayjs('2025-02-28T09:24'),
-  year: 13576,
+  id: 3465,
+  songTitle: 'bog',
+  artistName: 'bandwidth mummify',
+  playCount: 19950,
+  monthYear: dayjs('2025-02-27T20:21'),
+  year: 2075,
 };
 
 export const sampleWithNewData: NewGlobalTopsongs = {
-  songTitle: 'reservation hoot political',
-  artistName: 'within furthermore',
-  playCount: 20479,
-  monthYear: dayjs('2025-02-27T23:40'),
-  year: 24574,
+  songTitle: 'towards grown',
+  artistName: 'matter gee cheerfully',
+  playCount: 25826,
+  monthYear: dayjs('2025-02-27T21:47'),
+  year: 2063,
   id: null,
 };
 

@@ -1,0 +1,5 @@
+1. Play count should not be negative.
+2. Users cannot the manually delete global top songs but only the system admin can remove them.
+3. Data should be updated monthly and yearly (up to date).
+4. Song title must be unique, there shouldnt be same title in the database.
+5. timeframe should be restricted between 2000 and 2100 for valid entries.

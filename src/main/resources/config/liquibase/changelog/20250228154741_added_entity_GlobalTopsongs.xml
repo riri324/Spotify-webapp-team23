@@ -15,7 +15,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="song_title" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_global_topsongs__song_title" />
             </column>
             <column name="artist_name" type="varchar(255)">
                 <constraints nullable="false" />
