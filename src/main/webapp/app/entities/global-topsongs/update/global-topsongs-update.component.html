@@ -64,6 +64,9 @@
               @if (editForm.get('playCount')?.errors?.required) {
                 <small class="form-text text-danger">This field is required.</small>
               }
+              @if (editForm.get('playCount')?.errors?.min) {
+                <small class="form-text text-danger">This field should be at least 0.</small>
+              }
               <small class="form-text text-danger" [hidden]="!editForm.get('playCount')?.errors?.number"
                 >This field should be a number.</small
               >
@@ -105,6 +108,12 @@
             <div>
               @if (editForm.get('year')?.errors?.required) {
                 <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (editForm.get('year')?.errors?.min) {
+                <small class="form-text text-danger">This field should be at least 2000.</small>
+              }
+              @if (editForm.get('year')?.errors?.max) {
+                <small class="form-text text-danger">This field cannot be more than 2100.</small>
               }
               <small class="form-text text-danger" [hidden]="!editForm.get('year')?.errors?.number">This field should be a number.</small>
             </div>

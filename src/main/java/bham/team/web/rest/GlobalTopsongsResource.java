@@ -1,7 +1,8 @@
 package bham.team.web.rest;
 
-import bham.team.domain.GlobalTopsongs;
 import bham.team.repository.GlobalTopsongsRepository;
+import bham.team.service.GlobalTopsongsService;
+import bham.team.service.dto.GlobalTopsongsDTO;
 import bham.team.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -13,10 +14,14 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -24,7 +29,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api/global-topsongs")
-@Transactional
 public class GlobalTopsongsResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(GlobalTopsongsResource.class);
@@ -34,52 +38,55 @@ public class GlobalTopsongsResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final GlobalTopsongsService globalTopsongsService;
+
     private final GlobalTopsongsRepository globalTopsongsRepository;
 
-    public GlobalTopsongsResource(GlobalTopsongsRepository globalTopsongsRepository) {
+    public GlobalTopsongsResource(GlobalTopsongsService globalTopsongsService, GlobalTopsongsRepository globalTopsongsRepository) {
+        this.globalTopsongsService = globalTopsongsService;
         this.globalTopsongsRepository = globalTopsongsRepository;
     }
 
     /**
      * {@code POST  /global-topsongs} : Create a new globalTopsongs.
      *
-     * @param globalTopsongs the globalTopsongs to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new globalTopsongs, or with status {@code 400 (Bad Request)} if the globalTopsongs has already an ID.
+     * @param globalTopsongsDTO the globalTopsongsDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new globalTopsongsDTO, or with status {@code 400 (Bad Request)} if the globalTopsongs has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
-    public ResponseEntity<GlobalTopsongs> createGlobalTopsongs(@Valid @RequestBody GlobalTopsongs globalTopsongs)
+    public ResponseEntity<GlobalTopsongsDTO> createGlobalTopsongs(@Valid @RequestBody GlobalTopsongsDTO globalTopsongsDTO)
         throws URISyntaxException {
-        LOG.debug("REST request to save GlobalTopsongs : {}", globalTopsongs);
-        if (globalTopsongs.getId() != null) {
+        LOG.debug("REST request to save GlobalTopsongs : {}", globalTopsongsDTO);
+        if (globalTopsongsDTO.getId() != null) {
             throw new BadRequestAlertException("A new globalTopsongs cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        globalTopsongs = globalTopsongsRepository.save(globalTopsongs);
-        return ResponseEntity.created(new URI("/api/global-topsongs/" + globalTopsongs.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, globalTopsongs.getId().toString()))
-            .body(globalTopsongs);
+        globalTopsongsDTO = globalTopsongsService.save(globalTopsongsDTO);
+        return ResponseEntity.created(new URI("/api/global-topsongs/" + globalTopsongsDTO.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, globalTopsongsDTO.getId().toString()))
+            .body(globalTopsongsDTO);
     }
 
     /**
      * {@code PUT  /global-topsongs/:id} : Updates an existing globalTopsongs.
      *
-     * @param id the id of the globalTopsongs to save.
-     * @param globalTopsongs the globalTopsongs to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated globalTopsongs,
-     * or with status {@code 400 (Bad Request)} if the globalTopsongs is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the globalTopsongs couldn't be updated.
+     * @param id the id of the globalTopsongsDTO to save.
+     * @param globalTopsongsDTO the globalTopsongsDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated globalTopsongsDTO,
+     * or with status {@code 400 (Bad Request)} if the globalTopsongsDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the globalTopsongsDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<GlobalTopsongs> updateGlobalTopsongs(
+    public ResponseEntity<GlobalTopsongsDTO> updateGlobalTopsongs(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody GlobalTopsongs globalTopsongs
+        @Valid @RequestBody GlobalTopsongsDTO globalTopsongsDTO
     ) throws URISyntaxException {
-        LOG.debug("REST request to update GlobalTopsongs : {}, {}", id, globalTopsongs);
-        if (globalTopsongs.getId() == null) {
+        LOG.debug("REST request to update GlobalTopsongs : {}, {}", id, globalTopsongsDTO);
+        if (globalTopsongsDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, globalTopsongs.getId())) {
+        if (!Objects.equals(id, globalTopsongsDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -87,33 +94,33 @@ public class GlobalTopsongsResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        globalTopsongs = globalTopsongsRepository.save(globalTopsongs);
+        globalTopsongsDTO = globalTopsongsService.update(globalTopsongsDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, globalTopsongs.getId().toString()))
-            .body(globalTopsongs);
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, globalTopsongsDTO.getId().toString()))
+            .body(globalTopsongsDTO);
     }
 
     /**
      * {@code PATCH  /global-topsongs/:id} : Partial updates given fields of an existing globalTopsongs, field will ignore if it is null
      *
-     * @param id the id of the globalTopsongs to save.
-     * @param globalTopsongs the globalTopsongs to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated globalTopsongs,
-     * or with status {@code 400 (Bad Request)} if the globalTopsongs is not valid,
-     * or with status {@code 404 (Not Found)} if the globalTopsongs is not found,
-     * or with status {@code 500 (Internal Server Error)} if the globalTopsongs couldn't be updated.
+     * @param id the id of the globalTopsongsDTO to save.
+     * @param globalTopsongsDTO the globalTopsongsDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated globalTopsongsDTO,
+     * or with status {@code 400 (Bad Request)} if the globalTopsongsDTO is not valid,
+     * or with status {@code 404 (Not Found)} if the globalTopsongsDTO is not found,
+     * or with status {@code 500 (Internal Server Error)} if the globalTopsongsDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<GlobalTopsongs> partialUpdateGlobalTopsongs(
+    public ResponseEntity<GlobalTopsongsDTO> partialUpdateGlobalTopsongs(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody GlobalTopsongs globalTopsongs
+        @NotNull @RequestBody GlobalTopsongsDTO globalTopsongsDTO
     ) throws URISyntaxException {
-        LOG.debug("REST request to partial update GlobalTopsongs partially : {}, {}", id, globalTopsongs);
-        if (globalTopsongs.getId() == null) {
+        LOG.debug("REST request to partial update GlobalTopsongs partially : {}, {}", id, globalTopsongsDTO);
+        if (globalTopsongsDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, globalTopsongs.getId())) {
+        if (!Objects.equals(id, globalTopsongsDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -121,69 +128,51 @@ public class GlobalTopsongsResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<GlobalTopsongs> result = globalTopsongsRepository
-            .findById(globalTopsongs.getId())
-            .map(existingGlobalTopsongs -> {
-                if (globalTopsongs.getSongTitle() != null) {
-                    existingGlobalTopsongs.setSongTitle(globalTopsongs.getSongTitle());
-                }
-                if (globalTopsongs.getArtistName() != null) {
-                    existingGlobalTopsongs.setArtistName(globalTopsongs.getArtistName());
-                }
-                if (globalTopsongs.getPlayCount() != null) {
-                    existingGlobalTopsongs.setPlayCount(globalTopsongs.getPlayCount());
-                }
-                if (globalTopsongs.getMonthYear() != null) {
-                    existingGlobalTopsongs.setMonthYear(globalTopsongs.getMonthYear());
-                }
-                if (globalTopsongs.getYear() != null) {
-                    existingGlobalTopsongs.setYear(globalTopsongs.getYear());
-                }
-
-                return existingGlobalTopsongs;
-            })
-            .map(globalTopsongsRepository::save);
+        Optional<GlobalTopsongsDTO> result = globalTopsongsService.partialUpdate(globalTopsongsDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, globalTopsongs.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, globalTopsongsDTO.getId().toString())
         );
     }
 
     /**
      * {@code GET  /global-topsongs} : get all the globalTopsongs.
      *
+     * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of globalTopsongs in body.
      */
     @GetMapping("")
-    public List<GlobalTopsongs> getAllGlobalTopsongs() {
-        LOG.debug("REST request to get all GlobalTopsongs");
-        return globalTopsongsRepository.findAll();
+    public ResponseEntity<List<GlobalTopsongsDTO>> getAllGlobalTopsongs(@org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        LOG.debug("REST request to get a page of GlobalTopsongs");
+        Page<GlobalTopsongsDTO> page = globalTopsongsService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
      * {@code GET  /global-topsongs/:id} : get the "id" globalTopsongs.
      *
-     * @param id the id of the globalTopsongs to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the globalTopsongs, or with status {@code 404 (Not Found)}.
+     * @param id the id of the globalTopsongsDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the globalTopsongsDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<GlobalTopsongs> getGlobalTopsongs(@PathVariable("id") Long id) {
+    public ResponseEntity<GlobalTopsongsDTO> getGlobalTopsongs(@PathVariable("id") Long id) {
         LOG.debug("REST request to get GlobalTopsongs : {}", id);
-        Optional<GlobalTopsongs> globalTopsongs = globalTopsongsRepository.findById(id);
-        return ResponseUtil.wrapOrNotFound(globalTopsongs);
+        Optional<GlobalTopsongsDTO> globalTopsongsDTO = globalTopsongsService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(globalTopsongsDTO);
     }
 
     /**
      * {@code DELETE  /global-topsongs/:id} : delete the "id" globalTopsongs.
      *
-     * @param id the id of the globalTopsongs to delete.
+     * @param id the id of the globalTopsongsDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGlobalTopsongs(@PathVariable("id") Long id) {
         LOG.debug("REST request to delete GlobalTopsongs : {}", id);
-        globalTopsongsRepository.deleteById(id);
+        globalTopsongsService.delete(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();

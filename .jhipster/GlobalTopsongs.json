@@ -3,6 +3,7 @@
     "changelogDate": "20250228154741"
   },
   "applications": "*",
+  "dto": "mapstruct",
   "fields": [
     {
       "fieldName": "id",
@@ -12,7 +13,7 @@
     {
       "fieldName": "songTitle",
       "fieldType": "String",
-      "fieldValidateRules": ["required"]
+      "fieldValidateRules": ["required", "unique"]
     },
     {
       "fieldName": "artistName",
@@ -22,7 +23,8 @@
     {
       "fieldName": "playCount",
       "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "0"
     },
     {
       "fieldName": "monthYear",
@@ -32,10 +34,14 @@
     {
       "fieldName": "year",
       "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "2100",
+      "fieldValidateRulesMin": "2000"
     }
   ],
   "name": "GlobalTopsongs",
+  "pagination": "pagination",
   "relationships": [],
-  "searchEngine": "no"
+  "searchEngine": "no",
+  "service": "serviceClass"
 }

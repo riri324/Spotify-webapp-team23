@@ -62,13 +62,13 @@ export class GlobalTopsongsFormService {
         validators: [Validators.required],
       }),
       playCount: new FormControl(globalTopsongsRawValue.playCount, {
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.min(0)],
       }),
       monthYear: new FormControl(globalTopsongsRawValue.monthYear, {
         validators: [Validators.required],
       }),
       year: new FormControl(globalTopsongsRawValue.year, {
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.min(2000), Validators.max(2100)],
       }),
     });
   }
