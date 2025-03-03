@@ -9,8 +9,11 @@
         <h2>My Playlists</h2>
         @for (playlist of playlists; track playlist) {
           <div class="playlist-card">
-            <h3>{{ playlist.name }}</h3>
-            <p>{{ playlist.description }}</p>
+            <!-- In the future add functionality that brings user to playlist page -->
+            <button class="playlist-button">
+              <h3>{{ playlist.name }}</h3>
+              <p>{{ playlist.description }}</p>
+            </button>
           </div>
         }
       </div>
