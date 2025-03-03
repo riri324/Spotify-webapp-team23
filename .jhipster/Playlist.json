@@ -8,7 +8,7 @@
     {
       "fieldName": "id",
       "fieldType": "Long",
-      "fieldValidateRules": ["required"]
+      "fieldValidateRules": ["required", "unique"]
     },
     {
       "fieldName": "name",

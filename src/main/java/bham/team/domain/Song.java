@@ -27,7 +27,7 @@ public class Song implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "track_id", nullable = false)
+    @Column(name = "track_id", nullable = false, unique = true)
     private String trackId;
 
     @Column(name = "artists")
