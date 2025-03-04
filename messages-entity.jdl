@@ -1,0 +1,32 @@
+@dto(mapstruct) //messages are implied DTO's
+@paginate(pagination)//chunk loads the messages, less load on server
+entity Message {
+  subject String required minlength(1) maxlength(20),  //First line of the message (preview)
+  content TextBlob required,   //Content of the message
+  sent LocalDate required,   //A timestamp for the message
+  seen Boolean //Flag if the message has been seen
+}
+
+relationship ManyToOne {
+  Message{sender(login)} to User, //using loginID as primary key differentiates everyone
+  Message{recipient(login)} to User //one user can send and receive many messages
+}
+
+// Enum to represent the status of a Message.
+enum MessageStatus {
+DELIVERED, READ, FAILED
+}
+
+// User entity
+entity User {
+  login String required unique,
+  passwordHash String required,
+  firstName String,
+  lastName String,
+  followers Integer required
+}
+
+
+
+
+
