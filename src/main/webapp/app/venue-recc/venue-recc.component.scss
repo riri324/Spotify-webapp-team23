@@ -1,0 +1,87 @@
+.body1 {
+  background-color: #1e1e1e;
+  color: white;
+  font-family: "Poppins", serif;
+  font-weight: 500;
+  font-style: normal;
+  min-height: 100vh;
+}
+
+.title {
+  text-align: left;
+  color: #61eb34;
+  font-size: 30px;
+}
+.heading {
+  padding: 30px 50px 0px;
+  margin-bottom: 35px;
+}
+.tabs {
+  padding: 20px 50px;
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.tab {
+  padding: 10px 20px;
+  background-color: #292929;
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 20px;
+}
+.tab.active {
+  background-color: #ffcc00;
+  color: black;
+}
+.event-thumbnail {
+  width: auto;
+  height: 100%;
+  object-fit: cover;
+}
+.desc {
+  font-size: 16px;
+}
+.event-container {
+  padding: 20px 50px 20px 50px;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 50px;
+  column-gap: 100px;
+}
+.event-box {
+  background-color: #292929;
+  border-radius: 0px;
+  width: calc(29% - 20px);
+  min-width: 250px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  line-height: 25px;
+  height: 160px;
+
+}
+.event-details {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+}
+.event-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffcc00;
+}
+.event-info {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.home-icon {
+  width: 50px;
+  height: 50px;
+  color: #61eb34;
+}

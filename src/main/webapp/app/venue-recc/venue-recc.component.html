@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&family=Poppins:wght@500;800&display=swap" rel="stylesheet">
+  <title>Concerts</title>
+</head>
+<body class="body1">
+<div class="heading">
+  <h1 class="title">Concerts by your favourites
+    <a routerLink="/" style="float:right;">
+        <img src="content/images/home-icon-green.png" class="home-icon">
+    </a>
+  </h1>
+  <p class="desc">Find concerts based on your favourite artists!</p>
+</div>
+
+<div class="tabs">
+  <button class="tab" [class.active]="activeTab === 'global'" (click)="switchTab('global')">Global</button>
+  <button class="tab" [class.active]="activeTab === 'local'" (click)="switchTab('local')">Near you</button>
+</div>
+
+<div class="event-container">
+  <div class="event-box" *ngFor="let event of eventsToShow">
+    <div class="event-details">
+      <div class="event-title">{{ event.artistId }}</div>
+      <div class="event-info">{{ event.venueName }}</div>
+      <div class="event-info">{{ event.datetime }}</div>
+    </div>
+    <img [src]="event.thumbnail" alt="Event Thumbnail" class="event-thumbnail">
+  </div>
+</div>
+</body>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <link rel="preconnect" href="https://fonts.googleapis.com">-->
+<!--  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+<!--  <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&family=Poppins:wght@500;800&display=swap" rel="stylesheet">-->
+<!--  <title>Concerts</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class = heading>-->
+<!--  <h1 class="title">Concerts by your favourites</h1>-->
+<!--  <p class="desc">Find concerts based on your favourite artists!</p>-->
+<!--</div>-->
+
+<!--<div class="tabs">-->
+<!--  <button class="tab active" onclick="switchTab('global')">Global</button>-->
+<!--  <button class="tab" onclick="switchTab('local')">Near you</button>-->
+<!--</div>-->
+
+<!--<div class="event-container" id="event-list">-->
+<!--</div>-->
+
+<!--<script>-->
+<!--  const globalEvents = [-->
+<!--    { artistId: "ABC", venueName: "Venue", datetime: "2025-03-10 19:00", thumbnail: "../../content/images/placeholder.jpg" },-->
+<!--    { artistId: "ABC", venueName: "Venue", datetime: "2025-03-10 19:00", thumbnail: "../../content/images/placeholder.jpg" },-->
+<!--    { artistId: "ABC", venueName: "Venue", datetime: "2025-03-10 19:00", thumbnail: "../../content/images/placeholder.jpg" },-->
+<!--    { artistId: "ABC", venueName: "Venue", datetime: "2025-03-10 19:00", thumbnail: "../../content/images/placeholder.jpg" },-->
+<!--    { artistId: "ABC", venueName: "Venue", datetime: "2025-03-10 19:00", thumbnail: "../../content/images/placeholder.jpg" },-->
+<!--    { artistId: "ABC", venueName: "Venue", datetime: "2025-03-10 19:00", thumbnail: "../../content/images/placeholder.jpg" },-->
+<!--    { artistId: "ABC", venueName: "Venue", datetime: "2025-03-10 19:00", thumbnail: "../../content/images/placeholder.jpg" },-->
+<!--    { artistId: "ABC", venueName: "Venue", datetime: "2025-03-10 19:00", thumbnail: "../../content/images/placeholder.jpg" },-->
+<!--    { artistId: "ABC", venueName: "Venue", datetime: "2025-03-10 19:00", thumbnail: "../../content/images/placeholder.jpg" }-->
+<!--  ];-->
+
+<!--  const localEvents = [-->
+<!--    { artistId: "XYZ", venueName: "Venue", datetime: "2025-03-15 18:30", thumbnail: "../../content/images/placeholder.jpg" },-->
+<!--    { artistId: "XYZ", venueName: "Venue", datetime: "2025-03-15 18:30", thumbnail: "../../content/images/placeholder.jpg" },-->
+<!--    { artistId: "XYZ", venueName: "Venue", datetime: "2025-03-15 18:30", thumbnail: "../../content/images/placeholder.jpg" },-->
+<!--    { artistId: "XYZ", venueName: "Venue", datetime: "2025-03-15 18:30", thumbnail: "../../content/images/placeholder.jpg" },-->
+<!--    { artistId: "XYZ", venueName: "Venue", datetime: "2025-03-15 18:30", thumbnail: "../../content/images/placeholder.jpg" },-->
+<!--  ];-->
+
+<!--  function renderEvents(eventListData) {-->
+<!--    const eventList = document.getElementById("event-list");-->
+<!--    eventList.innerHTML = "";-->
+
+<!--    eventListData.forEach(event => {-->
+<!--      const eventBox = document.createElement("div");-->
+<!--      eventBox.classList.add("event-box");-->
+
+<!--      eventBox.innerHTML =-->
+<!--        <div class="event-details">-->
+<!--          <div class="event-title">${event.artistId}</div>-->
+<!--          <div class="event-info">${event.venueName}</div>-->
+<!--          <div class="event-info">${event.datetime}</div>-->
+<!--        </div>-->
+<!--      <img src="${event.thumbnail}" alt="Event Thumbnail" class="event-thumbnail">-->
+<!--        ;-->
+
+<!--        eventList.appendChild(eventBox);-->
+<!--        });-->
+<!--        }-->
+
+<!--        function switchTab(tab) {-->
+<!--        document.querySelectorAll(".tab").forEach(tabElement => tabElement.classList.remove("active"));-->
+<!--        document.querySelector([onclick="switchTab('${tab}')"]).classList.add("active");-->
+
+<!--        if (tab === "global") {-->
+<!--        renderEvents(globalEvents);-->
+<!--      } else {-->
+<!--        renderEvents(localEvents);-->
+<!--      }-->
+<!--      }-->
+
+<!--        window.onload = () => switchTab('global');-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
