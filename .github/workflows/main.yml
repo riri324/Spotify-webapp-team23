@@ -196,3 +196,5 @@ jobs:
             docker compose -f ~/team-project/prd.yml up -d
             docker system prune --force --filter 'until=24h'
           "
+
+# Test comment for git commit
