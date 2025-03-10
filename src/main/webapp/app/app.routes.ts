@@ -39,6 +39,11 @@ const routes: Routes = [
     title: 'login.title',
   },
   {
+    path: 'recommend',
+    loadComponent: () => import('./recommend/recommend.component').then(m => m.RecommendComponent),
+    title: 'recommend.title',
+  },
+  {
     path: '',
     loadChildren: () => import(`./entities/entity.routes`),
   },
