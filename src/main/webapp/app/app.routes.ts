@@ -46,7 +46,10 @@ const routes: Routes = [
     loadComponent: () => import('./venue-recc/venue-recc.component').then(m => m.VenueReccComponent),
     title: 'Venue Recommendations',
   },
-
+  {
+    path: 'recommender',
+    loadComponent: () => import('./recommender/recommender.component').then(m => m.RecommenderComponent),
+  },
   ...errorRoute,
 ];
 

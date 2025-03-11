@@ -46,6 +46,30 @@
               <li>
                 <a
                   class="dropdown-item"
+                  routerLink="/playlist"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Playlist</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/song"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Song</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
                   routerLink="/event"
                   routerLinkActive="active"
                   [routerLinkActiveOptions]="{ exact: true }"

@@ -108,6 +108,7 @@ jobs:
                CI_COMMIT_TAG=${{ github.sha }} \
                CI_REGISTRY=${{ env.CI_REGISTRY }} \
                ACME=${{ env.ACME_STAGING }} \
+               DEVURL=${{ env.DEVURL }} \
                URL=${{ env.URL }} \
                EMAIL=${{ github.event.head_commit.author.email }} > src/main/docker/.env
 
@@ -177,3 +178,5 @@ jobs:
             docker compose -f ~/team-project/prd.yml up -d
             docker system prune --force --filter 'until=24h'
           "
+
+# Test comment for git commit
