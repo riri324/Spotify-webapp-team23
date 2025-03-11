@@ -3,14 +3,15 @@
 This application was generated using JHipster 8.7.3 for the team project 2024-2025 module at the university of Birmingham.
 
 # Team 23
-   - Khalid A. kxa284@student.bham.ac.uk
-   - Niyam C. nxc379@student.bham.ac.uk
-   - Haris B. hxb430@student.bham.ac.uk
-   - Rohan H. rxh376@student.bham.ac.uk
-   - Reeyea K. rxk355@student.bham.ac.uk
-   - Warner L. trl312@student.bham.ac.uk
-   - Youngbin P. yxp104@student.bham.ac.uk
- 
+
+- Khalid A. kxa284@student.bham.ac.uk
+- Niyam C. nxc379@student.bham.ac.uk
+- Haris B. hxb430@student.bham.ac.uk
+- Rohan H. rxh376@student.bham.ac.uk
+- Reeyea K. rxk355@student.bham.ac.uk
+- Warner L. trl312@student.bham.ac.uk
+- Youngbin P. yxp104@student.bham.ac.uk
+
 # Required software
 
 To run the code from this repository requires at least:

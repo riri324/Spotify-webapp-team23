@@ -42,10 +42,16 @@ const routes: Routes = [
     loadChildren: () => import(`./entities/entity.routes`),
   },
   {
+    path: 'global-top-songs',
+    data: { pageTitle: 'Global Top Songs' },
+    loadChildren: () => import('./top-song/top-song.routes').then(m => m.default),
+  },
+  {
     path: 'venue-recommendations',
     loadComponent: () => import('./venue-recc/venue-recc.component').then(m => m.VenueReccComponent),
     title: 'Venue Recommendations',
   },
+
   {
     path: 'recommender',
     loadComponent: () => import('./recommender/recommender.component').then(m => m.RecommenderComponent),

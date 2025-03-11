@@ -7,10 +7,16 @@ const routes: Routes = [
     loadChildren: () => import('./admin/authority/authority.routes'),
   },
   {
+    path: 'global-topsongs',
+    data: { pageTitle: 'GlobalTopsongs' },
+    loadChildren: () => import('./global-topsongs/global-topsongs.routes'),
+  },
+  {
     path: 'event',
     data: { pageTitle: 'Events' },
     loadChildren: () => import('./event/event.routes'),
   },
+
   {
     path: 'playlist',
     data: { pageTitle: 'Playlists' },
@@ -21,6 +27,7 @@ const routes: Routes = [
     data: { pageTitle: 'Songs' },
     loadChildren: () => import('./song/song.routes'),
   },
+
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 
