@@ -25,7 +25,11 @@
     <include file="config/liquibase/changelog/20250205190206_added_entity_Event.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250302040024_added_entity_Playlist.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250302040025_added_entity_Song.xml" relativeToChangelogFile="false"/>
+<<<<<<< Updated upstream
 
+=======
+    <include file="config/liquibase/changelog/20250311004305_added_entity_UserPreference.xml" relativeToChangelogFile="false"/>
+>>>>>>> Stashed changes
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20250302040024_added_entity_constraints_Playlist.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->

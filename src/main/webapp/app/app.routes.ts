@@ -56,6 +56,11 @@ const routes: Routes = [
     path: 'recommender',
     loadComponent: () => import('./recommender/recommender.component').then(m => m.RecommenderComponent),
   },
+  {
+    path: 'user-preference',
+    data: { pageTitle: 'UserPreferences' },
+    loadComponent: () => import('./entities/user-preference/preferences.component').then(m => m.PreferencesComponent),
+  },
   ...errorRoute,
 ];
 
