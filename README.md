@@ -1,16 +1,19 @@
-# teamproject23 template application
+# teamproject24 template application
 
 This application was generated using JHipster 8.7.3 for the team project 2024-2025 module at the university of Birmingham.
 
-# Team 23
-   - Khalid A. kxa284@student.bham.ac.uk
-   - Niyam C. nxc379@student.bham.ac.uk
-   - Haris B. hxb430@student.bham.ac.uk
-   - Rohan H. rxh376@student.bham.ac.uk
-   - Reeyea K. rxk355@student.bham.ac.uk
-   - Warner L. trl312@student.bham.ac.uk
-   - Youngbin P. yxp104@student.bham.ac.uk
- 
+# Team X
+
+TODO:
+
+1. Add your team number above (replace X)
+
+2. Add your name below:
+
+   - Alice S. example@student.bham.ac.uk
+   - Bob S. example@student.bham.ac.uk
+   - <!-- this is a comment: delete this (and Alice and Bob), add your name and email  -->
+
 3. Modify [gdpr-policy.component.html](src/main/webapp/app/gdpr-policy/gdpr-policy.component.html) to add your team number (replace X) and team members to the contact section.
 
 <!-- this is a comment: delete lines TODO: and 1. 2. 3. once done... -->
@@ -361,7 +364,7 @@ npm run java:docker:arm64
 Then run:
 
 ```sh
-docker compose -f src/main/docker/app.yml up -d.
+docker compose -f src/main/docker/app.yml up -d
 ```
 
 For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the Docker Compose sub-generator (`jhipster docker-compose`), which is able to generate Docker configurations for one or several JHipster applications.
