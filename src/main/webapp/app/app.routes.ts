@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 
 import { Authority } from 'app/config/authority.constants';
-
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { errorRoute } from './layouts/error/error.route';
 
@@ -47,6 +46,12 @@ const routes: Routes = [
     data: { pageTitle: 'Global Top Songs' },
     loadChildren: () => import('./top-song/top-song.routes').then(m => m.default),
   },
+  {
+    path: 'venue-recommendations',
+    loadComponent: () => import('./venue-recc/venue-recc.component').then(m => m.VenueReccComponent),
+    title: 'Venue Recommendations',
+  },
+
   {
     path: 'recommender',
     loadComponent: () => import('./recommender/recommender.component').then(m => m.RecommenderComponent),

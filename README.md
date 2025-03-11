@@ -1,4 +1,4 @@
-# teamproject23 template application
+# teamproject24 template application
 
 This application was generated using JHipster 8.7.3 for the team project 2024-2025 module at the university of Birmingham.
 
@@ -358,7 +358,7 @@ npm run java:docker:arm64
 Then run:
 
 ```sh
-docker compose -f src/main/docker/app.yml up -d.
+docker compose -f src/main/docker/app.yml up -d
 ```
 
 For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the Docker Compose sub-generator (`jhipster docker-compose`), which is able to generate Docker configurations for one or several JHipster applications.

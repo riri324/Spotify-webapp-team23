@@ -12,6 +12,12 @@ const routes: Routes = [
     loadChildren: () => import('./global-topsongs/global-topsongs.routes'),
   },
   {
+    path: 'event',
+    data: { pageTitle: 'Events' },
+    loadChildren: () => import('./event/event.routes'),
+  },
+
+  {
     path: 'playlist',
     data: { pageTitle: 'Playlists' },
     loadChildren: () => import('./playlist/playlist.routes'),
