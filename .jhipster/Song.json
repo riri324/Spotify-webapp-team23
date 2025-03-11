@@ -1,0 +1,72 @@
+{
+  "annotations": {
+    "changelogDate": "20250302040025"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "trackId",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "artists",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "albumName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "trackName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "danceability",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "energy",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "speechiness",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "acousticness",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "instrumentalness",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "liveness",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "valence",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "tempo",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "trackGenre",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Song",
+  "relationships": [
+    {
+      "otherEntityName": "playlist",
+      "otherEntityRelationshipName": "songs",
+      "relationshipName": "playlists",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}

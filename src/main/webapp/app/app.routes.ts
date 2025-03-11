@@ -47,6 +47,10 @@ const routes: Routes = [
     data: { pageTitle: 'Global Top Songs' },
     loadChildren: () => import('./top-song/top-song.routes').then(m => m.default),
   },
+  {
+    path: 'recommender',
+    loadComponent: () => import('./recommender/recommender.component').then(m => m.RecommenderComponent),
+  },
   ...errorRoute,
 ];
 

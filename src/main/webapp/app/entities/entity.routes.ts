@@ -11,6 +11,17 @@ const routes: Routes = [
     data: { pageTitle: 'GlobalTopsongs' },
     loadChildren: () => import('./global-topsongs/global-topsongs.routes'),
   },
+  {
+    path: 'playlist',
+    data: { pageTitle: 'Playlists' },
+    loadChildren: () => import('./playlist/playlist.routes'),
+  },
+  {
+    path: 'song',
+    data: { pageTitle: 'Songs' },
+    loadChildren: () => import('./song/song.routes'),
+  },
+
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

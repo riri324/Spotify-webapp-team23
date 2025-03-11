@@ -1,0 +1,196 @@
+<div>
+  <h2 id="page-heading" data-cy="SongHeading">
+    <span>Songs</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-song"
+        [routerLink]="['/song/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span>Create a new Song</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (songs?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span>No Songs found</span>
+    </div>
+  }
+
+  @if (songs && songs.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span>ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="trackId">
+              <div class="d-flex">
+                <span>Track Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="artists">
+              <div class="d-flex">
+                <span>Artists</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="albumName">
+              <div class="d-flex">
+                <span>Album Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="trackName">
+              <div class="d-flex">
+                <span>Track Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="danceability">
+              <div class="d-flex">
+                <span>Danceability</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="energy">
+              <div class="d-flex">
+                <span>Energy</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="speechiness">
+              <div class="d-flex">
+                <span>Speechiness</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="acousticness">
+              <div class="d-flex">
+                <span>Acousticness</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="instrumentalness">
+              <div class="d-flex">
+                <span>Instrumentalness</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="liveness">
+              <div class="d-flex">
+                <span>Liveness</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="valence">
+              <div class="d-flex">
+                <span>Valence</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="tempo">
+              <div class="d-flex">
+                <span>Tempo</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="trackGenre">
+              <div class="d-flex">
+                <span>Track Genre</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="playlists.id">
+              <div class="d-flex">
+                <span>Playlists</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (song of songs; track trackId(song)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/song', song.id, 'view']">{{ song.id }}</a>
+              </td>
+              <td>{{ song.trackId }}</td>
+              <td>{{ song.artists }}</td>
+              <td>{{ song.albumName }}</td>
+              <td>{{ song.trackName }}</td>
+              <td>{{ song.danceability }}</td>
+              <td>{{ song.energy }}</td>
+              <td>{{ song.speechiness }}</td>
+              <td>{{ song.acousticness }}</td>
+              <td>{{ song.instrumentalness }}</td>
+              <td>{{ song.liveness }}</td>
+              <td>{{ song.valence }}</td>
+              <td>{{ song.tempo }}</td>
+              <td>{{ song.trackGenre }}</td>
+              <td>
+                @for (playlists of song.playlists; track $index; let last = $last) {
+                  <span>
+                    <a class="form-control-static" [routerLink]="['/playlist', playlists.id, 'view']">{{ playlists.id }}</a
+                    >{{ last ? '' : ', ' }}
+                  </span>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/song', song.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline">View</span>
+                  </a>
+
+                  <a [routerLink]="['/song', song.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(song)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
