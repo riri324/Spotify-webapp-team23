@@ -1,23 +1,63 @@
-<div class="navbar">Messaging Interface</div>
-<div class="container">
-  <div class="sidebar">
-    <h2>Conversations</h2>
-    <ul>
-      <li><a href="#">Alice</a></li>
-      <li><a href="#">Bob</a></li>
-      <li><a href="#">Charlie</a></li>
-      <li><a href="#">David</a></li>
-    </ul>
+<!--<div class="navbar">Messaging Interface</div>-->
+<!--<div class="container">-->
+<!--  <div class="sidebar">-->
+<!--    <h2>Conversations</h2>-->
+<!--    <ul>-->
+<!--      <li><a href="#">Alice</a></li>-->
+<!--      <li><a href="#">Bob</a></li>-->
+<!--      <li><a href="#">Charlie</a></li>-->
+<!--      <li><a href="#">David</a></li>-->
+<!--    </ul>-->
+<!--  </div>-->
+<!--  <div class="chat-window">-->
+<!--    <div class="message-list">-->
+<!--      <div class="message received">Hi there!</div>-->
+<!--      <div class="message sent">Hello, how are you?</div>-->
+<!--      <div class="message received">I'm doing well, thanks for asking.</div>-->
+<!--    </div>-->
+<!--    <div class="message-input">-->
+<!--      <input type="text" placeholder="Type your message..." />-->
+<!--      <button>Send</button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<div class="messages-container">
+  <h1>Messages</h1>
+  <p>Welcome, {{ userName }}!</p>
+
+  <!-- Display a notice if there are no messages -->
+  <div *ngIf="messages.length === 0">
+    <p>No messages available.</p>
   </div>
-  <div class="chat-window">
-    <div class="message-list">
-      <div class="message received">Hi there!</div>
-      <div class="message sent">Hello, how are you?</div>
-      <div class="message received">I'm doing well, thanks for asking.</div>
-    </div>
-    <div class="message-input">
-      <input type="text" placeholder="Type your message..." />
-      <button>Send</button>
-    </div>
+
+  <!-- Display messages in a table if they exist -->
+  <div *ngIf="messages.length > 0">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Subject</th>
+          <th>Content</th>
+          <th>Sent</th>
+          <th>Seen</th>
+          <th>Status</th>
+          <th>Sender</th>
+          <th>Recipient</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let message of messages; trackBy: trackMessageId">
+          <td>{{ message.id }}</td>
+          <td>{{ message.subject }}</td>
+          <td>{{ message.content }}</td>
+          <td>{{ message.sent | date: 'medium' }}</td>
+          <td>{{ message.seen ? 'Yes' : 'No' }}</td>
+          <td>{{ message.status }}</td>
+          <td>{{ message.sender?.login }}</td>
+          <td>{{ message.recipient?.login }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
