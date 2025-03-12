@@ -56,6 +56,11 @@ const routes: Routes = [
     loadComponent: () => import('./venue-recc/venue-recc.component').then(m => m.VenueReccComponent),
     title: 'Venue Recommendations',
   },
+  {
+    path: 'global-top-songs',
+    data: { pageTitle: 'Global Top Songs' },
+    loadChildren: () => import('./top-song/top-song.routes').then(m => m.default),
+  },
   ...errorRoute,
 ];
 
