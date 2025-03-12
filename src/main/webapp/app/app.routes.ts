@@ -66,6 +66,11 @@ const routes: Routes = [
     data: { pageTitle: 'Preferences' },
     loadChildren: () => import('./entities/preferences/preferences.routes').then(m => m.default),
   },
+  {
+    path: 'feedback',
+    data: { pageTitle: 'Feedback page' },
+    loadChildren: () => import('./feedback/feedback.component').then(m => m.FeedbackComponent),
+  },
   ...errorRoute,
 ];
 
