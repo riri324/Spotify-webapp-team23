@@ -5,7 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 
 //K7's entity
 @Entity
-public class feedback {
+public class
+feedback {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int feedbackId;
