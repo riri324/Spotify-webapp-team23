@@ -5,10 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 
 //K7's entity
 @Entity
-public class feedback {
+public class Feedback {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private int feedbackId;
+    private long feedbackId;
 
     @NotBlank(message = "Please enter your username")
     @Column(unique = true)
@@ -30,7 +30,7 @@ public class feedback {
     private Integer rating;
 
 
-    public feedback(int feedbackId, String username, String userEmail, Integer userPhoneNum, String message, Integer rating) {
+    public Feedback(long feedbackId, String username, String userEmail, Integer userPhoneNum, String message, Integer rating) {
 
         this.feedbackId = feedbackId;
         this.username = username;
@@ -43,15 +43,15 @@ public class feedback {
     }
 
     // do I need this?:
-    public feedback() {
+    public Feedback() {
 
     }
 
 
-    public int getFeedbackId() {
+    public long getFeedbackId() {
         return feedbackId;
     }
-    public void setFeedbackId(int feedbackId) {
+    public void setFeedbackId(long feedbackId) {
         feedbackId = feedbackId;
     }
 
