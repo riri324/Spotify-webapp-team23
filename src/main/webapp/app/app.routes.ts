@@ -62,6 +62,11 @@ const routes: Routes = [
     title: 'Feedback',
   },
   {
+    path: 'messages',
+    loadComponent: () => import('./messages/messages.component').then(m => m.MessagesComponent),
+    title: 'Messages',
+  },
+  {
     path: 'global-top-songs',
     data: { pageTitle: 'Global Top Songs' },
     loadChildren: () => import('./top-song/top-song.routes').then(m => m.default),
