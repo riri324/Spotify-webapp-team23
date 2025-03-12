@@ -9,8 +9,7 @@ describe('VenueReccComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [VenueReccComponent]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(VenueReccComponent);
     component = fixture.componentInstance;

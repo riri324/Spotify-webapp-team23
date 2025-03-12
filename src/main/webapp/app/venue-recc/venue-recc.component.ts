@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router'; // ✅ Import CommonModule for *ngFor
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'jhi-venue-recc',
