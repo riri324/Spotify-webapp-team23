@@ -1,0 +1,17 @@
+@Spotify // We are working on a playlist app
+entity Feedback {
+    // The feature I'm working on: lists that users can name,
+    // for example, one named after an artist and chosen tracks, liked lists, etc.
+
+    feedback Long required unique // An ID for the feedback
+
+    userName String required unique // User info -> required to be unique, shown on top of the feedback sent
+    userEmail String required // For contacting purposes
+    userPhoneNum Integer // Optional
+
+    message String required // The feedback message
+    rating Integer min(1) max(10) // Rate the service out of 10
+
+
+  }
+
