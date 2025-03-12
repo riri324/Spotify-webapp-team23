@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (feedback(); as feedbackRef) {
+      <div>
+        <h2 data-cy="feedbackDetailsHeading"><span>Feedback</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ feedbackRef.id }}</span>
+          </dd>
+          <dt><span>Feedback Id</span></dt>
+          <dd>
+            <span>{{ feedbackRef.feedbackId }}</span>
+          </dd>
+          <dt><span>Username</span></dt>
+          <dd>
+            <span>{{ feedbackRef.username }}</span>
+          </dd>
+          <dt><span>User Email</span></dt>
+          <dd>
+            <span>{{ feedbackRef.userEmail }}</span>
+          </dd>
+          <dt><span>User Phine Num</span></dt>
+          <dd>
+            <span>{{ feedbackRef.userPhineNum }}</span>
+          </dd>
+          <dt><span>Message</span></dt>
+          <dd>
+            <span>{{ feedbackRef.message }}</span>
+          </dd>
+          <dt><span>Rating</span></dt>
+          <dd>
+            <span>{{ feedbackRef.rating }}</span>
+          </dd>
+          <dt><span>User</span></dt>
+          <dd>
+            <span>{{ feedbackRef.user?.login }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/feedback', feedbackRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>
