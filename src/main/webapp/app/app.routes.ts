@@ -61,6 +61,11 @@ const routes: Routes = [
     data: { pageTitle: 'Global Top Songs' },
     loadChildren: () => import('./top-song/top-song.routes').then(m => m.default),
   },
+  {
+    path: 'preferences',
+    data: { pageTitle: 'Preferences' },
+    loadChildren: () => import('./entities/preferences/preferences.routes').then(m => m.default),
+  },
   ...errorRoute,
 ];
 
