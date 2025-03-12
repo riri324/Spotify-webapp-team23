@@ -57,6 +57,11 @@ const routes: Routes = [
     title: 'Venue Recommendations',
   },
   {
+    path: 'feedback',
+    loadComponent: () => import('./feedback/feedback.component').then(m => m.FeedbackComponent),
+    title: 'Feedback',
+  },
+  {
     path: 'global-top-songs',
     data: { pageTitle: 'Global Top Songs' },
     loadChildren: () => import('./top-song/top-song.routes').then(m => m.default),
@@ -65,11 +70,6 @@ const routes: Routes = [
     path: 'preferences',
     data: { pageTitle: 'Preferences' },
     loadChildren: () => import('./entities/preferences/preferences.routes').then(m => m.default),
-  },
-  {
-    path: 'feedback',
-    data: { pageTitle: 'Feedback page' },
-    loadChildren: () => import('./feedback/feedback.component').then(m => m.FeedbackComponent),
   },
   ...errorRoute,
 ];
