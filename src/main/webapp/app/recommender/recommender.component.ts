@@ -16,7 +16,10 @@ export class RecommenderComponent implements OnInit {
   userName = 'User Name';
   playlists?: IPlaylist[];
   Songs?: ISong[];
-  constructor(protected playlistService: PlaylistService, protected songService: SongService) {}
+  constructor(
+    protected playlistService: PlaylistService,
+    protected songService: SongService,
+  ) {}
 
   ngOnInit(): void {
     this.loadAll();
