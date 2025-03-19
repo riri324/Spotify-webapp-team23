@@ -1,28 +1,62 @@
+
 @Spotify // we are working on a playlist app
 
 entity Playlist {
-  id Long required unique,              // Unique ID for Playlist
-  name String required,
-  description String
+  playlistID Integer required unique,
+  name String required maxlength(50),         
+  description String maxlength(100),
+  isPublic Boolean required
 }
 
+// Song entity
 entity Song {
-  trackId String required unique, // Unique identifier for a song
-  artists String,
-  albumName String,
-  trackName String,
-  danceability Float,
-  energy Float,
-  speechiness Float,
-  acousticness Float,
-  instrumentalness Float,
-  liveness Float,
-  valence Float,
-  tempo Float,
-  trackGenre String
+  songId String required unique maxlength(50),      
+  artistName String required maxlength(100),                
+  albumID Integer required,              
+  trackName String required maxlength(150),              
+  danceability Float,            
+  energy Float,                  
+  speechiness Float,             
+  acousticness Float,            
+  instrumentalness Float,        
+  liveness Float,                
+  valence Float,                 
+  tempo Float,                   
+  genreID String required maxlength(50)
 }
 
-// Many-to-Many Relationship (Playlists <-> Songs)
+// Artist entity
+entity Artist {
+  artistName String required maxlength(100),
+  followers Integer required,
+  image ImageBlob
+}
+
+// Album entity
+entity Album {
+  albumID Integer required unique,
+  albumName String required maxlength(150),
+  artistName String required maxlength(100),
+  numberOfSongs Integer required,
+  image ImageBlob
+}
+
+// Genre entity
+entity Genre {
+  genreID Integer required unique,
+  songGenre String required maxlength(50)
+}
+
 relationship ManyToMany {
-  Playlist{songs} to Song{playlists}
+  Playlist{songs} to Song{playlists},
+}
+
+relationship ManyToOne {
+  Song{albumID} to Album,  
+  Song{genreID} to Genre,
+  Song{artistID} to Artist{Song}
+}
+
+relationship OneToMany {
+  Artist{albums} to Album{artist},
 }
