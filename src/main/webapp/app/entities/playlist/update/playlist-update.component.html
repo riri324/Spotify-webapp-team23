@@ -7,20 +7,34 @@
         <jhi-alert-error></jhi-alert-error>
 
         @if (editForm.controls.id.value !== null) {
-          @let idRef = editForm.get('id')!;
           <div class="mb-3">
-            <label class="form-label" for="field_id">Id</label>
+            <label class="form-label" for="field_id">ID</label>
             <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-            @if (idRef.invalid && (idRef.dirty || idRef.touched)) {
-              <div>
-                @if (editForm.get('id')?.errors?.required) {
-                  <small class="form-text text-danger">This field is required.</small>
-                }
-                <small class="form-text text-danger" [hidden]="!editForm.get('id')?.errors?.number">This field should be a number.</small>
-              </div>
-            }
           </div>
         }
+
+        @let playlistIDRef = editForm.get('playlistID')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_playlistID">Playlist ID</label>
+          <input
+            type="number"
+            class="form-control"
+            name="playlistID"
+            id="field_playlistID"
+            data-cy="playlistID"
+            formControlName="playlistID"
+          />
+          @if (playlistIDRef.invalid && (playlistIDRef.dirty || playlistIDRef.touched)) {
+            <div>
+              @if (editForm.get('playlistID')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('playlistID')?.errors?.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
 
         @let nameRef = editForm.get('name')!;
         <div class="mb-3">
@@ -31,10 +45,14 @@
               @if (editForm.get('name')?.errors?.required) {
                 <small class="form-text text-danger">This field is required.</small>
               }
+              @if (editForm.get('name')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 50 characters.</small>
+              }
             </div>
           }
         </div>
 
+        @let descriptionRef = editForm.get('description')!;
         <div class="mb-3">
           <label class="form-label" for="field_description">Description</label>
           <input
@@ -45,6 +63,26 @@
             data-cy="description"
             formControlName="description"
           />
+          @if (descriptionRef.invalid && (descriptionRef.dirty || descriptionRef.touched)) {
+            <div>
+              @if (editForm.get('description')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 100 characters.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let isPublicRef = editForm.get('isPublic')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_isPublic">Is Public</label>
+          <input type="checkbox" class="form-check" name="isPublic" id="field_isPublic" data-cy="isPublic" formControlName="isPublic" />
+          @if (isPublicRef.invalid && (isPublicRef.dirty || isPublicRef.touched)) {
+            <div>
+              @if (editForm.get('isPublic')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
+          }
         </div>
 
         <div class="mb-3">

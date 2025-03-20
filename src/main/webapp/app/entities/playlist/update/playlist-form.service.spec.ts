@@ -20,8 +20,10 @@ describe('Playlist Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
+            playlistID: expect.any(Object),
             name: expect.any(Object),
             description: expect.any(Object),
+            isPublic: expect.any(Object),
             songs: expect.any(Object),
           }),
         );
@@ -33,8 +35,10 @@ describe('Playlist Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
+            playlistID: expect.any(Object),
             name: expect.any(Object),
             description: expect.any(Object),
+            isPublic: expect.any(Object),
             songs: expect.any(Object),
           }),
         );

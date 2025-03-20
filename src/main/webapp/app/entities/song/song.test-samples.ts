@@ -1,38 +1,39 @@
 import { ISong, NewSong } from './song.model';
 
 export const sampleWithRequiredData: ISong = {
-  id: 24435,
-  trackId: 'welcome',
+  id: 10261,
+  songId: 'although bus',
+  trackName: 'joshingly',
 };
 
 export const sampleWithPartialData: ISong = {
-  id: 29343,
-  trackId: 'browse absent',
-  artists: 'certainly costume contrail',
-  danceability: 339.65,
-  speechiness: 17759.02,
-  instrumentalness: 2438.98,
+  id: 14934,
+  songId: 'sweatshop',
+  trackName: 'qua yowza',
+  speechiness: 9906.4,
+  acousticness: 25509.15,
+  liveness: 12613.88,
+  valence: 22868.73,
+  tempo: 30458.71,
 };
 
 export const sampleWithFullData: ISong = {
-  id: 11875,
-  trackId: 'elevation',
-  artists: 'onto ugh',
-  albumName: 'bah',
-  trackName: 'velocity attend',
-  danceability: 31723.71,
-  energy: 7240.67,
-  speechiness: 10083.21,
-  acousticness: 6608.8,
-  instrumentalness: 8523.4,
-  liveness: 29469.48,
-  valence: 22505.88,
-  tempo: 5934.12,
-  trackGenre: 'accessorise',
+  id: 4568,
+  songId: 'crossly greedily on',
+  trackName: 'only yawningly',
+  danceability: 260.64,
+  energy: 12692.39,
+  speechiness: 11363.26,
+  acousticness: 5651.25,
+  instrumentalness: 7372.66,
+  liveness: 28403.69,
+  valence: 19430.59,
+  tempo: 28531.01,
 };
 
 export const sampleWithNewData: NewSong = {
-  trackId: 'acceptable er unless',
+  songId: 'even over',
+  trackName: 'our glittering afore',
   id: null,
 };
 

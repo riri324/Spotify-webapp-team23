@@ -47,8 +47,10 @@ public class PlaylistAsserts {
     public static void assertPlaylistUpdatableFieldsEquals(Playlist expected, Playlist actual) {
         assertThat(expected)
             .as("Verify Playlist relevant properties")
+            .satisfies(e -> assertThat(e.getPlaylistID()).as("check playlistID").isEqualTo(actual.getPlaylistID()))
             .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()))
-            .satisfies(e -> assertThat(e.getDescription()).as("check description").isEqualTo(actual.getDescription()));
+            .satisfies(e -> assertThat(e.getDescription()).as("check description").isEqualTo(actual.getDescription()))
+            .satisfies(e -> assertThat(e.getIsPublic()).as("check isPublic").isEqualTo(actual.getIsPublic()));
     }
 
     /**

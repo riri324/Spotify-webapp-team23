@@ -123,11 +123,17 @@ public class PlaylistResource {
         Optional<Playlist> result = playlistRepository
             .findById(playlist.getId())
             .map(existingPlaylist -> {
+                if (playlist.getPlaylistID() != null) {
+                    existingPlaylist.setPlaylistID(playlist.getPlaylistID());
+                }
                 if (playlist.getName() != null) {
                     existingPlaylist.setName(playlist.getName());
                 }
                 if (playlist.getDescription() != null) {
                     existingPlaylist.setDescription(playlist.getDescription());
+                }
+                if (playlist.getIsPublic() != null) {
+                    existingPlaylist.setIsPublic(playlist.getIsPublic());
                 }
 
                 return existingPlaylist;

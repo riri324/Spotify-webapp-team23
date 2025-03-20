@@ -14,12 +14,14 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type PlaylistFormGroupInput = IPlaylist | PartialWithRequiredKeyOf<NewPlaylist>;
 
-type PlaylistFormDefaults = Pick<NewPlaylist, 'id' | 'songs'>;
+type PlaylistFormDefaults = Pick<NewPlaylist, 'id' | 'isPublic' | 'songs'>;
 
 type PlaylistFormGroupContent = {
   id: FormControl<IPlaylist['id'] | NewPlaylist['id']>;
+  playlistID: FormControl<IPlaylist['playlistID']>;
   name: FormControl<IPlaylist['name']>;
   description: FormControl<IPlaylist['description']>;
+  isPublic: FormControl<IPlaylist['isPublic']>;
   songs: FormControl<IPlaylist['songs']>;
 };
 
@@ -40,10 +42,18 @@ export class PlaylistFormService {
           validators: [Validators.required],
         },
       ),
-      name: new FormControl(playlistRawValue.name, {
+      playlistID: new FormControl(playlistRawValue.playlistID, {
         validators: [Validators.required],
       }),
-      description: new FormControl(playlistRawValue.description),
+      name: new FormControl(playlistRawValue.name, {
+        validators: [Validators.required, Validators.maxLength(50)],
+      }),
+      description: new FormControl(playlistRawValue.description, {
+        validators: [Validators.maxLength(100)],
+      }),
+      isPublic: new FormControl(playlistRawValue.isPublic, {
+        validators: [Validators.required],
+      }),
       songs: new FormControl(playlistRawValue.songs ?? []),
     });
   }
@@ -65,6 +75,7 @@ export class PlaylistFormService {
   private getFormDefaults(): PlaylistFormDefaults {
     return {
       id: null,
+      isPublic: false,
       songs: [],
     };
   }

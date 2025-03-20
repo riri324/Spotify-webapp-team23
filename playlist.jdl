@@ -3,26 +3,23 @@
 
 entity Playlist {
   playlistID Integer required unique,
-  name String required maxlength(50),         
+  name String required maxlength(50),
   description String maxlength(100),
   isPublic Boolean required
 }
 
 // Song entity
 entity Song {
-  songId String required unique maxlength(50),      
-  artistName String required maxlength(100),                
-  albumID Integer required,              
-  trackName String required maxlength(150),              
-  danceability Float,            
-  energy Float,                  
-  speechiness Float,             
-  acousticness Float,            
-  instrumentalness Float,        
-  liveness Float,                
-  valence Float,                 
-  tempo Float,                   
-  genreID String required maxlength(50)
+  songId String required unique maxlength(50),
+  trackName String required maxlength(150),
+  danceability Float,
+  energy Float,
+  speechiness Float,
+  acousticness Float,
+  instrumentalness Float,
+  liveness Float,
+  valence Float,
+  tempo Float
 }
 
 // Artist entity
@@ -36,7 +33,6 @@ entity Artist {
 entity Album {
   albumID Integer required unique,
   albumName String required maxlength(150),
-  artistName String required maxlength(100),
   numberOfSongs Integer required,
   image ImageBlob
 }
@@ -48,15 +44,15 @@ entity Genre {
 }
 
 relationship ManyToMany {
-  Playlist{songs} to Song{playlists},
+  Playlist{songs} to Song{playlists}
 }
 
 relationship ManyToOne {
-  Song{albumID} to Album,  
-  Song{genreID} to Genre,
-  Song{artistID} to Artist{Song}
+  Song{album} to Album{songs},
+  Song{genre} to Genre{songs},
+  Song{artist} to Artist{songs}
 }
 
 relationship OneToMany {
-  Artist{albums} to Album{artist},
+  Artist{albums} to Album{artist}
 }
