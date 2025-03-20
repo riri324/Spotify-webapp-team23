@@ -1,11 +1,524 @@
 id;genre_id;song_genre
-1;2500;once lively nucleotidase
-2;23175;guest than
-3;29926;solvency unselfish
-4;23449;pantyhose hourly
-5;5195;by with
-6;21019;above yum
-7;3496;questionably violently
-8;11739;enthusiastically nicely surface
-9;4585;yet bobble
-10;28128;slimy of hovel
+1;101;comic
+2;102;chinese idol pop
+3;103;nightcore
+4;104;k-pop
+5;105;indie electropop
+6;106;memphis hip hop
+7;107;josei rap
+8;108;swiss pop
+9;109;australian r&b
+10;110;british soul
+11;111;adult standards
+12;112;danish electronic
+13;113;melodic rap
+14;114;alabama rap
+15;115;himachali pop
+16;116;vocal trance
+17;117;orchestral soundtrack
+18;118;pop rap
+19;119;j-acoustic
+20;120;french shoegaze
+21;121;hungarian classical performance
+22;122;meme
+23;123;classic rock
+24;124;glitch hop
+25;125;instrumental grime
+26;126;emo rap
+27;127;sleaze rock
+28;128;bc underground hip hop
+29;129;detroit hip hop
+30;130;brighton indie
+31;131;british orchestra
+32;132;ann arbor indie
+33;133;blues rock
+34;134;dark trap
+35;135;diva house
+36;136;chinese electropop
+37;137;pop edm
+38;138;phonk brasileiro
+39;139;native american
+40;140;australian dance
+41;141;french pop
+42;142;german pop
+43;143;trap queen
+44;144;tempe indie
+45;145;belgian pop
+46;146;australian pop
+47;147;armenian hip hop
+48;148;hawaiian
+49;149;desi hip hop
+50;150;grunge
+51;151;christian lo-fi
+52;152;indie rock
+53;153;wonky
+54;154;swedish pop
+55;155;pop r&b
+56;156;indie emo
+57;157;christian hip hop
+58;158;dark pop
+59;159;g funk
+60;160;trap
+61;161;lo-fi beats
+62;162;canadian singer-songwriter
+63;163;atmospheric dnb
+64;164;alternative rock
+65;165;alternative dance
+66;166;electropop
+67;167;classic country pop
+68;168;arkansas country
+69;169;slap house
+70;170;bedroom soul
+71;171;anime latino
+72;172;hard bass
+73;173;cleveland indie
+74;174;shimmer psych
+75;175;fingerstyle
+76;176;deep tropical house
+77;177;modern folk rock
+78;178;ambient guitar
+79;179;leeds indie
+80;180;brooklyn indie
+81;181;teen pop
+82;182;classic bollywood
+83;183;complextro
+84;184;sad lo-fi
+85;185;hypnagogic pop
+86;186;malaysian pop
+87;187;indie rockism
+88;188;country
+89;189;children's folk
+90;190;indian indie
+91;191;instrumental math rock
+92;192;ambient lo-fi
+93;193;american modern classical
+94;194;belgian edm
+95;195;piano rock
+96;196;j-ambient
+97;197;hard rock
+98;198;british modern classical
+99;199;cloud rap
+100;200;social media pop
+101;201;indonesian lo-fi pop
+102;202;alternative hip hop
+103;203;canadian pop
+104;204;musica portuguesa contemporanea
+105;205;filmi
+106;206;modern indie folk
+107;207;bossbeat
+108;208;alternative pop rock
+109;209;lo-fi chill
+110;210;chill baile
+111;211;broadway
+112;212;cantopop
+113;213;british singer-songwriter
+114;214;classic texas country
+115;215;scandipop
+116;216;chill out
+117;217;dark r&b
+118;218;japanese alternative rock
+119;219;aussietronica
+120;220;canadian electronic
+121;221;alternative r&b
+122;222;neon pop punk
+123;223;german soundtrack
+124;224;indie game soundtrack
+125;225;canadian celtic
+126;226;hip hop
+127;227;finnish alternative rock
+128;228;cali rap
+129;229;j-pop boy group
+130;230;pixel
+131;231;reggae fusion
+132;232;emo
+133;233;ambient pop
+134;234;funk metal
+135;235;new england americana
+136;236;pakistani pop
+137;237;indie pop rap
+138;238;australian alternative pop
+139;239;alternative americana
+140;240;liquid funk
+141;241;nashville indie
+142;242;hollywood
+143;243;nightrun
+144;244;scottish indie
+145;245;vapor twitch
+146;246;australian hip hop
+147;247;german dance
+148;248;erhu
+149;249;glitchcore
+150;250;christian rock
+151;251;album rock
+152;252;lgbtq+ hip hop
+153;253;cumbia
+154;254;japanese teen pop
+155;255;chanson
+156;256;austindie
+157;257;oxford indie
+158;258;reggaeton
+159;259;minneapolis indie
+160;260;folk-pop
+161;261;eurobeat
+162;262;indie soul
+163;263;j-pop
+164;264;persian pop
+165;265;ballet class
+166;266;australian rock
+167;267;bass trap
+168;268;filter house
+169;269;aggressive phonk
+170;270;indie anthem-folk
+171;271;chennai indie
+172;272;hindi indie
+173;273;post-teen pop
+174;274;irish rock
+175;275;ukrainian viral pop
+176;276;ohio hip hop
+177;277;persian electronic
+178;278;modern dream pop
+179;279;pop folk
+180;280;japanese chillhop
+181;281;abstract
+182;282;norwegian house
+183;283;chillstep
+184;284;nyc rap
+185;285;electro-pop francais
+186;286;japanese old school hip hop
+187;287;chill r&b
+188;288;english indie rock
+189;289;funk carioca
+190;290;lo-fi jazzhop
+191;291;gregorian dance
+192;292;australian psych
+193;293;chamber pop
+194;294;pinoy hip hop
+195;295;otacore
+196;296;britcore
+197;297;drift phonk
+198;298;viral rap
+199;299;dark clubbing
+200;300;folktronica
+201;301;gangster rap
+202;302;jazz rap
+203;303;la indie
+204;304;japanese piano
+205;305;lo-fi study
+206;306;scorecore
+207;307;dreamo
+208;308;new french touch
+209;309;speedrun
+210;310;melodic dubstep
+211;311;city pop
+212;312;classical performance
+213;313;pov: indie
+214;314;ethereal wave
+215;315;irish pop
+216;316;turkish edm
+217;317;australian electropop
+218;318;kazakh pop
+219;319;contemporary country
+220;320;eurodance
+221;321;alabama indie
+222;322;indietronica
+223;323;industrial pop
+224;324;danish pop
+225;325;trip hop
+226;326;anime rock
+227;327;dance pop
+228;328;toronto indie
+229;329;j-rock
+230;330;hands up
+231;331;anthem worship
+232;332;chamber psych
+233;333;shanty
+234;334;metallic hardcore
+235;335;focus beats
+236;336;post-grunge
+237;337;musica indigena latinoamericana
+238;338;odia pop
+239;339;singaporean pop
+240;340;cedm
+241;341;antiviral pop
+242;342;belgian dance
+243;343;australian indie
+244;344;instrumental post-rock
+245;345;bhojpuri pop
+246;346;nyc pop
+247;347;abstract hip hop
+248;348;channel pop
+249;349;pop dance
+250;350;bubblegum dance
+251;351;romanian pop
+252;352;baroque pop
+253;353;stomp and holler
+254;354;solipsynthm
+255;355;alternative metal
+256;356;christian alternative rock
+257;357;afrofuturism
+258;358;odia bhajan
+259;359;argentine ambient
+260;360;assamese pop
+261;361;electronica
+262;362;manitoba indie
+263;363;anime lo-fi
+264;364;chutney
+265;365;lo-fi brasileiro
+266;366;anime score
+267;367;modern alternative pop
+268;368;gauze pop
+269;369;la pop
+270;370;chillwave
+271;371;asian american hip hop
+272;372;brostep
+273;373;gym phonk
+274;374;dutch pop
+275;375;swedish singer-songwriter
+276;376;k-pop girl group
+277;377;lithuanian electronic
+278;378;downtempo
+279;379;bedroom r&b
+280;380;g-house
+281;381;anime
+282;382;j-idol
+283;383;hopebeat
+284;384;garage rock revival
+285;385;atl hip hop
+286;386;nu disco
+287;387;metropopolis
+288;388;modern bollywood
+289;389;viral pop
+290;390;korean r&b
+291;391;nz pop
+292;392;detroit indie
+293;393;lo-fi rap
+294;394;modern rock
+295;395;glam rock
+296;396;dfw rap
+297;397;weirdcore
+298;398;sleep
+299;399;tech house
+300;400;swiss indie
+301;401;russian drill
+302;402;indie folk
+303;403;brazilian bass
+304;404;pop quebecois
+305;405;chill pop
+306;406;chiptune
+307;407;rage rap
+308;408;hip pop
+309;409;newfoundland indie
+310;410;swedish electropop
+311;411;french psychedelic
+312;412;pakistani hip hop
+313;413;uk hip hop
+314;414;dmv rap
+315;415;russian pop
+316;416;slowed and reverb
+317;417;stutter house
+318;418;dutch house
+319;419;irish singer-songwriter
+320;420;austin rock
+321;421;canadian latin
+322;422;melodipop
+323;423;indie garage rock
+324;424;jazz cover
+325;425;korean electropop
+326;426;hi-nrg
+327;427;disco house
+328;428;melbourne bounce international
+329;429;electra
+330;430;nz hip hop
+331;431;british soundtrack
+332;432;chillhop
+333;433;girl group
+334;434;lo-fi latino
+335;435;brooklyn drill
+336;436;contemporary r&b
+337;437;uk contemporary r&b
+338;438;k-rap
+339;439;blues
+340;440;alaska indie
+341;441;chinese viral pop
+342;442;modern alternative rock
+343;443;game mood
+344;444;neo mellow
+345;445;ambient worship
+346;446;boy pop
+347;447;hmong pop
+348;448;permanent wave
+349;449;belgian rock
+350;450;plugg
+351;451;uk pop
+352;452;indie pop
+353;453;electro
+354;454;acoustic pop
+355;455;dutch indie
+356;456;neo soul
+357;457;french hip hop
+358;458;russian drain
+359;459;calming instrumental
+360;460;arab electronic
+361;461;pittsburgh rap
+362;462;pakistani electronic
+363;463;aesthetic rap
+364;464;ccm
+365;465;chicago house
+366;466;new wave pop
+367;467;escape room
+368;468;hyperpop
+369;469;guitar case
+370;470;pluggnb
+371;471;arab trap
+372;472;indonesian r&b
+373;473;glitch
+374;474;french indie pop
+375;475;anime piano
+376;476;deep underground hip hop
+377;477;indonesian singer-songwriter
+378;478;wave
+379;479;norwegian pop
+380;480;indie poptimism
+381;481;dance rock
+382;482;mandopop
+383;483;traprun
+384;484;cyberpunk
+385;485;epicore
+386;486;telugu indie
+387;487;korean pop
+388;488;europop
+389;489;r&b
+390;490;dark plugg
+391;491;melodic metalcore
+392;492;shimmer pop
+393;493;funk
+394;494;big room
+395;495;german pop rock
+396;496;chill house
+397;497;new jersey indie
+398;498;barbadian pop
+399;499;indie rock italiano
+400;500;electro house
+401;501;indie r&b
+402;502;florida drill
+403;503;japanese vgm
+404;504;uk alternative hip hop
+405;505;gambian hip hop
+406;506;show tunes
+407;507;israeli pop
+408;508;dutch edm
+409;509;australian singer-songwriter
+410;510;indie viet
+411;511;sad rap
+412;512;glam metal
+413;513;estonian electronic
+414;514;classic swedish pop
+415;515;lo-fi cover
+416;516;chinese classical performance
+417;517;classic uk pop
+418;518;gujarati pop
+419;519;freeform hardcore
+420;520;video game music
+421;521;italian library music
+422;522;japanese dance pop
+423;523;singer-songwriter pop
+424;524;easy listening
+425;525;melodic drill
+426;526;chicago indie
+427;527;j-pop girl group
+428;528;meme rap
+429;529;classical
+430;530;bedroom pop
+431;531;latin hip hop
+432;532;nuevo folklore mexicano
+433;533;south african pop
+434;534;ambient folk
+435;535;afrobeats
+436;536;canadian hip hop
+437;537;nashville singer-songwriter
+438;538;hawaiian hip hop
+439;539;colombian pop
+440;540;denpa-kei
+441;541;classic pakistani pop
+442;542;virginia indie
+443;543;bhangra
+444;544;experimental pop
+445;545;classic progressive house
+446;546;cinematic dubstep
+447;547;classic soul
+448;548;lo-fi product
+449;549;gaming edm
+450;550;canadian contemporary r&b
+451;551;j-poprock
+452;552;alt z
+453;553;a cappella
+454;554;pop soul
+455;555;east coast hip hop
+456;556;dancefloor dnb
+457;557;future rock
+458;558;lilith
+459;559;japanese dub
+460;560;latin pop
+461;561;vapor pop
+462;562;art pop
+463;563;danish electropop
+464;564;disco
+465;565;italian indie pop
+466;566;electroclash
+467;567;nordic house
+468;568;celtic rock
+469;569;belgian indie
+470;570;cincinnati indie
+471;571;brazilian house
+472;572;hare krishna
+473;573;indian lo-fi
+474;574;pop
+475;575;abstract beats
+476;576;future bass
+477;577;candy pop
+478;578;sped up
+479;579;boy band
+480;580;gen z singer-songwriter
+481;581;british alternative rock
+482;582;canadian old school hip hop
+483;583;punjabi pop
+484;584;anime phonk
+485;585;house
+486;586;lo-fi indie
+487;587;garage rock
+488;588;thai indie rock
+489;589;indiecoustica
+490;590;minimal tech house
+491;591;desi pop
+492;592;bass house
+493;593;acoustic opm
+494;594;covertronica
+495;595;super eurobeat
+496;596;israeli mediterranean
+497;597;punjabi hip hop
+498;598;baroque
+499;599;modern indie pop
+500;600;lo-fi sleep
+501;601;conscious hip hop
+502;602;new romantic
+503;603;noise pop
+504;604;black americana
+505;605;rap rock
+506;606;classic bhangra
+507;607;brazilian edm
+508;608;uk dance
+509;609;edm
+510;610;bhajan
+511;611;chill phonk
+512;612;compositional ambient
+513;613;soul jazz
+514;614;chicago rap
+515;615;death metal
+516;616;bow pop
+517;617;singaporean singer-songwriter
+518;618;soundtrack
+519;619;american orchestra
+520;620;japanese alternative pop
+521;621;british indie rock
+522;622;afghan pop
+523;623;icelandic indie
