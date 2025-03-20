@@ -23,7 +23,7 @@
         @for (song of Songs; track song) {
           <div class="song-card">
             <h3>{{ song.trackName }}</h3>
-            <p>by {{ song.artists }}</p>
+            <p>by {{ song.artist?.artistName || 'Unknown' }}</p>
           </div>
         }
       </div>
