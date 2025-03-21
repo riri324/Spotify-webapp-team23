@@ -6,18 +6,26 @@
   "applications": "*",
   "fields": [
     {
-      "fieldName": "id",
-      "fieldType": "Long",
+      "fieldName": "playlistID",
+      "fieldType": "Integer",
       "fieldValidateRules": ["required", "unique"]
     },
     {
       "fieldName": "name",
       "fieldType": "String",
-      "fieldValidateRules": ["required"]
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "50"
     },
     {
       "fieldName": "description",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    },
+    {
+      "fieldName": "isPublic",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
     }
   ],
   "name": "Playlist",

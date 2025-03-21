@@ -1,11 +1,11 @@
-id;name;description
-1;through;frightfully
-2;unexpectedly;gnash urgently which
-3;familiar where dense;midst
-4;apud unaccountably;sunbathe yet
-5;instantly;until now
-6;hmph wrong ironclad;tuba next especially
-7;usually;illustrious
-8;amid snow ample;safeguard
-9;silk;satisfy
-10;reclassify easily;aggravating
+id;playlist_id;name;description;is_public
+1;101;Playlist 1;The first playlist;false
+2;102;Playlist 2;Big chungus;true
+3;103;Playlist 3;Song good;false
+4;104;Playlist 4;Running out of topics;false
+5;105;Playlist 5;next especially gladly;false
+6;106;Playlist 6;extremely;false
+7;107;Playlist 7;rekindle yum;false
+8;108;Playlist 8;gah easily;false
+9;109;Playlist 9;meh;true
+10;110;Playlist 10 yippee;partridge marketplace outside;false

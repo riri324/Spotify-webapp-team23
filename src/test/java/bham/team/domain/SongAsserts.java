@@ -47,9 +47,7 @@ public class SongAsserts {
     public static void assertSongUpdatableFieldsEquals(Song expected, Song actual) {
         assertThat(expected)
             .as("Verify Song relevant properties")
-            .satisfies(e -> assertThat(e.getTrackId()).as("check trackId").isEqualTo(actual.getTrackId()))
-            .satisfies(e -> assertThat(e.getArtists()).as("check artists").isEqualTo(actual.getArtists()))
-            .satisfies(e -> assertThat(e.getAlbumName()).as("check albumName").isEqualTo(actual.getAlbumName()))
+            .satisfies(e -> assertThat(e.getSongId()).as("check songId").isEqualTo(actual.getSongId()))
             .satisfies(e -> assertThat(e.getTrackName()).as("check trackName").isEqualTo(actual.getTrackName()))
             .satisfies(e -> assertThat(e.getDanceability()).as("check danceability").isEqualTo(actual.getDanceability()))
             .satisfies(e -> assertThat(e.getEnergy()).as("check energy").isEqualTo(actual.getEnergy()))
@@ -58,8 +56,7 @@ public class SongAsserts {
             .satisfies(e -> assertThat(e.getInstrumentalness()).as("check instrumentalness").isEqualTo(actual.getInstrumentalness()))
             .satisfies(e -> assertThat(e.getLiveness()).as("check liveness").isEqualTo(actual.getLiveness()))
             .satisfies(e -> assertThat(e.getValence()).as("check valence").isEqualTo(actual.getValence()))
-            .satisfies(e -> assertThat(e.getTempo()).as("check tempo").isEqualTo(actual.getTempo()))
-            .satisfies(e -> assertThat(e.getTrackGenre()).as("check trackGenre").isEqualTo(actual.getTrackGenre()));
+            .satisfies(e -> assertThat(e.getTempo()).as("check tempo").isEqualTo(actual.getTempo()));
     }
 
     /**
@@ -71,6 +68,9 @@ public class SongAsserts {
     public static void assertSongUpdatableRelationshipsEquals(Song expected, Song actual) {
         assertThat(expected)
             .as("Verify Song relationships")
+            .satisfies(e -> assertThat(e.getAlbum()).as("check album").isEqualTo(actual.getAlbum()))
+            .satisfies(e -> assertThat(e.getGenre()).as("check genre").isEqualTo(actual.getGenre()))
+            .satisfies(e -> assertThat(e.getArtist()).as("check artist").isEqualTo(actual.getArtist()))
             .satisfies(e -> assertThat(e.getPlaylists()).as("check playlists").isEqualTo(actual.getPlaylists()));
     }
 }

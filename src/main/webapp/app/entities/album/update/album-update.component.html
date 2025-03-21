@@ -1,0 +1,141 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-album-heading" data-cy="AlbumCreateUpdateHeading">Create or edit a Album</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let albumIDRef = editForm.get('albumID')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_albumID">Album ID</label>
+          <input type="number" class="form-control" name="albumID" id="field_albumID" data-cy="albumID" formControlName="albumID" />
+          @if (albumIDRef.invalid && (albumIDRef.dirty || albumIDRef.touched)) {
+            <div>
+              @if (editForm.get('albumID')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('albumID')?.errors?.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let albumNameRef = editForm.get('albumName')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_albumName">Album Name</label>
+          <input type="text" class="form-control" name="albumName" id="field_albumName" data-cy="albumName" formControlName="albumName" />
+          @if (albumNameRef.invalid && (albumNameRef.dirty || albumNameRef.touched)) {
+            <div>
+              @if (editForm.get('albumName')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (editForm.get('albumName')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 150 characters.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let numberOfSongsRef = editForm.get('numberOfSongs')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_numberOfSongs">Number Of Songs</label>
+          <input
+            type="number"
+            class="form-control"
+            name="numberOfSongs"
+            id="field_numberOfSongs"
+            data-cy="numberOfSongs"
+            formControlName="numberOfSongs"
+          />
+          @if (numberOfSongsRef.invalid && (numberOfSongsRef.dirty || numberOfSongsRef.touched)) {
+            <div>
+              @if (editForm.get('numberOfSongs')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('numberOfSongs')?.errors?.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let imageRef = editForm.get('image')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_image">Image</label>
+          <div>
+            @if (imageRef.value) {
+              <img
+                [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + imageRef.value"
+                style="max-height: 100px"
+                alt="album"
+              />
+            }
+            @if (imageRef.value) {
+              <div class="form-text text-danger clearfix">
+                <span class="pull-start">{{ editForm.get('imageContentType')!.value }}, {{ byteSize(imageRef.value!) }}</span>
+                <button
+                  type="button"
+                  (click)="clearInputImage('image', 'imageContentType', 'file_image')"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            }
+            <input type="file" id="file_image" data-cy="image" (change)="setFileData($event, 'image', true)" accept="image/*" />
+          </div>
+          <input type="hidden" class="form-control" name="image" id="field_image" data-cy="image" formControlName="image" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="imageContentType"
+            id="field_imageContentType"
+            formControlName="imageContentType"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_artist">Artist</label>
+          <select
+            class="form-control"
+            id="field_artist"
+            data-cy="artist"
+            name="artist"
+            formControlName="artist"
+            [compareWith]="compareArtist"
+          >
+            <option [ngValue]="null"></option>
+            @for (artistOption of artistsSharedCollection; track $index) {
+              <option [ngValue]="artistOption">{{ artistOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

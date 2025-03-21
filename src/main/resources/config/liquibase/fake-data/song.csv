@@ -1,11 +1,21 @@
-id;track_id;artists;album_name;track_name;danceability;energy;speechiness;acousticness;instrumentalness;liveness;valence;tempo;track_genre
-1;tray in;alongside gah scuffle;qua beside ready;every greedily swerve;4243.66;19187.61;8751.87;18015.9;11760.53;28771.55;686.01;20351.15;um messy nervous
-2;aw;why unruly grouper;gosh regarding after;badly scrap until;17827.04;1083.33;1583.69;20992.12;17333.27;23083.57;7983.99;28970.71;phew
-3;bah kindly;while while fooey;shimmering;astride naughty;22389.46;20378;9059.65;14633.25;9379.14;27705.4;9842.74;18030.76;puff partially while
-4;helplessly kindheartedly;pixellate quarterly;pear wetly hence;ugh mixture;9996.82;2294.28;27226.72;19602.71;849.59;12007.4;31248.7;5543.61;plus huzzah
-5;murky;trim;gosh amongst squiggly;for likewise facilitate;10355.31;18935.92;31546.71;9014.82;23214.55;15462.22;6226.53;4257.2;confound
-6;bah exactly furiously;butter provision throughout;among till unethically;filter beside weary;15335.36;22220.84;20260.99;6272.54;8603.88;13720.46;27332.84;2019.82;inwardly deform what
-7;playfully inquisitively unto;outrank juvenile;airbrush squiggly;meanwhile phew tenement;7824.61;13001.73;26178.27;15404.68;20784.19;24598.92;5885.59;19136.68;ugh geez
-8;softly near for;worth satirize embody;woot as caption;until ack politely;14740.47;6043.88;11884.3;21493.59;26768.3;24170.05;24575.67;29454.14;absent always unless
-9;insolence shear quizzically;yahoo optimistic;who;loudly mesh;24080.61;31236.44;17690.69;13773.15;13950.4;15004.59;29307.24;26871.08;whose fly forenenst
-10;furthermore whoever;scale helpfully;modulo yieldingly;cuckoo carpool barring;21304.16;16730.34;10313.52;21736.42;27984.63;13866.38;10928.38;25383.08;generously birth revoke
+id;song_id;track_name;danceability;energy;speechiness;acousticness;instrumentalness;liveness;valence;tempo
+1;QJSxiD1Z;"""Honest""";0.476;0.799;0.212;0.0162;0.0;0.257;0.577;162.139
+2;vIPSFUFF;"""In The Hall Of The Mountain King"" from Peer Gynt Suite N°1, Op. 46";0.475;0.13;0.051;0.916;0.956;0.101;0.122;112.241
+3;dKw5wYpQ;#BrooklynBloodPop!;0.691;0.814;0.117;0.0164;0.0;0.366;0.509;132.012
+4;ZsOlb7kW;$10;0.624;0.596;0.0314;0.475;0.203;0.119;0.896;120.969
+5;g9nJ9EUD;(I Just) Died In Your Arms;0.625;0.726;0.0444;0.0158;0.000169;0.0625;0.507;124.945
+6;372At1VH;(L)only Child;0.645;0.611;0.137;0.29;2.05e-05;0.237;0.645;157.475
+7;UcfXjlCt;(lol);0.663;0.904;0.0857;0.000708;0.289;0.341;0.675;118.024
+8;gaFgX0rG;...And to Those I Love, Thanks for Sticking Around;0.792;0.511;0.0409;0.124;9.04e-05;0.14;0.111;113.983
+9;pS5XFJpZ;...Baby One More Time;0.759;0.699;0.0307;0.202;0.000131;0.443;0.907;92.96
+10;cgibCP3o;0 to 100;0.742;0.675;0.0907;0.139;0.0;0.167;0.679;145.989
+11;LbBHCkiN;01:22;0.62;0.122;0.0428;0.967;0.963;0.0726;0.0502;72.019
+12;judBVj4t;10,000 Hours (with Justin Bieber);0.654;0.63;0.0259;0.153;0.0;0.111;0.43;89.991
+13;0uY9HaCE;11:23;0.611;0.256;0.0733;0.899;0.00497;0.125;0.585;123.535
+14;Lx5PUpLL;12 Hours;0.83;0.414;0.148;0.497;0.0;0.187;0.797;87.99
+15;UIRirI9j;120;0.806;0.945;0.0486;0.0243;0.837;0.267;0.341;119.992
+16;tVJUWOcE;12:45 - Stripped;0.459;0.214;0.0403;0.634;0.0;0.125;0.397;163.816
+17;H7Pd6KeM;13 Missed Calls;0.639;0.724;0.0664;0.452;0.0;0.159;0.522;129.712
+18;01guU1Ge;143;0.652;0.713;0.105;0.413;0.0048;0.265;0.692;156.031
+19;wqsaZzLp;17 (slowed + reverb);0.78;0.24;0.0711;0.373;0.0141;0.452;0.171;140.502
+20;X4f4sJss;18;0.783;0.599;0.0441;0.0445;0.0;0.108;0.611;113.97

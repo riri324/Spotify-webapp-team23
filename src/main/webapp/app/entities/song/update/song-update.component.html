@@ -13,32 +13,36 @@
           </div>
         }
 
-        @let trackIdRef = editForm.get('trackId')!;
+        @let songIdRef = editForm.get('songId')!;
         <div class="mb-3">
-          <label class="form-label" for="field_trackId">Track Id</label>
-          <input type="text" class="form-control" name="trackId" id="field_trackId" data-cy="trackId" formControlName="trackId" />
-          @if (trackIdRef.invalid && (trackIdRef.dirty || trackIdRef.touched)) {
+          <label class="form-label" for="field_songId">Song Id</label>
+          <input type="text" class="form-control" name="songId" id="field_songId" data-cy="songId" formControlName="songId" />
+          @if (songIdRef.invalid && (songIdRef.dirty || songIdRef.touched)) {
             <div>
-              @if (editForm.get('trackId')?.errors?.required) {
+              @if (editForm.get('songId')?.errors?.required) {
                 <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (editForm.get('songId')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 50 characters.</small>
               }
             </div>
           }
         </div>
 
-        <div class="mb-3">
-          <label class="form-label" for="field_artists">Artists</label>
-          <input type="text" class="form-control" name="artists" id="field_artists" data-cy="artists" formControlName="artists" />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_albumName">Album Name</label>
-          <input type="text" class="form-control" name="albumName" id="field_albumName" data-cy="albumName" formControlName="albumName" />
-        </div>
-
+        @let trackNameRef = editForm.get('trackName')!;
         <div class="mb-3">
           <label class="form-label" for="field_trackName">Track Name</label>
           <input type="text" class="form-control" name="trackName" id="field_trackName" data-cy="trackName" formControlName="trackName" />
+          @if (trackNameRef.invalid && (trackNameRef.dirty || trackNameRef.touched)) {
+            <div>
+              @if (editForm.get('trackName')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (editForm.get('trackName')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 150 characters.</small>
+              }
+            </div>
+          }
         </div>
 
         <div class="mb-3">
@@ -110,15 +114,40 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_trackGenre">Track Genre</label>
-          <input
-            type="text"
+          <label class="form-label" for="field_album">Album</label>
+          <select class="form-control" id="field_album" data-cy="album" name="album" formControlName="album" [compareWith]="compareAlbum">
+            <option [ngValue]="null"></option>
+            @for (albumOption of albumsSharedCollection; track $index) {
+              <option [ngValue]="albumOption">{{ albumOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_genre">Genre</label>
+          <select class="form-control" id="field_genre" data-cy="genre" name="genre" formControlName="genre" [compareWith]="compareGenre">
+            <option [ngValue]="null"></option>
+            @for (genreOption of genresSharedCollection; track $index) {
+              <option [ngValue]="genreOption">{{ genreOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_artist">Artist</label>
+          <select
             class="form-control"
-            name="trackGenre"
-            id="field_trackGenre"
-            data-cy="trackGenre"
-            formControlName="trackGenre"
-          />
+            id="field_artist"
+            data-cy="artist"
+            name="artist"
+            formControlName="artist"
+            [compareWith]="compareArtist"
+          >
+            <option [ngValue]="null"></option>
+            @for (artistOption of artistsSharedCollection; track $index) {
+              <option [ngValue]="artistOption">{{ artistOption.id }}</option>
+            }
+          </select>
         </div>
 
         <div class="mb-3">

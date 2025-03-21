@@ -37,7 +37,14 @@
           <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
             <th scope="col" jhiSortBy="id">
               <div class="d-flex">
-                <span>Id</span>
+                <span>ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="playlistID">
+              <div class="d-flex">
+                <span>Playlist ID</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
@@ -52,6 +59,13 @@
             <th scope="col" jhiSortBy="description">
               <div class="d-flex">
                 <span>Description</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="isPublic">
+              <div class="d-flex">
+                <span>Is Public</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
@@ -71,8 +85,10 @@
               <td>
                 <a [routerLink]="['/playlist', playlist.id, 'view']">{{ playlist.id }}</a>
               </td>
+              <td>{{ playlist.playlistID }}</td>
               <td>{{ playlist.name }}</td>
               <td>{{ playlist.description }}</td>
+              <td>{{ playlist.isPublic }}</td>
               <td>
                 @for (songs of playlist.songs; track $index; let last = $last) {
                   <span>

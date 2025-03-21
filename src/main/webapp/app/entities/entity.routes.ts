@@ -16,6 +16,21 @@ const routes: Routes = [
     data: { pageTitle: 'Songs' },
     loadChildren: () => import('./song/song.routes'),
   },
+  {
+    path: 'artist',
+    data: { pageTitle: 'Artists' },
+    loadChildren: () => import('./artist/artist.routes'),
+  },
+  {
+    path: 'album',
+    data: { pageTitle: 'Albums' },
+    loadChildren: () => import('./album/album.routes'),
+  },
+  {
+    path: 'genre',
+    data: { pageTitle: 'Genres' },
+    loadChildren: () => import('./genre/genre.routes'),
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

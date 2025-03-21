@@ -42,23 +42,9 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="trackId">
+            <th scope="col" jhiSortBy="songId">
               <div class="d-flex">
-                <span>Track Id</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="artists">
-              <div class="d-flex">
-                <span>Artists</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="albumName">
-              <div class="d-flex">
-                <span>Album Name</span>
+                <span>Song Id</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
@@ -126,10 +112,21 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="trackGenre">
+            <th scope="col" jhiSortBy="album.id">
               <div class="d-flex">
-                <span>Track Genre</span>
-
+                <span>Album</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="genre.id">
+              <div class="d-flex">
+                <span>Genre</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="artist.id">
+              <div class="d-flex">
+                <span>Artist</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
@@ -148,9 +145,7 @@
               <td>
                 <a [routerLink]="['/song', song.id, 'view']">{{ song.id }}</a>
               </td>
-              <td>{{ song.trackId }}</td>
-              <td>{{ song.artists }}</td>
-              <td>{{ song.albumName }}</td>
+              <td>{{ song.songId }}</td>
               <td>{{ song.trackName }}</td>
               <td>{{ song.danceability }}</td>
               <td>{{ song.energy }}</td>
@@ -160,7 +155,27 @@
               <td>{{ song.liveness }}</td>
               <td>{{ song.valence }}</td>
               <td>{{ song.tempo }}</td>
-              <td>{{ song.trackGenre }}</td>
+              <td>
+                @if (song.album) {
+                  <div>
+                    <a [routerLink]="['/album', song.album.id, 'view']">{{ song.album.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (song.genre) {
+                  <div>
+                    <a [routerLink]="['/genre', song.genre.id, 'view']">{{ song.genre.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (song.artist) {
+                  <div>
+                    <a [routerLink]="['/artist', song.artist.id, 'view']">{{ song.artist.id }}</a>
+                  </div>
+                }
+              </td>
               <td>
                 @for (playlists of song.playlists; track $index; let last = $last) {
                   <span>

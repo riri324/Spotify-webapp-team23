@@ -1,10 +1,11 @@
+import { IAlbum } from 'app/entities/album/album.model';
+import { IGenre } from 'app/entities/genre/genre.model';
+import { IArtist } from 'app/entities/artist/artist.model';
 import { IPlaylist } from 'app/entities/playlist/playlist.model';
 
 export interface ISong {
   id: number;
-  trackId?: string | null;
-  artists?: string | null;
-  albumName?: string | null;
+  songId?: string | null;
   trackName?: string | null;
   danceability?: number | null;
   energy?: number | null;
@@ -14,7 +15,9 @@ export interface ISong {
   liveness?: number | null;
   valence?: number | null;
   tempo?: number | null;
-  trackGenre?: string | null;
+  album?: IAlbum | null;
+  genre?: IGenre | null;
+  artist?: IArtist | null;
   playlists?: IPlaylist[] | null;
 }
 
