@@ -10,7 +10,7 @@
         @for (playlist of playlists; track playlist) {
           <div class="playlist-card">
             <!-- In the future add functionality that brings user to playlist page -->
-            <button class="playlist-button">
+            <button class="playlist-button" (click)="navigateToPlaylist(playlist.id)">
               <h3>{{ playlist.name }}</h3>
               <p>{{ playlist.description }}</p>
             </button>
