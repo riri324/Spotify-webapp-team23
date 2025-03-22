@@ -24,7 +24,7 @@ describe('GlobalTopsongs Form Service', () => {
             artistName: expect.any(Object),
             playCount: expect.any(Object),
             monthYear: expect.any(Object),
-            year: expect.any(Object),
+            songYear: expect.any(Object),
           }),
         );
       });
@@ -39,7 +39,7 @@ describe('GlobalTopsongs Form Service', () => {
             artistName: expect.any(Object),
             playCount: expect.any(Object),
             monthYear: expect.any(Object),
-            year: expect.any(Object),
+            songYear: expect.any(Object),
           }),
         );
       });

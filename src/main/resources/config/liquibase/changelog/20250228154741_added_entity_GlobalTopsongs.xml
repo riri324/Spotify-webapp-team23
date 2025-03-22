@@ -15,7 +15,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="song_title" type="varchar(255)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="ux_global_topsongs__song_title" />
+                <constraints nullable="false" />
             </column>
             <column name="artist_name" type="varchar(255)">
                 <constraints nullable="false" />
@@ -26,7 +26,7 @@
             <column name="month_year" type="${datetimeType}">
                 <constraints nullable="false" />
             </column>
-            <column name="year" type="integer">
+            <column name="song_year" type="integer">
                 <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -47,7 +47,7 @@
     <changeSet id="20250228154741-1-data" author="jhipster" context="faker">
         <loadData
                   file="config/liquibase/fake-data/global_topsongs.csv"
-                  separator=";"
+                  separator=","
                   tableName="global_topsongs"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
@@ -55,7 +55,7 @@
             <column name="artist_name" type="string"/>
             <column name="play_count" type="numeric"/>
             <column name="month_year" type="date"/>
-            <column name="year" type="numeric"/>
+            <column name="song_year" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

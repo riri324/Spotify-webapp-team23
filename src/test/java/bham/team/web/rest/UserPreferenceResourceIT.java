@@ -318,10 +318,9 @@ class UserPreferenceResourceIT {
         partialUpdatedUserPreference.setId(userPreference.getId());
 
         partialUpdatedUserPreference
-            .vocalPreference(UPDATED_VOCAL_PREFERENCE)
-            .listeningPattern(UPDATED_LISTENING_PATTERN)
-            .songLength(UPDATED_SONG_LENGTH)
-            .lyricsImportance(UPDATED_LYRICS_IMPORTANCE);
+            .musicPurpose(UPDATED_MUSIC_PURPOSE)
+            .listeningTime(UPDATED_LISTENING_TIME)
+            .listeningPattern(UPDATED_LISTENING_PATTERN);
 
         restUserPreferenceMockMvc
             .perform(

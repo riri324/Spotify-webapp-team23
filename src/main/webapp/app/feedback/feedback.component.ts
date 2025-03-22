@@ -13,5 +13,7 @@ export class FeedbackComponent {
   feedback: any;
   feedbacks: any;
 
-  saveFeedback() {}
+  saveFeedback(): void {
+    // TODO: Implement save feedback logic later
+  }
 }

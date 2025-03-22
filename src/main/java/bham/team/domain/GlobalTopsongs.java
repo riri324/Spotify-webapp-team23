@@ -26,7 +26,7 @@ public class GlobalTopsongs implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "song_title", nullable = false, unique = true)
+    @Column(name = "song_title", nullable = false)
     private String songTitle;
 
     @NotNull
@@ -45,8 +45,8 @@ public class GlobalTopsongs implements Serializable {
     @NotNull
     @Min(value = 2000)
     @Max(value = 2100)
-    @Column(name = "year", nullable = false)
-    private Integer year;
+    @Column(name = "song_year", nullable = false)
+    private Integer songYear;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -115,17 +115,17 @@ public class GlobalTopsongs implements Serializable {
         this.monthYear = monthYear;
     }
 
-    public Integer getYear() {
-        return this.year;
+    public Integer getSongYear() {
+        return this.songYear;
     }
 
-    public GlobalTopsongs year(Integer year) {
-        this.setYear(year);
+    public GlobalTopsongs songYear(Integer songYear) {
+        this.setSongYear(songYear);
         return this;
     }
 
-    public void setYear(Integer year) {
-        this.year = year;
+    public void setSongYear(Integer songYear) {
+        this.songYear = songYear;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -156,7 +156,7 @@ public class GlobalTopsongs implements Serializable {
             ", artistName='" + getArtistName() + "'" +
             ", playCount=" + getPlayCount() +
             ", monthYear='" + getMonthYear() + "'" +
-            ", year=" + getYear() +
+            ", songYear=" + getSongYear() +
             "}";
     }
 }

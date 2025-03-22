@@ -43,5 +43,6 @@
       "relationshipType": "many-to-one"
     }
   ],
+  "searchEngine": "no",
   "service": "serviceClass"
 }

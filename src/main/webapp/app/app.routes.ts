@@ -4,6 +4,7 @@ import { Authority } from 'app/config/authority.constants';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { errorRoute } from './layouts/error/error.route';
+import { TopSongsComponent } from '../app/top-song/top-song.component';
 
 const routes: Routes = [
   {
@@ -68,14 +69,19 @@ const routes: Routes = [
   },
   {
     path: 'global-top-songs',
-    data: { pageTitle: 'Global Top Songs' },
-    loadChildren: () => import('./top-song/top-song.routes').then(m => m.default),
+    loadChildren: () => import('./entities/global-topsongs/global-topsongs.routes').then(m => m.default),
   },
   {
     path: 'preferences',
     data: { pageTitle: 'Preferences' },
     loadChildren: () => import('./entities/preferences/preferences.routes').then(m => m.default),
   },
+  {
+    path: 'topsongs',
+    component: TopSongsComponent,
+    data: { pageTitle: 'globaltopsong' },
+  },
+
   ...errorRoute,
 ];
 

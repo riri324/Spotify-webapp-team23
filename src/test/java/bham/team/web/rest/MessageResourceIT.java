@@ -359,8 +359,6 @@ class MessageResourceIT {
         Message partialUpdatedMessage = new Message();
         partialUpdatedMessage.setId(message.getId());
 
-        partialUpdatedMessage.subject(UPDATED_SUBJECT);
-
         restMessageMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedMessage.getId())
