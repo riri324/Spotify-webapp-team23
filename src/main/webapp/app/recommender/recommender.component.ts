@@ -26,12 +26,12 @@ export class RecommenderComponent implements OnInit {
   }
 
   loadAll(): void {
-    // Fetch Products
+    // Fetch Playlists
     this.playlistService.query().subscribe(response => {
       this.playlists = response.body ?? [];
     });
 
-    // Fetch Categories
+    // Fetch Songs
     this.songService.query().subscribe(response => {
       this.Songs = response.body ?? [];
     });
