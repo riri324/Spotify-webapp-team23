@@ -60,11 +60,20 @@
 .playlist-button h3 {
   margin-top: 0;
   margin-bottom: 10px;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .playlist-button p {
   color: #999; /* Grey */
   margin: 0;
+  font-size: 0.85rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 /* Song cards and actions */
@@ -77,11 +86,25 @@
   height: 120px; /* Fixed height to match playlist cards */
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
 }
 
 .song-card h3 {
   margin-top: 0;
   margin-bottom: 5px;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-card p {
+  margin: 0 0 8px 0;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .song-actions {
@@ -93,11 +116,12 @@
   background-color: #39ff14; /* Neon green to match your theme */
   color: #000;
   border: none;
-  padding: 8px 16px;
+  padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
   transition: all 0.2s;
+  font-size: 0.85rem;
 }
 
 .add-to-playlist-btn:hover {
@@ -115,11 +139,13 @@
   margin-top: 10px;
   z-index: 10;
   border: 1px solid #555;
+  max-height: 250px;
+  overflow-y: auto;
 }
 
 .playlist-selector h4 {
   margin-bottom: 10px;
-  font-size: 16px;
+  font-size: 0.9rem;
   color: #39ff14;
   border-bottom: 1px solid #555;
   padding-bottom: 8px;
@@ -136,6 +162,7 @@
   border-radius: 4px;
   cursor: pointer;
   color: white;
+  font-size: 0.85rem;
 }
 
 .playlist-option:hover {
@@ -151,6 +178,7 @@
   margin-top: 10px;
   cursor: pointer;
   color: #ddd;
+  font-size: 0.85rem;
 }
 
 .cancel-btn:hover {
