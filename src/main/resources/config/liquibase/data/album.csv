@@ -1,11 +1,11 @@
 id;album_id;album_name;number_of_songs;image;image_content_type
-1;20476;modulo;14201;../fake-data/blob/hipster.png;image/png
-2;28076;hmph;7650;../fake-data/blob/hipster.png;image/png
-3;8562;hm;20296;../fake-data/blob/hipster.png;image/png
-4;12819;until;24158;../fake-data/blob/hipster.png;image/png
-5;10719;functional ligate seafood;3740;../fake-data/blob/hipster.png;image/png
-6;9780;after vague jacket;6662;../fake-data/blob/hipster.png;image/png
-7;3220;settle reference next;32677;../fake-data/blob/hipster.png;image/png
-8;13269;before;42;../fake-data/blob/hipster.png;image/png
-9;4451;lack;2778;../fake-data/blob/hipster.png;image/png
-10;1906;around upward resolve;10277;../fake-data/blob/hipster.png;image/png
+1;20476;modulo;14201;../data/blob/hipster.png;image/png
+2;28076;hmph;7650;../data/blob/hipster.png;image/png
+3;8562;hm;20296;../data/blob/hipster.png;image/png
+4;12819;until;24158;../data/blob/hipster.png;image/png
+5;10719;functional ligate seafood;3740;../data/blob/hipster.png;image/png
+6;9780;after vague jacket;6662;../data/blob/hipster.png;image/png
+7;3220;settle reference next;32677;../data/blob/hipster.png;image/png
+8;13269;before;42;../data/blob/hipster.png;image/png
+9;4451;lack;2778;../data/blob/hipster.png;image/png
+10;1906;around upward resolve;10277;../data/blob/hipster.png;image/png

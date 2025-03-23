@@ -1,7 +1,91 @@
 /* Add these styles to your existing CSS */
 
+/* Main container layout */
+.recommender-content {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+/* Header styles */
+.recommender-card h1 {
+  text-align: center;
+  color: #39ff14; /* Neon green */
+}
+
+.recommender-card > p {
+  text-align: center;
+  color: #999; /* Grey */
+}
+
+.playlists-section h2,
+.recommended-section h2 {
+  color: #39ff14; /* Neon green */
+}
+
+.playlists-section {
+  flex: 1;
+  border-right: 1px solid #555;
+  padding-right: 20px;
+}
+
+.recommended-section {
+  flex: 1;
+}
+
+/* Playlist cards */
+.playlist-card {
+  margin-bottom: 15px;
+}
+
+.playlist-button {
+  width: 100%;
+  height: 120px; /* Fixed height for consistency */
+  text-align: left;
+  background-color: #333;
+  border: 1px solid #555;
+  border-radius: 6px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.playlist-button:hover {
+  background-color: #444;
+  transform: scale(1.02);
+}
+
+.playlist-button h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.playlist-button p {
+  color: #999; /* Grey */
+  margin: 0;
+}
+
+/* Song cards and actions */
+.song-card {
+  background-color: #333;
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #555;
+  height: 120px; /* Fixed height to match playlist cards */
+  display: flex;
+  flex-direction: column;
+}
+
+.song-card h3 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
 .song-actions {
-  margin-top: 10px;
+  margin-top: auto; /* Push to bottom of card */
   position: relative;
 }
 
@@ -14,11 +98,11 @@
   cursor: pointer;
   font-weight: bold;
   transition: all 0.2s;
+}
 
-  &:hover {
-    background-color: #32d512;
-    transform: scale(1.05);
-  }
+.add-to-playlist-btn:hover {
+  background-color: #32d512;
+  transform: scale(1.05);
 }
 
 .playlist-selector {
@@ -31,46 +115,46 @@
   margin-top: 10px;
   z-index: 10;
   border: 1px solid #555;
+}
 
-  h4 {
-    margin-bottom: 10px;
-    font-size: 16px;
-    color: #39ff14;
-    border-bottom: 1px solid #555;
-    padding-bottom: 8px;
-  }
+.playlist-selector h4 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #39ff14;
+  border-bottom: 1px solid #555;
+  padding-bottom: 8px;
+}
 
-  .playlist-option {
-    display: block;
-    width: 100%;
-    text-align: left;
-    background: none;
-    border: none;
-    padding: 10px;
-    margin-bottom: 5px;
-    border-radius: 4px;
-    cursor: pointer;
-    color: white;
+.playlist-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+}
 
-    &:hover {
-      background-color: #555;
-    }
-  }
+.playlist-option:hover {
+  background-color: #555;
+}
 
-  .cancel-btn {
-    width: 100%;
-    background-color: #333;
-    border: 1px solid #555;
-    padding: 8px 12px;
-    border-radius: 4px;
-    margin-top: 10px;
-    cursor: pointer;
-    color: #ddd;
+.cancel-btn {
+  width: 100%;
+  background-color: #333;
+  border: 1px solid #555;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-top: 10px;
+  cursor: pointer;
+  color: #ddd;
+}
 
-    &:hover {
-      background-color: #3a3a3a;
-    }
-  }
+.cancel-btn:hover {
+  background-color: #3a3a3a;
 }
 
 /* Notification styles */
@@ -98,4 +182,19 @@
 
 .notification-hide {
   opacity: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .recommender-content {
+    flex-direction: column;
+  }
+
+  .playlists-section {
+    border-right: none;
+    border-bottom: 1px solid #555;
+    padding-right: 0;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
 }
