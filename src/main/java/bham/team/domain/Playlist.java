@@ -20,19 +20,28 @@ public class Playlist implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id", nullable = false, unique = true)
+    @Column(name = "id")
     private Long id;
 
     @NotNull
-    @Column(name = "name", nullable = false)
+    @Column(name = "playlist_id", nullable = false, unique = true)
+    private Integer playlistID;
+
+    @NotNull
+    @Size(max = 50)
+    @Column(name = "name", length = 50, nullable = false)
     private String name;
 
-    @Column(name = "description")
+    @Size(max = 100)
+    @Column(name = "description", length = 100)
     private String description;
+
+    @NotNull
+    @Column(name = "is_public", nullable = false)
+    private Boolean isPublic;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -41,8 +50,12 @@ public class Playlist implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "songs_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "playlists" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "album", "genre", "artist", "playlists" }, allowSetters = true)
     private Set<Song> songs = new HashSet<>();
+
+    @ManyToOne(optional = false)
+    @NotNull
+    private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -57,6 +70,19 @@ public class Playlist implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getPlaylistID() {
+        return this.playlistID;
+    }
+
+    public Playlist playlistID(Integer playlistID) {
+        this.setPlaylistID(playlistID);
+        return this;
+    }
+
+    public void setPlaylistID(Integer playlistID) {
+        this.playlistID = playlistID;
     }
 
     public String getName() {
@@ -85,6 +111,19 @@ public class Playlist implements Serializable {
         this.description = description;
     }
 
+    public Boolean getIsPublic() {
+        return this.isPublic;
+    }
+
+    public Playlist isPublic(Boolean isPublic) {
+        this.setIsPublic(isPublic);
+        return this;
+    }
+
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
+    }
+
     public Set<Song> getSongs() {
         return this.songs;
     }
@@ -105,6 +144,19 @@ public class Playlist implements Serializable {
 
     public Playlist removeSongs(Song song) {
         this.songs.remove(song);
+        return this;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Playlist user(User user) {
+        this.setUser(user);
         return this;
     }
 
@@ -132,8 +184,10 @@ public class Playlist implements Serializable {
     public String toString() {
         return "Playlist{" +
             "id=" + getId() +
+            ", playlistID=" + getPlaylistID() +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
+            ", isPublic='" + getIsPublic() + "'" +
             "}";
     }
 }

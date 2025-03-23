@@ -6,8 +6,10 @@ import { Subject, from, of } from 'rxjs';
 
 import { ISong } from 'app/entities/song/song.model';
 import { SongService } from 'app/entities/song/service/song.service';
-import { PlaylistService } from '../service/playlist.service';
+import { IUser } from 'app/entities/user/user.model';
+import { UserService } from 'app/entities/user/service/user.service';
 import { IPlaylist } from '../playlist.model';
+import { PlaylistService } from '../service/playlist.service';
 import { PlaylistFormService } from './playlist-form.service';
 
 import { PlaylistUpdateComponent } from './playlist-update.component';
@@ -19,6 +21,7 @@ describe('Playlist Management Update Component', () => {
   let playlistFormService: PlaylistFormService;
   let playlistService: PlaylistService;
   let songService: SongService;
+  let userService: UserService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -42,6 +45,7 @@ describe('Playlist Management Update Component', () => {
     playlistFormService = TestBed.inject(PlaylistFormService);
     playlistService = TestBed.inject(PlaylistService);
     songService = TestBed.inject(SongService);
+    userService = TestBed.inject(UserService);
 
     comp = fixture.componentInstance;
   });
@@ -49,10 +53,10 @@ describe('Playlist Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Song query and add missing value', () => {
       const playlist: IPlaylist = { id: 456 };
-      const songs: ISong[] = [{ id: 18491 }];
+      const songs: ISong[] = [{ id: 6404 }];
       playlist.songs = songs;
 
-      const songCollection: ISong[] = [{ id: 11260 }];
+      const songCollection: ISong[] = [{ id: 10877 }];
       jest.spyOn(songService, 'query').mockReturnValue(of(new HttpResponse({ body: songCollection })));
       const additionalSongs = [...songs];
       const expectedCollection: ISong[] = [...additionalSongs, ...songCollection];
@@ -69,15 +73,40 @@ describe('Playlist Management Update Component', () => {
       expect(comp.songsSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call User query and add missing value', () => {
+      const playlist: IPlaylist = { id: 456 };
+      const user: IUser = { id: 1554 };
+      playlist.user = user;
+
+      const userCollection: IUser[] = [{ id: 6267 }];
+      jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
+      const additionalUsers = [user];
+      const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
+      jest.spyOn(userService, 'addUserToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ playlist });
+      comp.ngOnInit();
+
+      expect(userService.query).toHaveBeenCalled();
+      expect(userService.addUserToCollectionIfMissing).toHaveBeenCalledWith(
+        userCollection,
+        ...additionalUsers.map(expect.objectContaining),
+      );
+      expect(comp.usersSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const playlist: IPlaylist = { id: 456 };
-      const songs: ISong = { id: 21754 };
+      const songs: ISong = { id: 14023 };
       playlist.songs = [songs];
+      const user: IUser = { id: 18806 };
+      playlist.user = user;
 
       activatedRoute.data = of({ playlist });
       comp.ngOnInit();
 
       expect(comp.songsSharedCollection).toContain(songs);
+      expect(comp.usersSharedCollection).toContain(user);
       expect(comp.playlist).toEqual(playlist);
     });
   });
@@ -158,6 +187,16 @@ describe('Playlist Management Update Component', () => {
         jest.spyOn(songService, 'compareSong');
         comp.compareSong(entity, entity2);
         expect(songService.compareSong).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareUser', () => {
+      it('Should forward to userService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(userService, 'compareUser');
+        comp.compareUser(entity, entity2);
+        expect(userService.compareUser).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

@@ -18,9 +18,7 @@ type SongFormDefaults = Pick<NewSong, 'id' | 'playlists'>;
 
 type SongFormGroupContent = {
   id: FormControl<ISong['id'] | NewSong['id']>;
-  trackId: FormControl<ISong['trackId']>;
-  artists: FormControl<ISong['artists']>;
-  albumName: FormControl<ISong['albumName']>;
+  songId: FormControl<ISong['songId']>;
   trackName: FormControl<ISong['trackName']>;
   danceability: FormControl<ISong['danceability']>;
   energy: FormControl<ISong['energy']>;
@@ -30,7 +28,9 @@ type SongFormGroupContent = {
   liveness: FormControl<ISong['liveness']>;
   valence: FormControl<ISong['valence']>;
   tempo: FormControl<ISong['tempo']>;
-  trackGenre: FormControl<ISong['trackGenre']>;
+  album: FormControl<ISong['album']>;
+  genre: FormControl<ISong['genre']>;
+  artist: FormControl<ISong['artist']>;
   playlists: FormControl<ISong['playlists']>;
 };
 
@@ -51,12 +51,12 @@ export class SongFormService {
           validators: [Validators.required],
         },
       ),
-      trackId: new FormControl(songRawValue.trackId, {
-        validators: [Validators.required],
+      songId: new FormControl(songRawValue.songId, {
+        validators: [Validators.required, Validators.maxLength(50)],
       }),
-      artists: new FormControl(songRawValue.artists),
-      albumName: new FormControl(songRawValue.albumName),
-      trackName: new FormControl(songRawValue.trackName),
+      trackName: new FormControl(songRawValue.trackName, {
+        validators: [Validators.required, Validators.maxLength(150)],
+      }),
       danceability: new FormControl(songRawValue.danceability),
       energy: new FormControl(songRawValue.energy),
       speechiness: new FormControl(songRawValue.speechiness),
@@ -65,7 +65,9 @@ export class SongFormService {
       liveness: new FormControl(songRawValue.liveness),
       valence: new FormControl(songRawValue.valence),
       tempo: new FormControl(songRawValue.tempo),
-      trackGenre: new FormControl(songRawValue.trackGenre),
+      album: new FormControl(songRawValue.album),
+      genre: new FormControl(songRawValue.genre),
+      artist: new FormControl(songRawValue.artist),
       playlists: new FormControl(songRawValue.playlists ?? []),
     });
   }

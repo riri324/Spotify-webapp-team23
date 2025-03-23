@@ -14,17 +14,11 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="track_id" type="varchar(255)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="ux_song__track_id" />
+            <column name="song_id" type="varchar(50)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_song__song_id" />
             </column>
-            <column name="artists" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="album_name" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="track_name" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="track_name" type="varchar(150)">
+                <constraints nullable="false" />
             </column>
             <column name="danceability" type="${floatType}">
                 <constraints nullable="true" />
@@ -50,7 +44,13 @@
             <column name="tempo" type="${floatType}">
                 <constraints nullable="true" />
             </column>
-            <column name="track_genre" type="varchar(255)">
+            <column name="album_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="genre_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="artist_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -69,14 +69,12 @@
     -->
     <changeSet id="20250302040025-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/song.csv"
+                  file="config/liquibase/data/song.csv"
                   separator=";"
                   tableName="song"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="track_id" type="string"/>
-            <column name="artists" type="string"/>
-            <column name="album_name" type="string"/>
+            <column name="song_id" type="string"/>
             <column name="track_name" type="string"/>
             <column name="danceability" type="numeric"/>
             <column name="energy" type="numeric"/>
@@ -86,7 +84,6 @@
             <column name="liveness" type="numeric"/>
             <column name="valence" type="numeric"/>
             <column name="tempo" type="numeric"/>
-            <column name="track_genre" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

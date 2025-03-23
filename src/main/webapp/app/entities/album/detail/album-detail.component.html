@@ -1,0 +1,61 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (album(); as albumRef) {
+      <div>
+        <h2 data-cy="albumDetailsHeading"><span>Album</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ albumRef.id }}</span>
+          </dd>
+          <dt><span>Album ID</span></dt>
+          <dd>
+            <span>{{ albumRef.albumID }}</span>
+          </dd>
+          <dt><span>Album Name</span></dt>
+          <dd>
+            <span>{{ albumRef.albumName }}</span>
+          </dd>
+          <dt><span>Number Of Songs</span></dt>
+          <dd>
+            <span>{{ albumRef.numberOfSongs }}</span>
+          </dd>
+          <dt><span>Image</span></dt>
+          <dd>
+            @if (albumRef.image) {
+              <div>
+                <a (click)="openFile(albumRef.image, albumRef.imageContentType)">
+                  <img [src]="'data:' + albumRef.imageContentType + ';base64,' + albumRef.image" style="max-width: 100%" alt="album" />
+                </a>
+                {{ albumRef.imageContentType }}, {{ byteSize(albumRef.image) }}
+              </div>
+            }
+          </dd>
+          <dt><span>Artist</span></dt>
+          <dd>
+            @if (album()!.artist) {
+              <div>
+                <a [routerLink]="['/artist', album()!.artist?.id, 'view']">{{ albumRef.artist?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/album', albumRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

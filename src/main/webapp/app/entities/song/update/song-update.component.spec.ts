@@ -4,10 +4,16 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, from, of } from 'rxjs';
 
+import { IAlbum } from 'app/entities/album/album.model';
+import { AlbumService } from 'app/entities/album/service/album.service';
+import { IGenre } from 'app/entities/genre/genre.model';
+import { GenreService } from 'app/entities/genre/service/genre.service';
+import { IArtist } from 'app/entities/artist/artist.model';
+import { ArtistService } from 'app/entities/artist/service/artist.service';
 import { IPlaylist } from 'app/entities/playlist/playlist.model';
 import { PlaylistService } from 'app/entities/playlist/service/playlist.service';
-import { SongService } from '../service/song.service';
 import { ISong } from '../song.model';
+import { SongService } from '../service/song.service';
 import { SongFormService } from './song-form.service';
 
 import { SongUpdateComponent } from './song-update.component';
@@ -18,6 +24,9 @@ describe('Song Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let songFormService: SongFormService;
   let songService: SongService;
+  let albumService: AlbumService;
+  let genreService: GenreService;
+  let artistService: ArtistService;
   let playlistService: PlaylistService;
 
   beforeEach(() => {
@@ -41,18 +50,87 @@ describe('Song Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     songFormService = TestBed.inject(SongFormService);
     songService = TestBed.inject(SongService);
+    albumService = TestBed.inject(AlbumService);
+    genreService = TestBed.inject(GenreService);
+    artistService = TestBed.inject(ArtistService);
     playlistService = TestBed.inject(PlaylistService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
+    it('Should call Album query and add missing value', () => {
+      const song: ISong = { id: 456 };
+      const album: IAlbum = { id: 28356 };
+      song.album = album;
+
+      const albumCollection: IAlbum[] = [{ id: 30327 }];
+      jest.spyOn(albumService, 'query').mockReturnValue(of(new HttpResponse({ body: albumCollection })));
+      const additionalAlbums = [album];
+      const expectedCollection: IAlbum[] = [...additionalAlbums, ...albumCollection];
+      jest.spyOn(albumService, 'addAlbumToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ song });
+      comp.ngOnInit();
+
+      expect(albumService.query).toHaveBeenCalled();
+      expect(albumService.addAlbumToCollectionIfMissing).toHaveBeenCalledWith(
+        albumCollection,
+        ...additionalAlbums.map(expect.objectContaining),
+      );
+      expect(comp.albumsSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should call Genre query and add missing value', () => {
+      const song: ISong = { id: 456 };
+      const genre: IGenre = { id: 1940 };
+      song.genre = genre;
+
+      const genreCollection: IGenre[] = [{ id: 27875 }];
+      jest.spyOn(genreService, 'query').mockReturnValue(of(new HttpResponse({ body: genreCollection })));
+      const additionalGenres = [genre];
+      const expectedCollection: IGenre[] = [...additionalGenres, ...genreCollection];
+      jest.spyOn(genreService, 'addGenreToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ song });
+      comp.ngOnInit();
+
+      expect(genreService.query).toHaveBeenCalled();
+      expect(genreService.addGenreToCollectionIfMissing).toHaveBeenCalledWith(
+        genreCollection,
+        ...additionalGenres.map(expect.objectContaining),
+      );
+      expect(comp.genresSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should call Artist query and add missing value', () => {
+      const song: ISong = { id: 456 };
+      const artist: IArtist = { id: 16037 };
+      song.artist = artist;
+
+      const artistCollection: IArtist[] = [{ id: 8607 }];
+      jest.spyOn(artistService, 'query').mockReturnValue(of(new HttpResponse({ body: artistCollection })));
+      const additionalArtists = [artist];
+      const expectedCollection: IArtist[] = [...additionalArtists, ...artistCollection];
+      jest.spyOn(artistService, 'addArtistToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ song });
+      comp.ngOnInit();
+
+      expect(artistService.query).toHaveBeenCalled();
+      expect(artistService.addArtistToCollectionIfMissing).toHaveBeenCalledWith(
+        artistCollection,
+        ...additionalArtists.map(expect.objectContaining),
+      );
+      expect(comp.artistsSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should call Playlist query and add missing value', () => {
       const song: ISong = { id: 456 };
-      const playlists: IPlaylist[] = [{ id: 17681 }];
+      const playlists: IPlaylist[] = [{ id: 31111 }];
       song.playlists = playlists;
 
-      const playlistCollection: IPlaylist[] = [{ id: 28335 }];
+      const playlistCollection: IPlaylist[] = [{ id: 13290 }];
       jest.spyOn(playlistService, 'query').mockReturnValue(of(new HttpResponse({ body: playlistCollection })));
       const additionalPlaylists = [...playlists];
       const expectedCollection: IPlaylist[] = [...additionalPlaylists, ...playlistCollection];
@@ -71,12 +149,21 @@ describe('Song Management Update Component', () => {
 
     it('Should update editForm', () => {
       const song: ISong = { id: 456 };
-      const playlists: IPlaylist = { id: 32371 };
+      const album: IAlbum = { id: 26740 };
+      song.album = album;
+      const genre: IGenre = { id: 21554 };
+      song.genre = genre;
+      const artist: IArtist = { id: 20807 };
+      song.artist = artist;
+      const playlists: IPlaylist = { id: 27168 };
       song.playlists = [playlists];
 
       activatedRoute.data = of({ song });
       comp.ngOnInit();
 
+      expect(comp.albumsSharedCollection).toContain(album);
+      expect(comp.genresSharedCollection).toContain(genre);
+      expect(comp.artistsSharedCollection).toContain(artist);
       expect(comp.playlistsSharedCollection).toContain(playlists);
       expect(comp.song).toEqual(song);
     });
@@ -151,6 +238,36 @@ describe('Song Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
+    describe('compareAlbum', () => {
+      it('Should forward to albumService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(albumService, 'compareAlbum');
+        comp.compareAlbum(entity, entity2);
+        expect(albumService.compareAlbum).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareGenre', () => {
+      it('Should forward to genreService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(genreService, 'compareGenre');
+        comp.compareGenre(entity, entity2);
+        expect(genreService.compareGenre).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareArtist', () => {
+      it('Should forward to artistService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(artistService, 'compareArtist');
+        comp.compareArtist(entity, entity2);
+        expect(artistService.compareArtist).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
     describe('comparePlaylist', () => {
       it('Should forward to playlistService', () => {
         const entity = { id: 123 };

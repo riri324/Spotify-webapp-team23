@@ -121,14 +121,8 @@ public class SongResource {
         Optional<Song> result = songRepository
             .findById(song.getId())
             .map(existingSong -> {
-                if (song.getTrackId() != null) {
-                    existingSong.setTrackId(song.getTrackId());
-                }
-                if (song.getArtists() != null) {
-                    existingSong.setArtists(song.getArtists());
-                }
-                if (song.getAlbumName() != null) {
-                    existingSong.setAlbumName(song.getAlbumName());
+                if (song.getSongId() != null) {
+                    existingSong.setSongId(song.getSongId());
                 }
                 if (song.getTrackName() != null) {
                     existingSong.setTrackName(song.getTrackName());
@@ -156,9 +150,6 @@ public class SongResource {
                 }
                 if (song.getTempo() != null) {
                     existingSong.setTempo(song.getTempo());
-                }
-                if (song.getTrackGenre() != null) {
-                    existingSong.setTrackGenre(song.getTrackGenre());
                 }
 
                 return existingSong;

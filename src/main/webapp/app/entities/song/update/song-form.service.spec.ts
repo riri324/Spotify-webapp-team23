@@ -20,9 +20,7 @@ describe('Song Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            trackId: expect.any(Object),
-            artists: expect.any(Object),
-            albumName: expect.any(Object),
+            songId: expect.any(Object),
             trackName: expect.any(Object),
             danceability: expect.any(Object),
             energy: expect.any(Object),
@@ -32,7 +30,9 @@ describe('Song Form Service', () => {
             liveness: expect.any(Object),
             valence: expect.any(Object),
             tempo: expect.any(Object),
-            trackGenre: expect.any(Object),
+            album: expect.any(Object),
+            genre: expect.any(Object),
+            artist: expect.any(Object),
             playlists: expect.any(Object),
           }),
         );
@@ -44,9 +44,7 @@ describe('Song Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            trackId: expect.any(Object),
-            artists: expect.any(Object),
-            albumName: expect.any(Object),
+            songId: expect.any(Object),
             trackName: expect.any(Object),
             danceability: expect.any(Object),
             energy: expect.any(Object),
@@ -56,7 +54,9 @@ describe('Song Form Service', () => {
             liveness: expect.any(Object),
             valence: expect.any(Object),
             tempo: expect.any(Object),
-            trackGenre: expect.any(Object),
+            album: expect.any(Object),
+            genre: expect.any(Object),
+            artist: expect.any(Object),
             playlists: expect.any(Object),
           }),
         );

@@ -1,0 +1,41 @@
+{
+  "annotations": {
+    "changelogDate": "20250320001858"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "artistName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    },
+    {
+      "fieldName": "followers",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "image",
+      "fieldType": "ImageBlob"
+    }
+  ],
+  "name": "Artist",
+  "relationships": [
+    {
+      "otherEntityName": "album",
+      "otherEntityRelationshipName": "artist",
+      "relationshipName": "albums",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "song",
+      "otherEntityRelationshipName": "artist",
+      "relationshipName": "songs",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}

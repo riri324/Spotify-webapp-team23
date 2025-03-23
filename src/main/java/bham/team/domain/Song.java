@@ -27,16 +27,13 @@ public class Song implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "track_id", nullable = false, unique = true)
-    private String trackId;
+    @Size(max = 50)
+    @Column(name = "song_id", length = 50, nullable = false, unique = true)
+    private String songId;
 
-    @Column(name = "artists")
-    private String artists;
-
-    @Column(name = "album_name")
-    private String albumName;
-
-    @Column(name = "track_name")
+    @NotNull
+    @Size(max = 150)
+    @Column(name = "track_name", length = 150, nullable = false)
     private String trackName;
 
     @Column(name = "danceability")
@@ -63,12 +60,21 @@ public class Song implements Serializable {
     @Column(name = "tempo")
     private Float tempo;
 
-    @Column(name = "track_genre")
-    private String trackGenre;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "artist", "songs" }, allowSetters = true)
+    private Album album;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "songs" }, allowSetters = true)
+    private Genre genre;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "albums", "songs" }, allowSetters = true)
+    private Artist artist;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "songs")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "songs" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "songs", "user" }, allowSetters = true)
     private Set<Playlist> playlists = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -86,43 +92,17 @@ public class Song implements Serializable {
         this.id = id;
     }
 
-    public String getTrackId() {
-        return this.trackId;
+    public String getSongId() {
+        return this.songId;
     }
 
-    public Song trackId(String trackId) {
-        this.setTrackId(trackId);
+    public Song songId(String songId) {
+        this.setSongId(songId);
         return this;
     }
 
-    public void setTrackId(String trackId) {
-        this.trackId = trackId;
-    }
-
-    public String getArtists() {
-        return this.artists;
-    }
-
-    public Song artists(String artists) {
-        this.setArtists(artists);
-        return this;
-    }
-
-    public void setArtists(String artists) {
-        this.artists = artists;
-    }
-
-    public String getAlbumName() {
-        return this.albumName;
-    }
-
-    public Song albumName(String albumName) {
-        this.setAlbumName(albumName);
-        return this;
-    }
-
-    public void setAlbumName(String albumName) {
-        this.albumName = albumName;
+    public void setSongId(String songId) {
+        this.songId = songId;
     }
 
     public String getTrackName() {
@@ -242,17 +222,43 @@ public class Song implements Serializable {
         this.tempo = tempo;
     }
 
-    public String getTrackGenre() {
-        return this.trackGenre;
+    public Album getAlbum() {
+        return this.album;
     }
 
-    public Song trackGenre(String trackGenre) {
-        this.setTrackGenre(trackGenre);
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
+
+    public Song album(Album album) {
+        this.setAlbum(album);
         return this;
     }
 
-    public void setTrackGenre(String trackGenre) {
-        this.trackGenre = trackGenre;
+    public Genre getGenre() {
+        return this.genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
+
+    public Song genre(Genre genre) {
+        this.setGenre(genre);
+        return this;
+    }
+
+    public Artist getArtist() {
+        return this.artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
+    }
+
+    public Song artist(Artist artist) {
+        this.setArtist(artist);
+        return this;
     }
 
     public Set<Playlist> getPlaylists() {
@@ -310,9 +316,7 @@ public class Song implements Serializable {
     public String toString() {
         return "Song{" +
             "id=" + getId() +
-            ", trackId='" + getTrackId() + "'" +
-            ", artists='" + getArtists() + "'" +
-            ", albumName='" + getAlbumName() + "'" +
+            ", songId='" + getSongId() + "'" +
             ", trackName='" + getTrackName() + "'" +
             ", danceability=" + getDanceability() +
             ", energy=" + getEnergy() +
@@ -322,7 +326,6 @@ public class Song implements Serializable {
             ", liveness=" + getLiveness() +
             ", valence=" + getValence() +
             ", tempo=" + getTempo() +
-            ", trackGenre='" + getTrackGenre() + "'" +
             "}";
     }
 }
