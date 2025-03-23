@@ -55,7 +55,7 @@
     -->
     <changeSet id="20250205190206-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/event.csv"
+                  file="config/liquibase/data/event.csv"
                   separator=";"
                   tableName="event"
                   usePreparedStatements="true">

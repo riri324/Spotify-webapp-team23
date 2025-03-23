@@ -1,11 +1,11 @@
 id;subject;content;sent;seen
-1;acceptable inasmuch ;../fake-data/blob/hipster.txt;2025-03-11;true
-2;into per;../fake-data/blob/hipster.txt;2025-03-11;true
-3;not yahoo;../fake-data/blob/hipster.txt;2025-03-12;true
-4;meaningfully anenst;../fake-data/blob/hipster.txt;2025-03-12;true
-5;darling;../fake-data/blob/hipster.txt;2025-03-12;true
-6;burly and;../fake-data/blob/hipster.txt;2025-03-12;false
-7;pro down;../fake-data/blob/hipster.txt;2025-03-12;false
-8;oh eek now;../fake-data/blob/hipster.txt;2025-03-12;true
-9;statue;../fake-data/blob/hipster.txt;2025-03-11;true
-10;dreamily excepting d;../fake-data/blob/hipster.txt;2025-03-12;true
+1;acceptable inasmuch ;../data/blob/hipster.txt;2025-03-11;true
+2;into per;../data/blob/hipster.txt;2025-03-11;true
+3;not yahoo;../data/blob/hipster.txt;2025-03-12;true
+4;meaningfully anenst;../data/blob/hipster.txt;2025-03-12;true
+5;darling;../data/blob/hipster.txt;2025-03-12;true
+6;burly and;../data/blob/hipster.txt;2025-03-12;false
+7;pro down;../data/blob/hipster.txt;2025-03-12;false
+8;oh eek now;../data/blob/hipster.txt;2025-03-12;true
+9;statue;../data/blob/hipster.txt;2025-03-11;true
+10;dreamily excepting d;../data/blob/hipster.txt;2025-03-12;true
