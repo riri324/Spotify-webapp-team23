@@ -69,6 +69,7 @@ export class RecommenderComponent implements OnInit {
         this.showNotification('Failed to add song to playlist. Please try again.', true);
       },
       complete() {
+        // Comment so eslint doesnt break
       },
     });
   }
