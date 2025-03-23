@@ -27,20 +27,20 @@
               <button class="add-to-playlist-btn" (click)="togglePlaylistSelector(song)">
                 Add to Playlist
               </button>
-
-              <!-- Playlist selector dropdown -->
-              @if (selectedSong && selectedSong.id === song.id) {
-                <div class="playlist-selector">
-                  <h4>Select a playlist:</h4>
-                  @for (playlist of playlists; track playlist) {
-                    <button class="playlist-option" (click)="addSongToPlaylist(song, playlist)">
-                      {{ playlist.name }}
-                    </button>
-                  }
-                  <button class="cancel-btn" (click)="togglePlaylistSelector(null)">Cancel</button>
-                </div>
-              }
             </div>
+
+            <!-- Playlist selector dropdown -->
+            @if (selectedSong && selectedSong.id === song.id) {
+              <div class="playlist-selector">
+                <h4>Select a playlist:</h4>
+                @for (playlist of playlists; track playlist) {
+                  <button class="playlist-option" (click)="addSongToPlaylist(song, playlist)">
+                    {{ playlist.name }}
+                  </button>
+                }
+                <button class="cancel-btn" (click)="togglePlaylistSelector(null)">Cancel</button>
+              </div>
+              }
           </div>
         }
       </div>

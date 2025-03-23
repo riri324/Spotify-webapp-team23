@@ -133,11 +133,11 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   padding: 12px;
   margin-top: 10px;
-  z-index: 20;
+  z-index: 5000;
   border: 1px solid #555;
   max-height: 250px;
   overflow-y: auto;
-  bottom: auto;
+  bottom: 100%;
   left: 0;
 }
 
