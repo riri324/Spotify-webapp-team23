@@ -81,7 +81,6 @@ const routes: Routes = [
     component: TopSongsComponent,
     data: { pageTitle: 'globaltopsong' },
   },
-
   ...errorRoute,
 ];
 
