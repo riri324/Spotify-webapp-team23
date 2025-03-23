@@ -2,10 +2,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlaylistService } from '../entities/playlist/service/playlist.service';
 import { SongService } from '../entities/song/service/song.service';
+import { UserService} from "../entities/user/service/user.service";
 import { IPlaylist } from '../entities/playlist/playlist.model';
 import { ISong } from '../entities/song/song.model';
 import { CommonModule } from '@angular/common';
 import { HttpResponse } from '@angular/common/http';
+import {IUser} from "../entities/user/user.model";
+import {User} from "../admin/user-management/user-management.model";
 
 @Component({
   selector: 'jhi-recommender',
@@ -15,7 +18,7 @@ import { HttpResponse } from '@angular/common/http';
   styleUrl: './recommender.component.scss',
 })
 export class RecommenderComponent implements OnInit {
-  userName = 'User Name';
+  userName: string | null = null;
   playlists?: IPlaylist[];
   Songs?: ISong[];
   selectedSong: ISong | null = null;
@@ -24,6 +27,7 @@ export class RecommenderComponent implements OnInit {
   constructor(
     protected playlistService: PlaylistService,
     protected songService: SongService,
+    private userService: UserService,
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +43,10 @@ export class RecommenderComponent implements OnInit {
     // Fetch Songs
     this.songService.query().subscribe(response => {
       this.Songs = response.body ?? [];
+    });
+
+    this.userService.query().subscribe(response => {
+      this.userName = response.body;
     });
   }
 
@@ -69,12 +77,11 @@ export class RecommenderComponent implements OnInit {
         this.showNotification('Failed to add song to playlist. Please try again.', true);
       },
       complete() {
-        // Optional: Handle completion if needed
       },
     });
   }
 
-  // Simple notification function (you can replace with a proper notification service if available)
+  // Simple notification function
   private showNotification(message: string, isError = false): void {
     const notificationElement = document.createElement('div');
     notificationElement.className = `notification ${isError ? 'notification-error' : 'notification-success'}`;
