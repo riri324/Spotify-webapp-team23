@@ -69,12 +69,11 @@ export class RecommenderComponent implements OnInit {
         this.showNotification('Failed to add song to playlist. Please try again.', true);
       },
       complete() {
-        // Optional: Handle completion if needed
       },
     });
   }
 
-  // Simple notification function (you can replace with a proper notification service if available)
+  // Simple notification function
   private showNotification(message: string, isError = false): void {
     const notificationElement = document.createElement('div');
     notificationElement.className = `notification ${isError ? 'notification-error' : 'notification-success'}`;
