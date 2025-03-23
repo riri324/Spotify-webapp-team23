@@ -21,7 +21,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let song of filteredSongs; let i = index">
-          <td>{{ i + 1 }}</td>
+          <td>
+            <a [routerLink]="['/global-topsongs', song.id, 'view']">{{ i + 1 }}</a>
+          </td>
           <td class="song-title">
             <div class="song-image">
               <fa-icon [icon]="'rectangle-xmark'"></fa-icon>

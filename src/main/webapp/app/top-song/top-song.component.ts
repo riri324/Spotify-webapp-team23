@@ -4,11 +4,12 @@ import { IGlobalTopsongs } from '../entities/global-topsongs/global-topsongs.mod
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faHouseUser, faRectangleXmark } from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'jhi-global-top-songs',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule, RouterModule],
   templateUrl: './top-song.component.html',
   styleUrls: ['./top-song.component.scss'],
 })
@@ -49,7 +50,7 @@ export class TopSongsComponent implements OnInit {
     if (this.globalTopsongs.length === 0) return;
 
     const targetYear = 2023;
-    const targetMonth = 3; // 3월
+    const targetMonth = 3;
 
     this.filteredSongs = this.globalTopsongs
       .filter(song => {
@@ -58,13 +59,12 @@ export class TopSongsComponent implements OnInit {
         const songYear = songDate.getFullYear();
         const songMonth = songDate.getMonth() + 1;
 
-        // Combine the conditions
         return (
           (this.currentView === 'month' && songYear === targetYear && songMonth === targetMonth) ||
           (this.currentView === 'year' && songYear === targetYear)
         );
       })
-      .sort((a, b) => (b.playCount ?? 0) - (a.playCount ?? 0)); // 재생 횟수 기준 내림차순 정렬
+      .sort((a, b) => (b.playCount ?? 0) - (a.playCount ?? 0));
   }
 
   goHome(): void {

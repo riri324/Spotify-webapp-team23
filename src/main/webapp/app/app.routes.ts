@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 
 import { Authority } from 'app/config/authority.constants';
 
@@ -83,5 +85,10 @@ const routes: Routes = [
   },
   ...errorRoute,
 ];
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule], // Make sure RouterModule is exported for usage in templates
+})
+export class TopSongRoutingModule {}
 
 export default routes;

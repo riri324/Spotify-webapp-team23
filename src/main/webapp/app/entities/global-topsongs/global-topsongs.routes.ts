@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { TopSongsComponent } from '../../../app/top-song/top-song.component';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { ASC } from 'app/config/navigation.constants';
@@ -36,6 +37,11 @@ const globalTopsongsRoute: Routes = [
       globalTopsongs: GlobalTopsongsResolve,
     },
     canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'topsongs',
+    component: TopSongsComponent,
+    data: { pageTitle: 'globaltopsong' },
   },
 ];
 
