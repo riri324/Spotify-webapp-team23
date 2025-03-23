@@ -69,7 +69,7 @@
     -->
     <changeSet id="20250302040025-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/song.csv"
+                  file="config/liquibase/data/song.csv"
                   separator=";"
                   tableName="song"
                   usePreparedStatements="true">

@@ -127,10 +127,10 @@ describe('Song Management Update Component', () => {
 
     it('Should call Playlist query and add missing value', () => {
       const song: ISong = { id: 456 };
-      const playlists: IPlaylist[] = [{ id: 19191 }];
+      const playlists: IPlaylist[] = [{ id: 31111 }];
       song.playlists = playlists;
 
-      const playlistCollection: IPlaylist[] = [{ id: 31111 }];
+      const playlistCollection: IPlaylist[] = [{ id: 13290 }];
       jest.spyOn(playlistService, 'query').mockReturnValue(of(new HttpResponse({ body: playlistCollection })));
       const additionalPlaylists = [...playlists];
       const expectedCollection: IPlaylist[] = [...additionalPlaylists, ...playlistCollection];
@@ -155,7 +155,7 @@ describe('Song Management Update Component', () => {
       song.genre = genre;
       const artist: IArtist = { id: 20807 };
       song.artist = artist;
-      const playlists: IPlaylist = { id: 13290 };
+      const playlists: IPlaylist = { id: 27168 };
       song.playlists = [playlists];
 
       activatedRoute.data = of({ song });

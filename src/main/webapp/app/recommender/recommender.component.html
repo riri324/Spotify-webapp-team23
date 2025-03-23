@@ -9,8 +9,7 @@
         <h2>My Playlists</h2>
         @for (playlist of playlists; track playlist) {
           <div class="playlist-card">
-            <!-- In the future add functionality that brings user to playlist page -->
-            <button class="playlist-button">
+            <button class="playlist-button" (click)="navigateToPlaylist(playlist.id)">
               <h3>{{ playlist.name }}</h3>
               <p>{{ playlist.description }}</p>
             </button>
@@ -24,6 +23,24 @@
           <div class="song-card">
             <h3>{{ song.trackName }}</h3>
             <p>by {{ song.artist?.artistName || 'Unknown' }}</p>
+            <div class="song-actions">
+              <button class="add-to-playlist-btn" (click)="togglePlaylistSelector(song)">
+                Add to Playlist
+              </button>
+
+              <!-- Playlist selector dropdown -->
+              @if (selectedSong && selectedSong.id === song.id) {
+                <div class="playlist-selector">
+                  <h4>Select a playlist:</h4>
+                  @for (playlist of playlists; track playlist) {
+                    <button class="playlist-option" (click)="addSongToPlaylist(song, playlist)">
+                      {{ playlist.name }}
+                    </button>
+                  }
+                  <button class="cancel-btn" (click)="togglePlaylistSelector(null)">Cancel</button>
+                </div>
+              }
+            </div>
           </div>
         }
       </div>
