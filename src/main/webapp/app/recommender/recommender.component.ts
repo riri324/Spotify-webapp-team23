@@ -2,13 +2,10 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlaylistService } from '../entities/playlist/service/playlist.service';
 import { SongService } from '../entities/song/service/song.service';
-import { UserService} from "../entities/user/service/user.service";
 import { IPlaylist } from '../entities/playlist/playlist.model';
 import { ISong } from '../entities/song/song.model';
 import { CommonModule } from '@angular/common';
 import { HttpResponse } from '@angular/common/http';
-import {IUser} from "../entities/user/user.model";
-import {User} from "../admin/user-management/user-management.model";
 
 @Component({
   selector: 'jhi-recommender',
@@ -18,7 +15,7 @@ import {User} from "../admin/user-management/user-management.model";
   styleUrl: './recommender.component.scss',
 })
 export class RecommenderComponent implements OnInit {
-  userName: string | null = null;
+  userName = 'User Name';
   playlists?: IPlaylist[];
   Songs?: ISong[];
   selectedSong: ISong | null = null;
@@ -27,7 +24,6 @@ export class RecommenderComponent implements OnInit {
   constructor(
     protected playlistService: PlaylistService,
     protected songService: SongService,
-    private userService: UserService,
   ) {}
 
   ngOnInit(): void {
@@ -43,10 +39,6 @@ export class RecommenderComponent implements OnInit {
     // Fetch Songs
     this.songService.query().subscribe(response => {
       this.Songs = response.body ?? [];
-    });
-
-    this.userService.query().subscribe(response => {
-      this.userName = response.body;
     });
   }
 
