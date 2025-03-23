@@ -19,28 +19,26 @@
       <!-- Recommended Songs Section -->
       <div class="recommended-section">
         <h2>Recommended Songs</h2>
-        @for (song of Songs?.slice(0,10); track song) {
+        @for (song of Songs?.slice(0, 10); track song) {
           <div class="song-card">
             <h3>{{ song.trackName }}</h3>
             <p>by {{ song.artist?.artistName || 'Unknown' }}</p>
             <div class="song-actions">
-              <button class="add-to-playlist-btn" (click)="togglePlaylistSelector(song)">
-                Add to Playlist
-              </button>
-
-              <!-- Playlist selector dropdown -->
-              @if (selectedSong && selectedSong.id === song.id) {
-                <div class="playlist-selector">
-                  <h4>Select a playlist:</h4>
-                  @for (playlist of playlists; track playlist) {
-                    <button class="playlist-option" (click)="addSongToPlaylist(song, playlist)">
-                      {{ playlist.name }}
-                    </button>
-                  }
-                  <button class="cancel-btn" (click)="togglePlaylistSelector(null)">Cancel</button>
-                </div>
-              }
+              <button class="add-to-playlist-btn" (click)="togglePlaylistSelector(song)">Add to Playlist</button>
             </div>
+
+            <!-- Playlist selector dropdown -->
+            @if (selectedSong && selectedSong.id === song.id) {
+              <div class="playlist-selector">
+                <h4>Select a playlist:</h4>
+                @for (playlist of playlists; track playlist) {
+                  <button class="playlist-option" (click)="addSongToPlaylist(song, playlist)">
+                    {{ playlist.name }}
+                  </button>
+                }
+                <button class="cancel-btn" (click)="togglePlaylistSelector(null)">Cancel</button>
+              </div>
+            }
           </div>
         }
       </div>
