@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { PlaylistService } from '../entities/playlist/service/playlist.service';
 import { SongService } from '../entities/song/service/song.service';
 import { IPlaylist } from '../entities/playlist/playlist.model';
 import { ISong } from '../entities/song/song.model';
-import { Playlist, Song } from './recommender.model';
 
 @Component({
   selector: 'jhi-recommender',
@@ -16,6 +16,8 @@ export class RecommenderComponent implements OnInit {
   userName = 'User Name';
   playlists?: IPlaylist[];
   Songs?: ISong[];
+  public readonly router = inject(Router);
+
   constructor(
     protected playlistService: PlaylistService,
     protected songService: SongService,
@@ -26,14 +28,19 @@ export class RecommenderComponent implements OnInit {
   }
 
   loadAll(): void {
-    // Fetch Products
+    // Fetch Playlists
     this.playlistService.query().subscribe(response => {
       this.playlists = response.body ?? [];
     });
 
-    // Fetch Categories
+    // Fetch Songs
     this.songService.query().subscribe(response => {
       this.Songs = response.body ?? [];
     });
+  }
+
+  // Method to navigate to the playlist detail page
+  navigateToPlaylist(id: number): void {
+    this.router.navigate(['/playlist', id, 'view']);
   }
 }

@@ -46,8 +46,10 @@
     -->
     <changeSet id="20250228154741-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/global_topsongs.csv"
-                  separator=","
+
+                  file="config/liquibase/data/global_topsongs.csv"
+                  separator=";"
+
                   tableName="global_topsongs"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
