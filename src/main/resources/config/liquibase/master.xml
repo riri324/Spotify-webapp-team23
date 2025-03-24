@@ -17,6 +17,7 @@
     <property name="datetimeType" value="datetime" dbms="postgresql"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250205190206_added_entity_Event.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250302040024_added_entity_Playlist.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250302040025_added_entity_Song.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
