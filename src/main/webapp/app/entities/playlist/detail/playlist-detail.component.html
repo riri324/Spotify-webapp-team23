@@ -31,6 +31,10 @@
           <dd>
             <span>{{ playlistRef.isPublic }}</span>
           </dd>
+          <dt><span>User</span></dt>
+          <dd>
+            <span>{{ playlistRef.user?.login }}</span>
+          </dd>
           <dt><span>Songs</span></dt>
           <dd>
             @for (songs of playlistRef.songs; track $index; let last = $last) {

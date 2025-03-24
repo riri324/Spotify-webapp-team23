@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (recommend(); as recommendRef) {
+      <div>
+        <h2 data-cy="recommendDetailsHeading"><span>Recommend</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>Id</span></dt>
+          <dd>
+            <span>{{ recommendRef.id }}</span>
+          </dd>
+          <dt><span>User Id</span></dt>
+          <dd>
+            <span>{{ recommendRef.userId }}</span>
+          </dd>
+          <dt><span>Recommended User Id</span></dt>
+          <dd>
+            <span>{{ recommendRef.recommendedUserId }}</span>
+          </dd>
+          <dt><span>Common Songs Count</span></dt>
+          <dd>
+            <span>{{ recommendRef.commonSongsCount }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/recommend', recommendRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

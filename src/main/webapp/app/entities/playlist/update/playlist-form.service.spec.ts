@@ -24,6 +24,7 @@ describe('Playlist Form Service', () => {
             name: expect.any(Object),
             description: expect.any(Object),
             isPublic: expect.any(Object),
+            user: expect.any(Object),
             songs: expect.any(Object),
           }),
         );
@@ -39,6 +40,7 @@ describe('Playlist Form Service', () => {
             name: expect.any(Object),
             description: expect.any(Object),
             isPublic: expect.any(Object),
+            user: expect.any(Object),
             songs: expect.any(Object),
           }),
         );

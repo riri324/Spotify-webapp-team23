@@ -31,6 +31,11 @@ const routes: Routes = [
     data: { pageTitle: 'Genres' },
     loadChildren: () => import('./genre/genre.routes'),
   },
+  {
+    path: 'recommend',
+    data: { pageTitle: 'Recommends' },
+    loadChildren: () => import('./recommend/recommend.routes'),
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

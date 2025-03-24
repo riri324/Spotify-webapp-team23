@@ -1,4 +1,3 @@
-
 @Spotify // we are working on a playlist app
 
 entity Playlist {
@@ -48,6 +47,7 @@ relationship ManyToMany {
 }
 
 relationship ManyToOne {
+  Playlist{user(login)} to User with builtInEntity,
   Song{album} to Album{songs},
   Song{genre} to Genre{songs},
   Song{artist} to Artist{songs}

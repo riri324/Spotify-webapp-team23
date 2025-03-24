@@ -43,6 +43,9 @@ public class Playlist implements Serializable {
     @Column(name = "is_public", nullable = false)
     private Boolean isPublic;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "rel_playlist__songs",
@@ -118,6 +121,19 @@ public class Playlist implements Serializable {
 
     public void setIsPublic(Boolean isPublic) {
         this.isPublic = isPublic;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Playlist user(User user) {
+        this.setUser(user);
+        return this;
     }
 
     public Set<Song> getSongs() {
