@@ -40,6 +40,13 @@ export class PlaylistService {
     return this.http.get<IPlaylist[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
+  queryUserPlaylists(userId: number): Observable<EntityArrayResponseType> {
+    const options = createRequestOption({
+      'user.id.equals': userId
+    });
+    return this.http.get<IPlaylist[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

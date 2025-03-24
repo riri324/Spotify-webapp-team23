@@ -2,10 +2,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlaylistService } from '../entities/playlist/service/playlist.service';
 import { SongService } from '../entities/song/service/song.service';
+import { AccountService } from '../core/auth/account.service';
 import { IPlaylist } from '../entities/playlist/playlist.model';
 import { ISong } from '../entities/song/song.model';
 import { CommonModule } from '@angular/common';
-import { HttpResponse } from '@angular/common/http';
+import { HttpResponse, HttpClient } from '@angular/common/http';
+import { ApplicationConfigService } from '../core/config/application-config.service';
+import { IUser } from '../entities/user/user.model';
 
 @Component({
   selector: 'jhi-recommender',
@@ -15,27 +18,55 @@ import { HttpResponse } from '@angular/common/http';
   styleUrl: './recommender.component.scss',
 })
 export class RecommenderComponent implements OnInit {
-  userName = 'User Name';
+  userName : string | null = null;
+  currentUserId: number | null = null;
   playlists?: IPlaylist[];
   Songs?: ISong[];
   selectedSong: ISong | null = null;
   public readonly router = inject(Router);
+  protected readonly http = inject(HttpClient);
+  protected readonly applicationConfigService = inject(ApplicationConfigService);
 
   constructor(
     protected playlistService: PlaylistService,
     protected songService: SongService,
+    protected accountService: AccountService,
   ) {}
 
   ngOnInit(): void {
-    this.loadAll();
+    this.loadSongs();
+    // this.loadUserInfo();
+    this.loadUserData();
   }
 
-  loadAll(): void {
-    // Fetch Playlists
-    this.playlistService.query().subscribe(response => {
-      this.playlists = response.body ?? [];
-    });
+  // loadUserInfo(): void {
+  //   this.accountService.identity().subscribe(account => {
+  //     if (account) {
+  //       this.userName = account.firstName || 'User';
+  //     }
+  //   });
+  // }
 
+  loadUserData(): void {
+    const apiUrl = this.applicationConfigService.getEndpointFor('api/account');
+    this.http.get<any>(apiUrl).subscribe(
+      userData => {
+        if (userData) {
+          this.userName = userData.firstName || null;
+          this.currentUserId = userData.id;
+
+          // After getting user ID, load playlists
+          if (this.currentUserId) {
+            this.playlistService.queryUserPlaylists(this.currentUserId).subscribe(response => {
+              this.playlists = response.body ?? [];
+            });
+          }
+        }
+      }
+    );
+  }
+
+  loadSongs(): void {
     // Fetch Songs
     this.songService.query().subscribe(response => {
       this.Songs = response.body ?? [];
