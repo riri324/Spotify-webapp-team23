@@ -5,7 +5,7 @@ import SharedModule from 'app/shared/shared.module';
 import { RecommendComponent } from './recommend.component';
 
 @NgModule({
-  imports: [SharedModule],
-  declarations: [RecommendComponent],
+  imports: [SharedModule, RecommendComponent],
+  declarations: [],
 })
 export class RecommendModule {}
