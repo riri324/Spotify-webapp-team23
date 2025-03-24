@@ -10,6 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import bham.team.IntegrationTest;
 import bham.team.domain.Event;
 import bham.team.repository.EventRepository;
+import bham.team.service.dto.EventDTO;
+import bham.team.service.mapper.EventMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
@@ -34,9 +36,6 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class EventResourceIT {
 
-    private static final Integer DEFAULT_ARTIST_ID = 1;
-    private static final Integer UPDATED_ARTIST_ID = 2;
-
     private static final Instant DEFAULT_DATETIME = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATETIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
@@ -45,6 +44,9 @@ class EventResourceIT {
 
     private static final String DEFAULT_TITLE = "AAAAAAAAAA";
     private static final String UPDATED_TITLE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ARTIST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_ARTIST_NAME = "BBBBBBBBBB";
 
     private static final String DEFAULT_VENUE_NAME = "AAAAAAAAAA";
     private static final String UPDATED_VENUE_NAME = "BBBBBBBBBB";
@@ -71,6 +73,9 @@ class EventResourceIT {
     private EventRepository eventRepository;
 
     @Autowired
+    private EventMapper eventMapper;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -88,10 +93,10 @@ class EventResourceIT {
      */
     public static Event createEntity() {
         return new Event()
-            .artistId(DEFAULT_ARTIST_ID)
             .datetime(DEFAULT_DATETIME)
             .description(DEFAULT_DESCRIPTION)
             .title(DEFAULT_TITLE)
+            .artistName(DEFAULT_ARTIST_NAME)
             .venueName(DEFAULT_VENUE_NAME)
             .city(DEFAULT_CITY)
             .region(DEFAULT_REGION)
@@ -106,10 +111,10 @@ class EventResourceIT {
      */
     public static Event createUpdatedEntity() {
         return new Event()
-            .artistId(UPDATED_ARTIST_ID)
             .datetime(UPDATED_DATETIME)
             .description(UPDATED_DESCRIPTION)
             .title(UPDATED_TITLE)
+            .artistName(UPDATED_ARTIST_NAME)
             .venueName(UPDATED_VENUE_NAME)
             .city(UPDATED_CITY)
             .region(UPDATED_REGION)
@@ -134,18 +139,20 @@ class EventResourceIT {
     void createEvent() throws Exception {
         long databaseSizeBeforeCreate = getRepositoryCount();
         // Create the Event
-        var returnedEvent = om.readValue(
+        EventDTO eventDTO = eventMapper.toDto(event);
+        var returnedEventDTO = om.readValue(
             restEventMockMvc
-                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(event)))
+                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(eventDTO)))
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse()
                 .getContentAsString(),
-            Event.class
+            EventDTO.class
         );
 
         // Validate the Event in the database
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
+        var returnedEvent = eventMapper.toEntity(returnedEventDTO);
         assertEventUpdatableFieldsEquals(returnedEvent, getPersistedEvent(returnedEvent));
 
         insertedEvent = returnedEvent;
@@ -156,12 +163,13 @@ class EventResourceIT {
     void createEventWithExistingId() throws Exception {
         // Create the Event with an existing ID
         event.setId(1);
+        EventDTO eventDTO = eventMapper.toDto(event);
 
         long databaseSizeBeforeCreate = getRepositoryCount();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restEventMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(event)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(eventDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Event in the database
@@ -170,15 +178,16 @@ class EventResourceIT {
 
     @Test
     @Transactional
-    void checkArtistIdIsRequired() throws Exception {
+    void checkDatetimeIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
-        event.setArtistId(null);
+        event.setDatetime(null);
 
         // Create the Event, which fails.
+        EventDTO eventDTO = eventMapper.toDto(event);
 
         restEventMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(event)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(eventDTO)))
             .andExpect(status().isBadRequest());
 
         assertSameRepositoryCount(databaseSizeBeforeTest);
@@ -196,10 +205,10 @@ class EventResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(event.getId().intValue())))
-            .andExpect(jsonPath("$.[*].artistId").value(hasItem(DEFAULT_ARTIST_ID)))
             .andExpect(jsonPath("$.[*].datetime").value(hasItem(DEFAULT_DATETIME.toString())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
+            .andExpect(jsonPath("$.[*].artistName").value(hasItem(DEFAULT_ARTIST_NAME)))
             .andExpect(jsonPath("$.[*].venueName").value(hasItem(DEFAULT_VENUE_NAME)))
             .andExpect(jsonPath("$.[*].city").value(hasItem(DEFAULT_CITY)))
             .andExpect(jsonPath("$.[*].region").value(hasItem(DEFAULT_REGION)))
@@ -218,10 +227,10 @@ class EventResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(event.getId().intValue()))
-            .andExpect(jsonPath("$.artistId").value(DEFAULT_ARTIST_ID))
             .andExpect(jsonPath("$.datetime").value(DEFAULT_DATETIME.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
+            .andExpect(jsonPath("$.artistName").value(DEFAULT_ARTIST_NAME))
             .andExpect(jsonPath("$.venueName").value(DEFAULT_VENUE_NAME))
             .andExpect(jsonPath("$.city").value(DEFAULT_CITY))
             .andExpect(jsonPath("$.region").value(DEFAULT_REGION))
@@ -248,20 +257,19 @@ class EventResourceIT {
         // Disconnect from session so that the updates on updatedEvent are not directly saved in db
         em.detach(updatedEvent);
         updatedEvent
-            .artistId(UPDATED_ARTIST_ID)
             .datetime(UPDATED_DATETIME)
             .description(UPDATED_DESCRIPTION)
             .title(UPDATED_TITLE)
+            .artistName(UPDATED_ARTIST_NAME)
             .venueName(UPDATED_VENUE_NAME)
             .city(UPDATED_CITY)
             .region(UPDATED_REGION)
             .country(UPDATED_COUNTRY);
+        EventDTO eventDTO = eventMapper.toDto(updatedEvent);
 
         restEventMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedEvent.getId())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(updatedEvent))
+                put(ENTITY_API_URL_ID, eventDTO.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(eventDTO))
             )
             .andExpect(status().isOk());
 
@@ -276,9 +284,14 @@ class EventResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         event.setId(intCount.incrementAndGet());
 
+        // Create the Event
+        EventDTO eventDTO = eventMapper.toDto(event);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restEventMockMvc
-            .perform(put(ENTITY_API_URL_ID, event.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(event)))
+            .perform(
+                put(ENTITY_API_URL_ID, eventDTO.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(eventDTO))
+            )
             .andExpect(status().isBadRequest());
 
         // Validate the Event in the database
@@ -291,12 +304,15 @@ class EventResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         event.setId(intCount.incrementAndGet());
 
+        // Create the Event
+        EventDTO eventDTO = eventMapper.toDto(event);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restEventMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, intCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(event))
+                    .content(om.writeValueAsBytes(eventDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -310,9 +326,12 @@ class EventResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         event.setId(intCount.incrementAndGet());
 
+        // Create the Event
+        EventDTO eventDTO = eventMapper.toDto(event);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restEventMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(event)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(eventDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Event in the database
@@ -331,7 +350,7 @@ class EventResourceIT {
         Event partialUpdatedEvent = new Event();
         partialUpdatedEvent.setId(event.getId());
 
-        partialUpdatedEvent.city(UPDATED_CITY).region(UPDATED_REGION).country(UPDATED_COUNTRY);
+        partialUpdatedEvent.title(UPDATED_TITLE).city(UPDATED_CITY).country(UPDATED_COUNTRY);
 
         restEventMockMvc
             .perform(
@@ -360,10 +379,10 @@ class EventResourceIT {
         partialUpdatedEvent.setId(event.getId());
 
         partialUpdatedEvent
-            .artistId(UPDATED_ARTIST_ID)
             .datetime(UPDATED_DATETIME)
             .description(UPDATED_DESCRIPTION)
             .title(UPDATED_TITLE)
+            .artistName(UPDATED_ARTIST_NAME)
             .venueName(UPDATED_VENUE_NAME)
             .city(UPDATED_CITY)
             .region(UPDATED_REGION)
@@ -389,10 +408,15 @@ class EventResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         event.setId(intCount.incrementAndGet());
 
+        // Create the Event
+        EventDTO eventDTO = eventMapper.toDto(event);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restEventMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, event.getId()).contentType("application/merge-patch+json").content(om.writeValueAsBytes(event))
+                patch(ENTITY_API_URL_ID, eventDTO.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(om.writeValueAsBytes(eventDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -406,12 +430,15 @@ class EventResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         event.setId(intCount.incrementAndGet());
 
+        // Create the Event
+        EventDTO eventDTO = eventMapper.toDto(event);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restEventMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, intCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(om.writeValueAsBytes(event))
+                    .content(om.writeValueAsBytes(eventDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -425,9 +452,12 @@ class EventResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         event.setId(intCount.incrementAndGet());
 
+        // Create the Event
+        EventDTO eventDTO = eventMapper.toDto(event);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restEventMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(event)))
+            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(eventDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Event in the database

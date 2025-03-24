@@ -83,7 +83,12 @@ public class SecurityConfiguration {
                     .requestMatchers(mvc.pattern("/api/activate")).permitAll()
                     .requestMatchers(mvc.pattern("/api/account/reset-password/init")).permitAll()
                     .requestMatchers(mvc.pattern("/api/account/reset-password/finish")).permitAll()
-                    .requestMatchers(mvc.pattern("/api/image-proxy")).permitAll()  // Added this line
+                    // Allow access to venue recommendations and required API endpoints
+                    .requestMatchers(mvc.pattern("/venue-recommendations")).permitAll()
+                    .requestMatchers(mvc.pattern("/venue-recommendations/**")).permitAll()
+                    .requestMatchers(mvc.pattern("/api/image-proxy")).permitAll()
+                    .requestMatchers(mvc.pattern("/api/ticketmaster/**")).permitAll()
+                    .requestMatchers(mvc.pattern("/api/spotify/**")).permitAll()
                     .requestMatchers(mvc.pattern("/api/admin/**")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(mvc.pattern("/api/**")).authenticated()
                     .requestMatchers(mvc.pattern("/v3/api-docs/**")).hasAuthority(AuthoritiesConstants.ADMIN)

@@ -12,9 +12,9 @@ public class EventTestSamples {
     public static Event getEventSample1() {
         return new Event()
             .id(1)
-            .artistId(1)
             .description("description1")
             .title("title1")
+            .artistName("artistName1")
             .venueName("venueName1")
             .city("city1")
             .region("region1")
@@ -24,9 +24,9 @@ public class EventTestSamples {
     public static Event getEventSample2() {
         return new Event()
             .id(2)
-            .artistId(2)
             .description("description2")
             .title("title2")
+            .artistName("artistName2")
             .venueName("venueName2")
             .city("city2")
             .region("region2")
@@ -36,9 +36,9 @@ public class EventTestSamples {
     public static Event getEventRandomSampleGenerator() {
         return new Event()
             .id(intCount.incrementAndGet())
-            .artistId(intCount.incrementAndGet())
             .description(UUID.randomUUID().toString())
             .title(UUID.randomUUID().toString())
+            .artistName(UUID.randomUUID().toString())
             .venueName(UUID.randomUUID().toString())
             .city(UUID.randomUUID().toString())
             .region(UUID.randomUUID().toString())

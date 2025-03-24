@@ -14,16 +14,16 @@
             <column name="id" type="integer">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="artist_id" type="integer">
+            <column name="datetime" type="${datetimeType}">
                 <constraints nullable="false" />
             </column>
-            <column name="datetime" type="${datetimeType}">
-                <constraints nullable="true" />
-            </column>
-            <column name="description" type="varchar(255)">
+            <column name="description" type="varchar(500)">
                 <constraints nullable="true" />
             </column>
             <column name="title" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="artist_name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="venue_name" type="varchar(255)">
@@ -60,10 +60,10 @@
                   tableName="event"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="artist_id" type="numeric"/>
             <column name="datetime" type="date"/>
             <column name="description" type="string"/>
             <column name="title" type="string"/>
+            <column name="artist_name" type="string"/>
             <column name="venue_name" type="string"/>
             <column name="city" type="string"/>
             <column name="region" type="string"/>

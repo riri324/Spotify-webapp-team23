@@ -47,10 +47,10 @@ public class EventAsserts {
     public static void assertEventUpdatableFieldsEquals(Event expected, Event actual) {
         assertThat(expected)
             .as("Verify Event relevant properties")
-            .satisfies(e -> assertThat(e.getArtistId()).as("check artistId").isEqualTo(actual.getArtistId()))
             .satisfies(e -> assertThat(e.getDatetime()).as("check datetime").isEqualTo(actual.getDatetime()))
             .satisfies(e -> assertThat(e.getDescription()).as("check description").isEqualTo(actual.getDescription()))
             .satisfies(e -> assertThat(e.getTitle()).as("check title").isEqualTo(actual.getTitle()))
+            .satisfies(e -> assertThat(e.getArtistName()).as("check artistName").isEqualTo(actual.getArtistName()))
             .satisfies(e -> assertThat(e.getVenueName()).as("check venueName").isEqualTo(actual.getVenueName()))
             .satisfies(e -> assertThat(e.getCity()).as("check city").isEqualTo(actual.getCity()))
             .satisfies(e -> assertThat(e.getRegion()).as("check region").isEqualTo(actual.getRegion()))

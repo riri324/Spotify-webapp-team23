@@ -42,13 +42,6 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="artistId">
-              <div class="d-flex">
-                <span>Artist Id</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
             <th scope="col" jhiSortBy="datetime">
               <div class="d-flex">
                 <span>Datetime</span>
@@ -66,6 +59,13 @@
             <th scope="col" jhiSortBy="title">
               <div class="d-flex">
                 <span>Title</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="artistName">
+              <div class="d-flex">
+                <span>Artist Name</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
@@ -107,10 +107,10 @@
               <td>
                 <a [routerLink]="['/event', event.id, 'view']">{{ event.id }}</a>
               </td>
-              <td>{{ event.artistId }}</td>
               <td>{{ event.datetime | formatMediumDatetime }}</td>
               <td>{{ event.description }}</td>
               <td>{{ event.title }}</td>
+              <td>{{ event.artistName }}</td>
               <td>{{ event.venueName }}</td>
               <td>{{ event.city }}</td>
               <td>{{ event.region }}</td>

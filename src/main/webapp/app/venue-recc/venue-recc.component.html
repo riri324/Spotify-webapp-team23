@@ -15,8 +15,8 @@
     <div class="heading">
       <h1 class="title">
         Concerts
-        <a routerLink="/" style="float: right">
-          <img src="content/images/home-icon-green.png" class="home-icon" />
+        <a routerLink="/" aria-label="Go to homepage" style="float: right">
+          <img src="content/images/home-icon-green.png" class="home-icon" alt="Home icon" />
         </a>
       </h1>
       <p class="desc">Search for concerts by popular artists and connect to Spotify to look for concerts by your favourites!</p>
@@ -38,8 +38,10 @@
     </div>
 
     <div class="tabs">
-      <button class="tab" [class.active]="activeTab === 'global'" (click)="switchTab('global')">Global</button>
-      <button class="tab" [class.active]="activeTab === 'local'" (click)="switchTab('local')">
+      <button class="tab" [class.active]="activeTab === 'global'" (click)="switchTab('global')" aria-label="Show global concerts">
+        Global
+      </button>
+      <button class="tab" [class.active]="activeTab === 'local'" (click)="switchTab('local')" aria-label="Show local concerts near you">
         Near you
         <span *ngIf="locationCity" class="location-pill">{{ locationCity }}</span>
       </button>

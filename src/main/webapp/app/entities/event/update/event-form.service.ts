@@ -31,10 +31,10 @@ type EventFormDefaults = Pick<NewEvent, 'id' | 'datetime'>;
 
 type EventFormGroupContent = {
   id: FormControl<EventFormRawValue['id'] | NewEvent['id']>;
-  artistId: FormControl<EventFormRawValue['artistId']>;
   datetime: FormControl<EventFormRawValue['datetime']>;
   description: FormControl<EventFormRawValue['description']>;
   title: FormControl<EventFormRawValue['title']>;
+  artistName: FormControl<EventFormRawValue['artistName']>;
   venueName: FormControl<EventFormRawValue['venueName']>;
   city: FormControl<EventFormRawValue['city']>;
   region: FormControl<EventFormRawValue['region']>;
@@ -58,12 +58,14 @@ export class EventFormService {
           validators: [Validators.required],
         },
       ),
-      artistId: new FormControl(eventRawValue.artistId, {
+      datetime: new FormControl(eventRawValue.datetime, {
         validators: [Validators.required],
       }),
-      datetime: new FormControl(eventRawValue.datetime),
-      description: new FormControl(eventRawValue.description),
+      description: new FormControl(eventRawValue.description, {
+        validators: [Validators.maxLength(500)],
+      }),
       title: new FormControl(eventRawValue.title),
+      artistName: new FormControl(eventRawValue.artistName),
       venueName: new FormControl(eventRawValue.venueName),
       city: new FormControl(eventRawValue.city),
       region: new FormControl(eventRawValue.region),

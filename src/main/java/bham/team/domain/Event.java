@@ -22,21 +22,22 @@ public class Event implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, unique = true)
     private Integer id;
 
     @NotNull
-    @Column(name = "artist_id", nullable = false)
-    private Integer artistId;
-
-    @Column(name = "datetime")
+    @Column(name = "datetime", nullable = false)
     private Instant datetime;
 
-    @Column(name = "description")
+    @Size(max = 500)
+    @Column(name = "description", length = 500)
     private String description;
 
     @Column(name = "title")
     private String title;
+
+    @Column(name = "artist_name")
+    private String artistName;
 
     @Column(name = "venue_name")
     private String venueName;
@@ -63,19 +64,6 @@ public class Event implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getArtistId() {
-        return this.artistId;
-    }
-
-    public Event artistId(Integer artistId) {
-        this.setArtistId(artistId);
-        return this;
-    }
-
-    public void setArtistId(Integer artistId) {
-        this.artistId = artistId;
     }
 
     public Instant getDatetime() {
@@ -115,6 +103,19 @@ public class Event implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getArtistName() {
+        return this.artistName;
+    }
+
+    public Event artistName(String artistName) {
+        this.setArtistName(artistName);
+        return this;
+    }
+
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
     }
 
     public String getVenueName() {
@@ -193,10 +194,10 @@ public class Event implements Serializable {
     public String toString() {
         return "Event{" +
             "id=" + getId() +
-            ", artistId=" + getArtistId() +
             ", datetime='" + getDatetime() + "'" +
             ", description='" + getDescription() + "'" +
             ", title='" + getTitle() + "'" +
+            ", artistName='" + getArtistName() + "'" +
             ", venueName='" + getVenueName() + "'" +
             ", city='" + getCity() + "'" +
             ", region='" + getRegion() + "'" +

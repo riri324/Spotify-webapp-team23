@@ -22,22 +22,7 @@
           </div>
         }
 
-        @let artistIdRef = editForm.get('artistId')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_artistId">Artist Id</label>
-          <input type="number" class="form-control" name="artistId" id="field_artistId" data-cy="artistId" formControlName="artistId" />
-          @if (artistIdRef.invalid && (artistIdRef.dirty || artistIdRef.touched)) {
-            <div>
-              @if (editForm.get('artistId')?.errors?.required) {
-                <small class="form-text text-danger">This field is required.</small>
-              }
-              <small class="form-text text-danger" [hidden]="!editForm.get('artistId')?.errors?.number"
-                >This field should be a number.</small
-              >
-            </div>
-          }
-        </div>
-
+        @let datetimeRef = editForm.get('datetime')!;
         <div class="mb-3">
           <label class="form-label" for="field_datetime">Datetime</label>
           <div class="d-flex">
@@ -51,8 +36,19 @@
               placeholder="YYYY-MM-DD HH:mm"
             />
           </div>
+          @if (datetimeRef.invalid && (datetimeRef.dirty || datetimeRef.touched)) {
+            <div>
+              @if (editForm.get('datetime')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('datetime')?.errors?.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
         </div>
 
+        @let descriptionRef = editForm.get('description')!;
         <div class="mb-3">
           <label class="form-label" for="field_description">Description</label>
           <input
@@ -63,11 +59,30 @@
             data-cy="description"
             formControlName="description"
           />
+          @if (descriptionRef.invalid && (descriptionRef.dirty || descriptionRef.touched)) {
+            <div>
+              @if (editForm.get('description')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 500 characters.</small>
+              }
+            </div>
+          }
         </div>
 
         <div class="mb-3">
           <label class="form-label" for="field_title">Title</label>
           <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_artistName">Artist Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="artistName"
+            id="field_artistName"
+            data-cy="artistName"
+            formControlName="artistName"
+          />
         </div>
 
         <div class="mb-3">

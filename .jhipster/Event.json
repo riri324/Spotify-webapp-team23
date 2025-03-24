@@ -1,29 +1,35 @@
 {
   "annotations": {
-    "changelogDate": "20250205190206"
+    "changelogDate": "20250205190206",
+    "dto": "mapstruct",
+    "filter": true,
+    "paginate": "infinite-scroll",
+    "service": "serviceClass"
   },
   "applications": "*",
   "fields": [
     {
       "fieldName": "id",
       "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "artistId",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
+      "fieldValidateRules": ["required", "unique"]
     },
     {
       "fieldName": "datetime",
-      "fieldType": "Instant"
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "description",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "500"
     },
     {
       "fieldName": "title",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "artistName",
       "fieldType": "String"
     },
     {

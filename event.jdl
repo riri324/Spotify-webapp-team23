@@ -3,19 +3,14 @@
 @paginate(infinite-scroll)
 @filter
 entity Event {
-  id Integer required unique minlength(5),
+  id Integer required unique,
   datetime Instant required,
   description String maxlength(500),
   title String,
+  artistName String,
   venueName String,
   city String,
   region String,
   country String
 }
 
-entity Artist {
-}
-
-relationship ManyToOne {
-  Event{artist} to Artist
-}

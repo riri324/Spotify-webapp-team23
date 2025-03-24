@@ -20,10 +20,10 @@ describe('Event Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            artistId: expect.any(Object),
             datetime: expect.any(Object),
             description: expect.any(Object),
             title: expect.any(Object),
+            artistName: expect.any(Object),
             venueName: expect.any(Object),
             city: expect.any(Object),
             region: expect.any(Object),
@@ -38,10 +38,10 @@ describe('Event Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            artistId: expect.any(Object),
             datetime: expect.any(Object),
             description: expect.any(Object),
             title: expect.any(Object),
+            artistName: expect.any(Object),
             venueName: expect.any(Object),
             city: expect.any(Object),
             region: expect.any(Object),
