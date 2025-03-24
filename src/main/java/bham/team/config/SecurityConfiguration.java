@@ -52,7 +52,13 @@ public class SecurityConfiguration {
             .addFilterAfter(new SpaWebFilter(), BasicAuthenticationFilter.class)
             .headers(headers ->
                 headers
-                    .contentSecurityPolicy(csp -> csp.policyDirectives(jHipsterProperties.getSecurity().getContentSecurityPolicy()))
+                    .contentSecurityPolicy(csp ->
+                        csp.policyDirectives(
+                            jHipsterProperties.getSecurity().getContentSecurityPolicy() +
+                            "; img-src 'self' *.ticketm.net *.ticketmaster.com images.universe.com; " +
+                            "connect-src 'self' https://app.ticketmaster.com"
+                        )
+                    )
                     .frameOptions(FrameOptionsConfig::sameOrigin)
                     .referrerPolicy(referrer -> referrer.policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN))
                     .permissionsPolicy(permissions ->
