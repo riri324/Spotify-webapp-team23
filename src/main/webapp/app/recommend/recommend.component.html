@@ -1,22 +1,39 @@
 <div class="recommend-container">
-  <h1>Recommended Users</h1>
+  <!-- Header -->
+  <header class="header">
+    <h1>Music Connect</h1>
+  </header>
 
-  <!-- Loading state -->
-  <div *ngIf="isLoading">Loading...</div>
+  <!-- Recommended Users Section -->
+  <section class="recommend-section">
+    <h2>👥 User Recommendations</h2>
 
-  <!-- Error message -->
-  <div *ngIf="errorMessage && !isLoading">{{ errorMessage }}</div>
+    <!-- Loading state -->
+    <div class="loading" *ngIf="isLoading">Loading recommendations...</div>
 
-  <!-- No recommendations state -->
-  <div *ngIf="!isLoading && !errorMessage && recommendedUsers.length === 0">No recommendations found.</div>
+    <!-- Error message -->
+    <div class="error-message" *ngIf="errorMessage && !isLoading">{{ errorMessage }}</div>
 
-  <!-- Recommendations list -->
-  <ul *ngIf="!isLoading && !errorMessage && recommendedUsers.length > 0">
-    <li *ngFor="let user of recommendedUsers">{{ user.recommendedUserId }} - {{ user.commonSongsCount }} songs in common</li>
-  </ul>
+    <!-- No recommendations state -->
+    <div class="no-recommend" *ngIf="!isLoading && !errorMessage && recommendedUsers.length === 0">No recommendations found.</div>
 
-  <!-- Generate button -->
-  <button (click)="generateRecommendations()" [disabled]="isLoading">
-    {{ isLoading ? 'Generating...' : 'Generate Recommendations' }}
-  </button>
+    <!-- Recommendations list -->
+    <ul class="user-list" *ngIf="!isLoading && !errorMessage && recommendedUsers.length > 0">
+      <li class="user-item" *ngFor="let user of recommendedUsers">
+        <div class="user-info">
+          <div class="avatar">👤</div>
+          <div>
+            <p class="user-name">{{ user.recommendedUserId }}</p>
+            <p class="common-songs">{{ user.commonSongsCount }} songs in common</p>
+          </div>
+        </div>
+        <button class="follow-button">Follow</button>
+      </li>
+    </ul>
+
+    <!-- Generate button -->
+    <button class="generate-button" (click)="generateRecommendations()" [disabled]="isLoading">
+      {{ isLoading ? 'Generating...' : 'Generate Recommendations' }}
+    </button>
+  </section>
 </div>

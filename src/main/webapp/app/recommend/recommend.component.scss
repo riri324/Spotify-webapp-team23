@@ -1,31 +1,150 @@
+// Spotify theme colors
+$spotify-green: #1db954;
+$background-dark: #121212;
+$text-light: #ffffff;
+$text-muted: #b3b3b3;
+
 .recommend-container {
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: center;
-}
+  background-color: $background-dark;
+  color: $text-light;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: 'Helvetica Neue', sans-serif;
 
-.generate-button {
-  margin-bottom: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-}
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
 
-.loading {
-  color: #007bff;
-  font-size: 18px;
-}
+    h1 {
+      font-size: 2.5rem;
+      color: $spotify-green;
+      margin: 0;
+    }
+  }
 
-.error-message {
-  color: red;
-  margin-bottom: 20px;
-}
+  .recommend-section {
+    background: #181818;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 
-.user-list {
-  list-style: none;
-  padding: 0;
+    h2 {
+      color: $spotify-green;
+      margin-bottom: 10px;
+    }
 
-  .user-item {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+    .loading {
+      color: $spotify-green;
+      font-size: 18px;
+      margin: 20px 0;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 16px;
+      margin: 20px 0;
+    }
+
+    .no-recommend {
+      color: $text-muted;
+      font-size: 16px;
+      margin: 20px 0;
+    }
+
+    .user-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      .user-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #282828;
+        border-radius: 8px;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        transition: background 0.3s ease;
+
+        &:hover {
+          background: #333333;
+        }
+
+        .user-info {
+          display: flex;
+          align-items: center;
+
+          .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #404040;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+          }
+
+          .user-name {
+            font-weight: bold;
+            font-size: 18px;
+            margin: 0;
+            color: $text-light;
+          }
+
+          .common-songs {
+            color: $text-muted;
+            font-size: 14px;
+            margin: 0;
+          }
+        }
+
+        .follow-button {
+          background-color: $spotify-green;
+          color: $background-dark;
+          border: none;
+          border-radius: 50px;
+          padding: 8px 16px;
+          cursor: pointer;
+          font-weight: bold;
+          transition: background-color 0.3s;
+
+          &:hover {
+            background-color: lighten($spotify-green, 10%);
+          }
+
+          &:disabled {
+            background-color: grey;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+
+    .generate-button {
+      width: 100%;
+      background-color: $spotify-green;
+      color: $background-dark;
+      border: none;
+      border-radius: 50px;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: lighten($spotify-green, 10%);
+      }
+
+      &:disabled {
+        background-color: grey;
+        cursor: not-allowed;
+      }
+    }
   }
 }
