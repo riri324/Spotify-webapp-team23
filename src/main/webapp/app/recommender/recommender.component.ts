@@ -18,7 +18,7 @@ import { IUser } from '../entities/user/user.model';
   styleUrl: './recommender.component.scss',
 })
 export class RecommenderComponent implements OnInit {
-  userName : string | null = null;
+  userName: string | null = null;
   currentUserId: number | null = null;
   playlists?: IPlaylist[];
   Songs?: ISong[];
@@ -49,21 +49,19 @@ export class RecommenderComponent implements OnInit {
 
   loadUserData(): void {
     const apiUrl = this.applicationConfigService.getEndpointFor('api/account');
-    this.http.get<any>(apiUrl).subscribe(
-      userData => {
-        if (userData) {
-          this.userName = userData.firstName || null;
-          this.currentUserId = userData.id;
+    this.http.get<any>(apiUrl).subscribe(userData => {
+      if (userData) {
+        this.userName = userData.firstName || null;
+        this.currentUserId = userData.id;
 
-          // After getting user ID, load playlists
-          if (this.currentUserId) {
-            this.playlistService.queryUserPlaylists(this.currentUserId).subscribe(response => {
-              this.playlists = response.body ?? [];
-            });
-          }
+        // After getting user ID, load playlists
+        if (this.currentUserId) {
+          this.playlistService.queryUserPlaylists(this.currentUserId).subscribe(response => {
+            this.playlists = response.body ?? [];
+          });
         }
       }
-    );
+    });
   }
 
   loadSongs(): void {
