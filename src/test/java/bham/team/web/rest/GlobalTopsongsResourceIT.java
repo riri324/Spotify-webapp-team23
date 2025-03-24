@@ -398,11 +398,7 @@ class GlobalTopsongsResourceIT {
         GlobalTopsongs partialUpdatedGlobalTopsongs = new GlobalTopsongs();
         partialUpdatedGlobalTopsongs.setId(globalTopsongs.getId());
 
-        partialUpdatedGlobalTopsongs
-            .songTitle(UPDATED_SONG_TITLE)
-            .artistName(UPDATED_ARTIST_NAME)
-            .playCount(UPDATED_PLAY_COUNT)
-            .monthYear(UPDATED_MONTH_YEAR);
+        partialUpdatedGlobalTopsongs.songTitle(UPDATED_SONG_TITLE).year(UPDATED_YEAR);
 
         restGlobalTopsongsMockMvc
             .perform(

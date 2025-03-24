@@ -49,10 +49,10 @@ describe('Feedback Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call User query and add missing value', () => {
       const feedback: IFeedback = { id: 456 };
-      const user: IUser = { id: 9076 };
+      const user: IUser = { id: 26461 };
       feedback.user = user;
 
-      const userCollection: IUser[] = [{ id: 15701 }];
+      const userCollection: IUser[] = [{ id: 17741 }];
       jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
       const additionalUsers = [user];
       const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
@@ -71,7 +71,7 @@ describe('Feedback Management Update Component', () => {
 
     it('Should update editForm', () => {
       const feedback: IFeedback = { id: 456 };
-      const user: IUser = { id: 2666 };
+      const user: IUser = { id: 10020 };
       feedback.user = user;
 
       activatedRoute.data = of({ feedback });

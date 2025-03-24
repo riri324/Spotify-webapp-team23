@@ -305,6 +305,8 @@ class PlaylistResourceIT {
         Playlist partialUpdatedPlaylist = new Playlist();
         partialUpdatedPlaylist.setId(playlist.getId());
 
+        partialUpdatedPlaylist.name(UPDATED_NAME);
+
         restPlaylistMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedPlaylist.getId())

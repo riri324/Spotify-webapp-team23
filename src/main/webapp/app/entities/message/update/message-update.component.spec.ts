@@ -49,12 +49,12 @@ describe('Message Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call User query and add missing value', () => {
       const message: IMessage = { id: 456 };
-      const sender: IUser = { id: 26461 };
+      const sender: IUser = { id: 9804 };
       message.sender = sender;
-      const recipient: IUser = { id: 17741 };
+      const recipient: IUser = { id: 8201 };
       message.recipient = recipient;
 
-      const userCollection: IUser[] = [{ id: 10020 }];
+      const userCollection: IUser[] = [{ id: 22078 }];
       jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
       const additionalUsers = [sender, recipient];
       const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
@@ -73,9 +73,9 @@ describe('Message Management Update Component', () => {
 
     it('Should update editForm', () => {
       const message: IMessage = { id: 456 };
-      const sender: IUser = { id: 9804 };
+      const sender: IUser = { id: 2765 };
       message.sender = sender;
-      const recipient: IUser = { id: 8201 };
+      const recipient: IUser = { id: 26342 };
       message.recipient = recipient;
 
       activatedRoute.data = of({ message });

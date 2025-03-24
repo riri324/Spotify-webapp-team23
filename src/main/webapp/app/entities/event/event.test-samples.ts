@@ -3,34 +3,33 @@ import dayjs from 'dayjs/esm';
 import { IEvent, NewEvent } from './event.model';
 
 export const sampleWithRequiredData: IEvent = {
-  id: 6045,
-  artistId: 4852,
+  id: 3222,
+  artistId: 26333,
 };
 
 export const sampleWithPartialData: IEvent = {
-  id: 6972,
-  artistId: 29015,
-  datetime: dayjs('2025-02-05T12:51'),
-  title: 'till smoothly provider',
-  city: 'Carrollbury',
-  region: 'crowded until',
-  country: 'Sudan',
+  id: 5190,
+  artistId: 28866,
+  datetime: dayjs('2025-02-04T19:27'),
+  venueName: 'ouch redress schematise',
+  city: 'South Donnastad',
+  country: 'Somalia',
 };
 
 export const sampleWithFullData: IEvent = {
-  id: 3027,
-  artistId: 19183,
-  datetime: dayjs('2025-02-05T00:03'),
-  description: 'downshift supposing brace',
-  title: 'intelligent lean',
-  venueName: 'wedge carefully',
-  city: 'East Corbin',
-  region: 'close and',
-  country: 'Jamaica',
+  id: 21332,
+  artistId: 8572,
+  datetime: dayjs('2025-02-05T07:03'),
+  description: 'pace',
+  title: 'stump dazzling',
+  venueName: 'lasting dull huzzah',
+  city: 'West Jannie',
+  region: 'barring',
+  country: 'Bermuda',
 };
 
 export const sampleWithNewData: NewEvent = {
-  artistId: 14842,
+  artistId: 30066,
   id: null,
 };
 

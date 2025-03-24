@@ -331,7 +331,7 @@ class EventResourceIT {
         Event partialUpdatedEvent = new Event();
         partialUpdatedEvent.setId(event.getId());
 
-        partialUpdatedEvent.city(UPDATED_CITY).region(UPDATED_REGION).country(UPDATED_COUNTRY);
+        partialUpdatedEvent.artistId(UPDATED_ARTIST_ID).title(UPDATED_TITLE).country(UPDATED_COUNTRY);
 
         restEventMockMvc
             .perform(

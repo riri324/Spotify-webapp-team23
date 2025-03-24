@@ -1,24 +1,24 @@
 import { IPlaylist, NewPlaylist } from './playlist.model';
 
 export const sampleWithRequiredData: IPlaylist = {
-  id: 8731,
-  name: 'hm phew willfully',
+  id: 20754,
+  name: 'attribute canter adrenalin',
 };
 
 export const sampleWithPartialData: IPlaylist = {
-  id: 19507,
-  name: 'than cemetery',
-  description: 'velocity above',
+  id: 24485,
+  name: 'moor since',
+  description: 'vacation against',
 };
 
 export const sampleWithFullData: IPlaylist = {
-  id: 2291,
-  name: 'zowie truly ferociously',
-  description: 'contradict beyond',
+  id: 8450,
+  name: 'energetic',
+  description: 'hospitable sniff irritably',
 };
 
 export const sampleWithNewData: NewPlaylist = {
-  name: 'beyond indeed',
+  name: 'how before yieldingly',
   id: null,
 };
 
