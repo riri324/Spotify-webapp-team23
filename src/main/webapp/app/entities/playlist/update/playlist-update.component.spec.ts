@@ -53,10 +53,10 @@ describe('Playlist Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Song query and add missing value', () => {
       const playlist: IPlaylist = { id: 456 };
-      const songs: ISong[] = [{ id: 18491 }];
+      const songs: ISong[] = [{ id: 6404 }];
       playlist.songs = songs;
 
-      const songCollection: ISong[] = [{ id: 11260 }];
+      const songCollection: ISong[] = [{ id: 10877 }];
       jest.spyOn(songService, 'query').mockReturnValue(of(new HttpResponse({ body: songCollection })));
       const additionalSongs = [...songs];
       const expectedCollection: ISong[] = [...additionalSongs, ...songCollection];
@@ -97,7 +97,7 @@ describe('Playlist Management Update Component', () => {
 
     it('Should update editForm', () => {
       const playlist: IPlaylist = { id: 456 };
-      const songs: ISong = { id: 21754 };
+      const songs: ISong = { id: 14023 };
       playlist.songs = [songs];
       const user: IUser = { id: 18806 };
       playlist.user = user;
