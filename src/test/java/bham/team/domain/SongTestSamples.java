@@ -10,32 +10,14 @@ public class SongTestSamples {
     private static final AtomicLong longCount = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
     public static Song getSongSample1() {
-        return new Song()
-            .id(1L)
-            .trackId("trackId1")
-            .artists("artists1")
-            .albumName("albumName1")
-            .trackName("trackName1")
-            .trackGenre("trackGenre1");
+        return new Song().id(1L).songId("songId1").trackName("trackName1");
     }
 
     public static Song getSongSample2() {
-        return new Song()
-            .id(2L)
-            .trackId("trackId2")
-            .artists("artists2")
-            .albumName("albumName2")
-            .trackName("trackName2")
-            .trackGenre("trackGenre2");
+        return new Song().id(2L).songId("songId2").trackName("trackName2");
     }
 
     public static Song getSongRandomSampleGenerator() {
-        return new Song()
-            .id(longCount.incrementAndGet())
-            .trackId(UUID.randomUUID().toString())
-            .artists(UUID.randomUUID().toString())
-            .albumName(UUID.randomUUID().toString())
-            .trackName(UUID.randomUUID().toString())
-            .trackGenre(UUID.randomUUID().toString());
+        return new Song().id(longCount.incrementAndGet()).songId(UUID.randomUUID().toString()).trackName(UUID.randomUUID().toString());
     }
 }

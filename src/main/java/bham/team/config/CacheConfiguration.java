@@ -54,11 +54,13 @@ public class CacheConfiguration {
             createCache(cm, bham.team.domain.Playlist.class.getName() + ".songs");
             createCache(cm, bham.team.domain.Song.class.getName());
             createCache(cm, bham.team.domain.Song.class.getName() + ".playlists");
-            createCache(cm, bham.team.domain.Event.class.getName());
-            createCache(cm, bham.team.domain.UserPreference.class.getName());
-            createCache(cm, bham.team.domain.GlobalTopsongs.class.getName());
-            createCache(cm, bham.team.domain.Feedback.class.getName());
-            createCache(cm, bham.team.domain.Message.class.getName());
+            createCache(cm, bham.team.domain.Artist.class.getName());
+            createCache(cm, bham.team.domain.Artist.class.getName() + ".albums");
+            createCache(cm, bham.team.domain.Artist.class.getName() + ".songs");
+            createCache(cm, bham.team.domain.Album.class.getName());
+            createCache(cm, bham.team.domain.Album.class.getName() + ".songs");
+            createCache(cm, bham.team.domain.Genre.class.getName());
+            createCache(cm, bham.team.domain.Genre.class.getName() + ".songs");
             // jhipster-needle-ehcache-add-entry
         };
     }

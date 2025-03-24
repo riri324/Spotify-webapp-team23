@@ -10,7 +10,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import bham.team.IntegrationTest;
 import bham.team.domain.Playlist;
+import bham.team.domain.User;
 import bham.team.repository.PlaylistRepository;
+import bham.team.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
@@ -40,11 +42,17 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class PlaylistResourceIT {
 
+    private static final Integer DEFAULT_PLAYLIST_ID = 1;
+    private static final Integer UPDATED_PLAYLIST_ID = 2;
+
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
+
+    private static final Boolean DEFAULT_IS_PUBLIC = false;
+    private static final Boolean UPDATED_IS_PUBLIC = true;
 
     private static final String ENTITY_API_URL = "/api/playlists";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -57,6 +65,9 @@ class PlaylistResourceIT {
 
     @Autowired
     private PlaylistRepository playlistRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Mock
     private PlaylistRepository playlistRepositoryMock;
@@ -77,8 +88,18 @@ class PlaylistResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Playlist createEntity() {
-        return new Playlist().name(DEFAULT_NAME).description(DEFAULT_DESCRIPTION);
+    public static Playlist createEntity(EntityManager em) {
+        Playlist playlist = new Playlist()
+            .playlistID(DEFAULT_PLAYLIST_ID)
+            .name(DEFAULT_NAME)
+            .description(DEFAULT_DESCRIPTION)
+            .isPublic(DEFAULT_IS_PUBLIC);
+        // Add required entity
+        User user = UserResourceIT.createEntity();
+        em.persist(user);
+        em.flush();
+        playlist.setUser(user);
+        return playlist;
     }
 
     /**
@@ -87,13 +108,23 @@ class PlaylistResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Playlist createUpdatedEntity() {
-        return new Playlist().name(UPDATED_NAME).description(UPDATED_DESCRIPTION);
+    public static Playlist createUpdatedEntity(EntityManager em) {
+        Playlist updatedPlaylist = new Playlist()
+            .playlistID(UPDATED_PLAYLIST_ID)
+            .name(UPDATED_NAME)
+            .description(UPDATED_DESCRIPTION)
+            .isPublic(UPDATED_IS_PUBLIC);
+        // Add required entity
+        User user = UserResourceIT.createEntity();
+        em.persist(user);
+        em.flush();
+        updatedPlaylist.setUser(user);
+        return updatedPlaylist;
     }
 
     @BeforeEach
     public void initTest() {
-        playlist = createEntity();
+        playlist = createEntity(em);
     }
 
     @AfterEach
@@ -145,10 +176,42 @@ class PlaylistResourceIT {
 
     @Test
     @Transactional
+    void checkPlaylistIDIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        playlist.setPlaylistID(null);
+
+        // Create the Playlist, which fails.
+
+        restPlaylistMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(playlist)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void checkNameIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
         playlist.setName(null);
+
+        // Create the Playlist, which fails.
+
+        restPlaylistMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(playlist)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkIsPublicIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        playlist.setIsPublic(null);
 
         // Create the Playlist, which fails.
 
@@ -171,8 +234,10 @@ class PlaylistResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(playlist.getId().intValue())))
+            .andExpect(jsonPath("$.[*].playlistID").value(hasItem(DEFAULT_PLAYLIST_ID)))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].isPublic").value(hasItem(DEFAULT_IS_PUBLIC.booleanValue())));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -204,8 +269,10 @@ class PlaylistResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(playlist.getId().intValue()))
+            .andExpect(jsonPath("$.playlistID").value(DEFAULT_PLAYLIST_ID))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION));
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
+            .andExpect(jsonPath("$.isPublic").value(DEFAULT_IS_PUBLIC.booleanValue()));
     }
 
     @Test
@@ -227,7 +294,7 @@ class PlaylistResourceIT {
         Playlist updatedPlaylist = playlistRepository.findById(playlist.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedPlaylist are not directly saved in db
         em.detach(updatedPlaylist);
-        updatedPlaylist.name(UPDATED_NAME).description(UPDATED_DESCRIPTION);
+        updatedPlaylist.playlistID(UPDATED_PLAYLIST_ID).name(UPDATED_NAME).description(UPDATED_DESCRIPTION).isPublic(UPDATED_IS_PUBLIC);
 
         restPlaylistMockMvc
             .perform(
@@ -333,7 +400,11 @@ class PlaylistResourceIT {
         Playlist partialUpdatedPlaylist = new Playlist();
         partialUpdatedPlaylist.setId(playlist.getId());
 
-        partialUpdatedPlaylist.name(UPDATED_NAME).description(UPDATED_DESCRIPTION);
+        partialUpdatedPlaylist
+            .playlistID(UPDATED_PLAYLIST_ID)
+            .name(UPDATED_NAME)
+            .description(UPDATED_DESCRIPTION)
+            .isPublic(UPDATED_IS_PUBLIC);
 
         restPlaylistMockMvc
             .perform(

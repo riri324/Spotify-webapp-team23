@@ -32,14 +32,8 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class SongResourceIT {
 
-    private static final String DEFAULT_TRACK_ID = "AAAAAAAAAA";
-    private static final String UPDATED_TRACK_ID = "BBBBBBBBBB";
-
-    private static final String DEFAULT_ARTISTS = "AAAAAAAAAA";
-    private static final String UPDATED_ARTISTS = "BBBBBBBBBB";
-
-    private static final String DEFAULT_ALBUM_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_ALBUM_NAME = "BBBBBBBBBB";
+    private static final String DEFAULT_SONG_ID = "AAAAAAAAAA";
+    private static final String UPDATED_SONG_ID = "BBBBBBBBBB";
 
     private static final String DEFAULT_TRACK_NAME = "AAAAAAAAAA";
     private static final String UPDATED_TRACK_NAME = "BBBBBBBBBB";
@@ -67,9 +61,6 @@ class SongResourceIT {
 
     private static final Float DEFAULT_TEMPO = 1F;
     private static final Float UPDATED_TEMPO = 2F;
-
-    private static final String DEFAULT_TRACK_GENRE = "AAAAAAAAAA";
-    private static final String UPDATED_TRACK_GENRE = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/songs";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -101,9 +92,7 @@ class SongResourceIT {
      */
     public static Song createEntity() {
         return new Song()
-            .trackId(DEFAULT_TRACK_ID)
-            .artists(DEFAULT_ARTISTS)
-            .albumName(DEFAULT_ALBUM_NAME)
+            .songId(DEFAULT_SONG_ID)
             .trackName(DEFAULT_TRACK_NAME)
             .danceability(DEFAULT_DANCEABILITY)
             .energy(DEFAULT_ENERGY)
@@ -112,8 +101,7 @@ class SongResourceIT {
             .instrumentalness(DEFAULT_INSTRUMENTALNESS)
             .liveness(DEFAULT_LIVENESS)
             .valence(DEFAULT_VALENCE)
-            .tempo(DEFAULT_TEMPO)
-            .trackGenre(DEFAULT_TRACK_GENRE);
+            .tempo(DEFAULT_TEMPO);
     }
 
     /**
@@ -124,9 +112,7 @@ class SongResourceIT {
      */
     public static Song createUpdatedEntity() {
         return new Song()
-            .trackId(UPDATED_TRACK_ID)
-            .artists(UPDATED_ARTISTS)
-            .albumName(UPDATED_ALBUM_NAME)
+            .songId(UPDATED_SONG_ID)
             .trackName(UPDATED_TRACK_NAME)
             .danceability(UPDATED_DANCEABILITY)
             .energy(UPDATED_ENERGY)
@@ -135,8 +121,7 @@ class SongResourceIT {
             .instrumentalness(UPDATED_INSTRUMENTALNESS)
             .liveness(UPDATED_LIVENESS)
             .valence(UPDATED_VALENCE)
-            .tempo(UPDATED_TEMPO)
-            .trackGenre(UPDATED_TRACK_GENRE);
+            .tempo(UPDATED_TEMPO);
     }
 
     @BeforeEach
@@ -193,10 +178,26 @@ class SongResourceIT {
 
     @Test
     @Transactional
-    void checkTrackIdIsRequired() throws Exception {
+    void checkSongIdIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
-        song.setTrackId(null);
+        song.setSongId(null);
+
+        // Create the Song, which fails.
+
+        restSongMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(song)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkTrackNameIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        song.setTrackName(null);
 
         // Create the Song, which fails.
 
@@ -219,9 +220,7 @@ class SongResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(song.getId().intValue())))
-            .andExpect(jsonPath("$.[*].trackId").value(hasItem(DEFAULT_TRACK_ID)))
-            .andExpect(jsonPath("$.[*].artists").value(hasItem(DEFAULT_ARTISTS)))
-            .andExpect(jsonPath("$.[*].albumName").value(hasItem(DEFAULT_ALBUM_NAME)))
+            .andExpect(jsonPath("$.[*].songId").value(hasItem(DEFAULT_SONG_ID)))
             .andExpect(jsonPath("$.[*].trackName").value(hasItem(DEFAULT_TRACK_NAME)))
             .andExpect(jsonPath("$.[*].danceability").value(hasItem(DEFAULT_DANCEABILITY.doubleValue())))
             .andExpect(jsonPath("$.[*].energy").value(hasItem(DEFAULT_ENERGY.doubleValue())))
@@ -230,8 +229,7 @@ class SongResourceIT {
             .andExpect(jsonPath("$.[*].instrumentalness").value(hasItem(DEFAULT_INSTRUMENTALNESS.doubleValue())))
             .andExpect(jsonPath("$.[*].liveness").value(hasItem(DEFAULT_LIVENESS.doubleValue())))
             .andExpect(jsonPath("$.[*].valence").value(hasItem(DEFAULT_VALENCE.doubleValue())))
-            .andExpect(jsonPath("$.[*].tempo").value(hasItem(DEFAULT_TEMPO.doubleValue())))
-            .andExpect(jsonPath("$.[*].trackGenre").value(hasItem(DEFAULT_TRACK_GENRE)));
+            .andExpect(jsonPath("$.[*].tempo").value(hasItem(DEFAULT_TEMPO.doubleValue())));
     }
 
     @Test
@@ -246,9 +244,7 @@ class SongResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(song.getId().intValue()))
-            .andExpect(jsonPath("$.trackId").value(DEFAULT_TRACK_ID))
-            .andExpect(jsonPath("$.artists").value(DEFAULT_ARTISTS))
-            .andExpect(jsonPath("$.albumName").value(DEFAULT_ALBUM_NAME))
+            .andExpect(jsonPath("$.songId").value(DEFAULT_SONG_ID))
             .andExpect(jsonPath("$.trackName").value(DEFAULT_TRACK_NAME))
             .andExpect(jsonPath("$.danceability").value(DEFAULT_DANCEABILITY.doubleValue()))
             .andExpect(jsonPath("$.energy").value(DEFAULT_ENERGY.doubleValue()))
@@ -257,8 +253,7 @@ class SongResourceIT {
             .andExpect(jsonPath("$.instrumentalness").value(DEFAULT_INSTRUMENTALNESS.doubleValue()))
             .andExpect(jsonPath("$.liveness").value(DEFAULT_LIVENESS.doubleValue()))
             .andExpect(jsonPath("$.valence").value(DEFAULT_VALENCE.doubleValue()))
-            .andExpect(jsonPath("$.tempo").value(DEFAULT_TEMPO.doubleValue()))
-            .andExpect(jsonPath("$.trackGenre").value(DEFAULT_TRACK_GENRE));
+            .andExpect(jsonPath("$.tempo").value(DEFAULT_TEMPO.doubleValue()));
     }
 
     @Test
@@ -281,9 +276,7 @@ class SongResourceIT {
         // Disconnect from session so that the updates on updatedSong are not directly saved in db
         em.detach(updatedSong);
         updatedSong
-            .trackId(UPDATED_TRACK_ID)
-            .artists(UPDATED_ARTISTS)
-            .albumName(UPDATED_ALBUM_NAME)
+            .songId(UPDATED_SONG_ID)
             .trackName(UPDATED_TRACK_NAME)
             .danceability(UPDATED_DANCEABILITY)
             .energy(UPDATED_ENERGY)
@@ -292,8 +285,7 @@ class SongResourceIT {
             .instrumentalness(UPDATED_INSTRUMENTALNESS)
             .liveness(UPDATED_LIVENESS)
             .valence(UPDATED_VALENCE)
-            .tempo(UPDATED_TEMPO)
-            .trackGenre(UPDATED_TRACK_GENRE);
+            .tempo(UPDATED_TEMPO);
 
         restSongMockMvc
             .perform(
@@ -370,14 +362,11 @@ class SongResourceIT {
         partialUpdatedSong.setId(song.getId());
 
         partialUpdatedSong
-            .artists(UPDATED_ARTISTS)
-            .albumName(UPDATED_ALBUM_NAME)
+            .songId(UPDATED_SONG_ID)
             .trackName(UPDATED_TRACK_NAME)
-            .energy(UPDATED_ENERGY)
             .speechiness(UPDATED_SPEECHINESS)
             .acousticness(UPDATED_ACOUSTICNESS)
-            .instrumentalness(UPDATED_INSTRUMENTALNESS)
-            .tempo(UPDATED_TEMPO);
+            .liveness(UPDATED_LIVENESS);
 
         restSongMockMvc
             .perform(
@@ -406,9 +395,7 @@ class SongResourceIT {
         partialUpdatedSong.setId(song.getId());
 
         partialUpdatedSong
-            .trackId(UPDATED_TRACK_ID)
-            .artists(UPDATED_ARTISTS)
-            .albumName(UPDATED_ALBUM_NAME)
+            .songId(UPDATED_SONG_ID)
             .trackName(UPDATED_TRACK_NAME)
             .danceability(UPDATED_DANCEABILITY)
             .energy(UPDATED_ENERGY)
@@ -417,8 +404,7 @@ class SongResourceIT {
             .instrumentalness(UPDATED_INSTRUMENTALNESS)
             .liveness(UPDATED_LIVENESS)
             .valence(UPDATED_VALENCE)
-            .tempo(UPDATED_TEMPO)
-            .trackGenre(UPDATED_TRACK_GENRE);
+            .tempo(UPDATED_TEMPO);
 
         restSongMockMvc
             .perform(

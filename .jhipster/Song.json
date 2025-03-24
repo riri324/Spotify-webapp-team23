@@ -5,21 +5,16 @@
   "applications": "*",
   "fields": [
     {
-      "fieldName": "trackId",
+      "fieldName": "songId",
       "fieldType": "String",
-      "fieldValidateRules": ["required", "unique"]
-    },
-    {
-      "fieldName": "artists",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "albumName",
-      "fieldType": "String"
+      "fieldValidateRules": ["required", "unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "50"
     },
     {
       "fieldName": "trackName",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "150"
     },
     {
       "fieldName": "danceability",
@@ -52,14 +47,31 @@
     {
       "fieldName": "tempo",
       "fieldType": "Float"
-    },
-    {
-      "fieldName": "trackGenre",
-      "fieldType": "String"
     }
   ],
   "name": "Song",
   "relationships": [
+    {
+      "otherEntityName": "album",
+      "otherEntityRelationshipName": "songs",
+      "relationshipName": "album",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "genre",
+      "otherEntityRelationshipName": "songs",
+      "relationshipName": "genre",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "artist",
+      "otherEntityRelationshipName": "songs",
+      "relationshipName": "artist",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
     {
       "otherEntityName": "playlist",
       "otherEntityRelationshipName": "songs",

@@ -15,17 +15,9 @@
           <dd>
             <span>{{ songRef.id }}</span>
           </dd>
-          <dt><span>Track Id</span></dt>
+          <dt><span>Song Id</span></dt>
           <dd>
-            <span>{{ songRef.trackId }}</span>
-          </dd>
-          <dt><span>Artists</span></dt>
-          <dd>
-            <span>{{ songRef.artists }}</span>
-          </dd>
-          <dt><span>Album Name</span></dt>
-          <dd>
-            <span>{{ songRef.albumName }}</span>
+            <span>{{ songRef.songId }}</span>
           </dd>
           <dt><span>Track Name</span></dt>
           <dd>
@@ -63,9 +55,29 @@
           <dd>
             <span>{{ songRef.tempo }}</span>
           </dd>
-          <dt><span>Track Genre</span></dt>
+          <dt><span>Album</span></dt>
           <dd>
-            <span>{{ songRef.trackGenre }}</span>
+            @if (song()!.album) {
+              <div>
+                <a [routerLink]="['/album', song()!.album?.id, 'view']">{{ songRef.album?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span>Genre</span></dt>
+          <dd>
+            @if (song()!.genre) {
+              <div>
+                <a [routerLink]="['/genre', song()!.genre?.id, 'view']">{{ songRef.genre?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span>Artist</span></dt>
+          <dd>
+            @if (song()!.artist) {
+              <div>
+                <a [routerLink]="['/artist', song()!.artist?.id, 'view']">{{ songRef.artist?.id }}</a>
+              </div>
+            }
           </dd>
           <dt><span>Playlists</span></dt>
           <dd>
