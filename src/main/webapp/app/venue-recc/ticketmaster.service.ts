@@ -182,7 +182,8 @@ export class TicketmasterService {
     if (images.length > 0) {
       const imageUrl = images[0]?.url;
       if (imageUrl && typeof imageUrl === 'string') {
-        thumbnail = imageUrl;
+        // Rewrite to use our image proxy
+        thumbnail = `/api/image-proxy?url=${encodeURIComponent(imageUrl)}`;
       }
     }
 

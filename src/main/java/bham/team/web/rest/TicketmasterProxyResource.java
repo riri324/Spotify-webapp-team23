@@ -82,7 +82,6 @@ public class TicketmasterProxyResource {
         log.info("REST request to proxy Ticketmaster image: {}", url);
 
         try {
-            // Set up headers to mimic a browser request
             HttpHeaders headers = new HttpHeaders();
             headers.set("User-Agent", "Mozilla/5.0");
             headers.set("Accept", "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8");

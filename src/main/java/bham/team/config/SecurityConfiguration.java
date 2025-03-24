@@ -55,7 +55,8 @@ public class SecurityConfiguration {
                     .contentSecurityPolicy(csp ->
                         csp.policyDirectives(
                             jHipsterProperties.getSecurity().getContentSecurityPolicy() +
-                            "; img-src 'self' *.ticketm.net *.ticketmaster.com images.universe.com; " +
+                            "; img-src 'self' data: https://*.ticketm.net https://s1.ticketm.net https://*.ticketmaster.com " +
+                            "https://images.universe.com https://i.ticketweb.com; " +
                             "connect-src 'self' https://app.ticketmaster.com"
                         )
                     )
@@ -63,7 +64,7 @@ public class SecurityConfiguration {
                     .referrerPolicy(referrer -> referrer.policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN))
                     .permissionsPolicy(permissions ->
                         permissions.policy(
-                            "camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"
+                            "camera=(), fullscreen=(self), geolocation=(self), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"
                         )
                     )
             )
@@ -82,6 +83,7 @@ public class SecurityConfiguration {
                     .requestMatchers(mvc.pattern("/api/activate")).permitAll()
                     .requestMatchers(mvc.pattern("/api/account/reset-password/init")).permitAll()
                     .requestMatchers(mvc.pattern("/api/account/reset-password/finish")).permitAll()
+                    .requestMatchers(mvc.pattern("/api/image-proxy")).permitAll()  // Added this line
                     .requestMatchers(mvc.pattern("/api/admin/**")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(mvc.pattern("/api/**")).authenticated()
                     .requestMatchers(mvc.pattern("/v3/api-docs/**")).hasAuthority(AuthoritiesConstants.ADMIN)
