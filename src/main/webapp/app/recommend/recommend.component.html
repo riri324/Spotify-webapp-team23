@@ -1,5 +1,4 @@
 <div class="recommend-container">
-  <!-- Music Suggestions -->
   <section class="recommend-section">
     <h2><i class="fa fa-music"></i> Music Suggestions</h2>
     <p *ngIf="!isLoading && recommendedSongs.length > 0">Similar users also listen to:</p>
@@ -24,7 +23,6 @@
     <p class="no-recommend" *ngIf="!isLoading && recommendedSongs.length === 0 && !errorMessage">No song recommendations found.</p>
   </section>
 
-  <!-- User Suggestions -->
   <section class="recommend-section">
     <h2>👥 User Suggestions</h2>
     <p *ngIf="!isLoading && recommendedUsers.length > 0">Users with similar taste:</p>
@@ -47,13 +45,11 @@
     <p class="no-recommend" *ngIf="!isLoading && recommendedUsers.length === 0 && !errorMessage">No user recommendations found.</p>
   </section>
 
-  <!-- Generate Button -->
   <div class="generate-wrap">
     <button class="generate-button" (click)="generateRecommendations()" [disabled]="isLoading">
       {{ isLoading ? 'Generating...' : 'Generate Recommendations' }}
     </button>
   </div>
 
-  <!-- Error -->
   <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
 </div>

@@ -5,12 +5,12 @@
 
 entity Recommend {
   id Long required,
-  userId String required, // login of the user getting the recommendations
-  recommendedUserId String required, // login of the similar user
-  commonSongsCount Integer required min(5) // how many songs they have in common
+  userId String required,
+  recommendedUserId String required,
+  commonSongsCount Integer required min(5)
 }
 
-// Define DTO, Service, Pagination (JHipster standard)
+
 dto Recommend with mapstruct
 service Recommend with serviceClass
 paginate Recommend with pagination

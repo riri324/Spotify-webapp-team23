@@ -132,7 +132,6 @@ public class RecommendService {
     public List<RecommendedSongDTO> getRecommendedSongsForCurrentUser() {
         String currentUserLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new RuntimeException("User not authenticated"));
 
-        // Step 1: Get recommended user IDs
         List<String> recommendedUserIds = recommendRepository
             .findAllByUserId(currentUserLogin)
             .stream()
@@ -141,13 +140,10 @@ public class RecommendService {
 
         if (recommendedUserIds.isEmpty()) return List.of();
 
-        // Step 2: Get songs from similar users' playlists
         List<Song> similarUserSongs = songRepository.findSongsByUserLogins(recommendedUserIds);
 
-        // Step 3: Get songs already in current user's playlists
         List<String> userSongIds = songRepository.findSongIdsByUserLogin(currentUserLogin);
 
-        // Step 4: Filter out songs already in current user's playlists
         return similarUserSongs
             .stream()
             .filter(song -> !userSongIds.contains(song.getSongId()))

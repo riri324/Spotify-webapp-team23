@@ -36,7 +36,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Page<User> findAllByIdNotNullAndActivatedIsTrue(Pageable pageable);
 
-    // ⭐ ADD THIS QUERY BELOW ⭐
     @Query(
         """
             SELECT u.login, COUNT(s.id)

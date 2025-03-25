@@ -26,7 +26,6 @@ public class RecommendDTO implements Serializable {
     @Min(value = 5)
     private Integer commonSongsCount;
 
-    // ✅ New field
     private List<String> commonSongNames;
 
     public Long getId() {

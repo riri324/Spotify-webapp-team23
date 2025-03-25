@@ -8,7 +8,6 @@ interface RecommendedUser {
   userId: string;
   recommendedUserId: string;
   commonSongsCount: number;
-  // commonSongNames?: string[]; // exists but hidden in UI
 }
 
 interface RecommendedSong {
