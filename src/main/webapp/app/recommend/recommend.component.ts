@@ -102,6 +102,10 @@ export class RecommendComponent implements OnInit {
     this.recommendedUsers = this.recommendedUsers.filter(u => u.recommendedUserId !== userId);
   }
 
+  dismissSong(songToRemove: RecommendedSong): void {
+    this.recommendedSongs = this.recommendedSongs.filter(song => song !== songToRemove);
+  }
+
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('authenticationToken');
     return new HttpHeaders({

@@ -1,15 +1,23 @@
 <div class="recommend-container">
   <!-- Music Suggestions -->
   <section class="recommend-section">
-    <h2>🎵 Music Suggestions</h2>
+    <h2><i class="fa fa-music"></i> Music Suggestions</h2>
     <p *ngIf="!isLoading && recommendedSongs.length > 0">Similar users also listen to:</p>
 
-    <div *ngIf="!isLoading && recommendedSongs.length > 0" class="song-grid">
+    <div class="card-grid" *ngIf="!isLoading && recommendedSongs.length > 0">
       <div class="song-card" *ngFor="let song of recommendedSongs">
-        <p class="song-title">
-          <strong>{{ song.trackName }}</strong>
-        </p>
-        <p class="song-artist">{{ song.artists }}</p>
+        <div class="song-header">
+          <p class="song-title">{{ song.trackName }}</p>
+          <p class="song-artist">{{ song.artists }}</p>
+        </div>
+        <div class="card-buttons">
+          <button title="Add to Playlist" class="icon-button add">
+            <i class="fa fa-plus"></i>
+          </button>
+          <button title="Not Interested" class="icon-button dismiss" (click)="dismissSong(song)">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
       </div>
     </div>
 

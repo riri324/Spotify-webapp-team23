@@ -34,6 +34,26 @@ public interface SongRepository extends JpaRepository<Song, Long> {
 
     @Query(
         """
+            SELECT DISTINCT s
+            FROM Song s
+            JOIN s.playlists p
+            WHERE p.user.login IN :logins
+        """
+    )
+    List<Song> findSongsByUserLogins(@Param("logins") List<String> logins);
+
+    @Query(
+        """
+            SELECT DISTINCT s.songId
+            FROM Song s
+            JOIN s.playlists p
+            WHERE p.user.login = :login
+        """
+    )
+    List<String> findSongIdsByUserLogin(@Param("login") String login);
+
+    @Query(
+        """
             SELECT DISTINCT s.trackName
             FROM Song s
             JOIN s.playlists p1

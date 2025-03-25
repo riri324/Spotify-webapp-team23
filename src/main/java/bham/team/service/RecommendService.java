@@ -132,11 +132,25 @@ public class RecommendService {
     public List<RecommendedSongDTO> getRecommendedSongsForCurrentUser() {
         String currentUserLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new RuntimeException("User not authenticated"));
 
-        // Get distinct songs from this user's playlists
-        List<Song> userSongs = songRepository.findSongsByUserLogin(currentUserLogin);
-
-        return userSongs
+        // Step 1: Get recommended user IDs
+        List<String> recommendedUserIds = recommendRepository
+            .findAllByUserId(currentUserLogin)
             .stream()
+            .map(r -> r.getRecommendedUserId())
+            .toList();
+
+        if (recommendedUserIds.isEmpty()) return List.of();
+
+        // Step 2: Get songs from similar users' playlists
+        List<Song> similarUserSongs = songRepository.findSongsByUserLogins(recommendedUserIds);
+
+        // Step 3: Get songs already in current user's playlists
+        List<String> userSongIds = songRepository.findSongIdsByUserLogin(currentUserLogin);
+
+        // Step 4: Filter out songs already in current user's playlists
+        return similarUserSongs
+            .stream()
+            .filter(song -> !userSongIds.contains(song.getSongId()))
             .map(song ->
                 new RecommendedSongDTO(
                     song.getTrackName(),
@@ -144,6 +158,7 @@ public class RecommendService {
                     song.getGenre() != null ? song.getGenre().getSongGenre() : "Unknown"
                 )
             )
+            .distinct()
             .toList();
     }
 }
