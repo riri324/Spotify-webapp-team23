@@ -33,7 +33,7 @@ export class PlaylistUpdateComponent implements OnInit {
   protected userService = inject(UserService);
   protected songService = inject(SongService);
   protected activatedRoute = inject(ActivatedRoute);
-
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: PlaylistFormGroup = this.playlistFormService.createPlaylistFormGroup();
 
   compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
