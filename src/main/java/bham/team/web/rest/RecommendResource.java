@@ -5,6 +5,7 @@ import bham.team.repository.RecommendRepository;
 import bham.team.security.SecurityUtils;
 import bham.team.service.RecommendService;
 import bham.team.service.dto.RecommendDTO;
+import bham.team.service.dto.RecommendedSongDTO;
 import bham.team.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -151,5 +152,15 @@ public class RecommendResource {
         List<RecommendDTO> recommendations = recommendService.findAllDTOByUserId(currentUserId);
 
         return ResponseEntity.ok(recommendations);
+    }
+
+    @GetMapping("/songs")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<RecommendedSongDTO>> getSongRecommendationsForCurrentUser() {
+        LOG.debug("REST request to get song recommendations for current user");
+
+        List<RecommendedSongDTO> songRecommendations = recommendService.getRecommendedSongsForCurrentUser();
+
+        return ResponseEntity.ok(songRecommendations);
     }
 }

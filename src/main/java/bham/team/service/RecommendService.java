@@ -1,9 +1,12 @@
 package bham.team.service;
 
 import bham.team.domain.Recommend;
+import bham.team.domain.Song;
 import bham.team.repository.RecommendRepository;
-import bham.team.repository.SongRepository; // ✅ You'll need this for song queries
+import bham.team.repository.SongRepository;
+import bham.team.security.SecurityUtils;
 import bham.team.service.dto.RecommendDTO;
+import bham.team.service.dto.RecommendedSongDTO;
 import bham.team.service.mapper.RecommendMapper;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +28,7 @@ public class RecommendService {
 
     private final RecommendRepository recommendRepository;
     private final RecommendMapper recommendMapper;
-    private final SongRepository songRepository; // ✅ Injected for song queries
+    private final SongRepository songRepository;
 
     public RecommendService(RecommendRepository recommendRepository, RecommendMapper recommendMapper, SongRepository songRepository) {
         this.recommendRepository = recommendRepository;
@@ -82,7 +85,7 @@ public class RecommendService {
 
         recommendRepository.deleteByUserId(userId);
 
-        List<String> currentUserSongIds = songRepository.findSongIdsByUserId(userId); // ✅ Assuming you have this query!
+        List<String> currentUserSongIds = songRepository.findSongIdsByUserId(userId);
 
         if (currentUserSongIds.isEmpty()) {
             LOG.info("User {} has no songs, skipping recommendations", userId);
@@ -109,6 +112,38 @@ public class RecommendService {
     @Transactional(readOnly = true)
     public List<RecommendDTO> findAllDTOByUserId(String userId) {
         LOG.debug("Fetching all recommendations for user: {}", userId);
-        return recommendRepository.findAllByUserId(userId).stream().map(recommendMapper::toDto).toList();
+
+        return recommendRepository
+            .findAllByUserId(userId)
+            .stream()
+            .map(recommend -> {
+                RecommendDTO dto = recommendMapper.toDto(recommend);
+
+                // Load common song names between the two users
+                List<String> commonSongNames = songRepository.findCommonSongNamesBetweenUsers(userId, recommend.getRecommendedUserId());
+
+                dto.setCommonSongNames(commonSongNames);
+                return dto;
+            })
+            .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<RecommendedSongDTO> getRecommendedSongsForCurrentUser() {
+        String currentUserLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new RuntimeException("User not authenticated"));
+
+        // Get distinct songs from this user's playlists
+        List<Song> userSongs = songRepository.findSongsByUserLogin(currentUserLogin);
+
+        return userSongs
+            .stream()
+            .map(song ->
+                new RecommendedSongDTO(
+                    song.getTrackName(),
+                    song.getArtist() != null ? song.getArtist().getArtistName() : "Unknown",
+                    song.getGenre() != null ? song.getGenre().getSongGenre() : "Unknown"
+                )
+            )
+            .toList();
     }
 }

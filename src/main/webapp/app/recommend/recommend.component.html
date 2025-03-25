@@ -1,39 +1,51 @@
 <div class="recommend-container">
-  <!-- Header -->
-  <header class="header">
-    <h1>Music Connect</h1>
-  </header>
-
-  <!-- Recommended Users Section -->
+  <!-- Music Suggestions -->
   <section class="recommend-section">
-    <h2>👥 User Recommendations</h2>
+    <h2>🎵 Music Suggestions</h2>
+    <p *ngIf="!isLoading && recommendedSongs.length > 0">Similar users also listen to:</p>
 
-    <!-- Loading state -->
-    <div class="loading" *ngIf="isLoading">Loading recommendations...</div>
+    <div *ngIf="!isLoading && recommendedSongs.length > 0" class="song-grid">
+      <div class="song-card" *ngFor="let song of recommendedSongs">
+        <p class="song-title">
+          <strong>{{ song.trackName }}</strong>
+        </p>
+        <p class="song-artist">{{ song.artists }}</p>
+      </div>
+    </div>
 
-    <!-- Error message -->
-    <div class="error-message" *ngIf="errorMessage && !isLoading">{{ errorMessage }}</div>
+    <p class="no-recommend" *ngIf="!isLoading && recommendedSongs.length === 0 && !errorMessage">No song recommendations found.</p>
+  </section>
 
-    <!-- No recommendations state -->
-    <div class="no-recommend" *ngIf="!isLoading && !errorMessage && recommendedUsers.length === 0">No recommendations found.</div>
+  <!-- User Suggestions -->
+  <section class="recommend-section">
+    <h2>👥 User Suggestions</h2>
+    <p *ngIf="!isLoading && recommendedUsers.length > 0">Users with similar taste:</p>
 
-    <!-- Recommendations list -->
-    <ul class="user-list" *ngIf="!isLoading && !errorMessage && recommendedUsers.length > 0">
-      <li class="user-item" *ngFor="let user of recommendedUsers">
-        <div class="user-info">
-          <div class="avatar">👤</div>
-          <div>
-            <p class="user-name">{{ user.recommendedUserId }}</p>
-            <p class="common-songs">{{ user.commonSongsCount }} songs in common</p>
-          </div>
+    <div *ngIf="!isLoading && recommendedUsers.length > 0" class="user-list">
+      <div class="user-card" *ngFor="let user of recommendedUsers">
+        <div class="user-name">
+          <span>👤 {{ user.recommendedUserId }}</span>
         </div>
-        <button class="follow-button">Follow</button>
-      </li>
-    </ul>
+        <div class="user-common">
+          <span>🎵 {{ user.commonSongsCount }} songs in common</span>
+        </div>
+        <div class="user-actions">
+          <button class="follow-button">Follow</button>
+          <button class="not-interested-button" (click)="removeUser(user.recommendedUserId)">Not Interested</button>
+        </div>
+      </div>
+    </div>
 
-    <!-- Generate button -->
+    <p class="no-recommend" *ngIf="!isLoading && recommendedUsers.length === 0 && !errorMessage">No user recommendations found.</p>
+  </section>
+
+  <!-- Generate Button -->
+  <div class="generate-wrap">
     <button class="generate-button" (click)="generateRecommendations()" [disabled]="isLoading">
       {{ isLoading ? 'Generating...' : 'Generate Recommendations' }}
     </button>
-  </section>
+  </div>
+
+  <!-- Error -->
+  <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
 </div>

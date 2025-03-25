@@ -3,6 +3,7 @@ package bham.team.service.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -24,6 +25,9 @@ public class RecommendDTO implements Serializable {
     @NotNull
     @Min(value = 5)
     private Integer commonSongsCount;
+
+    // ✅ New field
+    private List<String> commonSongNames;
 
     public Long getId() {
         return id;
@@ -57,35 +61,44 @@ public class RecommendDTO implements Serializable {
         this.commonSongsCount = commonSongsCount;
     }
 
+    public List<String> getCommonSongNames() {
+        return commonSongNames;
+    }
+
+    public void setCommonSongNames(List<String> commonSongNames) {
+        this.commonSongNames = commonSongNames;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof RecommendDTO)) {
-            return false;
-        }
-
-        RecommendDTO recommendDTO = (RecommendDTO) o;
-        if (this.id == null) {
-            return false;
-        }
-        return Objects.equals(this.id, recommendDTO.id);
+        if (this == o) return true;
+        if (!(o instanceof RecommendDTO)) return false;
+        RecommendDTO that = (RecommendDTO) o;
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id);
+        return Objects.hash(id);
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
-        return "RecommendDTO{" +
-            "id=" + getId() +
-            ", userId='" + getUserId() + "'" +
-            ", recommendedUserId='" + getRecommendedUserId() + "'" +
-            ", commonSongsCount=" + getCommonSongsCount() +
-            "}";
+        return (
+            "RecommendDTO{" +
+            "id=" +
+            id +
+            ", userId='" +
+            userId +
+            '\'' +
+            ", recommendedUserId='" +
+            recommendedUserId +
+            '\'' +
+            ", commonSongsCount=" +
+            commonSongsCount +
+            ", commonSongNames=" +
+            commonSongNames +
+            '}'
+        );
     }
 }

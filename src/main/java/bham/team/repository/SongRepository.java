@@ -21,4 +21,32 @@ public interface SongRepository extends JpaRepository<Song, Long> {
         """
     )
     List<String> findSongIdsByUserId(@Param("userId") String userId);
+
+    @Query(
+        """
+            SELECT DISTINCT s
+            FROM Song s
+            JOIN s.playlists p
+            WHERE p.user.login = :login
+        """
+    )
+    List<Song> findSongsByUserLogin(@Param("login") String login);
+
+    @Query(
+        """
+            SELECT DISTINCT s.trackName
+            FROM Song s
+            JOIN s.playlists p1
+            JOIN p1.user u1
+            WHERE u1.login = :user1
+              AND s.songId IN (
+                  SELECT s2.songId
+                  FROM Song s2
+                  JOIN s2.playlists p2
+                  JOIN p2.user u2
+                  WHERE u2.login = :user2
+              )
+        """
+    )
+    List<String> findCommonSongNamesBetweenUsers(@Param("user1") String user1, @Param("user2") String user2);
 }
