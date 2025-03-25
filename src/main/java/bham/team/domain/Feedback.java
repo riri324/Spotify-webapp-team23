@@ -5,9 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 
 //K7's entity
 @Entity
+@Table(name ="feedback")
+
 public class Feedback {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private long feedbackId;
 
     @NotBlank(message = "Please enter your username")

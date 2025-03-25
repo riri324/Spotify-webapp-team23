@@ -1,10 +1,12 @@
 package bham.team.web.rest;
 
 import bham.team.domain.Feedback;
+import bham.team.repository.FeedbackRepository;
 import bham.team.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,18 +30,23 @@ public class FeedbackResource {
   }
 
   @GetMapping
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<List<Feedback>> getAllFeedback() {
     List<Feedback> feedbackList = feedbackService.getAllFeedback();
     return ResponseEntity.ok(feedbackList);
   }
 
+
   @GetMapping("/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<Feedback> getFeedbackById(@PathVariable Long id) {
     Optional<Feedback> feedback = feedbackService.getFeedbackById(id);
     return feedback.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
   }
 
+
   @DeleteMapping("/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<Void> deleteFeedback(@PathVariable Long id) {
     feedbackService.deleteFeedback(id);
     return ResponseEntity.noContent().build();
