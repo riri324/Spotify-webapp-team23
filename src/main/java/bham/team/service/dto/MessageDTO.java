@@ -120,4 +120,5 @@ public class MessageDTO implements Serializable {
             ", recipient=" + getRecipient() +
             "}";
     }
+
 }

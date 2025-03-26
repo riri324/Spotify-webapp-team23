@@ -2,7 +2,7 @@ import dayjs from 'dayjs/esm';
 import { IUser } from 'app/entities/user/user.model';
 
 export interface IMessage {
-  id: number;
+  id: number | null;
   subject?: string | null;
   content?: string | null;
   sent?: dayjs.Dayjs | null;

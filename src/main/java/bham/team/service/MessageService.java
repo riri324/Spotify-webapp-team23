@@ -4,6 +4,8 @@ import bham.team.domain.Message;
 import bham.team.repository.MessageRepository;
 import bham.team.service.dto.MessageDTO;
 import bham.team.service.mapper.MessageMapper;
+
+import java.time.LocalDate;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +41,10 @@ public class MessageService {
     public MessageDTO save(MessageDTO messageDTO) {
         LOG.debug("Request to save Message : {}", messageDTO);
         Message message = messageMapper.toEntity(messageDTO);
+        //logic for if there is no timestamp provided
+        if (message.getSent() == null) {
+            message.setSent(LocalDate.now());
+        }
         message = messageRepository.save(message);
         return messageMapper.toDto(message);
     }

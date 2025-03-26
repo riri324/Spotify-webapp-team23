@@ -1,55 +1,109 @@
+<!--<div class="messages-container">-->
+<!--    <div class="messages-card">-->
+<!--        <header class="header">-->
+<!--            <h1>Messages</h1>-->
+<!--            <p>Welcome, Custom User!</p>-->
+<!--            <hr />-->
+<!--            <div class="messages-actions">-->
+<!--                <div class="search-user">-->
+<!--                    <label for="searchInput">Search for a user:</label>-->
+<!--                    <input id="searchInput" type="text" placeholder="Enter user name" />-->
+<!--                    <button>Search</button>-->
+<!--                </div>-->
+<!--                <button class="create-message-button">Create a New Message</button>-->
+<!--            </div>-->
+<!--        </header>-->
+
+<!--        &lt;!&ndash; Main Content Area with Sidebar and Chat &ndash;&gt;-->
+<!--        <div class="messages-main">-->
+<!--            &lt;!&ndash; Sidebar for User List &ndash;&gt;-->
+<!--            <aside class="users-sidebar">-->
+<!--                <h2>Users</h2>-->
+<!--                <ul>-->
+<!--                    <li class="active">john_doe</li>-->
+<!--                    <li>jane_doe</li>-->
+<!--                    <li>alice</li>-->
+<!--                </ul>-->
+<!--            </aside>-->
+
+<!--            &lt;!&ndash; Chat Section &ndash;&gt;-->
+<!--            <section class="messages-content">-->
+<!--                <div class="messages-thread">-->
+<!--                    &lt;!&ndash; Hardcoded chat bubbles &ndash;&gt;-->
+<!--                    <div class="message-bubble sender">-->
+<!--                        <p>Hello, how are you?</p>-->
+<!--                        <span class="timestamp">10:31</span>-->
+<!--                    </div>-->
+<!--                    <div class="message-bubble recipient">-->
+<!--                        <p>I’m good, thanks! Working on our new playlist project.</p>-->
+<!--                        <span class="timestamp">10:32</span>-->
+<!--                    </div>-->
+<!--                    <div class="message-bubble sender">-->
+<!--                        <p>Great to hear! Let's catch up later.</p>-->
+<!--                        <span class="timestamp">10:33</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Send Message Box &ndash;&gt;-->
+<!--                <div class="send-message-box">-->
+<!--                    <textarea rows="2" placeholder="Type your message here..."></textarea>-->
+<!--                    <button class="send-button">Send</button>-->
+<!--                </div>-->
+<!--            </section>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
 <div class="messages-container">
-    <div class="messages-card">
-        <header class="header">
-            <h1>Messages</h1>
-            <p>Welcome, Custom User!</p>
-            <hr />
-            <div class="messages-actions">
-                <div class="search-user">
-                    <label for="searchInput">Search for a user:</label>
-                    <input id="searchInput" type="text" placeholder="Enter user name" />
-                    <button>Search</button>
-                </div>
-                <button class="create-message-button">Create a New Message</button>
-            </div>
-        </header>
-
-        <!-- Main Content Area with Sidebar and Chat -->
-        <div class="messages-main">
-            <!-- Sidebar for User List -->
-            <aside class="users-sidebar">
-                <h2>Users</h2>
-                <ul>
-                    <li class="active">john_doe</li>
-                    <li>jane_doe</li>
-                    <li>alice</li>
-                </ul>
-            </aside>
-
-            <!-- Chat Section -->
-            <section class="messages-content">
-                <div class="messages-thread">
-                    <!-- Hardcoded chat bubbles -->
-                    <div class="message-bubble sender">
-                        <p>Hello, how are you?</p>
-                        <span class="timestamp">10:31</span>
-                    </div>
-                    <div class="message-bubble recipient">
-                        <p>I’m good, thanks! Working on our new playlist project.</p>
-                        <span class="timestamp">10:32</span>
-                    </div>
-                    <div class="message-bubble sender">
-                        <p>Great to hear! Let's catch up later.</p>
-                        <span class="timestamp">10:33</span>
-                    </div>
-                </div>
-
-                <!-- Send Message Box -->
-                <div class="send-message-box">
-                    <textarea rows="2" placeholder="Type your message here..."></textarea>
-                    <button class="send-button">Send</button>
-                </div>
-            </section>
+  <div class="messages-card">
+    <header class="header">
+      <h1>Messages</h1>
+      <p>Welcome, {{ currentUser }}!</p>
+      <hr />
+      <div class="messages-actions">
+        <div class="search-user">
+          <label for="searchInput">Search for a user:</label>
+          <input id="searchInput" type="text" placeholder="Enter user name" />
+          <button>Search</button>
         </div>
+        <button class="create-message-button">Create a New Message</button>
+      </div>
+    </header>
+
+    <!-- Main Content Area with Sidebar and Chat -->
+    <div class="messages-main">
+      <!-- Sidebar for User List (you might load users dynamically later) -->
+      <aside class="users-sidebar">
+        <h2>Users</h2>
+        <ul>
+          <li class="active">john_doe</li>
+          <li>jane_doe</li>
+          <li>alice</li>
+        </ul>
+      </aside>
+
+      <!-- Chat Section -->
+      <section class="messages-content">
+        <div class="messages-thread">
+          <!-- Dynamic chat bubbles -->
+          <div class="message-bubble" *ngFor="let msg of messages">
+            <div class="message-header">
+              <strong>{{ msg.sender?.login }}</strong>
+<!--              <span class="timestamp">{{ msg.sent | date:'shortTime' }}</span>-->
+            </div>
+            <div class="message-content">
+              <p>{{ msg.content }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Send Message Box -->
+        <div class="send-message-box">
+          <textarea rows="2" [(ngModel)]="newMessageContent" placeholder="Type your message here..."></textarea>
+          <button class="send-button" (click)="sendMessage()">Send</button>
+        </div>
+      </section>
     </div>
+  </div>
 </div>
