@@ -30,7 +30,7 @@ public interface PlaylistRepository extends PlaylistRepositoryWithBagRelationshi
     }
 
     default List<Playlist> findByUserIdWithEagerRelationships(Long userId) {
-        return this.findByUserIdWithEagerRelationships(userId);
+        return this.fetchBagRelationships(this.findByUserId(userId));
     }
 
     @Query("select playlist from Playlist playlist where playlist.user.login = ?#{authentication.name}")
