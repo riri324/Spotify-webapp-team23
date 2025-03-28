@@ -41,8 +41,7 @@ export class PlaylistService {
   }
 
   queryUserPlaylists(userId: number): Observable<EntityArrayResponseType> {
-    const options = createRequestOption({ userId: userId });
-    return this.http.get<IPlaylist[]>(this.resourceUrl, { params: options, observe: 'response' });
+    return this.http.get<IPlaylist[]>(`${this.resourceUrl}/user_id/${userId}`, { observe: 'response' });
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {
