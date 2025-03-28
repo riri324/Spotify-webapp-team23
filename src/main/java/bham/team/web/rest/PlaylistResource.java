@@ -168,7 +168,7 @@ public class PlaylistResource {
             if (eagerload) {
                 return playlistRepository.findByUserIdWithEagerRelationships(userId);
             } else {
-                return playlistRepository.findAll();
+                return playlistRepository.findByUserId(userId);
             }
         } else {
             // No userId provided, return all playlists

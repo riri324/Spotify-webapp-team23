@@ -52,6 +52,6 @@ public interface PlaylistRepository extends PlaylistRepositoryWithBagRelationshi
     @Query("select playlist from Playlist playlist left join fetch playlist.user where playlist.id =:id")
     Optional<Playlist> findOneWithToOneRelationships(@Param("id") Long id);
 
-    @Query("SELECT playlist FROM Playlist playlist left join fetch playlist.user where p.user.id = :userId")
+    @Query("SELECT playlist FROM Playlist playlist left join fetch playlist.user where playlist.user.id = :userId")
     List<Playlist> findByUserIdWithEagerRelationships(@Param("userId") Long userId);
 }
