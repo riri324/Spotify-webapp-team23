@@ -156,6 +156,12 @@ public class PlaylistResource {
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of playlists in body.
      */
+    /**
+     * {@code GET  /playlists} : get all the playlists.
+     *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of playlists in body.
+     */
     @GetMapping("")
     public List<Playlist> getAllPlaylists(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
         LOG.debug("REST request to get all Playlists");
@@ -195,6 +201,26 @@ public class PlaylistResource {
     }
 
     /**
+     * {@code GET  /playlists/user_id/:userId} : get all playlists for a given userId.
+     *
+     * @param userId the ID of the user whose playlists should be retrieved.
+     * @param eagerload flag to eager load entities from relationships.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of playlists in body.
+     */
+    @GetMapping("/user_id/{userId}")
+    public List<Playlist> getAllPlaylistsByUserId(
+        @PathVariable("userId") Long userId,
+        @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload
+    ) {
+        LOG.debug("REST request to get all Playlists for user: {}", userId);
+        if (eagerload) {
+            return playlistRepository.findAllByUserIdWithEagerRelationships(userId);
+        } else {
+            return playlistRepository.findAllByUserId(userId);
+        }
+    }
+
+    /**
      * {@code POST  /playlists/:id/songs/:songId} : Add a song to a playlist.
      *
      * @param id the id of the playlist.
@@ -203,10 +229,7 @@ public class PlaylistResource {
      * or with status {@code 404 (Not Found)} if the playlist or song is not found.
      */
     @PostMapping("/{id}/songs/{songId}")
-    public ResponseEntity<Playlist> addSongToPlaylist(
-        @PathVariable("id") Long id,
-        @PathVariable("songId") Long songId
-    ) {
+    public ResponseEntity<Playlist> addSongToPlaylist(@PathVariable("id") Long id, @PathVariable("songId") Long songId) {
         LOG.debug("REST request to add Song : {} to Playlist : {}", songId, id);
 
         Optional<Playlist> playlistOptional = playlistRepository.findOneWithEagerRelationships(id);
