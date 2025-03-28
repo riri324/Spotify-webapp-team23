@@ -157,12 +157,26 @@ public class PlaylistResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of playlists in body.
      */
     @GetMapping("")
-    public List<Playlist> getAllPlaylists(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
+    public List<Playlist> getAllPlaylists(
+        @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload,
+        @RequestParam(name = "userId", required = false) Long userId
+    ) {
         LOG.debug("REST request to get all Playlists");
-        if (eagerload) {
-            return playlistRepository.findAllWithEagerRelationships();
+
+        if (userId != null) {
+            LOG.debug("Filtering by userId: {}", userId);
+            if (eagerload) {
+                return playlistRepository.findByUserIdWithEagerRelationships(userId);
+            } else {
+                return playlistRepository.findAll();
+            }
         } else {
-            return playlistRepository.findAll();
+            // No userId provided, return all playlists
+            if (eagerload) {
+                return playlistRepository.findAllWithEagerRelationships();
+            } else {
+                return playlistRepository.findAll();
+            }
         }
     }
 

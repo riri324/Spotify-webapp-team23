@@ -8,7 +8,6 @@ import { ISong } from '../entities/song/song.model';
 import { CommonModule } from '@angular/common';
 import { HttpResponse, HttpClient } from '@angular/common/http';
 import { ApplicationConfigService } from '../core/config/application-config.service';
-import { IUser } from '../entities/user/user.model';
 
 @Component({
   selector: 'jhi-recommender',
@@ -35,17 +34,8 @@ export class RecommenderComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadSongs();
-    // this.loadUserInfo();
     this.loadUserData();
   }
-
-  // loadUserInfo(): void {
-  //   this.accountService.identity().subscribe(account => {
-  //     if (account) {
-  //       this.userName = account.firstName || 'User';
-  //     }
-  //   });
-  // }
 
   loadUserData(): void {
     const apiUrl = this.applicationConfigService.getEndpointFor('api/account');

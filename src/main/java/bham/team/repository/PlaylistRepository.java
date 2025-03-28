@@ -17,9 +17,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PlaylistRepository extends PlaylistRepositoryWithBagRelationships, JpaRepository<Playlist, Long> {
-    @Query("select playlist from Playlist playlist where playlist.user.login = ?#{authentication.name}")
-    List<Playlist> findByUserIsCurrentUser();
-
     default Optional<Playlist> findOneWithEagerRelationships(Long id) {
         return this.fetchBagRelationships(this.findOneWithToOneRelationships(id));
     }
@@ -32,10 +29,21 @@ public interface PlaylistRepository extends PlaylistRepositoryWithBagRelationshi
         return this.fetchBagRelationships(this.findAllWithToOneRelationships(pageable));
     }
 
+    default List<Playlist> findByUserIdWithEagerRelationships(Long userId) {
+        return this.findByUserIdWithEagerRelationships(userId);
+    }
+
+    @Query("select playlist from Playlist playlist where playlist.user.login = ?#{authentication.name}")
+    List<Playlist> findByUserIsCurrentUser();
+
+    @Query("select playlist from Playlist playlist where playlist.user.id = :userId")
+    List<Playlist> findByUserId(@Param("userId") Long userId);
+
     @Query(
         value = "select playlist from Playlist playlist left join fetch playlist.user",
         countQuery = "select count(playlist) from Playlist playlist"
     )
+
     Page<Playlist> findAllWithToOneRelationships(Pageable pageable);
 
     @Query("select playlist from Playlist playlist left join fetch playlist.user")
@@ -43,4 +51,7 @@ public interface PlaylistRepository extends PlaylistRepositoryWithBagRelationshi
 
     @Query("select playlist from Playlist playlist left join fetch playlist.user where playlist.id =:id")
     Optional<Playlist> findOneWithToOneRelationships(@Param("id") Long id);
+
+    @Query("SELECT playlist FROM Playlist playlist left join fetch playlist.user where p.user.id = :userId")
+    List<Playlist> findByUserIdWithEagerRelationships(@Param("userId") Long userId);
 }
