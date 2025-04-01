@@ -33,7 +33,6 @@ export class RecommenderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadSongs();
     this.loadUserData();
   }
 
@@ -48,6 +47,8 @@ export class RecommenderComponent implements OnInit {
         if (this.currentUserId) {
           this.playlistService.queryUserPlaylists(this.currentUserId).subscribe(response => {
             this.playlists = response.body ?? [];
+
+            this.loadSongs();
           });
         }
       }
@@ -55,10 +56,21 @@ export class RecommenderComponent implements OnInit {
   }
 
   loadSongs(): void {
-    // Fetch Songs
-    this.songService.query().subscribe(response => {
-      this.Songs = response.body ?? [];
+    if (!this.playlists || this.playlists.length === 0) {
+      this.Songs = [];
+      return;
+    }
+
+    // Collect all songs from all playlists
+    const songSet = new Set<ISong>();
+
+    this.playlists.forEach(playlist => {
+      if (playlist.songs) {
+        playlist.songs.forEach(song => songSet.add(song));
+      }
     });
+
+    this.Songs = Array.from(songSet);
   }
 
   // Method to navigate to the playlist detail page
