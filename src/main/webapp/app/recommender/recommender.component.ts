@@ -108,7 +108,6 @@ export class RecommenderComponent implements OnInit {
 
   rejectSong(song: ISong): void {
     // Placeholder function to test button existence
-    console.log("Reject button clicked for:", song.trackName);
   }
 
   // Simple notification function
