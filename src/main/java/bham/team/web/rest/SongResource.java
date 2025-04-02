@@ -200,4 +200,22 @@ public class SongResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
+
+//    /**
+//     * {@code GET  /songs/:id/similarSong} : get the closest related song.
+//     *
+//     * @param id the id of the song to retrieve.
+//     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the closest song,
+//     *         or with status {@code 404 (Not Found)} if no similar song is found.
+//     */
+//    @GetMapping("/{id}/similarSong")
+//    public ResponseEntity<Song> getClosestSong(@PathVariable("id") Long id) {
+//        LOG.debug("REST request to get the closest related song for Song : {}", id);
+//
+//        // Call the service to get the closest song
+//        Optional<Song> closestSong = songService.findClosestSong(id);
+//
+//        // Wrap and return the result
+//        return ResponseUtil.wrapOrNotFound(closestSong);
+//    }
 }
