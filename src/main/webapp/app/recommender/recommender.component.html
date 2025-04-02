@@ -25,6 +25,7 @@
             <p>by {{ song.artist?.artistName || 'Unknown' }}</p>
             <div class="song-actions">
               <button class="add-to-playlist-btn" (click)="togglePlaylistSelector(song)">Add to Playlist</button>
+              <button class="reject-btn" (click)="rejectSong(song)">Reject</button>
             </div>
 
             <!-- Playlist selector dropdown -->

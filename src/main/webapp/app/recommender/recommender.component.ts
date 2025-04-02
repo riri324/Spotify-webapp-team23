@@ -65,8 +65,9 @@ export class RecommenderComponent implements OnInit {
     const songSet = new Set<ISong>();
 
     this.playlists.forEach(playlist => {
-      if (playlist.songs) {
-        playlist.songs.forEach(song => songSet.add(song));
+      if (playlist.songs && playlist.songs.length > 0) {
+        const randomIndex = Math.floor(Math.random() * playlist.songs.length);
+        songSet.add(playlist.songs[randomIndex]);
       }
     });
 
@@ -103,6 +104,11 @@ export class RecommenderComponent implements OnInit {
         // Comment so eslint doesnt break
       },
     });
+  }
+
+  rejectSong(song: ISong): void {
+    // Placeholder function to test button existence
+    console.log("Reject button clicked for:", song.trackName);
   }
 
   // Simple notification function
