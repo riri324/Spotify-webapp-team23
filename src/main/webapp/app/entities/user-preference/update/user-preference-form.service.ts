@@ -26,6 +26,7 @@ type UserPreferenceFormGroupContent = {
   listeningPattern: FormControl<IUserPreference['listeningPattern']>;
   songLength: FormControl<IUserPreference['songLength']>;
   lyricsImportance: FormControl<IUserPreference['lyricsImportance']>;
+  user: FormControl<IUserPreference['user']>;
 };
 
 export type UserPreferenceFormGroup = FormGroup<UserPreferenceFormGroupContent>;
@@ -53,6 +54,7 @@ export class UserPreferenceFormService {
       listeningPattern: new FormControl(userPreferenceRawValue.listeningPattern),
       songLength: new FormControl(userPreferenceRawValue.songLength),
       lyricsImportance: new FormControl(userPreferenceRawValue.lyricsImportance),
+      user: new FormControl(userPreferenceRawValue.user),
     });
   }
 

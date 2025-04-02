@@ -46,6 +46,10 @@ public class UserPreference implements Serializable {
     @Column(name = "lyrics_importance")
     private String lyricsImportance;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(unique = true)
+    private User user;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -163,6 +167,19 @@ public class UserPreference implements Serializable {
 
     public void setLyricsImportance(String lyricsImportance) {
         this.lyricsImportance = lyricsImportance;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public UserPreference user(User user) {
+        this.setUser(user);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

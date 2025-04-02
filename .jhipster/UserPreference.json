@@ -39,6 +39,15 @@
     }
   ],
   "name": "UserPreference",
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one",
+      "relationshipWithBuiltInEntity": true
+    }
+  ],
   "searchEngine": "no"
 }

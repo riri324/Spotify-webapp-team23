@@ -159,12 +159,19 @@ public class UserPreferenceResource {
     /**
      * {@code GET  /user-preferences} : get all the userPreferences.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of userPreferences in body.
      */
     @GetMapping("")
-    public List<UserPreference> getAllUserPreferences() {
+    public List<UserPreference> getAllUserPreferences(
+        @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload
+    ) {
         LOG.debug("REST request to get all UserPreferences");
-        return userPreferenceRepository.findAll();
+        if (eagerload) {
+            return userPreferenceRepository.findAllWithEagerRelationships();
+        } else {
+            return userPreferenceRepository.findAll();
+        }
     }
 
     /**
@@ -176,7 +183,7 @@ public class UserPreferenceResource {
     @GetMapping("/{id}")
     public ResponseEntity<UserPreference> getUserPreference(@PathVariable("id") Long id) {
         LOG.debug("REST request to get UserPreference : {}", id);
-        Optional<UserPreference> userPreference = userPreferenceRepository.findById(id);
+        Optional<UserPreference> userPreference = userPreferenceRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(userPreference);
     }
 
