@@ -20,13 +20,12 @@ describe('Feedback Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            feedbackId: expect.any(Object),
-            username: expect.any(Object),
+            feedbackID: expect.any(Object),
+            userName: expect.any(Object),
             userEmail: expect.any(Object),
-            userPhineNum: expect.any(Object),
+            userPhoneNum: expect.any(Object),
             message: expect.any(Object),
             rating: expect.any(Object),
-            user: expect.any(Object),
           }),
         );
       });
@@ -37,13 +36,12 @@ describe('Feedback Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            feedbackId: expect.any(Object),
-            username: expect.any(Object),
+            feedbackID: expect.any(Object),
+            userName: expect.any(Object),
             userEmail: expect.any(Object),
-            userPhineNum: expect.any(Object),
+            userPhoneNum: expect.any(Object),
             message: expect.any(Object),
             rating: expect.any(Object),
-            user: expect.any(Object),
           }),
         );
       });

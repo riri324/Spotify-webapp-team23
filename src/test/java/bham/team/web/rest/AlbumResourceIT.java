@@ -337,7 +337,11 @@ class AlbumResourceIT {
         Album partialUpdatedAlbum = new Album();
         partialUpdatedAlbum.setId(album.getId());
 
-        partialUpdatedAlbum.numberOfSongs(UPDATED_NUMBER_OF_SONGS);
+        partialUpdatedAlbum
+            .albumName(UPDATED_ALBUM_NAME)
+            .numberOfSongs(UPDATED_NUMBER_OF_SONGS)
+            .image(UPDATED_IMAGE)
+            .imageContentType(UPDATED_IMAGE_CONTENT_TYPE);
 
         restAlbumMockMvc
             .perform(

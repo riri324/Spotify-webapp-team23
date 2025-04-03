@@ -1,0 +1,125 @@
+@Spotify // we are working on a playlist app
+
+entity Playlist {
+  playlistID Integer required unique,
+  name String required maxlength(50),
+  description String maxlength(100),
+  isPublic Boolean required
+}
+
+// UserPreference entity
+entity UserPreference {
+  favoriteGenre String required maxlength(20),
+  musicPurpose String required maxlength(50),
+  musicMood String maxlength(50),
+  vocalPreference String maxlength(50),
+  listeningTime String maxlength(50),
+  listeningPattern String maxlength(50),
+  songLength String maxlength(20),
+  lyricsImportance String maxlength(50)
+}
+
+// Event entity
+entity Event {
+  eventID Integer required unique,
+  datetime Instant required,
+  description String maxlength(500),
+  title String required maxlength(100),
+  venueName String required maxlength(100),
+  city String required maxlength(50),
+  region String required maxlength(50),
+  country String required maxlength(50)
+}
+
+// Feedback entity
+entity Feedback {
+  feedbackID Long required unique,
+  userName String required maxlength(100),
+  userEmail String required maxlength(100),
+  userPhoneNum String maxlength(25),
+  message String maxlength(2048),
+  rating Integer required min(1) max(10)  // Assuming a 1-10 rating
+}
+
+// Song entity
+entity Song {
+  songId String required unique maxlength(50),
+  trackName String required maxlength(150),
+  danceability Float,
+  energy Float,
+  speechiness Float,
+  acousticness Float,
+  instrumentalness Float,
+  liveness Float,
+  valence Float,
+  tempo Float,
+}
+
+// Message entity
+entity Message {
+  subject String required,
+  content TextBlob required,
+  sent LocalDate required,
+  seen Boolean
+}
+
+// GlobalTopsongs entity
+entity GlobalTopsongs {
+  playCount Integer required,
+  monthYear Instant required,
+  year Integer required min(2000) max(2100)
+}
+
+// ListeningHistory entity
+entity ListeningHistory {
+  historyID Integer required unique,
+  timestamp Instant required
+}
+
+// LikedTracks entity
+entity LikedSongs {
+  likeID Integer required unique,
+}
+
+// Artist entity
+entity Artist {
+  artistName String required maxlength(100),
+  followers Integer required,
+  image ImageBlob
+}
+
+// Album entity
+entity Album {
+  albumID Integer required unique,
+  albumName String required maxlength(150),
+  numberOfSongs Integer required,
+  image ImageBlob
+}
+
+// Genre entity
+entity Genre {
+  genreID Integer required unique,
+  songGenre String required maxlength(50)
+}
+
+
+relationship OneToMany {
+  Artist to Event,
+  Artist to Album,
+  Song to GlobalTopsongs
+}
+
+relationship ManyToMany {
+  Playlist to Song,
+  ListeningHistory to Song,
+}
+
+relationship OneToOne {
+  LikedSongs to Song,
+}
+
+relationship ManyToOne {
+  Song to Album,
+  Song to Genre,
+  Song to Artist
+}

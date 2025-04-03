@@ -31,14 +31,6 @@
           <dd>
             <span>{{ messageRef.seen }}</span>
           </dd>
-          <dt><span>Sender</span></dt>
-          <dd>
-            <span>{{ messageRef.sender?.login }}</span>
-          </dd>
-          <dt><span>Recipient</span></dt>
-          <dd>
-            <span>{{ messageRef.recipient?.login }}</span>
-          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

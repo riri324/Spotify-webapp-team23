@@ -26,14 +26,14 @@ class PlaylistTest {
     }
 
     @Test
-    void songsTest() {
+    void songTest() {
         Playlist playlist = getPlaylistRandomSampleGenerator();
         Song songBack = getSongRandomSampleGenerator();
 
-        playlist.addSongs(songBack);
+        playlist.addSong(songBack);
         assertThat(playlist.getSongs()).containsOnly(songBack);
 
-        playlist.removeSongs(songBack);
+        playlist.removeSong(songBack);
         assertThat(playlist.getSongs()).doesNotContain(songBack);
 
         playlist.songs(new HashSet<>(Set.of(songBack)));

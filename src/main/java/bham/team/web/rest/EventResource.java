@@ -70,10 +70,8 @@ public class EventResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Event> updateEvent(
-        @PathVariable(value = "id", required = false) final Integer id,
-        @Valid @RequestBody Event event
-    ) throws URISyntaxException {
+    public ResponseEntity<Event> updateEvent(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Event event)
+        throws URISyntaxException {
         LOG.debug("REST request to update Event : {}, {}", id, event);
         if (event.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -105,7 +103,7 @@ public class EventResource {
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Event> partialUpdateEvent(
-        @PathVariable(value = "id", required = false) final Integer id,
+        @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Event event
     ) throws URISyntaxException {
         LOG.debug("REST request to partial update Event partially : {}, {}", id, event);
@@ -123,8 +121,8 @@ public class EventResource {
         Optional<Event> result = eventRepository
             .findById(event.getId())
             .map(existingEvent -> {
-                if (event.getArtistId() != null) {
-                    existingEvent.setArtistId(event.getArtistId());
+                if (event.getEventID() != null) {
+                    existingEvent.setEventID(event.getEventID());
                 }
                 if (event.getDatetime() != null) {
                     existingEvent.setDatetime(event.getDatetime());
@@ -176,7 +174,7 @@ public class EventResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the event, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Event> getEvent(@PathVariable("id") Integer id) {
+    public ResponseEntity<Event> getEvent(@PathVariable("id") Long id) {
         LOG.debug("REST request to get Event : {}", id);
         Optional<Event> event = eventRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(event);
@@ -189,7 +187,7 @@ public class EventResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEvent(@PathVariable("id") Integer id) {
+    public ResponseEntity<Void> deleteEvent(@PathVariable("id") Long id) {
         LOG.debug("REST request to delete Event : {}", id);
         eventRepository.deleteById(id);
         return ResponseEntity.noContent()

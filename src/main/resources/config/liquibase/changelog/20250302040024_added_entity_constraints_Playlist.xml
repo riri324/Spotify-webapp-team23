@@ -11,24 +11,17 @@
     <changeSet id="20250302040024-2" author="jhipster">
 
         <addForeignKeyConstraint baseColumnNames="playlist_id"
-                                 baseTableName="rel_playlist__songs"
-                                 constraintName="fk_rel_playlist__songs__playlist_id"
+                                 baseTableName="rel_playlist__song"
+                                 constraintName="fk_rel_playlist__song__playlist_id"
                                  referencedColumnNames="id"
                                  referencedTableName="playlist"
                                  />
 
-        <addForeignKeyConstraint baseColumnNames="songs_id"
-                                 baseTableName="rel_playlist__songs"
-                                 constraintName="fk_rel_playlist__songs__songs_id"
+        <addForeignKeyConstraint baseColumnNames="song_id"
+                                 baseTableName="rel_playlist__song"
+                                 constraintName="fk_rel_playlist__song__song_id"
                                  referencedColumnNames="id"
                                  referencedTableName="song"
-                                 />
-
-        <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="playlist"
-                                 constraintName="fk_playlist__user_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_user"
                                  />
     </changeSet>
 </databaseChangeLog>

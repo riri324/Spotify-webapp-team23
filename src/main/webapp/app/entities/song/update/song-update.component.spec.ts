@@ -12,6 +12,8 @@ import { IArtist } from 'app/entities/artist/artist.model';
 import { ArtistService } from 'app/entities/artist/service/artist.service';
 import { IPlaylist } from 'app/entities/playlist/playlist.model';
 import { PlaylistService } from 'app/entities/playlist/service/playlist.service';
+import { IListeningHistory } from 'app/entities/listening-history/listening-history.model';
+import { ListeningHistoryService } from 'app/entities/listening-history/service/listening-history.service';
 import { ISong } from '../song.model';
 import { SongService } from '../service/song.service';
 import { SongFormService } from './song-form.service';
@@ -28,6 +30,7 @@ describe('Song Management Update Component', () => {
   let genreService: GenreService;
   let artistService: ArtistService;
   let playlistService: PlaylistService;
+  let listeningHistoryService: ListeningHistoryService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -54,6 +57,7 @@ describe('Song Management Update Component', () => {
     genreService = TestBed.inject(GenreService);
     artistService = TestBed.inject(ArtistService);
     playlistService = TestBed.inject(PlaylistService);
+    listeningHistoryService = TestBed.inject(ListeningHistoryService);
 
     comp = fixture.componentInstance;
   });
@@ -61,10 +65,10 @@ describe('Song Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Album query and add missing value', () => {
       const song: ISong = { id: 456 };
-      const album: IAlbum = { id: 28356 };
+      const album: IAlbum = { id: 21714 };
       song.album = album;
 
-      const albumCollection: IAlbum[] = [{ id: 30327 }];
+      const albumCollection: IAlbum[] = [{ id: 20260 }];
       jest.spyOn(albumService, 'query').mockReturnValue(of(new HttpResponse({ body: albumCollection })));
       const additionalAlbums = [album];
       const expectedCollection: IAlbum[] = [...additionalAlbums, ...albumCollection];
@@ -83,10 +87,10 @@ describe('Song Management Update Component', () => {
 
     it('Should call Genre query and add missing value', () => {
       const song: ISong = { id: 456 };
-      const genre: IGenre = { id: 1940 };
+      const genre: IGenre = { id: 9159 };
       song.genre = genre;
 
-      const genreCollection: IGenre[] = [{ id: 27875 }];
+      const genreCollection: IGenre[] = [{ id: 31153 }];
       jest.spyOn(genreService, 'query').mockReturnValue(of(new HttpResponse({ body: genreCollection })));
       const additionalGenres = [genre];
       const expectedCollection: IGenre[] = [...additionalGenres, ...genreCollection];
@@ -105,10 +109,10 @@ describe('Song Management Update Component', () => {
 
     it('Should call Artist query and add missing value', () => {
       const song: ISong = { id: 456 };
-      const artist: IArtist = { id: 16037 };
+      const artist: IArtist = { id: 24076 };
       song.artist = artist;
 
-      const artistCollection: IArtist[] = [{ id: 8607 }];
+      const artistCollection: IArtist[] = [{ id: 3634 }];
       jest.spyOn(artistService, 'query').mockReturnValue(of(new HttpResponse({ body: artistCollection })));
       const additionalArtists = [artist];
       const expectedCollection: IArtist[] = [...additionalArtists, ...artistCollection];
@@ -127,10 +131,10 @@ describe('Song Management Update Component', () => {
 
     it('Should call Playlist query and add missing value', () => {
       const song: ISong = { id: 456 };
-      const playlists: IPlaylist[] = [{ id: 31111 }];
+      const playlists: IPlaylist[] = [{ id: 14186 }];
       song.playlists = playlists;
 
-      const playlistCollection: IPlaylist[] = [{ id: 13290 }];
+      const playlistCollection: IPlaylist[] = [{ id: 15551 }];
       jest.spyOn(playlistService, 'query').mockReturnValue(of(new HttpResponse({ body: playlistCollection })));
       const additionalPlaylists = [...playlists];
       const expectedCollection: IPlaylist[] = [...additionalPlaylists, ...playlistCollection];
@@ -147,16 +151,40 @@ describe('Song Management Update Component', () => {
       expect(comp.playlistsSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call ListeningHistory query and add missing value', () => {
+      const song: ISong = { id: 456 };
+      const listeningHistories: IListeningHistory[] = [{ id: 14378 }];
+      song.listeningHistories = listeningHistories;
+
+      const listeningHistoryCollection: IListeningHistory[] = [{ id: 9255 }];
+      jest.spyOn(listeningHistoryService, 'query').mockReturnValue(of(new HttpResponse({ body: listeningHistoryCollection })));
+      const additionalListeningHistories = [...listeningHistories];
+      const expectedCollection: IListeningHistory[] = [...additionalListeningHistories, ...listeningHistoryCollection];
+      jest.spyOn(listeningHistoryService, 'addListeningHistoryToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ song });
+      comp.ngOnInit();
+
+      expect(listeningHistoryService.query).toHaveBeenCalled();
+      expect(listeningHistoryService.addListeningHistoryToCollectionIfMissing).toHaveBeenCalledWith(
+        listeningHistoryCollection,
+        ...additionalListeningHistories.map(expect.objectContaining),
+      );
+      expect(comp.listeningHistoriesSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const song: ISong = { id: 456 };
-      const album: IAlbum = { id: 26740 };
+      const album: IAlbum = { id: 31202 };
       song.album = album;
-      const genre: IGenre = { id: 21554 };
+      const genre: IGenre = { id: 6878 };
       song.genre = genre;
-      const artist: IArtist = { id: 20807 };
+      const artist: IArtist = { id: 29930 };
       song.artist = artist;
-      const playlists: IPlaylist = { id: 27168 };
-      song.playlists = [playlists];
+      const playlist: IPlaylist = { id: 15253 };
+      song.playlists = [playlist];
+      const listeningHistory: IListeningHistory = { id: 30099 };
+      song.listeningHistories = [listeningHistory];
 
       activatedRoute.data = of({ song });
       comp.ngOnInit();
@@ -164,7 +192,8 @@ describe('Song Management Update Component', () => {
       expect(comp.albumsSharedCollection).toContain(album);
       expect(comp.genresSharedCollection).toContain(genre);
       expect(comp.artistsSharedCollection).toContain(artist);
-      expect(comp.playlistsSharedCollection).toContain(playlists);
+      expect(comp.playlistsSharedCollection).toContain(playlist);
+      expect(comp.listeningHistoriesSharedCollection).toContain(listeningHistory);
       expect(comp.song).toEqual(song);
     });
   });
@@ -275,6 +304,16 @@ describe('Song Management Update Component', () => {
         jest.spyOn(playlistService, 'comparePlaylist');
         comp.comparePlaylist(entity, entity2);
         expect(playlistService.comparePlaylist).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareListeningHistory', () => {
+      it('Should forward to listeningHistoryService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(listeningHistoryService, 'compareListeningHistory');
+        comp.compareListeningHistory(entity, entity2);
+        expect(listeningHistoryService.compareListeningHistory).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

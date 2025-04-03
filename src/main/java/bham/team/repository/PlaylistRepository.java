@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,30 +16,15 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PlaylistRepository extends PlaylistRepositoryWithBagRelationships, JpaRepository<Playlist, Long> {
-    @Query("select playlist from Playlist playlist where playlist.user.login = ?#{authentication.name}")
-    List<Playlist> findByUserIsCurrentUser();
-
     default Optional<Playlist> findOneWithEagerRelationships(Long id) {
-        return this.fetchBagRelationships(this.findOneWithToOneRelationships(id));
+        return this.fetchBagRelationships(this.findById(id));
     }
 
     default List<Playlist> findAllWithEagerRelationships() {
-        return this.fetchBagRelationships(this.findAllWithToOneRelationships());
+        return this.fetchBagRelationships(this.findAll());
     }
 
     default Page<Playlist> findAllWithEagerRelationships(Pageable pageable) {
-        return this.fetchBagRelationships(this.findAllWithToOneRelationships(pageable));
+        return this.fetchBagRelationships(this.findAll(pageable));
     }
-
-    @Query(
-        value = "select playlist from Playlist playlist left join fetch playlist.user",
-        countQuery = "select count(playlist) from Playlist playlist"
-    )
-    Page<Playlist> findAllWithToOneRelationships(Pageable pageable);
-
-    @Query("select playlist from Playlist playlist left join fetch playlist.user")
-    List<Playlist> findAllWithToOneRelationships();
-
-    @Query("select playlist from Playlist playlist left join fetch playlist.user where playlist.id =:id")
-    Optional<Playlist> findOneWithToOneRelationships(@Param("id") Long id);
 }

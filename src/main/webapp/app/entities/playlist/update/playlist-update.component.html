@@ -86,11 +86,11 @@
         </div>
 
         <div class="mb-3">
-          <label for="field_songs">Songs</label>
+          <label for="field_songs">Song</label>
           <select
             class="form-control"
             id="field_songs"
-            data-cy="songs"
+            data-cy="song"
             multiple
             name="songs"
             formControlName="songs"
@@ -101,25 +101,6 @@
             }
           </select>
         </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_user">User</label>
-          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
-            @if (!editForm.get('user')!.value) {
-              <option [ngValue]="null" selected></option>
-            }
-            @for (userOption of usersSharedCollection; track $index) {
-              <option [ngValue]="userOption">{{ userOption.login }}</option>
-            }
-          </select>
-        </div>
-        @if (editForm.get(['user'])!.invalid && (editForm.get(['user'])!.dirty || editForm.get(['user'])!.touched)) {
-          <div>
-            @if (editForm.get(['user'])?.errors?.required) {
-              <small class="form-text text-danger">This field is required.</small>
-            }
-          </div>
-        }
       </div>
 
       <div>

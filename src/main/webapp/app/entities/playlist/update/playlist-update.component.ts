@@ -9,10 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ISong } from 'app/entities/song/song.model';
 import { SongService } from 'app/entities/song/service/song.service';
-import { IUser } from 'app/entities/user/user.model';
-import { UserService } from 'app/entities/user/service/user.service';
-import { PlaylistService } from '../service/playlist.service';
 import { IPlaylist } from '../playlist.model';
+import { PlaylistService } from '../service/playlist.service';
 import { PlaylistFormGroup, PlaylistFormService } from './playlist-form.service';
 
 @Component({
@@ -26,20 +24,16 @@ export class PlaylistUpdateComponent implements OnInit {
   playlist: IPlaylist | null = null;
 
   songsSharedCollection: ISong[] = [];
-  usersSharedCollection: IUser[] = [];
 
   protected playlistService = inject(PlaylistService);
   protected playlistFormService = inject(PlaylistFormService);
   protected songService = inject(SongService);
-  protected userService = inject(UserService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: PlaylistFormGroup = this.playlistFormService.createPlaylistFormGroup();
 
   compareSong = (o1: ISong | null, o2: ISong | null): boolean => this.songService.compareSong(o1, o2);
-
-  compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ playlist }) => {
@@ -93,7 +87,6 @@ export class PlaylistUpdateComponent implements OnInit {
       this.songsSharedCollection,
       ...(playlist.songs ?? []),
     );
-    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, playlist.user);
   }
 
   protected loadRelationshipsOptions(): void {
@@ -102,11 +95,5 @@ export class PlaylistUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<ISong[]>) => res.body ?? []))
       .pipe(map((songs: ISong[]) => this.songService.addSongToCollectionIfMissing<ISong>(songs, ...(this.playlist?.songs ?? []))))
       .subscribe((songs: ISong[]) => (this.songsSharedCollection = songs));
-
-    this.userService
-      .query()
-      .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
-      .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.playlist?.user)))
-      .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
   }
 }

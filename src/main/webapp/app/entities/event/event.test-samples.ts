@@ -3,34 +3,48 @@ import dayjs from 'dayjs/esm';
 import { IEvent, NewEvent } from './event.model';
 
 export const sampleWithRequiredData: IEvent = {
-  id: 6045,
-  artistId: 4852,
+  id: 26911,
+  eventID: 26629,
+  datetime: dayjs('2025-02-05T03:00'),
+  title: 'until',
+  venueName: 'though under independence',
+  city: 'Myrticeburgh',
+  region: 'against',
+  country: 'Cayman Islands',
 };
 
 export const sampleWithPartialData: IEvent = {
-  id: 6972,
-  artistId: 29015,
-  datetime: dayjs('2025-02-05T12:51'),
-  title: 'till smoothly provider',
-  city: 'Carrollbury',
-  region: 'crowded until',
-  country: 'Sudan',
+  id: 9260,
+  eventID: 32532,
+  datetime: dayjs('2025-02-05T05:10'),
+  description: 'degrease underneath yearningly',
+  title: 'heartfelt dock culture',
+  venueName: 'fair',
+  city: 'New Anabelle',
+  region: 'ew ha psst',
+  country: 'Mexico',
 };
 
 export const sampleWithFullData: IEvent = {
-  id: 3027,
-  artistId: 19183,
-  datetime: dayjs('2025-02-05T00:03'),
-  description: 'downshift supposing brace',
-  title: 'intelligent lean',
-  venueName: 'wedge carefully',
-  city: 'East Corbin',
-  region: 'close and',
-  country: 'Jamaica',
+  id: 12858,
+  eventID: 11828,
+  datetime: dayjs('2025-02-05T01:18'),
+  description: 'wordy mixture how',
+  title: 'exonerate',
+  venueName: 'what why absent',
+  city: 'Bartolettihaven',
+  region: 'meanwhile pace',
+  country: "Lao People's Democratic Republic",
 };
 
 export const sampleWithNewData: NewEvent = {
-  artistId: 14842,
+  eventID: 13374,
+  datetime: dayjs('2025-02-05T16:42'),
+  title: 'barring before up',
+  venueName: 'unearth',
+  city: 'New York',
+  region: 'through splosh',
+  country: 'Syrian Arab Republic',
   id: null,
 };
 

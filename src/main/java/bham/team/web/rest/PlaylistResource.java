@@ -1,9 +1,7 @@
 package bham.team.web.rest;
 
 import bham.team.domain.Playlist;
-import bham.team.domain.Song;
 import bham.team.repository.PlaylistRepository;
-import bham.team.repository.SongRepository;
 import bham.team.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -37,11 +35,9 @@ public class PlaylistResource {
     private String applicationName;
 
     private final PlaylistRepository playlistRepository;
-    private final SongRepository songRepository;
 
-    public PlaylistResource(PlaylistRepository playlistRepository, SongRepository songRepository) {
+    public PlaylistResource(PlaylistRepository playlistRepository) {
         this.playlistRepository = playlistRepository;
-        this.songRepository = songRepository;
     }
 
     /**
@@ -192,41 +188,5 @@ public class PlaylistResource {
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
-    }
-
-    /**
-     * {@code POST  /playlists/:id/songs/:songId} : Add a song to a playlist.
-     *
-     * @param id the id of the playlist.
-     * @param songId the id of the song to add.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated playlist,
-     * or with status {@code 404 (Not Found)} if the playlist or song is not found.
-     */
-    @PostMapping("/{id}/songs/{songId}")
-    public ResponseEntity<Playlist> addSongToPlaylist(
-        @PathVariable("id") Long id,
-        @PathVariable("songId") Long songId
-    ) {
-        LOG.debug("REST request to add Song : {} to Playlist : {}", songId, id);
-
-        Optional<Playlist> playlistOptional = playlistRepository.findOneWithEagerRelationships(id);
-        Optional<Song> songOptional = songRepository.findById(songId);
-
-        if (playlistOptional.isPresent() && songOptional.isPresent()) {
-            Playlist playlist = playlistOptional.get();
-            Song song = songOptional.get();
-
-            // Check if the song is already in the playlist to avoid duplicates
-            if (!playlist.getSongs().contains(song)) {
-                playlist.addSongs(song);
-                playlistRepository.save(playlist);
-            }
-
-            return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, id.toString()))
-                .body(playlist);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 }

@@ -32,18 +32,10 @@
   "relationships": [
     {
       "otherEntityName": "song",
-      "otherEntityRelationshipName": "playlists",
-      "relationshipName": "songs",
+      "otherEntityRelationshipName": "playlist",
+      "relationshipName": "song",
       "relationshipSide": "left",
       "relationshipType": "many-to-many"
-    },
-    {
-      "otherEntityField": "login",
-      "otherEntityName": "user",
-      "relationshipName": "user",
-      "relationshipSide": "left",
-      "relationshipType": "many-to-one",
-      "relationshipValidateRules": ["required"]
     }
   ],
   "searchEngine": "no"

@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 import SharedModule from 'app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -10,8 +10,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
-import { IUser } from 'app/entities/user/user.model';
-import { UserService } from 'app/entities/user/service/user.service';
 import { MessageService } from '../service/message.service';
 import { IMessage } from '../message.model';
 import { MessageFormGroup, MessageFormService } from './message-form.service';
@@ -26,19 +24,14 @@ export class MessageUpdateComponent implements OnInit {
   isSaving = false;
   message: IMessage | null = null;
 
-  usersSharedCollection: IUser[] = [];
-
   protected dataUtils = inject(DataUtils);
   protected eventManager = inject(EventManager);
   protected messageService = inject(MessageService);
   protected messageFormService = inject(MessageFormService);
-  protected userService = inject(UserService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: MessageFormGroup = this.messageFormService.createMessageFormGroup();
-
-  compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ message }) => {
@@ -46,8 +39,6 @@ export class MessageUpdateComponent implements OnInit {
       if (message) {
         this.updateForm(message);
       }
-
-      this.loadRelationshipsOptions();
     });
   }
 
@@ -102,21 +93,5 @@ export class MessageUpdateComponent implements OnInit {
   protected updateForm(message: IMessage): void {
     this.message = message;
     this.messageFormService.resetForm(this.editForm, message);
-
-    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(
-      this.usersSharedCollection,
-      message.sender,
-      message.recipient,
-    );
-  }
-
-  protected loadRelationshipsOptions(): void {
-    this.userService
-      .query()
-      .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
-      .pipe(
-        map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.message?.sender, this.message?.recipient)),
-      )
-      .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
   }
 }

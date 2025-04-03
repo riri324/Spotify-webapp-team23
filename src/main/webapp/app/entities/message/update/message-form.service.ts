@@ -22,8 +22,6 @@ type MessageFormGroupContent = {
   content: FormControl<IMessage['content']>;
   sent: FormControl<IMessage['sent']>;
   seen: FormControl<IMessage['seen']>;
-  sender: FormControl<IMessage['sender']>;
-  recipient: FormControl<IMessage['recipient']>;
 };
 
 export type MessageFormGroup = FormGroup<MessageFormGroupContent>;
@@ -44,7 +42,7 @@ export class MessageFormService {
         },
       ),
       subject: new FormControl(messageRawValue.subject, {
-        validators: [Validators.required, Validators.minLength(1), Validators.maxLength(20)],
+        validators: [Validators.required],
       }),
       content: new FormControl(messageRawValue.content, {
         validators: [Validators.required],
@@ -53,8 +51,6 @@ export class MessageFormService {
         validators: [Validators.required],
       }),
       seen: new FormControl(messageRawValue.seen),
-      sender: new FormControl(messageRawValue.sender),
-      recipient: new FormControl(messageRawValue.recipient),
     });
   }
 

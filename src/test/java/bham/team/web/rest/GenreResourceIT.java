@@ -291,7 +291,7 @@ class GenreResourceIT {
         Genre partialUpdatedGenre = new Genre();
         partialUpdatedGenre.setId(genre.getId());
 
-        partialUpdatedGenre.genreID(UPDATED_GENRE_ID).songGenre(UPDATED_SONG_GENRE);
+        partialUpdatedGenre.genreID(UPDATED_GENRE_ID);
 
         restGenreMockMvc
             .perform(

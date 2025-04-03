@@ -10,9 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import bham.team.IntegrationTest;
 import bham.team.domain.Playlist;
-import bham.team.domain.User;
 import bham.team.repository.PlaylistRepository;
-import bham.team.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
@@ -66,9 +64,6 @@ class PlaylistResourceIT {
     @Autowired
     private PlaylistRepository playlistRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
     @Mock
     private PlaylistRepository playlistRepositoryMock;
 
@@ -88,18 +83,12 @@ class PlaylistResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Playlist createEntity(EntityManager em) {
-        Playlist playlist = new Playlist()
+    public static Playlist createEntity() {
+        return new Playlist()
             .playlistID(DEFAULT_PLAYLIST_ID)
             .name(DEFAULT_NAME)
             .description(DEFAULT_DESCRIPTION)
             .isPublic(DEFAULT_IS_PUBLIC);
-        // Add required entity
-        User user = UserResourceIT.createEntity();
-        em.persist(user);
-        em.flush();
-        playlist.setUser(user);
-        return playlist;
     }
 
     /**
@@ -108,23 +97,17 @@ class PlaylistResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Playlist createUpdatedEntity(EntityManager em) {
-        Playlist updatedPlaylist = new Playlist()
+    public static Playlist createUpdatedEntity() {
+        return new Playlist()
             .playlistID(UPDATED_PLAYLIST_ID)
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .isPublic(UPDATED_IS_PUBLIC);
-        // Add required entity
-        User user = UserResourceIT.createEntity();
-        em.persist(user);
-        em.flush();
-        updatedPlaylist.setUser(user);
-        return updatedPlaylist;
     }
 
     @BeforeEach
     public void initTest() {
-        playlist = createEntity(em);
+        playlist = createEntity();
     }
 
     @AfterEach
@@ -372,7 +355,7 @@ class PlaylistResourceIT {
         Playlist partialUpdatedPlaylist = new Playlist();
         partialUpdatedPlaylist.setId(playlist.getId());
 
-        partialUpdatedPlaylist.name(UPDATED_NAME);
+        partialUpdatedPlaylist.playlistID(UPDATED_PLAYLIST_ID).name(UPDATED_NAME);
 
         restPlaylistMockMvc
             .perform(

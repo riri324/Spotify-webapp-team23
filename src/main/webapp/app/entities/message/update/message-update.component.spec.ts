@@ -4,8 +4,6 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, from, of } from 'rxjs';
 
-import { IUser } from 'app/entities/user/user.model';
-import { UserService } from 'app/entities/user/service/user.service';
 import { MessageService } from '../service/message.service';
 import { IMessage } from '../message.model';
 import { MessageFormService } from './message-form.service';
@@ -18,7 +16,6 @@ describe('Message Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let messageFormService: MessageFormService;
   let messageService: MessageService;
-  let userService: UserService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -41,48 +38,17 @@ describe('Message Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     messageFormService = TestBed.inject(MessageFormService);
     messageService = TestBed.inject(MessageService);
-    userService = TestBed.inject(UserService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call User query and add missing value', () => {
-      const message: IMessage = { id: 456 };
-      const sender: IUser = { id: 26461 };
-      message.sender = sender;
-      const recipient: IUser = { id: 17741 };
-      message.recipient = recipient;
-
-      const userCollection: IUser[] = [{ id: 10020 }];
-      jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
-      const additionalUsers = [sender, recipient];
-      const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
-      jest.spyOn(userService, 'addUserToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ message });
-      comp.ngOnInit();
-
-      expect(userService.query).toHaveBeenCalled();
-      expect(userService.addUserToCollectionIfMissing).toHaveBeenCalledWith(
-        userCollection,
-        ...additionalUsers.map(expect.objectContaining),
-      );
-      expect(comp.usersSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should update editForm', () => {
       const message: IMessage = { id: 456 };
-      const sender: IUser = { id: 9804 };
-      message.sender = sender;
-      const recipient: IUser = { id: 8201 };
-      message.recipient = recipient;
 
       activatedRoute.data = of({ message });
       comp.ngOnInit();
 
-      expect(comp.usersSharedCollection).toContain(sender);
-      expect(comp.usersSharedCollection).toContain(recipient);
       expect(comp.message).toEqual(message);
     });
   });
@@ -152,18 +118,6 @@ describe('Message Management Update Component', () => {
       expect(messageService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('Compare relationships', () => {
-    describe('compareUser', () => {
-      it('Should forward to userService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(userService, 'compareUser');
-        comp.compareUser(entity, entity2);
-        expect(userService.compareUser).toHaveBeenCalledWith(entity, entity2);
-      });
     });
   });
 });

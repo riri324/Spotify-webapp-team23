@@ -2,6 +2,7 @@ package bham.team.domain;
 
 import static bham.team.domain.AlbumTestSamples.*;
 import static bham.team.domain.ArtistTestSamples.*;
+import static bham.team.domain.EventTestSamples.*;
 import static bham.team.domain.SongTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,15 +28,37 @@ class ArtistTest {
     }
 
     @Test
-    void albumsTest() {
+    void eventTest() {
+        Artist artist = getArtistRandomSampleGenerator();
+        Event eventBack = getEventRandomSampleGenerator();
+
+        artist.addEvent(eventBack);
+        assertThat(artist.getEvents()).containsOnly(eventBack);
+        assertThat(eventBack.getArtist()).isEqualTo(artist);
+
+        artist.removeEvent(eventBack);
+        assertThat(artist.getEvents()).doesNotContain(eventBack);
+        assertThat(eventBack.getArtist()).isNull();
+
+        artist.events(new HashSet<>(Set.of(eventBack)));
+        assertThat(artist.getEvents()).containsOnly(eventBack);
+        assertThat(eventBack.getArtist()).isEqualTo(artist);
+
+        artist.setEvents(new HashSet<>());
+        assertThat(artist.getEvents()).doesNotContain(eventBack);
+        assertThat(eventBack.getArtist()).isNull();
+    }
+
+    @Test
+    void albumTest() {
         Artist artist = getArtistRandomSampleGenerator();
         Album albumBack = getAlbumRandomSampleGenerator();
 
-        artist.addAlbums(albumBack);
+        artist.addAlbum(albumBack);
         assertThat(artist.getAlbums()).containsOnly(albumBack);
         assertThat(albumBack.getArtist()).isEqualTo(artist);
 
-        artist.removeAlbums(albumBack);
+        artist.removeAlbum(albumBack);
         assertThat(artist.getAlbums()).doesNotContain(albumBack);
         assertThat(albumBack.getArtist()).isNull();
 
@@ -49,15 +72,15 @@ class ArtistTest {
     }
 
     @Test
-    void songsTest() {
+    void songTest() {
         Artist artist = getArtistRandomSampleGenerator();
         Song songBack = getSongRandomSampleGenerator();
 
-        artist.addSongs(songBack);
+        artist.addSong(songBack);
         assertThat(artist.getSongs()).containsOnly(songBack);
         assertThat(songBack.getArtist()).isEqualTo(artist);
 
-        artist.removeSongs(songBack);
+        artist.removeSong(songBack);
         assertThat(artist.getSongs()).doesNotContain(songBack);
         assertThat(songBack.getArtist()).isNull();
 

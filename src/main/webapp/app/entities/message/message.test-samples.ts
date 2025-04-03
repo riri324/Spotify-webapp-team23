@@ -3,31 +3,31 @@ import dayjs from 'dayjs/esm';
 import { IMessage, NewMessage } from './message.model';
 
 export const sampleWithRequiredData: IMessage = {
-  id: 4952,
-  subject: 'shrill incidentally ',
+  id: 6933,
+  subject: 'duh correctly excepting',
   content: '../fake-data/blob/hipster.txt',
   sent: dayjs('2025-03-12'),
 };
 
 export const sampleWithPartialData: IMessage = {
-  id: 24783,
-  subject: 'satirise',
+  id: 500,
+  subject: 'plus turret',
   content: '../fake-data/blob/hipster.txt',
   sent: dayjs('2025-03-11'),
 };
 
 export const sampleWithFullData: IMessage = {
-  id: 23445,
-  subject: 'very',
+  id: 30849,
+  subject: 'mathematics',
   content: '../fake-data/blob/hipster.txt',
-  sent: dayjs('2025-03-12'),
+  sent: dayjs('2025-03-11'),
   seen: true,
 };
 
 export const sampleWithNewData: NewMessage = {
-  subject: 'unsightly zowie',
+  subject: 'recompense towards emphasize',
   content: '../fake-data/blob/hipster.txt',
-  sent: dayjs('2025-03-11'),
+  sent: dayjs('2025-03-12'),
   id: null,
 };
 

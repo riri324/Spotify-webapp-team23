@@ -1,31 +1,34 @@
 import { IUserPreference, NewUserPreference } from './user-preference.model';
 
 export const sampleWithRequiredData: IUserPreference = {
-  id: 13911,
+  id: 14965,
+  favoriteGenre: 'via quarrelsomely',
+  musicPurpose: 'victoriously',
 };
 
 export const sampleWithPartialData: IUserPreference = {
-  id: 26741,
-  favoriteGenre: 'hmph pish',
-  musicPurpose: 'outrun vice',
-  vocalPreference: 'access yum pigsty',
-  songLength: 'underneath forgo',
-  lyricsImportance: 'below',
+  id: 25652,
+  favoriteGenre: 'deadly culminate tro',
+  musicPurpose: 'delightfully never once',
+  listeningTime: 'disposer cross usefully',
+  lyricsImportance: 'unsung um utterly',
 };
 
 export const sampleWithFullData: IUserPreference = {
-  id: 23143,
-  favoriteGenre: 'stool',
-  musicPurpose: 'editor',
-  musicMood: 'coaxingly hmph',
-  vocalPreference: 'reproachfully regarding',
-  listeningTime: 'outfox',
-  listeningPattern: 'jive exaggerate',
-  songLength: 'wherever',
-  lyricsImportance: 'relaunch solidly what',
+  id: 32036,
+  favoriteGenre: 'whenever',
+  musicPurpose: 'ick because brr',
+  musicMood: 'service phooey nippy',
+  vocalPreference: 'kindheartedly that hence',
+  listeningTime: 'lashes trek',
+  listeningPattern: 'unscramble',
+  songLength: 'heighten',
+  lyricsImportance: 'phew',
 };
 
 export const sampleWithNewData: NewUserPreference = {
+  favoriteGenre: 'from',
+  musicPurpose: 'for',
   id: null,
 };
 

@@ -4,6 +4,8 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, from, of } from 'rxjs';
 
+import { IArtist } from 'app/entities/artist/artist.model';
+import { ArtistService } from 'app/entities/artist/service/artist.service';
 import { EventService } from '../service/event.service';
 import { IEvent } from '../event.model';
 import { EventFormService } from './event-form.service';
@@ -16,6 +18,7 @@ describe('Event Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let eventFormService: EventFormService;
   let eventService: EventService;
+  let artistService: ArtistService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -38,17 +41,43 @@ describe('Event Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     eventFormService = TestBed.inject(EventFormService);
     eventService = TestBed.inject(EventService);
+    artistService = TestBed.inject(ArtistService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should update editForm', () => {
+    it('Should call Artist query and add missing value', () => {
       const event: IEvent = { id: 456 };
+      const artist: IArtist = { id: 27585 };
+      event.artist = artist;
+
+      const artistCollection: IArtist[] = [{ id: 15834 }];
+      jest.spyOn(artistService, 'query').mockReturnValue(of(new HttpResponse({ body: artistCollection })));
+      const additionalArtists = [artist];
+      const expectedCollection: IArtist[] = [...additionalArtists, ...artistCollection];
+      jest.spyOn(artistService, 'addArtistToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ event });
       comp.ngOnInit();
 
+      expect(artistService.query).toHaveBeenCalled();
+      expect(artistService.addArtistToCollectionIfMissing).toHaveBeenCalledWith(
+        artistCollection,
+        ...additionalArtists.map(expect.objectContaining),
+      );
+      expect(comp.artistsSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should update editForm', () => {
+      const event: IEvent = { id: 456 };
+      const artist: IArtist = { id: 14248 };
+      event.artist = artist;
+
+      activatedRoute.data = of({ event });
+      comp.ngOnInit();
+
+      expect(comp.artistsSharedCollection).toContain(artist);
       expect(comp.event).toEqual(event);
     });
   });
@@ -118,6 +147,18 @@ describe('Event Management Update Component', () => {
       expect(eventService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Compare relationships', () => {
+    describe('compareArtist', () => {
+      it('Should forward to artistService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(artistService, 'compareArtist');
+        comp.compareArtist(entity, entity2);
+        expect(artistService.compareArtist).toHaveBeenCalledWith(entity, entity2);
+      });
     });
   });
 });

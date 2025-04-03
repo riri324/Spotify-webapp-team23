@@ -112,14 +112,6 @@ describe('Message Management Component', () => {
     );
   });
 
-  it('should load a page', () => {
-    // WHEN
-    comp.navigateToPage(1);
-
-    // THEN
-    expect(routerNavigateSpy).toHaveBeenCalled();
-  });
-
   it('should calculate the sort attribute for an id', () => {
     // WHEN
     comp.ngOnInit();

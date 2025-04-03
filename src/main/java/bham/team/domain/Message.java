@@ -25,8 +25,7 @@ public class Message implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "subject", length = 20, nullable = false)
+    @Column(name = "subject", nullable = false)
     private String subject;
 
     @Lob
@@ -39,12 +38,6 @@ public class Message implements Serializable {
 
     @Column(name = "seen")
     private Boolean seen;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User sender;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User recipient;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -111,32 +104,6 @@ public class Message implements Serializable {
 
     public void setSeen(Boolean seen) {
         this.seen = seen;
-    }
-
-    public User getSender() {
-        return this.sender;
-    }
-
-    public void setSender(User user) {
-        this.sender = user;
-    }
-
-    public Message sender(User user) {
-        this.setSender(user);
-        return this;
-    }
-
-    public User getRecipient() {
-        return this.recipient;
-    }
-
-    public void setRecipient(User user) {
-        this.recipient = user;
-    }
-
-    public Message recipient(User user) {
-        this.setRecipient(user);
-        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

@@ -1,39 +1,34 @@
 import { ISong, NewSong } from './song.model';
 
 export const sampleWithRequiredData: ISong = {
-  id: 10261,
-  songId: 'although bus',
-  trackName: 'joshingly',
+  id: 8791,
+  songId: 'apostrophize as enhance',
+  trackName: 'gratefully mmm',
 };
 
 export const sampleWithPartialData: ISong = {
-  id: 14934,
-  songId: 'sweatshop',
-  trackName: 'qua yowza',
-  speechiness: 9906.4,
-  acousticness: 25509.15,
-  liveness: 12613.88,
-  valence: 22868.73,
-  tempo: 30458.71,
+  id: 8969,
+  songId: 'fiddle upbeat modulo',
+  trackName: 'hence wedding spectate',
 };
 
 export const sampleWithFullData: ISong = {
-  id: 4568,
-  songId: 'crossly greedily on',
-  trackName: 'only yawningly',
-  danceability: 260.64,
-  energy: 12692.39,
-  speechiness: 11363.26,
-  acousticness: 5651.25,
-  instrumentalness: 7372.66,
-  liveness: 28403.69,
-  valence: 19430.59,
-  tempo: 28531.01,
+  id: 20860,
+  songId: 'alert forage',
+  trackName: 'duh',
+  danceability: 15164.23,
+  energy: 16173.89,
+  speechiness: 18401.53,
+  acousticness: 16517.97,
+  instrumentalness: 7383.98,
+  liveness: 14960.68,
+  valence: 12435.33,
+  tempo: 5414.76,
 };
 
 export const sampleWithNewData: NewSong = {
-  songId: 'even over',
-  trackName: 'our glittering afore',
+  songId: 'finally hydrant',
+  trackName: 'zowie flash worldly',
   id: null,
 };
 

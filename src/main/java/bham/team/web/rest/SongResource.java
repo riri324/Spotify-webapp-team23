@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -165,10 +166,17 @@ public class SongResource {
     /**
      * {@code GET  /songs} : get all the songs.
      *
+     * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of songs in body.
      */
     @GetMapping("")
-    public List<Song> getAllSongs() {
+    public List<Song> getAllSongs(@RequestParam(name = "filter", required = false) String filter) {
+        if ("likedsongs-is-null".equals(filter)) {
+            LOG.debug("REST request to get all Songs where likedSongs is null");
+            return StreamSupport.stream(songRepository.findAll().spliterator(), false)
+                .filter(song -> song.getLikedSongs() == null)
+                .toList();
+        }
         LOG.debug("REST request to get all Songs");
         return songRepository.findAll();
     }
