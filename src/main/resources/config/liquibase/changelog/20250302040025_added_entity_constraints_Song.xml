@@ -10,12 +10,12 @@
     -->
     <changeSet id="20250302040025-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="album_id"
-                                 baseTableName="song"
-                                 constraintName="fk_song__album_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="album"
-                                 />
+<!--        <addForeignKeyConstraint baseColumnNames="album_id"-->
+<!--                                 baseTableName="song"-->
+<!--                                 constraintName="fk_song__album_id"-->
+<!--                                 referencedColumnNames="id"-->
+<!--                                 referencedTableName="album"-->
+<!--                                 />-->
 
         <addForeignKeyConstraint baseColumnNames="genre_id"
                                  baseTableName="song"
