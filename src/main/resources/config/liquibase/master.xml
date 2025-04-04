@@ -37,6 +37,7 @@
     <include file="config/liquibase/changelog/20250228154741_added_entity_constraints_GlobalTopsongs.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250403234356_added_entity_constraints_ListeningHistory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250403234357_added_entity_constraints_LikedSongs.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250312145701_added_entity_constraints_Message.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

@@ -3,11 +3,14 @@
     "changelogDate": "20250312145701"
   },
   "applications": "*",
+  "dto": "mapstruct",
   "fields": [
     {
       "fieldName": "subject",
       "fieldType": "String",
-      "fieldValidateRules": ["required"]
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "20",
+      "fieldValidateRulesMinlength": "1"
     },
     {
       "fieldName": "content",
@@ -25,6 +28,25 @@
     }
   ],
   "name": "Message",
-  "relationships": [],
-  "searchEngine": "no"
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "user",
+      "relationshipName": "sender",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipWithBuiltInEntity": true
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "user",
+      "relationshipName": "recipient",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipWithBuiltInEntity": true
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
 }

@@ -6,8 +6,8 @@ entity Message {
 }
 
 relationship ManyToOne {
-  Message{sender(id)} to User,
-  Message{recipient(id)} to User
+  Message{sender(id)} to User with builtInEntity,
+  Message{recipient(id)} to User with builtInEntity
 }
 
 enum MessageStatus {

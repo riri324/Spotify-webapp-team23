@@ -10,6 +10,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import bham.team.IntegrationTest;
 import bham.team.domain.Message;
 import bham.team.repository.MessageRepository;
+import bham.team.repository.UserRepository;
+import bham.team.service.dto.MessageDTO;
+import bham.team.service.mapper.MessageMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDate;
@@ -59,6 +62,12 @@ class MessageResourceIT {
     private MessageRepository messageRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private MessageMapper messageMapper;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -106,18 +115,20 @@ class MessageResourceIT {
     void createMessage() throws Exception {
         long databaseSizeBeforeCreate = getRepositoryCount();
         // Create the Message
-        var returnedMessage = om.readValue(
+        MessageDTO messageDTO = messageMapper.toDto(message);
+        var returnedMessageDTO = om.readValue(
             restMessageMockMvc
-                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(message)))
+                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(messageDTO)))
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse()
                 .getContentAsString(),
-            Message.class
+            MessageDTO.class
         );
 
         // Validate the Message in the database
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
+        var returnedMessage = messageMapper.toEntity(returnedMessageDTO);
         assertMessageUpdatableFieldsEquals(returnedMessage, getPersistedMessage(returnedMessage));
 
         insertedMessage = returnedMessage;
@@ -128,12 +139,13 @@ class MessageResourceIT {
     void createMessageWithExistingId() throws Exception {
         // Create the Message with an existing ID
         message.setId(1L);
+        MessageDTO messageDTO = messageMapper.toDto(message);
 
         long databaseSizeBeforeCreate = getRepositoryCount();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restMessageMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(message)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(messageDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Message in the database
@@ -148,9 +160,10 @@ class MessageResourceIT {
         message.setSubject(null);
 
         // Create the Message, which fails.
+        MessageDTO messageDTO = messageMapper.toDto(message);
 
         restMessageMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(message)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(messageDTO)))
             .andExpect(status().isBadRequest());
 
         assertSameRepositoryCount(databaseSizeBeforeTest);
@@ -164,9 +177,10 @@ class MessageResourceIT {
         message.setSent(null);
 
         // Create the Message, which fails.
+        MessageDTO messageDTO = messageMapper.toDto(message);
 
         restMessageMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(message)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(messageDTO)))
             .andExpect(status().isBadRequest());
 
         assertSameRepositoryCount(databaseSizeBeforeTest);
@@ -228,12 +242,11 @@ class MessageResourceIT {
         // Disconnect from session so that the updates on updatedMessage are not directly saved in db
         em.detach(updatedMessage);
         updatedMessage.subject(UPDATED_SUBJECT).content(UPDATED_CONTENT).sent(UPDATED_SENT).seen(UPDATED_SEEN);
+        MessageDTO messageDTO = messageMapper.toDto(updatedMessage);
 
         restMessageMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedMessage.getId())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(updatedMessage))
+                put(ENTITY_API_URL_ID, messageDTO.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(messageDTO))
             )
             .andExpect(status().isOk());
 
@@ -248,9 +261,14 @@ class MessageResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         message.setId(longCount.incrementAndGet());
 
+        // Create the Message
+        MessageDTO messageDTO = messageMapper.toDto(message);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restMessageMockMvc
-            .perform(put(ENTITY_API_URL_ID, message.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(message)))
+            .perform(
+                put(ENTITY_API_URL_ID, messageDTO.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(messageDTO))
+            )
             .andExpect(status().isBadRequest());
 
         // Validate the Message in the database
@@ -263,12 +281,15 @@ class MessageResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         message.setId(longCount.incrementAndGet());
 
+        // Create the Message
+        MessageDTO messageDTO = messageMapper.toDto(message);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restMessageMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(message))
+                    .content(om.writeValueAsBytes(messageDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -282,9 +303,12 @@ class MessageResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         message.setId(longCount.incrementAndGet());
 
+        // Create the Message
+        MessageDTO messageDTO = messageMapper.toDto(message);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restMessageMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(message)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(messageDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Message in the database
@@ -303,7 +327,7 @@ class MessageResourceIT {
         Message partialUpdatedMessage = new Message();
         partialUpdatedMessage.setId(message.getId());
 
-        partialUpdatedMessage.content(UPDATED_CONTENT).sent(UPDATED_SENT);
+        partialUpdatedMessage.subject(UPDATED_SUBJECT).content(UPDATED_CONTENT);
 
         restMessageMockMvc
             .perform(
@@ -353,10 +377,15 @@ class MessageResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         message.setId(longCount.incrementAndGet());
 
+        // Create the Message
+        MessageDTO messageDTO = messageMapper.toDto(message);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restMessageMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, message.getId()).contentType("application/merge-patch+json").content(om.writeValueAsBytes(message))
+                patch(ENTITY_API_URL_ID, messageDTO.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(om.writeValueAsBytes(messageDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -370,12 +399,15 @@ class MessageResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         message.setId(longCount.incrementAndGet());
 
+        // Create the Message
+        MessageDTO messageDTO = messageMapper.toDto(message);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restMessageMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(om.writeValueAsBytes(message))
+                    .content(om.writeValueAsBytes(messageDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -389,9 +421,12 @@ class MessageResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         message.setId(longCount.incrementAndGet());
 
+        // Create the Message
+        MessageDTO messageDTO = messageMapper.toDto(message);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restMessageMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(message)))
+            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(messageDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Message in the database

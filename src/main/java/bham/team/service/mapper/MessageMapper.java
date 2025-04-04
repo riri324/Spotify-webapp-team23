@@ -11,13 +11,12 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface MessageMapper extends EntityMapper<MessageDTO, Message> {
-    @Mapping(target = "sender", source = "sender", qualifiedByName = "userLogin")
-    @Mapping(target = "recipient", source = "recipient", qualifiedByName = "userLogin")
+    @Mapping(target = "sender", source = "sender", qualifiedByName = "userId")
+    @Mapping(target = "recipient", source = "recipient", qualifiedByName = "userId")
     MessageDTO toDto(Message s);
 
-    @Named("userLogin")
+    @Named("userId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "login", source = "login")
-    UserDTO toDtoUserLogin(User user);
+    UserDTO toDtoUserId(User user);
 }

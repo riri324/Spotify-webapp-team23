@@ -14,7 +14,7 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="subject" type="varchar(255)">
+            <column name="subject" type="varchar(20)">
                 <constraints nullable="false" />
             </column>
             <column name="content" type="${clobType}">
@@ -24,6 +24,12 @@
                 <constraints nullable="false" />
             </column>
             <column name="seen" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="sender_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="recipient_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

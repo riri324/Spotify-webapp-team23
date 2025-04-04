@@ -24,6 +24,8 @@ describe('Message Form Service', () => {
             content: expect.any(Object),
             sent: expect.any(Object),
             seen: expect.any(Object),
+            sender: expect.any(Object),
+            recipient: expect.any(Object),
           }),
         );
       });
@@ -38,6 +40,8 @@ describe('Message Form Service', () => {
             content: expect.any(Object),
             sent: expect.any(Object),
             seen: expect.any(Object),
+            sender: expect.any(Object),
+            recipient: expect.any(Object),
           }),
         );
       });
