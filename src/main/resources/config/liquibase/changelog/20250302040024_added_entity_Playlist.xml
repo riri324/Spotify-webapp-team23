@@ -10,6 +10,7 @@
         Added the entity Playlist.
     -->
     <changeSet id="20250302040024-1" author="jhipster">
+        <validCheckSum>9:a72cb682e9a34cd30eee409849b27820</validCheckSum>
         <createTable tableName="playlist">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
@@ -34,7 +35,7 @@
     </changeSet>
 
     <changeSet id="20250302040024-1-relations" author="jhipster">
-
+        <validCheckSum>9:4568b210677b7b0122be99d8a6bb8558</validCheckSum>
         <createTable tableName="rel_playlist__song">
             <column name="song_id" type="bigint">
                 <constraints nullable="false"/>
