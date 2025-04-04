@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import bham.team.IntegrationTest;
 import bham.team.domain.Playlist;
 import bham.team.repository.PlaylistRepository;
+import bham.team.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
@@ -63,6 +64,9 @@ class PlaylistResourceIT {
 
     @Autowired
     private PlaylistRepository playlistRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Mock
     private PlaylistRepository playlistRepositoryMock;

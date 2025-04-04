@@ -83,7 +83,7 @@ public class Song implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "songs")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "songs" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "songs", "user" }, allowSetters = true)
     private Set<Playlist> playlists = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "songs")

@@ -23,5 +23,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="song"
                                  />
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="playlist"
+                                 constraintName="fk_playlist__user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"
+                                 />
     </changeSet>
 </databaseChangeLog>
