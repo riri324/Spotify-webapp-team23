@@ -47,7 +47,6 @@ export class RecommenderComponent implements OnInit {
         if (this.currentUserId) {
           this.playlistService.queryUserPlaylists(this.currentUserId).subscribe(response => {
             this.playlists = (response.body ?? []).filter(playlist => playlist.songs && playlist.songs.length > 0);
-            // this.initializeCache();
 
             this.loadSongs();
           });
@@ -55,16 +54,6 @@ export class RecommenderComponent implements OnInit {
       }
     });
   }
-
-  // // Initialize in-memory cache, this is for later
-  // initializeCache(): void {
-  //   // Initialize temporary cache for each playlist
-  //   this.playlists.forEach(playlist => {
-  //     if (playlist.id && !this.playlistCache.has(playlist.id)) {
-  //       this.playlistCache.set(playlist.id, playlist.songs || []);
-  //     }
-  //   });
-  // }
 
   loadSongs(): void {
     if (!this.playlists || this.playlists.length === 0) {
