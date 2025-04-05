@@ -154,24 +154,43 @@ public class PlaylistResource {
      * {@code GET  /playlists} : get all the playlists.
      *
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of playlists in body.
-     */
-    /**
-     * {@code GET  /playlists} : get all the playlists.
-     *
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
+     * @param userId optional user ID to filter playlists by owner
+     * @param authority optional user authority/role
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of playlists in body.
      */
     @GetMapping("")
-    public List<Playlist> getAllPlaylists(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
-        LOG.debug("REST request to get all Playlists");
-        if (eagerload) {
-            return playlistRepository.findAllWithEagerRelationships();
+    public List<Playlist> getAllPlaylists(
+        @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload,
+        @RequestParam(name = "userId", required = false) Long userId,
+        @RequestParam(name = "authority", required = false) String authority) {
+
+        LOG.debug("REST request to get Playlists with filters: userId={}, authority={}", userId, authority);
+
+        // Check if user is admin - admins can see all playlists
+        boolean isAdmin = "ROLE_ADMIN".equals(authority);
+
+        if (isAdmin) {
+            // Admin sees all playlists
+            if (eagerload) {
+                return playlistRepository.findAllWithEagerRelationships();
+            } else {
+                return playlistRepository.findAll();
+            }
+        } else if (userId != null) {
+            // Regular user sees only their playlists
+            if (eagerload) {
+                return playlistRepository.findPublicOrUserWithEagerRelationships(userId);
+            } else {
+                return playlistRepository.findPublicOrUser(userId);
+            }
         } else {
-            return playlistRepository.findAll();
+            if (eagerload) {
+                return playlistRepository.findPublicWithEagerRelationships();
+            } else {
+                return playlistRepository.findPublic();
+            }
         }
     }
-
     /**
      * {@code GET  /playlists/:id} : get the "id" playlist.
      *

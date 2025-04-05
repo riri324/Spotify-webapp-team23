@@ -2,6 +2,8 @@ import { Component, NgZone, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Data, ParamMap, Router, RouterModule } from '@angular/router';
 import { Observable, Subscription, combineLatest, filter, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HttpResponse, HttpClient } from '@angular/common/http';
+import { ApplicationConfigService } from '../core/config/application-config.service';
 
 import SharedModule from 'app/shared/shared.module';
 import { SortByDirective, SortDirective, SortService, type SortState, sortStateSignal } from 'app/shared/sort';
@@ -30,6 +32,8 @@ import { PlaylistDeleteDialogComponent } from '../delete/playlist-delete-dialog.
 export class PlaylistComponent implements OnInit {
   subscription: Subscription | null = null;
   playlists?: IPlaylist[];
+  userRole: string | null = null;
+  currentUserId: number | null = null;
   isLoading = false;
 
   sortState = sortStateSignal({});
@@ -40,20 +44,30 @@ export class PlaylistComponent implements OnInit {
   protected readonly sortService = inject(SortService);
   protected modalService = inject(NgbModal);
   protected ngZone = inject(NgZone);
+  protected readonly http = inject(HttpClient);
+  protected readonly applicationConfigService = inject(ApplicationConfigService);
 
   trackId = (item: IPlaylist): number => this.playlistService.getPlaylistIdentifier(item);
 
   ngOnInit(): void {
+    this.loadUserData();
     this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])
       .pipe(
         tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
-        tap(() => {
-          if (!this.playlists || this.playlists.length === 0) {
-            this.load();
-          }
-        }),
       )
       .subscribe();
+  }
+
+  protected loadUserData(): void {
+    const apiUrl = this.applicationConfigService.getEndpointFor('api/account');
+    this.http.get<any>(apiUrl).subscribe(userData => {
+      if (userData) {
+        this.userRole = userData.authorities?.[0] ?? null;
+        this.currentUserId = userData.id;
+        // Once we have user data, load playlists
+        this.load();
+      }
+    });
   }
 
   delete(playlist: IPlaylist): void {
@@ -100,11 +114,24 @@ export class PlaylistComponent implements OnInit {
 
   protected queryBackend(): Observable<EntityArrayResponseType> {
     this.isLoading = true;
+
     const queryObject: any = {
       eagerload: true,
       sort: this.sortService.buildSortParam(this.sortState()),
     };
-    return this.playlistService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+
+    if (this.userRole && this.currentUserId) {
+      // If user, get user ID for playlist filtering
+      if (this.userRole === 'ROLE_USER') {
+        queryObject.userId = this.currentUserId;
+      }
+      // Mainly needed for admin, since admins should be able to see all
+      queryObject.authority = this.userRole;
+    }
+
+    return this.playlistService.query(queryObject).pipe(
+      tap(() => (this.isLoading = false))
+    );
   }
 
   protected handleNavigation(sortState: SortState): void {
