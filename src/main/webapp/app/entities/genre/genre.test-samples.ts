@@ -1,26 +1,26 @@
 import { IGenre, NewGenre } from './genre.model';
 
 export const sampleWithRequiredData: IGenre = {
-  id: 13534,
-  genreID: 15960,
-  songGenre: 'through yieldingly',
+  id: 21546,
+  genreID: 15602,
+  songGenre: 'agreeable next',
 };
 
 export const sampleWithPartialData: IGenre = {
-  id: 22407,
-  genreID: 27559,
-  songGenre: 'amidst sociable',
+  id: 19802,
+  genreID: 24721,
+  songGenre: 'libel why',
 };
 
 export const sampleWithFullData: IGenre = {
-  id: 24201,
-  genreID: 18272,
-  songGenre: 'furthermore apropos order',
+  id: 25144,
+  genreID: 24000,
+  songGenre: 'duh until uh-huh',
 };
 
 export const sampleWithNewData: NewGenre = {
-  genreID: 24527,
-  songGenre: 'hovercraft hunger dull',
+  genreID: 4140,
+  songGenre: 'yuck which upon',
   id: null,
 };
 

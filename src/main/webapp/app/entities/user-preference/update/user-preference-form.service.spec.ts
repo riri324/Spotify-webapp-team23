@@ -28,6 +28,7 @@ describe('UserPreference Form Service', () => {
             listeningPattern: expect.any(Object),
             songLength: expect.any(Object),
             lyricsImportance: expect.any(Object),
+            user: expect.any(Object),
           }),
         );
       });
@@ -46,6 +47,7 @@ describe('UserPreference Form Service', () => {
             listeningPattern: expect.any(Object),
             songLength: expect.any(Object),
             lyricsImportance: expect.any(Object),
+            user: expect.any(Object),
           }),
         );
       });

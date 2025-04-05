@@ -331,7 +331,13 @@ class EventResourceIT {
         Event partialUpdatedEvent = new Event();
         partialUpdatedEvent.setId(event.getId());
 
-        partialUpdatedEvent.city(UPDATED_CITY).region(UPDATED_REGION).country(UPDATED_COUNTRY);
+        partialUpdatedEvent
+            .datetime(UPDATED_DATETIME)
+            .description(UPDATED_DESCRIPTION)
+            .title(UPDATED_TITLE)
+            .city(UPDATED_CITY)
+            .region(UPDATED_REGION)
+            .country(UPDATED_COUNTRY);
 
         restEventMockMvc
             .perform(

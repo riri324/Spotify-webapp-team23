@@ -1,9 +1,7 @@
 package bham.team.web.rest;
 
 import bham.team.domain.Playlist;
-import bham.team.domain.Song;
 import bham.team.repository.PlaylistRepository;
-import bham.team.repository.SongRepository;
 import bham.team.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -37,11 +35,9 @@ public class PlaylistResource {
     private String applicationName;
 
     private final PlaylistRepository playlistRepository;
-    private final SongRepository songRepository;
 
-    public PlaylistResource(PlaylistRepository playlistRepository, SongRepository songRepository) {
+    public PlaylistResource(PlaylistRepository playlistRepository) {
         this.playlistRepository = playlistRepository;
-        this.songRepository = songRepository;
     }
 
     /**

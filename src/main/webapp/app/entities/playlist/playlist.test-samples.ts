@@ -1,31 +1,30 @@
 import { IPlaylist, NewPlaylist } from './playlist.model';
 
 export const sampleWithRequiredData: IPlaylist = {
-  id: 782,
-  playlistID: 5991,
-  name: 'suckle helpful modulo',
+  id: 27630,
+  playlistID: 1132,
+  name: 'before diagram',
   isPublic: false,
 };
 
 export const sampleWithPartialData: IPlaylist = {
-  id: 10944,
-  playlistID: 11954,
-  name: 'fooey far hold',
-  description: 'narrow',
+  id: 2694,
+  playlistID: 31027,
+  name: 'serenade mockingly granny',
   isPublic: true,
 };
 
 export const sampleWithFullData: IPlaylist = {
-  id: 32586,
-  playlistID: 9698,
-  name: 'fluffy yippee',
-  description: 'across',
-  isPublic: false,
+  id: 4255,
+  playlistID: 30599,
+  name: 'conclude chunter extract',
+  description: 'circumnavigate',
+  isPublic: true,
 };
 
 export const sampleWithNewData: NewPlaylist = {
-  playlistID: 11047,
-  name: 'classic',
+  playlistID: 22037,
+  name: 'consequently pish',
   isPublic: false,
   id: null,
 };

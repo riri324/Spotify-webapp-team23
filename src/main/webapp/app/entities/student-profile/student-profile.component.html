@@ -1,0 +1,87 @@
+<section>
+  <div class="rt-container">
+    <div class="col-rt-12">
+      <div class="Scriptcontent">
+        <div class="student-profile py-4">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="card shadow-sm">
+                  <div class="card-header bg-transparent text-center">
+                    <img class="profile_img" />
+                    <h3 style="color: #000000">User</h3>
+                  </div>
+                  <div class="card-body">
+                    <p class="mb-2">
+                      <strong class="pr-1">Student ID:</strong>
+                      <input [(ngModel)]="profile.studentId" class="form-control" placeholder="Enter Student ID" />
+                    </p>
+                    <p class="mb-2">
+                      <strong class="pr-1">Name:</strong>
+                      <input [(ngModel)]="profile.name" class="form-control" placeholder="Enter Name" />
+                    </p>
+                    <p class="mb-2">
+                      <strong class="pr-1">Age:</strong>
+                      <input [(ngModel)]="profile.age" class="form-control" placeholder="Enter Age" type="number" />
+                    </p>
+                    <p class="mb-2">
+                      <strong class="pr-1">Bio:</strong>
+                      <textarea [(ngModel)]="profile.bio" class="form-control" placeholder="Write something about yourself..."></textarea>
+                    </p>
+                    <div class="text-right mt-3">
+                      <button class="btn btn-success" (click)="saveProfile()">Submit All</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-8">
+                <div class="card shadow-sm">
+                  <div class="card-header bg-transparent border-0">
+                    <h3 class="mb-0" style="color: #000000"><i class="far fa-clone pr-1"></i>Music Preferences</h3>
+                  </div>
+                  <div class="card-body pt-0">
+                    <table class="table table-bordered">
+                      <tr>
+                        <th>Genre</th>
+                        <td colspan="2">{{ profile.user.preference.favoriteGenre }}</td>
+                      </tr>
+                      <tr>
+                        <th>Reason for listening</th>
+                        <td colspan="2">{{ profile.user.preference.musicPurpose }}</td>
+                      </tr>
+                      <tr>
+                        <th>Mood</th>
+                        <td colspan="2">{{ profile.user.preference.musicMood }}</td>
+                      </tr>
+                      <tr>
+                        <th>Instrumental/Vocal</th>
+                        <td colspan="2">{{ profile.user.preference.vocalPreference }}</td>
+                      </tr>
+                      <tr>
+                        <th>Listening Time</th>
+                        <td colspan="2">{{ profile.user.preference.listeningTime }}</td>
+                      </tr>
+                      <tr>
+                        <th>Listening Pattern</th>
+                        <td colspan="2">{{ profile.user.preference.listeningPattern }}</td>
+                      </tr>
+                      <tr>
+                        <th>Song Length</th>
+                        <td colspan="2">{{ profile.user.preference.songLength }}</td>
+                      </tr>
+                      <tr>
+                        <th>Lyrics Importance</th>
+                        <td colspan="2">{{ profile.user.preference.lyricsImportance }}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

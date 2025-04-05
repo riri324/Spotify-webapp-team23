@@ -361,12 +361,7 @@ class SongResourceIT {
         Song partialUpdatedSong = new Song();
         partialUpdatedSong.setId(song.getId());
 
-        partialUpdatedSong
-            .songId(UPDATED_SONG_ID)
-            .trackName(UPDATED_TRACK_NAME)
-            .speechiness(UPDATED_SPEECHINESS)
-            .acousticness(UPDATED_ACOUSTICNESS)
-            .liveness(UPDATED_LIVENESS);
+        partialUpdatedSong.trackName(UPDATED_TRACK_NAME).energy(UPDATED_ENERGY).tempo(UPDATED_TEMPO);
 
         restSongMockMvc
             .perform(

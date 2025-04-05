@@ -31,11 +31,7 @@
             @if (selectedSong && selectedSong.id === song.id) {
               <div class="playlist-selector">
                 <h4>Select a playlist:</h4>
-                @for (playlist of playlists; track playlist) {
-                  <button class="playlist-option" (click)="addSongToPlaylist(song, playlist)">
-                    {{ playlist.name }}
-                  </button>
-                }
+                @for (playlist of playlists; track playlist) {}
                 <button class="cancel-btn" (click)="togglePlaylistSelector(null)">Cancel</button>
               </div>
             }

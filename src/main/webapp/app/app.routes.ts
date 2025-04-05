@@ -4,6 +4,8 @@ import { Authority } from 'app/config/authority.constants';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { errorRoute } from './layouts/error/error.route';
+import { UserPreferenceComponent } from './entities/preferences/preferences.component';
+import { StudentProfileComponent } from './entities/student-profile/student-profile.component';
 
 const routes: Routes = [
   {
@@ -57,11 +59,6 @@ const routes: Routes = [
     title: 'Venue Recommendations',
   },
   {
-    path: 'feedback',
-    loadComponent: () => import('./feedback/feedback.component').then(m => m.FeedbackComponent),
-    title: 'Feedback',
-  },
-  {
     path: 'messages',
     loadComponent: () => import('./messages/messages.component').then(m => m.MessagesComponent),
     title: 'Messages',
@@ -72,9 +69,24 @@ const routes: Routes = [
     loadChildren: () => import('./top-song/top-song.routes').then(m => m.default),
   },
   {
-    path: 'preferences',
-    data: { pageTitle: 'Preferences' },
-    loadChildren: () => import('./entities/preferences/preferences.routes').then(m => m.default),
+    path: 'preferences', // ✅ 설문 전용 페이지
+    component: UserPreferenceComponent,
+    data: { pageTitle: 'Preferences Form' },
+    canActivate: [UserRouteAccessService], // 로그인 유지 (원하면 제거 가능)
+  },
+  {
+    path: 'profile', // ✅ 설문 전용 페이지
+    component: StudentProfileComponent,
+    data: { pageTitle: 'user profile' },
+    canActivate: [UserRouteAccessService], // 로그인 유지 (원하면 제거 가능)
+  },
+  {
+    path: 'user-preference', // ✅ JHipster 엔티티 전체 경로 (리스트/상세/수정/삭제)
+    loadChildren: () => import('./entities/user-preference/user-preference.routes').then(m => m.default),
+  },
+  {
+    path: 'user-profile', // ✅ JHipster 엔티티 전체 경로 (리스트/상세/수정/삭제)
+    loadChildren: () => import('./entities/user-profile/user-profile.routes').then(m => m.default),
   },
   ...errorRoute,
 ];
