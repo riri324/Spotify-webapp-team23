@@ -162,8 +162,8 @@ public class PlaylistResource {
     public List<Playlist> getAllPlaylists(
         @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload,
         @RequestParam(name = "userId", required = false) Long userId,
-        @RequestParam(name = "authority", required = false) String authority) {
-
+        @RequestParam(name = "authority", required = false) String authority
+    ) {
         LOG.debug("REST request to get Playlists with filters: userId={}, authority={}", userId, authority);
 
         // Check if user is admin - admins can see all playlists
@@ -184,6 +184,7 @@ public class PlaylistResource {
                 return playlistRepository.findPublicOrUser(userId);
             }
         } else {
+            // Need to figure out a way to allow unauthenticated users to still view the playlists
             if (eagerload) {
                 return playlistRepository.findPublicWithEagerRelationships();
             } else {
@@ -191,6 +192,7 @@ public class PlaylistResource {
             }
         }
     }
+
     /**
      * {@code GET  /playlists/:id} : get the "id" playlist.
      *

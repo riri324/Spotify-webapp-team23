@@ -17,9 +17,11 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PlaylistRepository extends PlaylistRepositoryWithBagRelationships, JpaRepository<Playlist, Long> {
+    // Fetch playlists for the current logged-in user
     @Query("select playlist from Playlist playlist where playlist.user.login = ?#{authentication.name}")
     List<Playlist> findByUserIsCurrentUser();
 
+    // Eager load methods
     default Optional<Playlist> findOneWithEagerRelationships(Long id) {
         return this.fetchBagRelationships(this.findOneWithToOneRelationships(id));
     }
@@ -32,6 +34,7 @@ public interface PlaylistRepository extends PlaylistRepositoryWithBagRelationshi
         return this.fetchBagRelationships(this.findAllWithToOneRelationships(pageable));
     }
 
+    // Queries to fetch playlists with relationships (non-eager load)
     @Query(
         value = "select playlist from Playlist playlist left join fetch playlist.user",
         countQuery = "select count(playlist) from Playlist playlist"
@@ -49,13 +52,15 @@ public interface PlaylistRepository extends PlaylistRepositoryWithBagRelationshi
 
     List<Playlist> findAllByUserId(Long userId);
 
-    @Query("select distinct p from Playlist p left join fetch p.songs where p.isPublic = true")
+    @Query("select p from Playlist p left join fetch p.songs where p.isPublic = true")
     List<Playlist> findPublicWithEagerRelationships();
 
-    List<Playlist> findPublic();
-
-    @Query("select distinct p from Playlist p left join fetch p.songs where p.isPublic = true OR p.user.id = :userId")
+    @Query("select p from Playlist p left join fetch p.songs where p.isPublic = true OR p.user.id = :userId")
     List<Playlist> findPublicOrUserWithEagerRelationships(@Param("userId") Long userId);
 
-    List<Playlist> findPublicOrUser(Long userId);
+    @Query("select p from Playlist p where p.isPublic = true")
+    List<Playlist> findPublic();
+
+    @Query("select p from Playlist p where p.isPublic = true OR p.user.id = :userId")
+    List<Playlist> findPublicOrUser(@Param("userId") Long userId);
 }

@@ -87,7 +87,6 @@
               <td>{{ playlist.playlistID }}</td>
               <td>{{ playlist.name }}</td>
               <td>{{ playlist.description }}</td>
-              <td>{{ playlist.isPublic }}</td>
               <td>
                 @for (songs of playlist.songs; track $index; let last = $last) {
                   <span>
