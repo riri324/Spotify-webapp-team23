@@ -3,29 +3,30 @@ import dayjs from 'dayjs/esm';
 import { IMessage, NewMessage } from './message.model';
 
 export const sampleWithRequiredData: IMessage = {
-  id: 4952,
-  subject: 'shrill incidentally ',
-  content: '../fake-data/blob/hipster.txt',
-  sent: dayjs('2025-03-12'),
-};
-
-export const sampleWithPartialData: IMessage = {
-  id: 24783,
-  subject: 'satirise',
+  id: 7068,
+  subject: 'regular burgeon libe',
   content: '../fake-data/blob/hipster.txt',
   sent: dayjs('2025-03-11'),
 };
 
-export const sampleWithFullData: IMessage = {
-  id: 23445,
-  subject: 'very',
+export const sampleWithPartialData: IMessage = {
+  id: 25042,
+  subject: 'giggle',
   content: '../fake-data/blob/hipster.txt',
-  sent: dayjs('2025-03-12'),
-  seen: true,
+  sent: dayjs('2025-03-11'),
+  seen: false,
+};
+
+export const sampleWithFullData: IMessage = {
+  id: 24203,
+  subject: 'considering scarper ',
+  content: '../fake-data/blob/hipster.txt',
+  sent: dayjs('2025-03-11'),
+  seen: false,
 };
 
 export const sampleWithNewData: NewMessage = {
-  subject: 'unsightly zowie',
+  subject: 'gratefully yuck the',
   content: '../fake-data/blob/hipster.txt',
   sent: dayjs('2025-03-11'),
   id: null,

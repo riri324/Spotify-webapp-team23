@@ -52,11 +52,6 @@ export class PlaylistService {
     return o1 && o2 ? this.getPlaylistIdentifier(o1) === this.getPlaylistIdentifier(o2) : o1 === o2;
   }
 
-  // New method to add a song to a playlist
-  addSongToPlaylist(playlistId: number, songId: number): Observable<HttpResponse<IPlaylist>> {
-    return this.http.post<IPlaylist>(`${this.resourceUrl}/${playlistId}/songs/${songId}`, {}, { observe: 'response' });
-  }
-
   addPlaylistToCollectionIfMissing<Type extends Pick<IPlaylist, 'id'>>(
     playlistCollection: Type[],
     ...playlistsToCheck: (Type | null | undefined)[]

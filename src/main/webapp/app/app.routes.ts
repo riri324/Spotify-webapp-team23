@@ -5,6 +5,7 @@ import { Authority } from 'app/config/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { errorRoute } from './layouts/error/error.route';
 import { UserPreferenceComponent } from './entities/preferences/preferences.component';
+import { StudentProfileComponent } from './entities/student-profile/student-profile.component';
 
 const routes: Routes = [
   {
@@ -74,8 +75,18 @@ const routes: Routes = [
     canActivate: [UserRouteAccessService], // 로그인 유지 (원하면 제거 가능)
   },
   {
+    path: 'profile', // ✅ 설문 전용 페이지
+    component: StudentProfileComponent,
+    data: { pageTitle: 'user profile' },
+    canActivate: [UserRouteAccessService], // 로그인 유지 (원하면 제거 가능)
+  },
+  {
     path: 'user-preference', // ✅ JHipster 엔티티 전체 경로 (리스트/상세/수정/삭제)
     loadChildren: () => import('./entities/user-preference/user-preference.routes').then(m => m.default),
+  },
+  {
+    path: 'user-profile', // ✅ JHipster 엔티티 전체 경로 (리스트/상세/수정/삭제)
+    loadChildren: () => import('./entities/user-profile/user-profile.routes').then(m => m.default),
   },
   ...errorRoute,
 ];

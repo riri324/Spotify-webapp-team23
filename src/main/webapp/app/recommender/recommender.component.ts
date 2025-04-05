@@ -53,26 +53,6 @@ export class RecommenderComponent implements OnInit {
   }
 
   // Add a song to a playlist
-  addSongToPlaylist(song: ISong, playlist: IPlaylist): void {
-    if (!song.id || !playlist.id) {
-      return;
-    }
-
-    // Call the service method to add the song to the playlist
-    this.playlistService.addSongToPlaylist(playlist.id, song.id).subscribe({
-      next: response => {
-        // Show success message
-        this.showNotification(`"${song.trackName}" added to "${playlist.name}" playlist`);
-        this.togglePlaylistSelector(null);
-      },
-      error: error => {
-        this.showNotification('Failed to add song to playlist. Please try again.', true);
-      },
-      complete() {
-        // Comment so eslint doesnt break
-      },
-    });
-  }
 
   // Simple notification function
   private showNotification(message: string, isError = false): void {

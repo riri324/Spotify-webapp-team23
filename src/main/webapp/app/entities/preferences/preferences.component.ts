@@ -11,6 +11,7 @@ import { DEFAULT_SORT_DATA, ITEM_DELETED_EVENT, SORT } from 'app/config/navigati
 import { IUserPreference, NewUserPreference } from '.././user-preference/user-preference.model';
 import { EntityArrayResponseType, UserPreferenceService } from '.././user-preference/service/user-preference.service';
 import { UserPreferenceDeleteDialogComponent } from '.././user-preference/delete/user-preference-delete-dialog.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   standalone: true,
@@ -34,7 +35,6 @@ export class UserPreferenceComponent implements OnInit {
   isLoading = false;
   sortState = sortStateSignal({});
 
-  // 설문 관련 상태값
   questions = [
     { question: 'Which genre do you prefer?', options: ['Pop', 'Rock', 'Jazz', 'Hip-hop', 'Classical', 'Electronic'] },
     {
@@ -53,13 +53,14 @@ export class UserPreferenceComponent implements OnInit {
   selectedPreferences: Record<string, string> = {};
   selectedOption: string | null = null;
 
-  // 주입
+  // 의존성 주입
   public readonly router = inject(Router);
   protected readonly userPreferenceService = inject(UserPreferenceService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly sortService = inject(SortService);
   protected modalService = inject(NgbModal);
   protected ngZone = inject(NgZone);
+  protected readonly http = inject(HttpClient); // 로그인 사용자 정보 가져오기용
 
   ngOnInit(): void {
     this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])
@@ -87,15 +88,10 @@ export class UserPreferenceComponent implements OnInit {
 
   load(): void {
     this.queryBackend().subscribe({
-      next: (res: EntityArrayResponseType) => {
-        this.onResponseSuccess(res);
-      },
+      next: (res: EntityArrayResponseType) => this.onResponseSuccess(res),
     });
   }
 
-  navigateToWithComponentValues(event: SortState): void {
-    this.handleNavigation(event);
-  }
   selectPreference(answer: string): void {
     const currentQuestion = this.questions[this.currentQuestionIndex].question;
     this.selectedPreferences[currentQuestion] = answer;
@@ -114,26 +110,31 @@ export class UserPreferenceComponent implements OnInit {
   }
 
   savePreferences(): void {
-    const data: NewUserPreference = {
-      id: null,
-      favoriteGenre: this.selectedPreferences['Which genre do you prefer?'],
-      musicPurpose: this.selectedPreferences['What is your primary reason for listening to music?'],
-      musicMood: this.selectedPreferences['What mood do you prefer in music?'],
-      vocalPreference: this.selectedPreferences['Do you prefer instrumental music or vocal music?'],
-      listeningTime: this.selectedPreferences['When do you usually listen to music?'],
-      listeningPattern: this.selectedPreferences['How do you usually listen to music?'],
-      songLength: this.selectedPreferences['What is your preferred song length?'],
-      lyricsImportance: this.selectedPreferences['How important are lyrics to you?'],
-    };
+    this.http.get('/api/account').subscribe((account: any) => {
+      const data: NewUserPreference = {
+        id: null,
+        favoriteGenre: this.selectedPreferences['Which genre do you prefer?'],
+        musicPurpose: this.selectedPreferences['What is your primary reason for listening to music?'],
+        musicMood: this.selectedPreferences['What mood do you prefer in music?'],
+        vocalPreference: this.selectedPreferences['Do you prefer instrumental music or vocal music?'],
+        listeningTime: this.selectedPreferences['When do you usually listen to music?'],
+        listeningPattern: this.selectedPreferences['How do you usually listen to music?'],
+        songLength: this.selectedPreferences['What is your preferred song length?'],
+        lyricsImportance: this.selectedPreferences['How important are lyrics to you?'],
+        user: {
+          id: account.id,
+        },
+      };
 
-    this.userPreferenceService.create(data).subscribe({
-      next: () => {
-        alert('✅ Preferences saved!');
-        this.load();
-      },
-      error() {
-        alert('❌ Failed to save preferences.');
-      },
+      this.userPreferenceService.create(data).subscribe({
+        next: () => {
+          alert('✅ Preferences saved!');
+          this.load();
+        },
+        error() {
+          alert('❌ Failed to save preferences.');
+        },
+      });
     });
   }
 

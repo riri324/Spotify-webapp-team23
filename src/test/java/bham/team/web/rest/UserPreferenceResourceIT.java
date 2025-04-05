@@ -350,9 +350,11 @@ class UserPreferenceResourceIT {
         partialUpdatedUserPreference.setId(userPreference.getId());
 
         partialUpdatedUserPreference
+            .favoriteGenre(UPDATED_FAVORITE_GENRE)
+            .musicPurpose(UPDATED_MUSIC_PURPOSE)
             .musicMood(UPDATED_MUSIC_MOOD)
             .vocalPreference(UPDATED_VOCAL_PREFERENCE)
-            .listeningTime(UPDATED_LISTENING_TIME);
+            .listeningPattern(UPDATED_LISTENING_PATTERN);
 
         restUserPreferenceMockMvc
             .perform(

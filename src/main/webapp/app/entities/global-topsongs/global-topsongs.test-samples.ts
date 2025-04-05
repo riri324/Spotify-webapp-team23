@@ -3,38 +3,38 @@ import dayjs from 'dayjs/esm';
 import { IGlobalTopsongs, NewGlobalTopsongs } from './global-topsongs.model';
 
 export const sampleWithRequiredData: IGlobalTopsongs = {
-  id: 13253,
-  songTitle: 'that fledgling',
-  artistName: 'obesity',
-  playCount: 30374,
-  monthYear: dayjs('2025-02-27T17:15'),
-  year: 2024,
+  id: 3907,
+  songTitle: 'toward whoa',
+  artistName: 'phew',
+  playCount: 9163,
+  monthYear: dayjs('2025-02-28T02:48'),
+  year: 2033,
 };
 
 export const sampleWithPartialData: IGlobalTopsongs = {
-  id: 11287,
-  songTitle: 'boohoo redress',
-  artistName: 'unibody',
-  playCount: 3057,
-  monthYear: dayjs('2025-02-27T18:12'),
-  year: 2005,
+  id: 4893,
+  songTitle: 'yin aboard tuber',
+  artistName: 'warmhearted however disbar',
+  playCount: 5978,
+  monthYear: dayjs('2025-02-28T12:48'),
+  year: 2058,
 };
 
 export const sampleWithFullData: IGlobalTopsongs = {
-  id: 14571,
-  songTitle: 'indeed',
-  artistName: 'jacket',
-  playCount: 29523,
-  monthYear: dayjs('2025-02-27T22:05'),
-  year: 2062,
+  id: 928,
+  songTitle: 'disarm deficient serene',
+  artistName: 'sans',
+  playCount: 26139,
+  monthYear: dayjs('2025-02-28T00:27'),
+  year: 2000,
 };
 
 export const sampleWithNewData: NewGlobalTopsongs = {
-  songTitle: 'sick firm ultimate',
-  artistName: 'barracks truly unearth',
-  playCount: 15622,
-  monthYear: dayjs('2025-02-28T02:20'),
-  year: 2054,
+  songTitle: 'bah bowler ragged',
+  artistName: 'unripe',
+  playCount: 31371,
+  monthYear: dayjs('2025-02-27T19:30'),
+  year: 2048,
   id: null,
 };
 

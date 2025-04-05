@@ -335,7 +335,11 @@ class FeedbackResourceIT {
         Feedback partialUpdatedFeedback = new Feedback();
         partialUpdatedFeedback.setId(feedback.getId());
 
-        partialUpdatedFeedback.userPhineNum(UPDATED_USER_PHINE_NUM).rating(UPDATED_RATING);
+        partialUpdatedFeedback
+            .feedbackId(UPDATED_FEEDBACK_ID)
+            .username(UPDATED_USERNAME)
+            .userPhineNum(UPDATED_USER_PHINE_NUM)
+            .message(UPDATED_MESSAGE);
 
         restFeedbackMockMvc
             .perform(

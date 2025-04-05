@@ -3,6 +3,7 @@
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
     <property name="now" value="now()" dbms="h2"/>
     <property name="floatType" value="float4" dbms="h2"/>
     <property name="uuidType" value="uuid" dbms="h2"/>
@@ -25,17 +26,19 @@
     <include file="config/liquibase/changelog/20250303014320_added_entity_Feedback.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250312145701_added_entity_Message.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250312145702_added_entity_User.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250403145029_added_entity_UserProfile.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+
     <include file="config/liquibase/changelog/20250302040024_added_entity_constraints_Playlist.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250303014320_added_entity_constraints_Feedback.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250312145701_added_entity_constraints_Message.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250320001858_added_entity_Artist.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250320001859_added_entity_Album.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250320001900_added_entity_Genre.xml" relativeToChangelogFile="false"/>
-    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20250302040025_added_entity_constraints_Song.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250320001859_added_entity_constraints_Album.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250228002743_added_entity_constraints_UserPreference.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250403145029_added_entity_constraints_UserProfile.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

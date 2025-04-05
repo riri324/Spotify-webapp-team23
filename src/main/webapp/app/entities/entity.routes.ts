@@ -36,6 +36,31 @@ const routes: Routes = [
     data: { pageTitle: 'UserPreferences' },
     loadChildren: () => import('./user-preference/user-preference.routes'),
   },
+  {
+    path: 'user-profile',
+    data: { pageTitle: 'UserProfiles' },
+    loadChildren: () => import('./user-profile/user-profile.routes'),
+  },
+  {
+    path: 'event',
+    data: { pageTitle: 'Events' },
+    loadChildren: () => import('./event/event.routes'),
+  },
+  {
+    path: 'global-topsongs',
+    data: { pageTitle: 'GlobalTopsongs' },
+    loadChildren: () => import('./global-topsongs/global-topsongs.routes'),
+  },
+  {
+    path: 'feedback',
+    data: { pageTitle: 'Feedbacks' },
+    loadChildren: () => import('./feedback/feedback.routes'),
+  },
+  {
+    path: 'message',
+    data: { pageTitle: 'Messages' },
+    loadChildren: () => import('./message/message.routes'),
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

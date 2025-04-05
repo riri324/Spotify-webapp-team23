@@ -1,23 +1,22 @@
 import { IFeedback, NewFeedback } from './feedback.model';
 
 export const sampleWithRequiredData: IFeedback = {
-  id: 28806,
+  id: 26252,
 };
 
 export const sampleWithPartialData: IFeedback = {
-  id: 22352,
-  username: 'buzzing although',
-  rating: 20360,
+  id: 9667,
+  message: 'per',
 };
 
 export const sampleWithFullData: IFeedback = {
-  id: 27144,
-  feedbackId: 9449,
-  username: 'gripper eek',
-  userEmail: 'indeed knit ew',
-  userPhineNum: 2407,
-  message: 'preheat',
-  rating: 13792,
+  id: 7914,
+  feedbackId: 28899,
+  username: 'clone',
+  userEmail: 'absent pastel',
+  userPhineNum: 14457,
+  message: 'why reasoning',
+  rating: 30532,
 };
 
 export const sampleWithNewData: NewFeedback = {

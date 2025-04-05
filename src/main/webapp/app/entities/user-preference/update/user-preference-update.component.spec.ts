@@ -49,10 +49,10 @@ describe('UserPreference Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call User query and add missing value', () => {
       const userPreference: IUserPreference = { id: 456 };
-      const user: IUser = { id: 3141 };
+      const user: IUser = { id: 16263 };
       userPreference.user = user;
 
-      const userCollection: IUser[] = [{ id: 10084 }];
+      const userCollection: IUser[] = [{ id: 1756 }];
       jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
       const additionalUsers = [user];
       const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
@@ -71,7 +71,7 @@ describe('UserPreference Management Update Component', () => {
 
     it('Should update editForm', () => {
       const userPreference: IUserPreference = { id: 456 };
-      const user: IUser = { id: 29200 };
+      const user: IUser = { id: 25495 };
       userPreference.user = user;
 
       activatedRoute.data = of({ userPreference });

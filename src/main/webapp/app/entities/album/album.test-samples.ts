@@ -1,34 +1,32 @@
 import { IAlbum, NewAlbum } from './album.model';
 
 export const sampleWithRequiredData: IAlbum = {
-  id: 6803,
-  albumID: 10614,
-  albumName: 'meh gah',
-  numberOfSongs: 13185,
+  id: 23672,
+  albumID: 5069,
+  albumName: 'zowie plus',
+  numberOfSongs: 9450,
 };
 
 export const sampleWithPartialData: IAlbum = {
-  id: 23198,
-  albumID: 7761,
-  albumName: 'detective contrast',
-  numberOfSongs: 19394,
-  image: '../fake-data/blob/hipster.png',
-  imageContentType: 'unknown',
+  id: 899,
+  albumID: 24408,
+  albumName: 'live because consequently',
+  numberOfSongs: 463,
 };
 
 export const sampleWithFullData: IAlbum = {
-  id: 19762,
-  albumID: 11382,
-  albumName: 'gray anticodon',
-  numberOfSongs: 8421,
+  id: 4526,
+  albumID: 31199,
+  albumName: 'down',
+  numberOfSongs: 24248,
   image: '../fake-data/blob/hipster.png',
   imageContentType: 'unknown',
 };
 
 export const sampleWithNewData: NewAlbum = {
-  albumID: 15972,
-  albumName: 'decode',
-  numberOfSongs: 20811,
+  albumID: 14413,
+  albumName: 'giant unique',
+  numberOfSongs: 30637,
   id: null,
 };
 

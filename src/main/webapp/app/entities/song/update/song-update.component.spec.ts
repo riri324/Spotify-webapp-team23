@@ -61,10 +61,10 @@ describe('Song Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Album query and add missing value', () => {
       const song: ISong = { id: 456 };
-      const album: IAlbum = { id: 28356 };
+      const album: IAlbum = { id: 14819 };
       song.album = album;
 
-      const albumCollection: IAlbum[] = [{ id: 30327 }];
+      const albumCollection: IAlbum[] = [{ id: 31753 }];
       jest.spyOn(albumService, 'query').mockReturnValue(of(new HttpResponse({ body: albumCollection })));
       const additionalAlbums = [album];
       const expectedCollection: IAlbum[] = [...additionalAlbums, ...albumCollection];
@@ -83,10 +83,10 @@ describe('Song Management Update Component', () => {
 
     it('Should call Genre query and add missing value', () => {
       const song: ISong = { id: 456 };
-      const genre: IGenre = { id: 1940 };
+      const genre: IGenre = { id: 11553 };
       song.genre = genre;
 
-      const genreCollection: IGenre[] = [{ id: 27875 }];
+      const genreCollection: IGenre[] = [{ id: 18390 }];
       jest.spyOn(genreService, 'query').mockReturnValue(of(new HttpResponse({ body: genreCollection })));
       const additionalGenres = [genre];
       const expectedCollection: IGenre[] = [...additionalGenres, ...genreCollection];
@@ -105,10 +105,10 @@ describe('Song Management Update Component', () => {
 
     it('Should call Artist query and add missing value', () => {
       const song: ISong = { id: 456 };
-      const artist: IArtist = { id: 16037 };
+      const artist: IArtist = { id: 19709 };
       song.artist = artist;
 
-      const artistCollection: IArtist[] = [{ id: 8607 }];
+      const artistCollection: IArtist[] = [{ id: 28751 }];
       jest.spyOn(artistService, 'query').mockReturnValue(of(new HttpResponse({ body: artistCollection })));
       const additionalArtists = [artist];
       const expectedCollection: IArtist[] = [...additionalArtists, ...artistCollection];
@@ -127,10 +127,10 @@ describe('Song Management Update Component', () => {
 
     it('Should call Playlist query and add missing value', () => {
       const song: ISong = { id: 456 };
-      const playlists: IPlaylist[] = [{ id: 31111 }];
+      const playlists: IPlaylist[] = [{ id: 12477 }];
       song.playlists = playlists;
 
-      const playlistCollection: IPlaylist[] = [{ id: 13290 }];
+      const playlistCollection: IPlaylist[] = [{ id: 7677 }];
       jest.spyOn(playlistService, 'query').mockReturnValue(of(new HttpResponse({ body: playlistCollection })));
       const additionalPlaylists = [...playlists];
       const expectedCollection: IPlaylist[] = [...additionalPlaylists, ...playlistCollection];
@@ -149,13 +149,13 @@ describe('Song Management Update Component', () => {
 
     it('Should update editForm', () => {
       const song: ISong = { id: 456 };
-      const album: IAlbum = { id: 26740 };
+      const album: IAlbum = { id: 15380 };
       song.album = album;
-      const genre: IGenre = { id: 21554 };
+      const genre: IGenre = { id: 23525 };
       song.genre = genre;
-      const artist: IArtist = { id: 20807 };
+      const artist: IArtist = { id: 9549 };
       song.artist = artist;
-      const playlists: IPlaylist = { id: 27168 };
+      const playlists: IPlaylist = { id: 23528 };
       song.playlists = [playlists];
 
       activatedRoute.data = of({ song });

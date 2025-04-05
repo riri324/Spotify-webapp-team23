@@ -1,0 +1,11 @@
+entity UserProfile {
+  studentId String required,
+  name String required,
+  age Integer required,
+  profileImageUrl String,
+  bio String
+}
+
+relationship OneToOne {
+  UserProfile{user(login)} to User with builtInEntity
+}
