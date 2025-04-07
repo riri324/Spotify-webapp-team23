@@ -11,17 +11,9 @@
         <jhi-alert></jhi-alert>
 
         <dl class="row-md jh-entity-details">
-          <dt><span>Id</span></dt>
+          <dt><span>ID</span></dt>
           <dd>
             <span>{{ globalTopsongsRef.id }}</span>
-          </dd>
-          <dt><span>Song Title</span></dt>
-          <dd>
-            <span>{{ globalTopsongsRef.songTitle }}</span>
-          </dd>
-          <dt><span>Artist Name</span></dt>
-          <dd>
-            <span>{{ globalTopsongsRef.artistName }}</span>
           </dd>
           <dt><span>Play Count</span></dt>
           <dd>
@@ -34,6 +26,14 @@
           <dt><span>Year</span></dt>
           <dd>
             <span>{{ globalTopsongsRef.year }}</span>
+          </dd>
+          <dt><span>Song</span></dt>
+          <dd>
+            @if (globalTopsongs()!.song) {
+              <div>
+                <a [routerLink]="['/song', globalTopsongs()!.song?.id, 'view']">{{ globalTopsongsRef.song?.id }}</a>
+              </div>
+            }
           </dd>
         </dl>
 

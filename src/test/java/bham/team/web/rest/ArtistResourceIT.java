@@ -313,7 +313,7 @@ class ArtistResourceIT {
         Artist partialUpdatedArtist = new Artist();
         partialUpdatedArtist.setId(artist.getId());
 
-        partialUpdatedArtist.followers(UPDATED_FOLLOWERS).image(UPDATED_IMAGE).imageContentType(UPDATED_IMAGE_CONTENT_TYPE);
+        partialUpdatedArtist.image(UPDATED_IMAGE).imageContentType(UPDATED_IMAGE_CONTENT_TYPE);
 
         restArtistMockMvc
             .perform(

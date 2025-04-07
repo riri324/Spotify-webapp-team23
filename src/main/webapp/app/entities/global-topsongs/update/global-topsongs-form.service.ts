@@ -31,11 +31,10 @@ type GlobalTopsongsFormDefaults = Pick<NewGlobalTopsongs, 'id' | 'monthYear'>;
 
 type GlobalTopsongsFormGroupContent = {
   id: FormControl<GlobalTopsongsFormRawValue['id'] | NewGlobalTopsongs['id']>;
-  songTitle: FormControl<GlobalTopsongsFormRawValue['songTitle']>;
-  artistName: FormControl<GlobalTopsongsFormRawValue['artistName']>;
   playCount: FormControl<GlobalTopsongsFormRawValue['playCount']>;
   monthYear: FormControl<GlobalTopsongsFormRawValue['monthYear']>;
   year: FormControl<GlobalTopsongsFormRawValue['year']>;
+  song: FormControl<GlobalTopsongsFormRawValue['song']>;
 };
 
 export type GlobalTopsongsFormGroup = FormGroup<GlobalTopsongsFormGroupContent>;
@@ -55,14 +54,8 @@ export class GlobalTopsongsFormService {
           validators: [Validators.required],
         },
       ),
-      songTitle: new FormControl(globalTopsongsRawValue.songTitle, {
-        validators: [Validators.required],
-      }),
-      artistName: new FormControl(globalTopsongsRawValue.artistName, {
-        validators: [Validators.required],
-      }),
       playCount: new FormControl(globalTopsongsRawValue.playCount, {
-        validators: [Validators.required, Validators.min(0)],
+        validators: [Validators.required],
       }),
       monthYear: new FormControl(globalTopsongsRawValue.monthYear, {
         validators: [Validators.required],
@@ -70,6 +63,7 @@ export class GlobalTopsongsFormService {
       year: new FormControl(globalTopsongsRawValue.year, {
         validators: [Validators.required, Validators.min(2000), Validators.max(2100)],
       }),
+      song: new FormControl(globalTopsongsRawValue.song),
     });
   }
 

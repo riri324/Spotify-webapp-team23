@@ -31,7 +31,7 @@ type EventFormDefaults = Pick<NewEvent, 'id' | 'datetime'>;
 
 type EventFormGroupContent = {
   id: FormControl<EventFormRawValue['id'] | NewEvent['id']>;
-  artistId: FormControl<EventFormRawValue['artistId']>;
+  eventID: FormControl<EventFormRawValue['eventID']>;
   datetime: FormControl<EventFormRawValue['datetime']>;
   description: FormControl<EventFormRawValue['description']>;
   title: FormControl<EventFormRawValue['title']>;
@@ -39,6 +39,7 @@ type EventFormGroupContent = {
   city: FormControl<EventFormRawValue['city']>;
   region: FormControl<EventFormRawValue['region']>;
   country: FormControl<EventFormRawValue['country']>;
+  artist: FormControl<EventFormRawValue['artist']>;
 };
 
 export type EventFormGroup = FormGroup<EventFormGroupContent>;
@@ -58,16 +59,31 @@ export class EventFormService {
           validators: [Validators.required],
         },
       ),
-      artistId: new FormControl(eventRawValue.artistId, {
+      eventID: new FormControl(eventRawValue.eventID, {
         validators: [Validators.required],
       }),
-      datetime: new FormControl(eventRawValue.datetime),
-      description: new FormControl(eventRawValue.description),
-      title: new FormControl(eventRawValue.title),
-      venueName: new FormControl(eventRawValue.venueName),
-      city: new FormControl(eventRawValue.city),
-      region: new FormControl(eventRawValue.region),
-      country: new FormControl(eventRawValue.country),
+      datetime: new FormControl(eventRawValue.datetime, {
+        validators: [Validators.required],
+      }),
+      description: new FormControl(eventRawValue.description, {
+        validators: [Validators.maxLength(500)],
+      }),
+      title: new FormControl(eventRawValue.title, {
+        validators: [Validators.required, Validators.maxLength(100)],
+      }),
+      venueName: new FormControl(eventRawValue.venueName, {
+        validators: [Validators.required, Validators.maxLength(100)],
+      }),
+      city: new FormControl(eventRawValue.city, {
+        validators: [Validators.required, Validators.maxLength(50)],
+      }),
+      region: new FormControl(eventRawValue.region, {
+        validators: [Validators.required, Validators.maxLength(50)],
+      }),
+      country: new FormControl(eventRawValue.country, {
+        validators: [Validators.required, Validators.maxLength(50)],
+      }),
+      artist: new FormControl(eventRawValue.artist),
     });
   }
 

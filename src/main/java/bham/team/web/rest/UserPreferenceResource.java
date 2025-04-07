@@ -3,6 +3,8 @@ package bham.team.web.rest;
 import bham.team.domain.UserPreference;
 import bham.team.repository.UserPreferenceRepository;
 import bham.team.web.rest.errors.BadRequestAlertException;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -46,7 +48,8 @@ public class UserPreferenceResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
-    public ResponseEntity<UserPreference> createUserPreference(@RequestBody UserPreference userPreference) throws URISyntaxException {
+    public ResponseEntity<UserPreference> createUserPreference(@Valid @RequestBody UserPreference userPreference)
+        throws URISyntaxException {
         LOG.debug("REST request to save UserPreference : {}", userPreference);
         if (userPreference.getId() != null) {
             throw new BadRequestAlertException("A new userPreference cannot already have an ID", ENTITY_NAME, "idexists");
@@ -70,7 +73,7 @@ public class UserPreferenceResource {
     @PutMapping("/{id}")
     public ResponseEntity<UserPreference> updateUserPreference(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody UserPreference userPreference
+        @Valid @RequestBody UserPreference userPreference
     ) throws URISyntaxException {
         LOG.debug("REST request to update UserPreference : {}, {}", id, userPreference);
         if (userPreference.getId() == null) {
@@ -104,7 +107,7 @@ public class UserPreferenceResource {
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<UserPreference> partialUpdateUserPreference(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody UserPreference userPreference
+        @NotNull @RequestBody UserPreference userPreference
     ) throws URISyntaxException {
         LOG.debug("REST request to partial update UserPreference partially : {}, {}", id, userPreference);
         if (userPreference.getId() == null) {

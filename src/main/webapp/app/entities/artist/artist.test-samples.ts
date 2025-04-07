@@ -1,30 +1,28 @@
 import { IArtist, NewArtist } from './artist.model';
 
 export const sampleWithRequiredData: IArtist = {
-  id: 20248,
-  artistName: 'uh-huh sunny',
-  followers: 5609,
+  id: 9002,
+  artistName: 'tightly',
+  followers: 26232,
 };
 
 export const sampleWithPartialData: IArtist = {
-  id: 26239,
-  artistName: 'pertain',
-  followers: 20255,
-  image: '../fake-data/blob/hipster.png',
-  imageContentType: 'unknown',
+  id: 4101,
+  artistName: 'shampoo',
+  followers: 26507,
 };
 
 export const sampleWithFullData: IArtist = {
-  id: 17072,
-  artistName: 'fully doubter surprisingly',
-  followers: 3235,
+  id: 17933,
+  artistName: 'curiously yuck',
+  followers: 31026,
   image: '../fake-data/blob/hipster.png',
   imageContentType: 'unknown',
 };
 
 export const sampleWithNewData: NewArtist = {
-  artistName: 'who spirited',
-  followers: 31544,
+  artistName: 'yawningly except',
+  followers: 11950,
   id: null,
 };
 

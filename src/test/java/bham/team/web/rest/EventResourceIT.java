@@ -15,7 +15,7 @@ import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,8 +34,8 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class EventResourceIT {
 
-    private static final Integer DEFAULT_ARTIST_ID = 1;
-    private static final Integer UPDATED_ARTIST_ID = 2;
+    private static final Integer DEFAULT_EVENT_ID = 1;
+    private static final Integer UPDATED_EVENT_ID = 2;
 
     private static final Instant DEFAULT_DATETIME = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATETIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
@@ -62,7 +62,7 @@ class EventResourceIT {
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
     private static Random random = new Random();
-    private static AtomicInteger intCount = new AtomicInteger(random.nextInt() + (2 * Short.MAX_VALUE));
+    private static AtomicLong longCount = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
     @Autowired
     private ObjectMapper om;
@@ -88,7 +88,7 @@ class EventResourceIT {
      */
     public static Event createEntity() {
         return new Event()
-            .artistId(DEFAULT_ARTIST_ID)
+            .eventID(DEFAULT_EVENT_ID)
             .datetime(DEFAULT_DATETIME)
             .description(DEFAULT_DESCRIPTION)
             .title(DEFAULT_TITLE)
@@ -106,7 +106,7 @@ class EventResourceIT {
      */
     public static Event createUpdatedEntity() {
         return new Event()
-            .artistId(UPDATED_ARTIST_ID)
+            .eventID(UPDATED_EVENT_ID)
             .datetime(UPDATED_DATETIME)
             .description(UPDATED_DESCRIPTION)
             .title(UPDATED_TITLE)
@@ -155,7 +155,7 @@ class EventResourceIT {
     @Transactional
     void createEventWithExistingId() throws Exception {
         // Create the Event with an existing ID
-        event.setId(1);
+        event.setId(1L);
 
         long databaseSizeBeforeCreate = getRepositoryCount();
 
@@ -170,10 +170,106 @@ class EventResourceIT {
 
     @Test
     @Transactional
-    void checkArtistIdIsRequired() throws Exception {
+    void checkEventIDIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
-        event.setArtistId(null);
+        event.setEventID(null);
+
+        // Create the Event, which fails.
+
+        restEventMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(event)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkDatetimeIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        event.setDatetime(null);
+
+        // Create the Event, which fails.
+
+        restEventMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(event)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkTitleIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        event.setTitle(null);
+
+        // Create the Event, which fails.
+
+        restEventMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(event)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkVenueNameIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        event.setVenueName(null);
+
+        // Create the Event, which fails.
+
+        restEventMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(event)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkCityIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        event.setCity(null);
+
+        // Create the Event, which fails.
+
+        restEventMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(event)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkRegionIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        event.setRegion(null);
+
+        // Create the Event, which fails.
+
+        restEventMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(event)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkCountryIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        event.setCountry(null);
 
         // Create the Event, which fails.
 
@@ -196,7 +292,7 @@ class EventResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(event.getId().intValue())))
-            .andExpect(jsonPath("$.[*].artistId").value(hasItem(DEFAULT_ARTIST_ID)))
+            .andExpect(jsonPath("$.[*].eventID").value(hasItem(DEFAULT_EVENT_ID)))
             .andExpect(jsonPath("$.[*].datetime").value(hasItem(DEFAULT_DATETIME.toString())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
@@ -218,7 +314,7 @@ class EventResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(event.getId().intValue()))
-            .andExpect(jsonPath("$.artistId").value(DEFAULT_ARTIST_ID))
+            .andExpect(jsonPath("$.eventID").value(DEFAULT_EVENT_ID))
             .andExpect(jsonPath("$.datetime").value(DEFAULT_DATETIME.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
@@ -232,7 +328,7 @@ class EventResourceIT {
     @Transactional
     void getNonExistingEvent() throws Exception {
         // Get the event
-        restEventMockMvc.perform(get(ENTITY_API_URL_ID, Integer.MAX_VALUE)).andExpect(status().isNotFound());
+        restEventMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
     }
 
     @Test
@@ -248,7 +344,7 @@ class EventResourceIT {
         // Disconnect from session so that the updates on updatedEvent are not directly saved in db
         em.detach(updatedEvent);
         updatedEvent
-            .artistId(UPDATED_ARTIST_ID)
+            .eventID(UPDATED_EVENT_ID)
             .datetime(UPDATED_DATETIME)
             .description(UPDATED_DESCRIPTION)
             .title(UPDATED_TITLE)
@@ -274,7 +370,7 @@ class EventResourceIT {
     @Transactional
     void putNonExistingEvent() throws Exception {
         long databaseSizeBeforeUpdate = getRepositoryCount();
-        event.setId(intCount.incrementAndGet());
+        event.setId(longCount.incrementAndGet());
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restEventMockMvc
@@ -289,12 +385,12 @@ class EventResourceIT {
     @Transactional
     void putWithIdMismatchEvent() throws Exception {
         long databaseSizeBeforeUpdate = getRepositoryCount();
-        event.setId(intCount.incrementAndGet());
+        event.setId(longCount.incrementAndGet());
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restEventMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, intCount.incrementAndGet())
+                put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(om.writeValueAsBytes(event))
             )
@@ -308,7 +404,7 @@ class EventResourceIT {
     @Transactional
     void putWithMissingIdPathParamEvent() throws Exception {
         long databaseSizeBeforeUpdate = getRepositoryCount();
-        event.setId(intCount.incrementAndGet());
+        event.setId(longCount.incrementAndGet());
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restEventMockMvc
@@ -330,14 +426,6 @@ class EventResourceIT {
         // Update the event using partial update
         Event partialUpdatedEvent = new Event();
         partialUpdatedEvent.setId(event.getId());
-
-        partialUpdatedEvent
-            .datetime(UPDATED_DATETIME)
-            .description(UPDATED_DESCRIPTION)
-            .title(UPDATED_TITLE)
-            .city(UPDATED_CITY)
-            .region(UPDATED_REGION)
-            .country(UPDATED_COUNTRY);
 
         restEventMockMvc
             .perform(
@@ -366,7 +454,7 @@ class EventResourceIT {
         partialUpdatedEvent.setId(event.getId());
 
         partialUpdatedEvent
-            .artistId(UPDATED_ARTIST_ID)
+            .eventID(UPDATED_EVENT_ID)
             .datetime(UPDATED_DATETIME)
             .description(UPDATED_DESCRIPTION)
             .title(UPDATED_TITLE)
@@ -393,7 +481,7 @@ class EventResourceIT {
     @Transactional
     void patchNonExistingEvent() throws Exception {
         long databaseSizeBeforeUpdate = getRepositoryCount();
-        event.setId(intCount.incrementAndGet());
+        event.setId(longCount.incrementAndGet());
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restEventMockMvc
@@ -410,12 +498,12 @@ class EventResourceIT {
     @Transactional
     void patchWithIdMismatchEvent() throws Exception {
         long databaseSizeBeforeUpdate = getRepositoryCount();
-        event.setId(intCount.incrementAndGet());
+        event.setId(longCount.incrementAndGet());
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restEventMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, intCount.incrementAndGet())
+                patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
                     .content(om.writeValueAsBytes(event))
             )
@@ -429,7 +517,7 @@ class EventResourceIT {
     @Transactional
     void patchWithMissingIdPathParamEvent() throws Exception {
         long databaseSizeBeforeUpdate = getRepositoryCount();
-        event.setId(intCount.incrementAndGet());
+        event.setId(longCount.incrementAndGet());
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restEventMockMvc

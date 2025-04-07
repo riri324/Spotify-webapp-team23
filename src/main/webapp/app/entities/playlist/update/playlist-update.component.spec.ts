@@ -53,10 +53,10 @@ describe('Playlist Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Song query and add missing value', () => {
       const playlist: IPlaylist = { id: 456 };
-      const songs: ISong[] = [{ id: 4676 }];
+      const songs: ISong[] = [{ id: 5172 }];
       playlist.songs = songs;
 
-      const songCollection: ISong[] = [{ id: 3000 }];
+      const songCollection: ISong[] = [{ id: 1639 }];
       jest.spyOn(songService, 'query').mockReturnValue(of(new HttpResponse({ body: songCollection })));
       const additionalSongs = [...songs];
       const expectedCollection: ISong[] = [...additionalSongs, ...songCollection];
@@ -75,10 +75,10 @@ describe('Playlist Management Update Component', () => {
 
     it('Should call User query and add missing value', () => {
       const playlist: IPlaylist = { id: 456 };
-      const user: IUser = { id: 19524 };
+      const user: IUser = { id: 6213 };
       playlist.user = user;
 
-      const userCollection: IUser[] = [{ id: 13046 }];
+      const userCollection: IUser[] = [{ id: 22834 }];
       jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
       const additionalUsers = [user];
       const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
@@ -97,15 +97,15 @@ describe('Playlist Management Update Component', () => {
 
     it('Should update editForm', () => {
       const playlist: IPlaylist = { id: 456 };
-      const songs: ISong = { id: 30146 };
-      playlist.songs = [songs];
-      const user: IUser = { id: 11923 };
+      const song: ISong = { id: 2802 };
+      playlist.songs = [song];
+      const user: IUser = { id: 29087 };
       playlist.user = user;
 
       activatedRoute.data = of({ playlist });
       comp.ngOnInit();
 
-      expect(comp.songsSharedCollection).toContain(songs);
+      expect(comp.songsSharedCollection).toContain(song);
       expect(comp.usersSharedCollection).toContain(user);
       expect(comp.playlist).toEqual(playlist);
     });

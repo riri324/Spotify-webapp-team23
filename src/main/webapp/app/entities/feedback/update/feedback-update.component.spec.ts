@@ -4,8 +4,6 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, from, of } from 'rxjs';
 
-import { IUser } from 'app/entities/user/user.model';
-import { UserService } from 'app/entities/user/service/user.service';
 import { FeedbackService } from '../service/feedback.service';
 import { IFeedback } from '../feedback.model';
 import { FeedbackFormService } from './feedback-form.service';
@@ -18,7 +16,6 @@ describe('Feedback Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let feedbackFormService: FeedbackFormService;
   let feedbackService: FeedbackService;
-  let userService: UserService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -41,43 +38,17 @@ describe('Feedback Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     feedbackFormService = TestBed.inject(FeedbackFormService);
     feedbackService = TestBed.inject(FeedbackService);
-    userService = TestBed.inject(UserService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call User query and add missing value', () => {
-      const feedback: IFeedback = { id: 456 };
-      const user: IUser = { id: 7419 };
-      feedback.user = user;
-
-      const userCollection: IUser[] = [{ id: 26345 }];
-      jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
-      const additionalUsers = [user];
-      const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
-      jest.spyOn(userService, 'addUserToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ feedback });
-      comp.ngOnInit();
-
-      expect(userService.query).toHaveBeenCalled();
-      expect(userService.addUserToCollectionIfMissing).toHaveBeenCalledWith(
-        userCollection,
-        ...additionalUsers.map(expect.objectContaining),
-      );
-      expect(comp.usersSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should update editForm', () => {
       const feedback: IFeedback = { id: 456 };
-      const user: IUser = { id: 5325 };
-      feedback.user = user;
 
       activatedRoute.data = of({ feedback });
       comp.ngOnInit();
 
-      expect(comp.usersSharedCollection).toContain(user);
       expect(comp.feedback).toEqual(feedback);
     });
   });
@@ -147,18 +118,6 @@ describe('Feedback Management Update Component', () => {
       expect(feedbackService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('Compare relationships', () => {
-    describe('compareUser', () => {
-      it('Should forward to userService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(userService, 'compareUser');
-        comp.compareUser(entity, entity2);
-        expect(userService.compareUser).toHaveBeenCalledWith(entity, entity2);
-      });
     });
   });
 });

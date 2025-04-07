@@ -21,7 +21,7 @@
     {
       "otherEntityName": "song",
       "otherEntityRelationshipName": "genre",
-      "relationshipName": "songs",
+      "relationshipName": "song",
       "relationshipSide": "right",
       "relationshipType": "one-to-many"
     }

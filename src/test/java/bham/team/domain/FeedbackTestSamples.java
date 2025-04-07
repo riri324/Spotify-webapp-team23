@@ -14,10 +14,10 @@ public class FeedbackTestSamples {
     public static Feedback getFeedbackSample1() {
         return new Feedback()
             .id(1L)
-            .feedbackId(1)
-            .username("username1")
+            .feedbackID(1L)
+            .userName("userName1")
             .userEmail("userEmail1")
-            .userPhineNum(1)
+            .userPhoneNum("userPhoneNum1")
             .message("message1")
             .rating(1);
     }
@@ -25,10 +25,10 @@ public class FeedbackTestSamples {
     public static Feedback getFeedbackSample2() {
         return new Feedback()
             .id(2L)
-            .feedbackId(2)
-            .username("username2")
+            .feedbackID(2L)
+            .userName("userName2")
             .userEmail("userEmail2")
-            .userPhineNum(2)
+            .userPhoneNum("userPhoneNum2")
             .message("message2")
             .rating(2);
     }
@@ -36,10 +36,10 @@ public class FeedbackTestSamples {
     public static Feedback getFeedbackRandomSampleGenerator() {
         return new Feedback()
             .id(longCount.incrementAndGet())
-            .feedbackId(intCount.incrementAndGet())
-            .username(UUID.randomUUID().toString())
+            .feedbackID(longCount.incrementAndGet())
+            .userName(UUID.randomUUID().toString())
             .userEmail(UUID.randomUUID().toString())
-            .userPhineNum(intCount.incrementAndGet())
+            .userPhoneNum(UUID.randomUUID().toString())
             .message(UUID.randomUUID().toString())
             .rating(intCount.incrementAndGet());
     }

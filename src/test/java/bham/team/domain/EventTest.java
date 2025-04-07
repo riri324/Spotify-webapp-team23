@@ -1,5 +1,6 @@
 package bham.team.domain;
 
+import static bham.team.domain.ArtistTestSamples.*;
 import static bham.team.domain.EventTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,5 +21,17 @@ class EventTest {
 
         event2 = getEventSample2();
         assertThat(event1).isNotEqualTo(event2);
+    }
+
+    @Test
+    void artistTest() {
+        Event event = getEventRandomSampleGenerator();
+        Artist artistBack = getArtistRandomSampleGenerator();
+
+        event.setArtist(artistBack);
+        assertThat(event.getArtist()).isEqualTo(artistBack);
+
+        event.artist(null);
+        assertThat(event.getArtist()).isNull();
     }
 }

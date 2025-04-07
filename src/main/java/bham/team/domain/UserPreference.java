@@ -1,6 +1,7 @@
 package bham.team.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -22,28 +23,38 @@ public class UserPreference implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "favorite_genre")
+    @NotNull
+    @Size(max = 20)
+    @Column(name = "favorite_genre", length = 20, nullable = false)
     private String favoriteGenre;
 
-    @Column(name = "music_purpose")
+    @NotNull
+    @Size(max = 50)
+    @Column(name = "music_purpose", length = 50, nullable = false)
     private String musicPurpose;
 
-    @Column(name = "music_mood")
+    @Size(max = 50)
+    @Column(name = "music_mood", length = 50)
     private String musicMood;
 
-    @Column(name = "vocal_preference")
+    @Size(max = 50)
+    @Column(name = "vocal_preference", length = 50)
     private String vocalPreference;
 
-    @Column(name = "listening_time")
+    @Size(max = 50)
+    @Column(name = "listening_time", length = 50)
     private String listeningTime;
 
-    @Column(name = "listening_pattern")
+    @Size(max = 50)
+    @Column(name = "listening_pattern", length = 50)
     private String listeningPattern;
 
-    @Column(name = "song_length")
+    @Size(max = 20)
+    @Column(name = "song_length", length = 20)
     private String songLength;
 
-    @Column(name = "lyrics_importance")
+    @Size(max = 50)
+    @Column(name = "lyrics_importance", length = 50)
     private String lyricsImportance;
 
     @OneToOne(fetch = FetchType.LAZY)

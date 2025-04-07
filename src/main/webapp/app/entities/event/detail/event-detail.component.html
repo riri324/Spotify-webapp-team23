@@ -11,13 +11,13 @@
         <jhi-alert></jhi-alert>
 
         <dl class="row-md jh-entity-details">
-          <dt><span>Id</span></dt>
+          <dt><span>ID</span></dt>
           <dd>
             <span>{{ eventRef.id }}</span>
           </dd>
-          <dt><span>Artist Id</span></dt>
+          <dt><span>Event ID</span></dt>
           <dd>
-            <span>{{ eventRef.artistId }}</span>
+            <span>{{ eventRef.eventID }}</span>
           </dd>
           <dt><span>Datetime</span></dt>
           <dd>
@@ -46,6 +46,14 @@
           <dt><span>Country</span></dt>
           <dd>
             <span>{{ eventRef.country }}</span>
+          </dd>
+          <dt><span>Artist</span></dt>
+          <dd>
+            @if (event()!.artist) {
+              <div>
+                <a [routerLink]="['/artist', event()!.artist?.id, 'view']">{{ eventRef.artist?.id }}</a>
+              </div>
+            }
           </dd>
         </dl>
 

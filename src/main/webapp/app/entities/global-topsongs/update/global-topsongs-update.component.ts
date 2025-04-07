@@ -2,11 +2,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 
 import SharedModule from 'app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { ISong } from 'app/entities/song/song.model';
+import { SongService } from 'app/entities/song/service/song.service';
 import { IGlobalTopsongs } from '../global-topsongs.model';
 import { GlobalTopsongsService } from '../service/global-topsongs.service';
 import { GlobalTopsongsFormGroup, GlobalTopsongsFormService } from './global-topsongs-form.service';
@@ -21,12 +23,17 @@ export class GlobalTopsongsUpdateComponent implements OnInit {
   isSaving = false;
   globalTopsongs: IGlobalTopsongs | null = null;
 
+  songsSharedCollection: ISong[] = [];
+
   protected globalTopsongsService = inject(GlobalTopsongsService);
   protected globalTopsongsFormService = inject(GlobalTopsongsFormService);
+  protected songService = inject(SongService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: GlobalTopsongsFormGroup = this.globalTopsongsFormService.createGlobalTopsongsFormGroup();
+
+  compareSong = (o1: ISong | null, o2: ISong | null): boolean => this.songService.compareSong(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ globalTopsongs }) => {
@@ -34,6 +41,8 @@ export class GlobalTopsongsUpdateComponent implements OnInit {
       if (globalTopsongs) {
         this.updateForm(globalTopsongs);
       }
+
+      this.loadRelationshipsOptions();
     });
   }
 
@@ -73,5 +82,15 @@ export class GlobalTopsongsUpdateComponent implements OnInit {
   protected updateForm(globalTopsongs: IGlobalTopsongs): void {
     this.globalTopsongs = globalTopsongs;
     this.globalTopsongsFormService.resetForm(this.editForm, globalTopsongs);
+
+    this.songsSharedCollection = this.songService.addSongToCollectionIfMissing<ISong>(this.songsSharedCollection, globalTopsongs.song);
+  }
+
+  protected loadRelationshipsOptions(): void {
+    this.songService
+      .query()
+      .pipe(map((res: HttpResponse<ISong[]>) => res.body ?? []))
+      .pipe(map((songs: ISong[]) => this.songService.addSongToCollectionIfMissing<ISong>(songs, this.globalTopsongs?.song)))
+      .subscribe((songs: ISong[]) => (this.songsSharedCollection = songs));
   }
 }

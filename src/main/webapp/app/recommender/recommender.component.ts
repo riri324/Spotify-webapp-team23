@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlaylistService } from '../entities/playlist/service/playlist.service';
-import { SongService } from '../entities/song/service/song.service';
 import { AccountService } from '../core/auth/account.service';
 import { IPlaylist } from '../entities/playlist/playlist.model';
 import { ISong } from '../entities/song/song.model';
@@ -21,6 +20,8 @@ export class RecommenderComponent implements OnInit {
   currentUserId: number | null = null;
   playlists?: IPlaylist[];
   Songs?: ISong[];
+  playlistCache: Map<number, ISong[]> = new Map<number, ISong[]>();
+  rejectedSongs: Set<number> = new Set<number>();
   selectedSong: ISong | null = null;
   public readonly router = inject(Router);
   protected readonly http = inject(HttpClient);
@@ -28,12 +29,10 @@ export class RecommenderComponent implements OnInit {
 
   constructor(
     protected playlistService: PlaylistService,
-    protected songService: SongService,
     protected accountService: AccountService,
   ) {}
 
   ngOnInit(): void {
-    this.loadSongs();
     this.loadUserData();
   }
 
@@ -44,10 +43,12 @@ export class RecommenderComponent implements OnInit {
         this.userName = userData.firstName || null;
         this.currentUserId = userData.id;
 
-        // After getting user ID, load playlists
+        // After getting user ID, load playlists that have at least one song
         if (this.currentUserId) {
           this.playlistService.queryUserPlaylists(this.currentUserId).subscribe(response => {
-            this.playlists = response.body ?? [];
+            this.playlists = (response.body ?? []).filter(playlist => playlist.songs && playlist.songs.length > 0);
+
+            this.loadSongs();
           });
         }
       }
@@ -55,10 +56,22 @@ export class RecommenderComponent implements OnInit {
   }
 
   loadSongs(): void {
-    // Fetch Songs
-    this.songService.query().subscribe(response => {
-      this.Songs = response.body ?? [];
+    if (!this.playlists || this.playlists.length === 0) {
+      this.Songs = [];
+      return;
+    }
+
+    // Collect one random song from each of the playlists
+    const songSet = new Set<ISong>();
+
+    this.playlists.forEach(playlist => {
+      if (playlist.songs && playlist.songs.length > 0) {
+        const randomIndex = Math.floor(Math.random() * playlist.songs.length);
+        songSet.add(playlist.songs[randomIndex]);
+      }
     });
+
+    this.Songs = Array.from(songSet);
   }
 
   // Method to navigate to the playlist detail page
@@ -72,6 +85,10 @@ export class RecommenderComponent implements OnInit {
   }
 
   // Add a song to a playlist
+
+  rejectSong(song: ISong): void {
+    // Placeholder function to test button existence
+  }
 
   // Simple notification function
   private showNotification(message: string, isError = false): void {

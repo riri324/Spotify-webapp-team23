@@ -2,34 +2,45 @@
   "annotations": {
     "changelogDate": "20250303014320"
   },
-  "dto": "no",
+  "applications": "*",
   "fields": [
     {
-      "fieldName": "feedbackId",
-      "fieldType": "Integer"
+      "fieldName": "feedbackID",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required", "unique"]
     },
     {
-      "fieldName": "username",
-      "fieldType": "String"
+      "fieldName": "userName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "100"
     },
     {
       "fieldName": "userEmail",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "100"
     },
     {
-      "fieldName": "userPhineNum",
-      "fieldType": "Integer"
+      "fieldName": "userPhoneNum",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "25"
     },
     {
       "fieldName": "message",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "2048"
     },
     {
       "fieldName": "rating",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "10",
+      "fieldValidateRulesMin": "1"
     }
   ],
-  "jpaMetamodelFiltering": false,
   "name": "Feedback",
   "pagination": "pagination",
   "readOnly": false,

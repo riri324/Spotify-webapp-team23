@@ -3,38 +3,30 @@ import dayjs from 'dayjs/esm';
 import { IGlobalTopsongs, NewGlobalTopsongs } from './global-topsongs.model';
 
 export const sampleWithRequiredData: IGlobalTopsongs = {
-  id: 3907,
-  songTitle: 'toward whoa',
-  artistName: 'phew',
-  playCount: 9163,
-  monthYear: dayjs('2025-02-28T02:48'),
-  year: 2033,
+  id: 32330,
+  playCount: 22061,
+  monthYear: dayjs('2025-02-28T01:02'),
+  year: 2089,
 };
 
 export const sampleWithPartialData: IGlobalTopsongs = {
-  id: 4893,
-  songTitle: 'yin aboard tuber',
-  artistName: 'warmhearted however disbar',
-  playCount: 5978,
-  monthYear: dayjs('2025-02-28T12:48'),
-  year: 2058,
+  id: 12775,
+  playCount: 14825,
+  monthYear: dayjs('2025-02-28T06:51'),
+  year: 2056,
 };
 
 export const sampleWithFullData: IGlobalTopsongs = {
-  id: 928,
-  songTitle: 'disarm deficient serene',
-  artistName: 'sans',
-  playCount: 26139,
-  monthYear: dayjs('2025-02-28T00:27'),
-  year: 2000,
+  id: 26909,
+  playCount: 6103,
+  monthYear: dayjs('2025-02-27T18:44'),
+  year: 2069,
 };
 
 export const sampleWithNewData: NewGlobalTopsongs = {
-  songTitle: 'bah bowler ragged',
-  artistName: 'unripe',
-  playCount: 31371,
-  monthYear: dayjs('2025-02-27T19:30'),
-  year: 2048,
+  playCount: 15892,
+  monthYear: dayjs('2025-02-28T06:09'),
+  year: 2051,
   id: null,
 };
 

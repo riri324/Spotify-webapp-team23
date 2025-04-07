@@ -125,6 +125,23 @@
   transform: scale(1.05);
 }
 
+.reject-btn {
+  background-color: #ff1439; /* Bright Neon Red */
+  color: #fff; /* White text for contrast */
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+  font-size: 0.85rem;
+}
+
+.reject-btn:hover {
+  background-color: #d51232; /* Slightly darker red */
+  transform: scale(1.05);
+}
+
 .playlist-selector {
   position: absolute;
   width: 100%;

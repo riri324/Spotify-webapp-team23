@@ -4,7 +4,6 @@ import static bham.team.domain.MessageAsserts.*;
 import static bham.team.web.rest.TestUtil.createUpdateProxyForBean;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -12,26 +11,19 @@ import bham.team.IntegrationTest;
 import bham.team.domain.Message;
 import bham.team.repository.MessageRepository;
 import bham.team.repository.UserRepository;
-import bham.team.service.MessageService;
 import bham.team.service.dto.MessageDTO;
 import bham.team.service.mapper.MessageMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -41,7 +33,6 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link MessageResource} REST controller.
  */
 @IntegrationTest
-@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class MessageResourceIT {
@@ -73,14 +64,8 @@ class MessageResourceIT {
     @Autowired
     private UserRepository userRepository;
 
-    @Mock
-    private MessageRepository messageRepositoryMock;
-
     @Autowired
     private MessageMapper messageMapper;
-
-    @Mock
-    private MessageService messageServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -219,23 +204,6 @@ class MessageResourceIT {
             .andExpect(jsonPath("$.[*].seen").value(hasItem(DEFAULT_SEEN.booleanValue())));
     }
 
-    @SuppressWarnings({ "unchecked" })
-    void getAllMessagesWithEagerRelationshipsIsEnabled() throws Exception {
-        when(messageServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restMessageMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
-
-        verify(messageServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void getAllMessagesWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(messageServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restMessageMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
-        verify(messageRepositoryMock, times(1)).findAll(any(Pageable.class));
-    }
-
     @Test
     @Transactional
     void getMessage() throws Exception {
@@ -359,7 +327,7 @@ class MessageResourceIT {
         Message partialUpdatedMessage = new Message();
         partialUpdatedMessage.setId(message.getId());
 
-        partialUpdatedMessage.sent(UPDATED_SENT).seen(UPDATED_SEEN);
+        partialUpdatedMessage.content(UPDATED_CONTENT).sent(UPDATED_SENT);
 
         restMessageMockMvc
             .perform(

@@ -61,6 +61,16 @@ const routes: Routes = [
     data: { pageTitle: 'Messages' },
     loadChildren: () => import('./message/message.routes'),
   },
+  {
+    path: 'listening-history',
+    data: { pageTitle: 'ListeningHistories' },
+    loadChildren: () => import('./listening-history/listening-history.routes'),
+  },
+  {
+    path: 'liked-songs',
+    data: { pageTitle: 'LikedSongs' },
+    loadChildren: () => import('./liked-songs/liked-songs.routes'),
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

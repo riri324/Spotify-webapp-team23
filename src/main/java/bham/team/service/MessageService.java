@@ -89,15 +89,6 @@ public class MessageService {
     }
 
     /**
-     * Get all the messages with eager load of many-to-many relationships.
-     *
-     * @return the list of entities.
-     */
-    public Page<MessageDTO> findAllWithEagerRelationships(Pageable pageable) {
-        return messageRepository.findAllWithEagerRelationships(pageable).map(messageMapper::toDto);
-    }
-
-    /**
      * Get one message by id.
      *
      * @param id the id of the entity.
@@ -106,7 +97,7 @@ public class MessageService {
     @Transactional(readOnly = true)
     public Optional<MessageDTO> findOne(Long id) {
         LOG.debug("Request to get Message : {}", id);
-        return messageRepository.findOneWithEagerRelationships(id).map(messageMapper::toDto);
+        return messageRepository.findById(id).map(messageMapper::toDto);
     }
 
     /**

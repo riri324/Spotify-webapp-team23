@@ -151,11 +151,11 @@
         </div>
 
         <div class="mb-3">
-          <label for="field_playlists">Playlists</label>
+          <label for="field_playlists">Playlist</label>
           <select
             class="form-control"
             id="field_playlists"
-            data-cy="playlists"
+            data-cy="playlist"
             multiple
             name="playlists"
             formControlName="playlists"
@@ -163,6 +163,23 @@
           >
             @for (playlistOption of playlistsSharedCollection; track $index) {
               <option [ngValue]="playlistOption">{{ playlistOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="field_listeningHistories">Listening History</label>
+          <select
+            class="form-control"
+            id="field_listeningHistories"
+            data-cy="listeningHistory"
+            multiple
+            name="listeningHistories"
+            formControlName="listeningHistories"
+            [compareWith]="compareListeningHistory"
+          >
+            @for (listeningHistoryOption of listeningHistoriesSharedCollection; track $index) {
+              <option [ngValue]="listeningHistoryOption">{{ listeningHistoryOption.id }}</option>
             }
           </select>
         </div>

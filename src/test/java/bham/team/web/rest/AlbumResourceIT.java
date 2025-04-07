@@ -338,7 +338,7 @@ class AlbumResourceIT {
         partialUpdatedAlbum.setId(album.getId());
 
         partialUpdatedAlbum
-            .albumID(UPDATED_ALBUM_ID)
+            .albumName(UPDATED_ALBUM_NAME)
             .numberOfSongs(UPDATED_NUMBER_OF_SONGS)
             .image(UPDATED_IMAGE)
             .imageContentType(UPDATED_IMAGE_CONTENT_TYPE);

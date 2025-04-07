@@ -47,10 +47,10 @@ public class FeedbackAsserts {
     public static void assertFeedbackUpdatableFieldsEquals(Feedback expected, Feedback actual) {
         assertThat(expected)
             .as("Verify Feedback relevant properties")
-            .satisfies(e -> assertThat(e.getFeedbackId()).as("check feedbackId").isEqualTo(actual.getFeedbackId()))
-            .satisfies(e -> assertThat(e.getUsername()).as("check username").isEqualTo(actual.getUsername()))
+            .satisfies(e -> assertThat(e.getFeedbackID()).as("check feedbackID").isEqualTo(actual.getFeedbackID()))
+            .satisfies(e -> assertThat(e.getUserName()).as("check userName").isEqualTo(actual.getUserName()))
             .satisfies(e -> assertThat(e.getUserEmail()).as("check userEmail").isEqualTo(actual.getUserEmail()))
-            .satisfies(e -> assertThat(e.getUserPhineNum()).as("check userPhineNum").isEqualTo(actual.getUserPhineNum()))
+            .satisfies(e -> assertThat(e.getUserPhoneNum()).as("check userPhoneNum").isEqualTo(actual.getUserPhoneNum()))
             .satisfies(e -> assertThat(e.getMessage()).as("check message").isEqualTo(actual.getMessage()))
             .satisfies(e -> assertThat(e.getRating()).as("check rating").isEqualTo(actual.getRating()));
     }

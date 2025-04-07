@@ -1,5 +1,6 @@
 package bham.team.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
@@ -18,23 +19,13 @@ public class GlobalTopsongs implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
 
     @NotNull
-    @Column(name = "song_title", nullable = false, unique = true)
-    private String songTitle;
-
-    @NotNull
-    @Column(name = "artist_name", nullable = false)
-    private String artistName;
-
-    @NotNull
-    @Min(value = 0)
     @Column(name = "play_count", nullable = false)
     private Integer playCount;
 
@@ -47,6 +38,13 @@ public class GlobalTopsongs implements Serializable {
     @Max(value = 2100)
     @Column(name = "year", nullable = false)
     private Integer year;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(
+        value = { "globalTopsongs", "album", "genre", "artist", "likedSongs", "playlists", "listeningHistories" },
+        allowSetters = true
+    )
+    private Song song;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -61,32 +59,6 @@ public class GlobalTopsongs implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getSongTitle() {
-        return this.songTitle;
-    }
-
-    public GlobalTopsongs songTitle(String songTitle) {
-        this.setSongTitle(songTitle);
-        return this;
-    }
-
-    public void setSongTitle(String songTitle) {
-        this.songTitle = songTitle;
-    }
-
-    public String getArtistName() {
-        return this.artistName;
-    }
-
-    public GlobalTopsongs artistName(String artistName) {
-        this.setArtistName(artistName);
-        return this;
-    }
-
-    public void setArtistName(String artistName) {
-        this.artistName = artistName;
     }
 
     public Integer getPlayCount() {
@@ -128,6 +100,19 @@ public class GlobalTopsongs implements Serializable {
         this.year = year;
     }
 
+    public Song getSong() {
+        return this.song;
+    }
+
+    public void setSong(Song song) {
+        this.song = song;
+    }
+
+    public GlobalTopsongs song(Song song) {
+        this.setSong(song);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -152,8 +137,6 @@ public class GlobalTopsongs implements Serializable {
     public String toString() {
         return "GlobalTopsongs{" +
             "id=" + getId() +
-            ", songTitle='" + getSongTitle() + "'" +
-            ", artistName='" + getArtistName() + "'" +
             ", playCount=" + getPlayCount() +
             ", monthYear='" + getMonthYear() + "'" +
             ", year=" + getYear() +

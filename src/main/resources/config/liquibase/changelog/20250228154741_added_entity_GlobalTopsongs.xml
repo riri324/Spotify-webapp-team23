@@ -14,12 +14,6 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="song_title" type="varchar(255)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="ux_global_topsongs__song_title" />
-            </column>
-            <column name="artist_name" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
             <column name="play_count" type="integer">
                 <constraints nullable="false" />
             </column>
@@ -28,6 +22,9 @@
             </column>
             <column name="year" type="integer">
                 <constraints nullable="false" />
+            </column>
+            <column name="song_id" type="bigint">
+                <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -51,8 +48,6 @@
                   tableName="global_topsongs"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="song_title" type="string"/>
-            <column name="artist_name" type="string"/>
             <column name="play_count" type="numeric"/>
             <column name="month_year" type="date"/>
             <column name="year" type="numeric"/>

@@ -31,18 +31,20 @@
   "pagination": "pagination",
   "relationships": [
     {
-      "otherEntityField": "login",
+      "otherEntityField": "id",
       "otherEntityName": "user",
       "relationshipName": "sender",
       "relationshipSide": "left",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipWithBuiltInEntity": true
     },
     {
-      "otherEntityField": "login",
+      "otherEntityField": "id",
       "otherEntityName": "user",
       "relationshipName": "recipient",
       "relationshipSide": "left",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipWithBuiltInEntity": true
     }
   ],
   "searchEngine": "no",

@@ -10,6 +10,7 @@
         Added the entity Playlist.
     -->
     <changeSet id="20250302040024-1" author="jhipster">
+        <validCheckSum>9:a72cb682e9a34cd30eee409849b27820</validCheckSum>
         <createTable tableName="playlist">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
@@ -27,16 +28,16 @@
                 <constraints nullable="false" />
             </column>
             <column name="user_id" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>
 
     <changeSet id="20250302040024-1-relations" author="jhipster">
-
-        <createTable tableName="rel_playlist__songs">
-            <column name="songs_id" type="bigint">
+        <validCheckSum>9:4568b210677b7b0122be99d8a6bb8558</validCheckSum>
+        <createTable tableName="rel_playlist__song">
+            <column name="song_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
             <column name="playlist_id" type="bigint">
@@ -44,7 +45,7 @@
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="playlist_id, songs_id" tableName="rel_playlist__songs"/>
+        <addPrimaryKey columnNames="playlist_id, song_id" tableName="rel_playlist__song"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -68,7 +69,6 @@
             <column name="name" type="string"/>
             <column name="description" type="string"/>
             <column name="is_public" type="boolean"/>
-            <column name="user_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

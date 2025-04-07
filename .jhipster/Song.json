@@ -52,30 +52,51 @@
   "name": "Song",
   "relationships": [
     {
+      "otherEntityName": "globalTopsongs",
+      "otherEntityRelationshipName": "song",
+      "relationshipName": "globalTopsongs",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityName": "album",
-      "otherEntityRelationshipName": "songs",
+      "otherEntityRelationshipName": "song",
       "relationshipName": "album",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     },
     {
       "otherEntityName": "genre",
-      "otherEntityRelationshipName": "songs",
+      "otherEntityRelationshipName": "song",
       "relationshipName": "genre",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     },
     {
       "otherEntityName": "artist",
-      "otherEntityRelationshipName": "songs",
+      "otherEntityRelationshipName": "song",
       "relationshipName": "artist",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     },
     {
+      "otherEntityName": "likedSongs",
+      "otherEntityRelationshipName": "song",
+      "relationshipName": "likedSongs",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-one"
+    },
+    {
       "otherEntityName": "playlist",
-      "otherEntityRelationshipName": "songs",
-      "relationshipName": "playlists",
+      "otherEntityRelationshipName": "song",
+      "relationshipName": "playlist",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "listeningHistory",
+      "otherEntityRelationshipName": "song",
+      "relationshipName": "listeningHistory",
       "relationshipSide": "right",
       "relationshipType": "many-to-many"
     }

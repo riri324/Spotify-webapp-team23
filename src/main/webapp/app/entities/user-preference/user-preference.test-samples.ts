@@ -25,6 +25,8 @@ export const sampleWithFullData: IUserPreference = {
 };
 
 export const sampleWithNewData: NewUserPreference = {
+  favoriteGenre: 'from',
+  musicPurpose: 'for',
   id: null,
 };
 

@@ -237,7 +237,7 @@ public class PlaylistResource {
 
             // Check if the song is already in the playlist to avoid duplicates
             if (!playlist.getSongs().contains(song)) {
-                playlist.addSongs(song);
+                playlist.addSong(song);
                 playlistRepository.save(playlist);
             }
 

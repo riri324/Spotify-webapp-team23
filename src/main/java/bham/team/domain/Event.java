@@ -1,5 +1,6 @@
 package bham.team.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
@@ -18,64 +19,79 @@ public class Event implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @Column(name = "id")
+    private Long id;
 
     @NotNull
-    @Column(name = "artist_id", nullable = false)
-    private Integer artistId;
+    @Column(name = "event_id", nullable = false, unique = true)
+    private Integer eventID;
 
-    @Column(name = "datetime")
+    @NotNull
+    @Column(name = "datetime", nullable = false)
     private Instant datetime;
 
-    @Column(name = "description")
+    @Size(max = 500)
+    @Column(name = "description", length = 500)
     private String description;
 
-    @Column(name = "title")
+    @NotNull
+    @Size(max = 100)
+    @Column(name = "title", length = 100, nullable = false)
     private String title;
 
-    @Column(name = "venue_name")
+    @NotNull
+    @Size(max = 100)
+    @Column(name = "venue_name", length = 100, nullable = false)
     private String venueName;
 
-    @Column(name = "city")
+    @NotNull
+    @Size(max = 50)
+    @Column(name = "city", length = 50, nullable = false)
     private String city;
 
-    @Column(name = "region")
+    @NotNull
+    @Size(max = 50)
+    @Column(name = "region", length = 50, nullable = false)
     private String region;
 
-    @Column(name = "country")
+    @NotNull
+    @Size(max = 50)
+    @Column(name = "country", length = 50, nullable = false)
     private String country;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "events", "albums", "songs" }, allowSetters = true)
+    private Artist artist;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
-    public Integer getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public Event id(Integer id) {
+    public Event id(Long id) {
         this.setId(id);
         return this;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getArtistId() {
-        return this.artistId;
+    public Integer getEventID() {
+        return this.eventID;
     }
 
-    public Event artistId(Integer artistId) {
-        this.setArtistId(artistId);
+    public Event eventID(Integer eventID) {
+        this.setEventID(eventID);
         return this;
     }
 
-    public void setArtistId(Integer artistId) {
-        this.artistId = artistId;
+    public void setEventID(Integer eventID) {
+        this.eventID = eventID;
     }
 
     public Instant getDatetime() {
@@ -169,6 +185,19 @@ public class Event implements Serializable {
         this.country = country;
     }
 
+    public Artist getArtist() {
+        return this.artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
+    }
+
+    public Event artist(Artist artist) {
+        this.setArtist(artist);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -193,7 +222,7 @@ public class Event implements Serializable {
     public String toString() {
         return "Event{" +
             "id=" + getId() +
-            ", artistId=" + getArtistId() +
+            ", eventID=" + getEventID() +
             ", datetime='" + getDatetime() + "'" +
             ", description='" + getDescription() + "'" +
             ", title='" + getTitle() + "'" +

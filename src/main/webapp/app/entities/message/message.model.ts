@@ -7,8 +7,8 @@ export interface IMessage {
   content?: string | null;
   sent?: dayjs.Dayjs | null;
   seen?: boolean | null;
-  sender?: Pick<IUser, 'id' | 'login'> | null;
-  recipient?: Pick<IUser, 'id' | 'login'> | null;
+  sender?: Pick<IUser, 'id'> | null;
+  recipient?: Pick<IUser, 'id'> | null;
 }
 
 export type NewMessage = Omit<IMessage, 'id'> & { id: null };

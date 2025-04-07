@@ -13,58 +13,112 @@
           </div>
         }
 
+        @let feedbackIDRef = editForm.get('feedbackID')!;
         <div class="mb-3">
-          <label class="form-label" for="field_feedbackId">Feedback Id</label>
+          <label class="form-label" for="field_feedbackID">Feedback ID</label>
           <input
             type="number"
             class="form-control"
-            name="feedbackId"
-            id="field_feedbackId"
-            data-cy="feedbackId"
-            formControlName="feedbackId"
+            name="feedbackID"
+            id="field_feedbackID"
+            data-cy="feedbackID"
+            formControlName="feedbackID"
           />
+          @if (feedbackIDRef.invalid && (feedbackIDRef.dirty || feedbackIDRef.touched)) {
+            <div>
+              @if (editForm.get('feedbackID')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('feedbackID')?.errors?.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
         </div>
 
+        @let userNameRef = editForm.get('userName')!;
         <div class="mb-3">
-          <label class="form-label" for="field_username">Username</label>
-          <input type="text" class="form-control" name="username" id="field_username" data-cy="username" formControlName="username" />
+          <label class="form-label" for="field_userName">User Name</label>
+          <input type="text" class="form-control" name="userName" id="field_userName" data-cy="userName" formControlName="userName" />
+          @if (userNameRef.invalid && (userNameRef.dirty || userNameRef.touched)) {
+            <div>
+              @if (editForm.get('userName')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (editForm.get('userName')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 100 characters.</small>
+              }
+            </div>
+          }
         </div>
 
+        @let userEmailRef = editForm.get('userEmail')!;
         <div class="mb-3">
           <label class="form-label" for="field_userEmail">User Email</label>
           <input type="text" class="form-control" name="userEmail" id="field_userEmail" data-cy="userEmail" formControlName="userEmail" />
+          @if (userEmailRef.invalid && (userEmailRef.dirty || userEmailRef.touched)) {
+            <div>
+              @if (editForm.get('userEmail')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (editForm.get('userEmail')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 100 characters.</small>
+              }
+            </div>
+          }
         </div>
 
+        @let userPhoneNumRef = editForm.get('userPhoneNum')!;
         <div class="mb-3">
-          <label class="form-label" for="field_userPhineNum">User Phine Num</label>
+          <label class="form-label" for="field_userPhoneNum">User Phone Num</label>
           <input
-            type="number"
+            type="text"
             class="form-control"
-            name="userPhineNum"
-            id="field_userPhineNum"
-            data-cy="userPhineNum"
-            formControlName="userPhineNum"
+            name="userPhoneNum"
+            id="field_userPhoneNum"
+            data-cy="userPhoneNum"
+            formControlName="userPhoneNum"
           />
+          @if (userPhoneNumRef.invalid && (userPhoneNumRef.dirty || userPhoneNumRef.touched)) {
+            <div>
+              @if (editForm.get('userPhoneNum')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 25 characters.</small>
+              }
+            </div>
+          }
         </div>
 
+        @let messageRef = editForm.get('message')!;
         <div class="mb-3">
           <label class="form-label" for="field_message">Message</label>
           <input type="text" class="form-control" name="message" id="field_message" data-cy="message" formControlName="message" />
+          @if (messageRef.invalid && (messageRef.dirty || messageRef.touched)) {
+            <div>
+              @if (editForm.get('message')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 2048 characters.</small>
+              }
+            </div>
+          }
         </div>
 
+        @let ratingRef = editForm.get('rating')!;
         <div class="mb-3">
           <label class="form-label" for="field_rating">Rating</label>
           <input type="number" class="form-control" name="rating" id="field_rating" data-cy="rating" formControlName="rating" />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_user">User</label>
-          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
-            <option [ngValue]="null"></option>
-            @for (userOption of usersSharedCollection; track $index) {
-              <option [ngValue]="userOption">{{ userOption.login }}</option>
-            }
-          </select>
+          @if (ratingRef.invalid && (ratingRef.dirty || ratingRef.touched)) {
+            <div>
+              @if (editForm.get('rating')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (editForm.get('rating')?.errors?.min) {
+                <small class="form-text text-danger">This field should be at least 1.</small>
+              }
+              @if (editForm.get('rating')?.errors?.max) {
+                <small class="form-text text-danger">This field cannot be more than 10.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('rating')?.errors?.number">This field should be a number.</small>
+            </div>
+          }
         </div>
       </div>
 

@@ -79,11 +79,20 @@
               </div>
             }
           </dd>
-          <dt><span>Playlists</span></dt>
+          <dt><span>Playlist</span></dt>
           <dd>
-            @for (playlists of songRef.playlists; track $index; let last = $last) {
+            @for (playlist of songRef.playlists; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/playlist', playlists.id, 'view']">{{ playlists?.id }}</a
+                <a [routerLink]="['/playlist', playlist.id, 'view']">{{ playlist?.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+          <dt><span>Listening History</span></dt>
+          <dd>
+            @for (listeningHistory of songRef.listeningHistories; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/listening-history', listeningHistory.id, 'view']">{{ listeningHistory?.id }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }

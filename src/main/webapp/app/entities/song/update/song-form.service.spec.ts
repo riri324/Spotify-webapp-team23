@@ -34,6 +34,7 @@ describe('Song Form Service', () => {
             genre: expect.any(Object),
             artist: expect.any(Object),
             playlists: expect.any(Object),
+            listeningHistories: expect.any(Object),
           }),
         );
       });
@@ -58,6 +59,7 @@ describe('Song Form Service', () => {
             genre: expect.any(Object),
             artist: expect.any(Object),
             playlists: expect.any(Object),
+            listeningHistories: expect.any(Object),
           }),
         );
       });

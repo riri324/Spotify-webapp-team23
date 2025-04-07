@@ -56,9 +56,7 @@ export class PlaylistFormService {
         validators: [Validators.required],
       }),
       songs: new FormControl(playlistRawValue.songs ?? []),
-      user: new FormControl(playlistRawValue.user, {
-        validators: [Validators.required],
-      }),
+      user: new FormControl(playlistRawValue.user),
     });
   }
 
