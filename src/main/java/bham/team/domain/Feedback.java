@@ -1,8 +1,10 @@
 package bham.team.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
+import java.io.Serializable;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Feedback.
@@ -16,54 +18,81 @@ public class Feedback implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long feedbackId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    @Column(name = "id")
+    private Long id;
 
-    @NotBlank(message = "Please enter your username")
-    @Column(unique = true)
-    private String username;
+    @NotNull
+    @Column(name = "feedback_id", nullable = false, unique = true)
+    private Long feedbackID;
 
-    @NotBlank(message = "Please enter your Email")
-    @Email
-    @Column(unique = true)
+    @NotNull
+    @Size(max = 100)
+    @Column(name = "user_name", length = 100, nullable = false)
+    private String userName;
+
+    @NotNull
+    @Size(max = 100)
+    @Column(name = "user_email", length = 100, nullable = false)
     private String userEmail;
 
-    @Column
-    private Integer userPhoneNum;
+    @Size(max = 25)
+    @Column(name = "user_phone_num", length = 25)
+    private String userPhoneNum;
 
-    @NotBlank(message = "Please enter your feedback")
-    @Column(columnDefinition = "TEXT")
+    @Size(max = 2048)
+    @Column(name = "message", length = 2048)
     private String message;
 
-    @Column
+    @NotNull
+    @Min(value = 1)
+    @Max(value = 10)
+    @Column(name = "rating", nullable = false)
     private Integer rating;
 
-    public Feedback(long feedbackId, String username, String userEmail, Integer userPhoneNum, String message, Integer rating) {
-        this.feedbackId = feedbackId;
-        this.username = username;
-        this.userEmail = userEmail;
-        this.userPhoneNum = userPhoneNum;
-        this.message = message;
-        this.rating = rating;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public Long getId() {
+        return this.id;
     }
 
-    // do I need this?:
-    public Feedback() {}
-
-    public long getFeedbackId() {
-        return feedbackId;
+    public Feedback id(Long id) {
+        this.setId(id);
+        return this;
     }
 
-    public void setFeedbackId(long feedbackId) {
-        feedbackId = feedbackId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public Long getFeedbackID() {
+        return this.feedbackID;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public Feedback feedbackID(Long feedbackID) {
+        this.setFeedbackID(feedbackID);
+        return this;
+    }
+
+    public void setFeedbackID(Long feedbackID) {
+        this.feedbackID = feedbackID;
+    }
+
+    public String getUserName() {
+        return this.userName;
+    }
+
+    public Feedback userName(String userName) {
+        this.setUserName(userName);
+        return this;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getUserEmail() {
@@ -79,11 +108,16 @@ public class Feedback implements Serializable {
         this.userEmail = userEmail;
     }
 
-    public Integer getUserPhoneNum() {
-        return userPhoneNum;
+    public String getUserPhoneNum() {
+        return this.userPhoneNum;
     }
 
-    public void setUserPhoneNum(Integer userPhoneNum) {
+    public Feedback userPhoneNum(String userPhoneNum) {
+        this.setUserPhoneNum(userPhoneNum);
+        return this;
+    }
+
+    public void setUserPhoneNum(String userPhoneNum) {
         this.userPhoneNum = userPhoneNum;
     }
 
@@ -111,5 +145,51 @@ public class Feedback implements Serializable {
 
     public void setRating(Integer rating) {
         this.rating = rating;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Feedback user(User user) {
+        this.setUser(user);
+        return this;
+    }
+
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Feedback)) {
+            return false;
+        }
+        return getId() != null && getId().equals(((Feedback) o).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        return getClass().hashCode();
+    }
+
+    // prettier-ignore
+    @Override
+    public String toString() {
+        return "Feedback{" +
+            "id=" + getId() +
+            ", feedbackID=" + getFeedbackID() +
+            ", userName='" + getUserName() + "'" +
+            ", userEmail='" + getUserEmail() + "'" +
+            ", userPhoneNum='" + getUserPhoneNum() + "'" +
+            ", message='" + getMessage() + "'" +
+            ", rating=" + getRating() +
+            "}";
     }
 }

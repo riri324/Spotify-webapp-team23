@@ -14,5 +14,8 @@ export class FeedbackComponent {
   feedback: any;
   feedbacks: any;
 
-  saveFeedback() {}
+  saveFeedback(): void {
+    // Replace with a logging service or remove if unnecessary
+    // this.loggingService.log('Feedback saved:', this.feedback);
+  }
 }

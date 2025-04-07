@@ -382,11 +382,10 @@ class UserPreferenceResourceIT {
         partialUpdatedUserPreference.setId(userPreference.getId());
 
         partialUpdatedUserPreference
-            .favoriteGenre(UPDATED_FAVORITE_GENRE)
             .musicPurpose(UPDATED_MUSIC_PURPOSE)
-            .musicMood(UPDATED_MUSIC_MOOD)
-            .vocalPreference(UPDATED_VOCAL_PREFERENCE)
-            .listeningPattern(UPDATED_LISTENING_PATTERN);
+            .listeningPattern(UPDATED_LISTENING_PATTERN)
+            .songLength(UPDATED_SONG_LENGTH)
+            .lyricsImportance(UPDATED_LYRICS_IMPORTANCE);
 
         restUserPreferenceMockMvc
             .perform(

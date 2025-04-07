@@ -40,10 +40,6 @@ export class PlaylistService {
     return this.http.get<IPlaylist[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
-  queryUserPlaylists(userId: number): Observable<EntityArrayResponseType> {
-    return this.http.get<IPlaylist[]>(`${this.resourceUrl}/user_id/${userId}`, { observe: 'response' });
-  }
-
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
@@ -74,5 +70,12 @@ export class PlaylistService {
       return [...playlistsToAdd, ...playlistCollection];
     }
     return playlistCollection;
+  }
+
+  // ★★ 새로 추가하는 메서드 ★★
+  // 사용자별 플레이리스트 조회
+  queryUserPlaylists(userId: number): Observable<HttpResponse<IPlaylist[]>> {
+    // 예: 백엔드에서 GET /api/playlists/user_id/:userId 로 구현되어 있다고 가정
+    return this.http.get<IPlaylist[]>(`${this.resourceUrl}/user_id/${userId}`, { observe: 'response' });
   }
 }

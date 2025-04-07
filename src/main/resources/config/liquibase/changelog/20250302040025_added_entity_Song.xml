@@ -10,7 +10,6 @@
         Added the entity Song.
     -->
     <changeSet id="20250302040025-1" author="jhipster">
-        <validCheckSum>9:a7f8e6570f6854599b6ae1bd161bcc55</validCheckSum>
         <createTable tableName="song">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>

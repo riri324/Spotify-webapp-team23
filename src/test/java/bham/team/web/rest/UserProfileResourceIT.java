@@ -373,7 +373,7 @@ class UserProfileResourceIT {
         UserProfile partialUpdatedUserProfile = new UserProfile();
         partialUpdatedUserProfile.setId(userProfile.getId());
 
-        partialUpdatedUserProfile.profileImageUrl(UPDATED_PROFILE_IMAGE_URL);
+        partialUpdatedUserProfile.name(UPDATED_NAME);
 
         restUserProfileMockMvc
             .perform(

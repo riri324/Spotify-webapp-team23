@@ -26,6 +26,7 @@ describe('Feedback Form Service', () => {
             userPhoneNum: expect.any(Object),
             message: expect.any(Object),
             rating: expect.any(Object),
+            user: expect.any(Object),
           }),
         );
       });
@@ -42,6 +43,7 @@ describe('Feedback Form Service', () => {
             userPhoneNum: expect.any(Object),
             message: expect.any(Object),
             rating: expect.any(Object),
+            user: expect.any(Object),
           }),
         );
       });

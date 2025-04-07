@@ -75,10 +75,10 @@ describe('Playlist Management Update Component', () => {
 
     it('Should call User query and add missing value', () => {
       const playlist: IPlaylist = { id: 456 };
-      const user: IUser = { id: 6213 };
+      const user: IUser = { id: 17535 };
       playlist.user = user;
 
-      const userCollection: IUser[] = [{ id: 22834 }];
+      const userCollection: IUser[] = [{ id: 11461 }];
       jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
       const additionalUsers = [user];
       const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
@@ -99,7 +99,7 @@ describe('Playlist Management Update Component', () => {
       const playlist: IPlaylist = { id: 456 };
       const song: ISong = { id: 2802 };
       playlist.songs = [song];
-      const user: IUser = { id: 29087 };
+      const user: IUser = { id: 21016 };
       playlist.user = user;
 
       activatedRoute.data = of({ playlist });

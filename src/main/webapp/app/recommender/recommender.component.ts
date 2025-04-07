@@ -46,6 +46,7 @@ export class RecommenderComponent implements OnInit {
         // After getting user ID, load playlists that have at least one song
         if (this.currentUserId) {
           this.playlistService.queryUserPlaylists(this.currentUserId).subscribe(response => {
+            const body: IPlaylist[] = response.body ?? [];
             this.playlists = (response.body ?? []).filter(playlist => playlist.songs && playlist.songs.length > 0);
 
             this.loadSongs();

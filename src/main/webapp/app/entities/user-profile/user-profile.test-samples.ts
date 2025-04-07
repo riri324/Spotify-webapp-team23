@@ -1,34 +1,32 @@
 import { IUserProfile, NewUserProfile } from './user-profile.model';
 
 export const sampleWithRequiredData: IUserProfile = {
-  id: 11149,
-  studentId: 'glum',
-  name: 'warmly rebel pfft',
-  age: 24874,
+  id: 25795,
+  studentId: 'hm saturate so',
+  name: 'who accessorise numb',
+  age: 18177,
 };
 
 export const sampleWithPartialData: IUserProfile = {
-  id: 6878,
-  studentId: 'abnormally before',
-  name: 'shaft',
-  age: 1753,
-  profileImageUrl: 'duster subexpression',
-  bio: 'pivot',
+  id: 4922,
+  studentId: 'valuable likewise front',
+  name: 'selfishly tough',
+  age: 20263,
 };
 
 export const sampleWithFullData: IUserProfile = {
-  id: 867,
-  studentId: 'exaggerate tricky',
-  name: 'yowza bah carelessly',
-  age: 27037,
-  profileImageUrl: 'candid aw',
-  bio: 'nor rim',
+  id: 19399,
+  studentId: 'tight drat bus',
+  name: 'although hence while',
+  age: 14922,
+  profileImageUrl: 'annually',
+  bio: 'inasmuch sweatshop although',
 };
 
 export const sampleWithNewData: NewUserProfile = {
-  studentId: 'stupendous not',
-  name: 'tremendously',
-  age: 13581,
+  studentId: 'where',
+  name: 'modulo ew considering',
+  age: 27472,
   id: null,
 };
 

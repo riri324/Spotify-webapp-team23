@@ -24,6 +24,7 @@ type FeedbackFormGroupContent = {
   userPhoneNum: FormControl<IFeedback['userPhoneNum']>;
   message: FormControl<IFeedback['message']>;
   rating: FormControl<IFeedback['rating']>;
+  user: FormControl<IFeedback['user']>;
 };
 
 export type FeedbackFormGroup = FormGroup<FeedbackFormGroupContent>;
@@ -61,6 +62,7 @@ export class FeedbackFormService {
       rating: new FormControl(feedbackRawValue.rating, {
         validators: [Validators.required, Validators.min(1), Validators.max(10)],
       }),
+      user: new FormControl(feedbackRawValue.user),
     });
   }
 

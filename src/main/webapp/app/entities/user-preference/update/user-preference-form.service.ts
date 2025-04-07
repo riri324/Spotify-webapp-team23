@@ -46,14 +46,30 @@ export class UserPreferenceFormService {
           validators: [Validators.required],
         },
       ),
-      favoriteGenre: new FormControl(userPreferenceRawValue.favoriteGenre),
-      musicPurpose: new FormControl(userPreferenceRawValue.musicPurpose),
-      musicMood: new FormControl(userPreferenceRawValue.musicMood),
-      vocalPreference: new FormControl(userPreferenceRawValue.vocalPreference),
-      listeningTime: new FormControl(userPreferenceRawValue.listeningTime),
-      listeningPattern: new FormControl(userPreferenceRawValue.listeningPattern),
-      songLength: new FormControl(userPreferenceRawValue.songLength),
-      lyricsImportance: new FormControl(userPreferenceRawValue.lyricsImportance),
+      favoriteGenre: new FormControl(userPreferenceRawValue.favoriteGenre, {
+        validators: [Validators.required, Validators.maxLength(20)],
+      }),
+      musicPurpose: new FormControl(userPreferenceRawValue.musicPurpose, {
+        validators: [Validators.required, Validators.maxLength(50)],
+      }),
+      musicMood: new FormControl(userPreferenceRawValue.musicMood, {
+        validators: [Validators.maxLength(50)],
+      }),
+      vocalPreference: new FormControl(userPreferenceRawValue.vocalPreference, {
+        validators: [Validators.maxLength(50)],
+      }),
+      listeningTime: new FormControl(userPreferenceRawValue.listeningTime, {
+        validators: [Validators.maxLength(50)],
+      }),
+      listeningPattern: new FormControl(userPreferenceRawValue.listeningPattern, {
+        validators: [Validators.maxLength(50)],
+      }),
+      songLength: new FormControl(userPreferenceRawValue.songLength, {
+        validators: [Validators.maxLength(20)],
+      }),
+      lyricsImportance: new FormControl(userPreferenceRawValue.lyricsImportance, {
+        validators: [Validators.maxLength(50)],
+      }),
       user: new FormControl(userPreferenceRawValue.user),
     });
   }
