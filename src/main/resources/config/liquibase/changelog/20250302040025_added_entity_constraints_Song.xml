@@ -10,6 +10,10 @@
     -->
     <changeSet id="20250302040025-2" author="jhipster">
 
+      <addColumn tableName="song">
+        <column name="album_id" type="bigint"/>
+      </addColumn>
+
         <addForeignKeyConstraint baseColumnNames="album_id"
                                  baseTableName="song"
                                  constraintName="fk_song__album_id"
@@ -17,12 +21,20 @@
                                  referencedTableName="album"
                                  />
 
+      <addColumn tableName="song">
+        <column name="genre_id" type="bigint"/>
+      </addColumn>
+
         <addForeignKeyConstraint baseColumnNames="genre_id"
                                  baseTableName="song"
                                  constraintName="fk_song__genre_id"
                                  referencedColumnNames="id"
                                  referencedTableName="genre"
                                  />
+
+      <addColumn tableName="song">
+        <column name="artist_id" type="bigint"/>
+      </addColumn>
 
         <addForeignKeyConstraint baseColumnNames="artist_id"
                                  baseTableName="song"
