@@ -1,4 +1,8 @@
+import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
+import { PreferencesComponent } from './preferences/preferences.component';
+import { StudentProfileComponent } from './student-profile/student-profile.component';
+import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 
 const routes: Routes = [
   {
@@ -65,6 +69,23 @@ const routes: Routes = [
     path: 'liked-songs',
     data: { pageTitle: 'LikedSongs' },
     loadChildren: () => import('./liked-songs/liked-songs.routes'),
+  },
+  {
+    path: 'user-profile',
+    data: { pageTitle: 'UserProfiles' },
+    loadChildren: () => import('./user-profile/user-profile.routes'),
+  },
+  {
+    path: 'preferences',
+    component: PreferencesComponent,
+    data: { pageTitle: 'Preferences Form' },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'profile',
+    component: StudentProfileComponent,
+    data: { pageTitle: 'Profile' },
+    canActivate: [UserRouteAccessService],
   },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];

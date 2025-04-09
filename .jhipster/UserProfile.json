@@ -1,0 +1,43 @@
+{
+  "annotations": {
+    "changelogDate": "20250409144041"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "studentId",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "age",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "profileImageUrl",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "bio",
+      "fieldType": "String"
+    }
+  ],
+  "name": "UserProfile",
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one",
+      "relationshipWithBuiltInEntity": true
+    }
+  ],
+  "searchEngine": "no"
+}

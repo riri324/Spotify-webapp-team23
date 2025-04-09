@@ -14,29 +14,32 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="favorite_genre" type="varchar(20)">
-                <constraints nullable="false" />
-            </column>
-            <column name="music_purpose" type="varchar(50)">
-                <constraints nullable="false" />
-            </column>
-            <column name="music_mood" type="varchar(50)">
+            <column name="favorite_genre" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="vocal_preference" type="varchar(50)">
+            <column name="music_purpose" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="listening_time" type="varchar(50)">
+            <column name="music_mood" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="listening_pattern" type="varchar(50)">
+            <column name="vocal_preference" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="song_length" type="varchar(20)">
+            <column name="listening_time" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="lyrics_importance" type="varchar(50)">
+            <column name="listening_pattern" type="varchar(255)">
                 <constraints nullable="true" />
+            </column>
+            <column name="song_length" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="lyrics_importance" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_user_preference__user_id" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>

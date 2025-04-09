@@ -1,59 +1,53 @@
 {
   "annotations": {
-    "changelogDate": "20250228002743"
+    "changelogDate": "20250228002743",
+    "spotify": true
   },
   "applications": "*",
   "fields": [
     {
       "fieldName": "favoriteGenre",
-      "fieldType": "String",
-      "fieldValidateRules": ["required", "maxlength"],
-      "fieldValidateRulesMaxlength": "20"
+      "fieldType": "String"
     },
     {
       "fieldName": "musicPurpose",
-      "fieldType": "String",
-      "fieldValidateRules": ["required", "maxlength"],
-      "fieldValidateRulesMaxlength": "50"
+      "fieldType": "String"
     },
     {
       "fieldName": "musicMood",
-      "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "50"
+      "fieldType": "String"
     },
     {
       "fieldName": "vocalPreference",
-      "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "50"
+      "fieldType": "String"
     },
     {
       "fieldName": "listeningTime",
-      "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "50"
+      "fieldType": "String"
     },
     {
       "fieldName": "listeningPattern",
-      "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "50"
+      "fieldType": "String"
     },
     {
       "fieldName": "songLength",
-      "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "20"
+      "fieldType": "String"
     },
     {
       "fieldName": "lyricsImportance",
-      "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "50"
+      "fieldType": "String"
     }
   ],
   "name": "UserPreference",
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one",
+      "relationshipWithBuiltInEntity": true
+    }
+  ],
   "searchEngine": "no"
 }
