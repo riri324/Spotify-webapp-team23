@@ -57,6 +57,23 @@ public class UserPreference implements Serializable {
     @Column(name = "lyrics_importance", length = 50)
     private String lyricsImportance;
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public UserPreference user(User user) {
+        this.setUser(user);
+        return this;
+    }
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
