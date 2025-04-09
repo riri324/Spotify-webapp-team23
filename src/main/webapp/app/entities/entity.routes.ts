@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
-import { PreferencesComponent } from './preferences/preferences.component';
+import { UserPreferenceComponent } from './preferences/preferences.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 
@@ -77,7 +77,7 @@ const routes: Routes = [
   },
   {
     path: 'preferences',
-    component: PreferencesComponent,
+    component: UserPreferenceComponent,
     data: { pageTitle: 'Preferences Form' },
     canActivate: [UserRouteAccessService],
   },
