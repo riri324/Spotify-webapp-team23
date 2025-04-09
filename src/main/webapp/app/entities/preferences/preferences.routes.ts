@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { UserPreferenceComponent } from './preferences.component';
+import { PreferencesComponent } from './preferences.component';
 
 const preferencesRoutes: Routes = [
   {
     path: '',
-    component: UserPreferenceComponent,
+    component: PreferencesComponent,
     data: {
       pageTitle: 'Preferences',
     },
