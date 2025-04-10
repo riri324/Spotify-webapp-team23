@@ -2,8 +2,11 @@ package bham.team.web.rest;
 
 import bham.team.domain.Playlist;
 import bham.team.domain.Song;
+import bham.team.domain.User;
 import bham.team.repository.PlaylistRepository;
 import bham.team.repository.SongRepository;
+import bham.team.repository.UserRepository;
+import bham.team.security.SecurityUtils;
 import bham.team.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -15,6 +18,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -38,10 +42,12 @@ public class PlaylistResource {
 
     private final PlaylistRepository playlistRepository;
     private final SongRepository songRepository;
+    private final UserRepository userRepository;
 
-    public PlaylistResource(PlaylistRepository playlistRepository, SongRepository songRepository) {
+    public PlaylistResource(PlaylistRepository playlistRepository, SongRepository songRepository, UserRepository userRepository) {
         this.playlistRepository = playlistRepository;
         this.songRepository = songRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -54,10 +60,40 @@ public class PlaylistResource {
     @PostMapping("")
     public ResponseEntity<Playlist> createPlaylist(@Valid @RequestBody Playlist playlist) throws URISyntaxException {
         LOG.debug("REST request to save Playlist : {}", playlist);
+
+        // Check if the playlist already has an ID (which shouldn't happen when creating a new one)
         if (playlist.getId() != null) {
             throw new BadRequestAlertException("A new playlist cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        // Fetch current user ID and check if they are an admin
+        String currentUsername = SecurityUtils.getCurrentUserLogin().orElse(null);
+        boolean isAdmin = SecurityUtils.hasCurrentUserThisAuthority("ROLE_ADMIN");
+
+        if (currentUsername == null) {
+            throw new BadRequestAlertException("User must be logged in to create a playlist", ENTITY_NAME, "usernotloggedin");
+        }
+
+        // If user is admin, allow them to set any user they want (already in the playlist)
+        if (isAdmin) {
+            // If no user is specified in the playlist, set it to the admin
+            if (playlist.getUser() == null) {
+                User adminUser = userRepository
+                    .findOneByLogin(currentUsername)
+                    .orElseThrow(() -> new BadRequestAlertException("Admin user not found", ENTITY_NAME, "usernotfound"));
+                playlist.setUser(adminUser);
+            }
+            // Otherwise, keep the user that's already set in the playlist
+        } else {
+            // Regular users can only set themselves as the owner
+            User regularUser = userRepository
+                .findOneByLogin(currentUsername)
+                .orElseThrow(() -> new BadRequestAlertException("User not found", ENTITY_NAME, "usernotfound"));
+            playlist.setUser(regularUser);
+        }
+
         playlist = playlistRepository.save(playlist);
+
         return ResponseEntity.created(new URI("/api/playlists/" + playlist.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, playlist.getId().toString()))
             .body(playlist);
@@ -86,11 +122,51 @@ public class PlaylistResource {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
-        if (!playlistRepository.existsById(id)) {
+        // Fetch current user ID and check if they are an admin
+        String currentUsername = SecurityUtils.getCurrentUserLogin().orElse(null);
+        boolean isAdmin = SecurityUtils.hasCurrentUserThisAuthority("ROLE_ADMIN");
+
+        if (currentUsername == null) {
+            throw new BadRequestAlertException("User must be logged in to update a playlist", ENTITY_NAME, "usernotloggedin");
+        }
+
+        // First fetch the existing playlist to check ownership
+        Optional<Playlist> existingPlaylistOpt = playlistRepository.findById(id);
+        if (existingPlaylistOpt.isEmpty()) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
+        Playlist existingPlaylist = existingPlaylistOpt.get();
+
+        // Check if current user is authorized to update this playlist
+        if (!isAdmin && (existingPlaylist.getUser() == null || !currentUsername.equals(existingPlaylist.getUser()))) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .headers(
+                    HeaderUtil.createFailureAlert(
+                        applicationName,
+                        false,
+                        ENTITY_NAME,
+                        "notauthorized",
+                        "You are not authorized to update this playlist"
+                    )
+                )
+                .build();
+        }
+
+        // If user is admin, allow them to update the playlist with any user
+        if (isAdmin) {
+            // Maintain the user from the request if provided, otherwise keep the existing user
+            if (playlist.getUser() == null) {
+                playlist.setUser(existingPlaylist.getUser());
+            }
+        } else {
+            // Regular users must maintain the original owner (themselves)
+            playlist.setUser(existingPlaylist.getUser());
+        }
+
+        // Save the updated playlist
         playlist = playlistRepository.save(playlist);
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, playlist.getId().toString()))
             .body(playlist);
@@ -124,23 +200,62 @@ public class PlaylistResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
+        // Fetch current user ID and check if they are an admin
+        String currentUsername = SecurityUtils.getCurrentUserLogin().orElse(null);
+        boolean isAdmin = SecurityUtils.hasCurrentUserThisAuthority("ROLE_ADMIN");
+
+        if (currentUsername == null) {
+            throw new BadRequestAlertException("User must be logged in to update a playlist", ENTITY_NAME, "usernotloggedin");
+        }
+
+        // First fetch the existing playlist to check ownership
+        Optional<Playlist> existingPlaylistOpt = playlistRepository.findById(id);
+        if (existingPlaylistOpt.isEmpty()) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        Playlist existingPlaylist = existingPlaylistOpt.get();
+
+        // Check if current user is authorized to update this playlist
+        if (!isAdmin && (existingPlaylist.getUser() == null || !currentUsername.equals(existingPlaylist.getUser()))) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .headers(
+                    HeaderUtil.createFailureAlert(
+                        applicationName,
+                        false,
+                        ENTITY_NAME,
+                        "notauthorized",
+                        "You are not authorized to update this playlist"
+                    )
+                )
+                .build();
+        }
+
+        // Process the partial update
         Optional<Playlist> result = playlistRepository
             .findById(playlist.getId())
-            .map(existingPlaylist -> {
+            .map(existingPlaylistToUpdate -> {
                 if (playlist.getPlaylistID() != null) {
-                    existingPlaylist.setPlaylistID(playlist.getPlaylistID());
+                    existingPlaylistToUpdate.setPlaylistID(playlist.getPlaylistID());
                 }
                 if (playlist.getName() != null) {
-                    existingPlaylist.setName(playlist.getName());
+                    existingPlaylistToUpdate.setName(playlist.getName());
                 }
                 if (playlist.getDescription() != null) {
-                    existingPlaylist.setDescription(playlist.getDescription());
+                    existingPlaylistToUpdate.setDescription(playlist.getDescription());
                 }
                 if (playlist.getIsPublic() != null) {
-                    existingPlaylist.setIsPublic(playlist.getIsPublic());
+                    existingPlaylistToUpdate.setIsPublic(playlist.getIsPublic());
                 }
 
-                return existingPlaylist;
+                // For user ownership - only allow admins to change it
+                if (playlist.getUser() != null) {
+                    if (isAdmin) {
+                        existingPlaylistToUpdate.setUser(playlist.getUser());
+                    } else {}
+                }
+
+                return existingPlaylistToUpdate;
             })
             .map(playlistRepository::save);
 
@@ -156,19 +271,35 @@ public class PlaylistResource {
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of playlists in body.
      */
-    /**
-     * {@code GET  /playlists} : get all the playlists.
-     *
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of playlists in body.
-     */
     @GetMapping("")
     public List<Playlist> getAllPlaylists(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
         LOG.debug("REST request to get all Playlists");
-        if (eagerload) {
-            return playlistRepository.findAllWithEagerRelationships();
+
+        // Fetch current user ID and check if they are an admin
+        String currentUsername = SecurityUtils.getCurrentUserLogin().orElse(null);
+        boolean isAdmin = SecurityUtils.hasCurrentUserThisAuthority("ROLE_ADMIN");
+
+        if (isAdmin) {
+            // Admin sees all playlists
+            if (eagerload) {
+                return playlistRepository.findAllWithEagerRelationships();
+            } else {
+                return playlistRepository.findAll();
+            }
+        } else if (currentUsername != null) {
+            // Authenticated user sees public playlists and their own
+            if (eagerload) {
+                return playlistRepository.findPublicOrUserWithEagerRelationships(currentUsername);
+            } else {
+                return playlistRepository.findPublicOrUser(currentUsername);
+            }
         } else {
-            return playlistRepository.findAll();
+            // Unauthenticated user sees only public playlists
+            if (eagerload) {
+                return playlistRepository.findPublicWithEagerRelationships();
+            } else {
+                return playlistRepository.findPublic();
+            }
         }
     }
 
@@ -181,8 +312,45 @@ public class PlaylistResource {
     @GetMapping("/{id}")
     public ResponseEntity<Playlist> getPlaylist(@PathVariable("id") Long id) {
         LOG.debug("REST request to get Playlist : {}", id);
-        Optional<Playlist> playlist = playlistRepository.findOneWithEagerRelationships(id);
-        return ResponseUtil.wrapOrNotFound(playlist);
+
+        // Fetch current user ID and check if they are an admin
+        String currentUsername = SecurityUtils.getCurrentUserLogin().orElse(null);
+        boolean isAdmin = SecurityUtils.hasCurrentUserThisAuthority("ROLE_ADMIN");
+
+        Optional<Playlist> playlistOpt = playlistRepository.findOneWithEagerRelationships(id);
+
+        if (playlistOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Playlist playlist = playlistOpt.get();
+
+        if (isAdmin) {
+            // Admin can view any playlist
+            return ResponseEntity.ok(playlist);
+        } else if (
+            currentUsername != null &&
+            (playlist.getIsPublic() || (playlist.getUser() != null && currentUsername.equals(playlist.getUser())))
+        ) {
+            // Authenticated user can view public playlists or their own
+            return ResponseEntity.ok(playlist);
+        } else if (playlist.getIsPublic()) {
+            // Unauthenticated user can only view public playlists
+            return ResponseEntity.ok(playlist);
+        } else {
+            // Access denied
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .headers(
+                    HeaderUtil.createFailureAlert(
+                        applicationName,
+                        false,
+                        ENTITY_NAME,
+                        "accessdenied",
+                        "You do not have permission to view this playlist"
+                    )
+                )
+                .build();
+        }
     }
 
     /**
@@ -194,10 +362,50 @@ public class PlaylistResource {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePlaylist(@PathVariable("id") Long id) {
         LOG.debug("REST request to delete Playlist : {}", id);
-        playlistRepository.deleteById(id);
-        return ResponseEntity.noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
-            .build();
+
+        // Fetch current user ID and check if they are an admin
+        String currentUsername = SecurityUtils.getCurrentUserLogin().orElse(null);
+        boolean isAdmin = SecurityUtils.hasCurrentUserThisAuthority("ROLE_ADMIN");
+
+        if (currentUsername == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .headers(
+                    HeaderUtil.createFailureAlert(
+                        applicationName,
+                        false,
+                        ENTITY_NAME,
+                        "unauthorized",
+                        "You must be logged in to delete a playlist"
+                    )
+                )
+                .build();
+        }
+
+        Optional<Playlist> playlistOpt = playlistRepository.findById(id);
+        if (playlistOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Playlist playlist = playlistOpt.get();
+
+        if (isAdmin || (playlist.getUser() != null && currentUsername.equals(playlist.getUser()))) {
+            playlistRepository.deleteById(id);
+            return ResponseEntity.noContent()
+                .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+                .build();
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .headers(
+                    HeaderUtil.createFailureAlert(
+                        applicationName,
+                        false,
+                        ENTITY_NAME,
+                        "notauthorized",
+                        "You are not authorized to delete this playlist"
+                    )
+                )
+                .build();
+        }
     }
 
     /**

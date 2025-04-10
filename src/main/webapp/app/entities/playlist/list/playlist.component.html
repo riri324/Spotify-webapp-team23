@@ -63,16 +63,9 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="isPublic">
+            <th scope="col" jhiSortBy="songs.id">
               <div class="d-flex">
-                <span>Is Public</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="song.id">
-              <div class="d-flex">
-                <span>Song</span>
+                <span>Songs</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
@@ -94,11 +87,10 @@
               <td>{{ playlist.playlistID }}</td>
               <td>{{ playlist.name }}</td>
               <td>{{ playlist.description }}</td>
-              <td>{{ playlist.isPublic }}</td>
               <td>
-                @for (song of playlist.songs; track $index; let last = $last) {
+                @for (songs of playlist.songs; track $index; let last = $last) {
                   <span>
-                    <a class="form-control-static" [routerLink]="['/song', song.id, 'view']">{{ song.id }}</a
+                    <a class="form-control-static" [routerLink]="['/song', songs.id, 'view']">{{ songs.id }}</a
                     >{{ last ? '' : ', ' }}
                   </span>
                 }
