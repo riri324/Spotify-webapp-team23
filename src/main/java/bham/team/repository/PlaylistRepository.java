@@ -55,12 +55,12 @@ public interface PlaylistRepository extends PlaylistRepositoryWithBagRelationshi
     @Query("select p from Playlist p left join fetch p.songs where p.isPublic = true")
     List<Playlist> findPublicWithEagerRelationships();
 
-    @Query("select p from Playlist p left join fetch p.songs where p.isPublic = true OR p.user.id = :userId")
-    List<Playlist> findPublicOrUserWithEagerRelationships(@Param("userId") Long userId);
+    @Query("select p from Playlist p left join fetch p.songs where p.isPublic = true OR p.user.login = :userName")
+    List<Playlist> findPublicOrUserWithEagerRelationships(@Param("userName") String userName);
 
     @Query("select p from Playlist p where p.isPublic = true")
     List<Playlist> findPublic();
 
-    @Query("select p from Playlist p where p.isPublic = true OR p.user.id = :userId")
-    List<Playlist> findPublicOrUser(@Param("userId") Long userId);
+    @Query("select p from Playlist p where p.isPublic = true OR p.user.login = :userName")
+    List<Playlist> findPublicOrUser(@Param("userName") String userName);
 }

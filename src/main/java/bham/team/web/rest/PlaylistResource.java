@@ -2,10 +2,12 @@ package bham.team.web.rest;
 
 import bham.team.domain.Playlist;
 import bham.team.domain.Song;
+import bham.team.domain.User;
 import bham.team.repository.PlaylistRepository;
 import bham.team.repository.SongRepository;
-import bham.team.web.rest.errors.BadRequestAlertException;
+import bham.team.repository.UserRepository;
 import bham.team.security.SecurityUtils;
+import bham.team.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
@@ -16,8 +18,8 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -40,10 +42,12 @@ public class PlaylistResource {
 
     private final PlaylistRepository playlistRepository;
     private final SongRepository songRepository;
+    private final UserRepository userRepository;
 
-    public PlaylistResource(PlaylistRepository playlistRepository, SongRepository songRepository) {
+    public PlaylistResource(PlaylistRepository playlistRepository, SongRepository songRepository, UserRepository userRepository) {
         this.playlistRepository = playlistRepository;
         this.songRepository = songRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -63,10 +67,10 @@ public class PlaylistResource {
         }
 
         // Fetch current user ID and check if they are an admin
-        Long currentUserId = SecurityUtils.getCurrentUserLogin().orElse(null);
+        String currentUsername = SecurityUtils.getCurrentUserLogin().orElse(null);
         boolean isAdmin = SecurityUtils.hasCurrentUserThisAuthority("ROLE_ADMIN");
 
-        if (currentUserId == null) {
+        if (currentUsername == null) {
             throw new BadRequestAlertException("User must be logged in to create a playlist", ENTITY_NAME, "usernotloggedin");
         }
 
@@ -74,14 +78,16 @@ public class PlaylistResource {
         if (isAdmin) {
             // If no user is specified in the playlist, set it to the admin
             if (playlist.getUser() == null) {
-                User adminUser = userRepository.findById(currentUserId)
+                User adminUser = userRepository
+                    .findOneByLogin(currentUsername)
                     .orElseThrow(() -> new BadRequestAlertException("Admin user not found", ENTITY_NAME, "usernotfound"));
                 playlist.setUser(adminUser);
             }
             // Otherwise, keep the user that's already set in the playlist
         } else {
             // Regular users can only set themselves as the owner
-            User regularUser = userRepository.findById(currentUserId)
+            User regularUser = userRepository
+                .findOneByLogin(currentUsername)
                 .orElseThrow(() -> new BadRequestAlertException("User not found", ENTITY_NAME, "usernotfound"));
             playlist.setUser(regularUser);
         }
@@ -117,10 +123,10 @@ public class PlaylistResource {
         }
 
         // Fetch current user ID and check if they are an admin
-        Long currentUserId = SecurityUtils.getCurrentUserLogin().orElse(null);
+        String currentUsername = SecurityUtils.getCurrentUserLogin().orElse(null);
         boolean isAdmin = SecurityUtils.hasCurrentUserThisAuthority("ROLE_ADMIN");
 
-        if (currentUserId == null) {
+        if (currentUsername == null) {
             throw new BadRequestAlertException("User must be logged in to update a playlist", ENTITY_NAME, "usernotloggedin");
         }
 
@@ -133,11 +139,17 @@ public class PlaylistResource {
         Playlist existingPlaylist = existingPlaylistOpt.get();
 
         // Check if current user is authorized to update this playlist
-        if (!isAdmin && (existingPlaylist.getUser() == null ||
-            !currentUserId.equals(existingPlaylist.getUser().getId()))) {
+        if (!isAdmin && (existingPlaylist.getUser() == null || !currentUsername.equals(existingPlaylist.getUser()))) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .headers(HeaderUtil.createFailureAlert(applicationName, false, ENTITY_NAME,
-                    "notauthorized", "You are not authorized to update this playlist"))
+                .headers(
+                    HeaderUtil.createFailureAlert(
+                        applicationName,
+                        false,
+                        ENTITY_NAME,
+                        "notauthorized",
+                        "You are not authorized to update this playlist"
+                    )
+                )
                 .build();
         }
 
@@ -189,10 +201,10 @@ public class PlaylistResource {
         }
 
         // Fetch current user ID and check if they are an admin
-        Long currentUserId = SecurityUtils.getCurrentUserLogin().orElse(null);
+        String currentUsername = SecurityUtils.getCurrentUserLogin().orElse(null);
         boolean isAdmin = SecurityUtils.hasCurrentUserThisAuthority("ROLE_ADMIN");
 
-        if (currentUserId == null) {
+        if (currentUsername == null) {
             throw new BadRequestAlertException("User must be logged in to update a playlist", ENTITY_NAME, "usernotloggedin");
         }
 
@@ -205,11 +217,17 @@ public class PlaylistResource {
         Playlist existingPlaylist = existingPlaylistOpt.get();
 
         // Check if current user is authorized to update this playlist
-        if (!isAdmin && (existingPlaylist.getUser() == null ||
-            !currentUserId.equals(existingPlaylist.getUser().getId()))) {
+        if (!isAdmin && (existingPlaylist.getUser() == null || !currentUsername.equals(existingPlaylist.getUser()))) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .headers(HeaderUtil.createFailureAlert(applicationName, false, ENTITY_NAME,
-                    "notauthorized", "You are not authorized to update this playlist"))
+                .headers(
+                    HeaderUtil.createFailureAlert(
+                        applicationName,
+                        false,
+                        ENTITY_NAME,
+                        "notauthorized",
+                        "You are not authorized to update this playlist"
+                    )
+                )
                 .build();
         }
 
@@ -234,9 +252,7 @@ public class PlaylistResource {
                 if (playlist.getUser() != null) {
                     if (isAdmin) {
                         existingPlaylistToUpdate.setUser(playlist.getUser());
-                    } else {
-                        // Regular users cannot change playlist ownership, so we skip here
-                    }
+                    } else {}
                 }
 
                 return existingPlaylistToUpdate;
@@ -256,13 +272,11 @@ public class PlaylistResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of playlists in body.
      */
     @GetMapping("")
-    public List<Playlist> getAllPlaylists(
-        @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload
-    ) {
+    public List<Playlist> getAllPlaylists(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
         LOG.debug("REST request to get all Playlists");
 
         // Fetch current user ID and check if they are an admin
-        Long currentUserId = SecurityUtils.getCurrentUserLogin().orElse(null);
+        String currentUsername = SecurityUtils.getCurrentUserLogin().orElse(null);
         boolean isAdmin = SecurityUtils.hasCurrentUserThisAuthority("ROLE_ADMIN");
 
         if (isAdmin) {
@@ -272,12 +286,12 @@ public class PlaylistResource {
             } else {
                 return playlistRepository.findAll();
             }
-        } else if (currentUserId != null) {
+        } else if (currentUsername != null) {
             // Authenticated user sees public playlists and their own
             if (eagerload) {
-                return playlistRepository.findPublicOrUserWithEagerRelationships(currentUserId);
+                return playlistRepository.findPublicOrUserWithEagerRelationships(currentUsername);
             } else {
-                return playlistRepository.findPublicOrUser(currentUserId);
+                return playlistRepository.findPublicOrUser(currentUsername);
             }
         } else {
             // Unauthenticated user sees only public playlists
@@ -300,7 +314,7 @@ public class PlaylistResource {
         LOG.debug("REST request to get Playlist : {}", id);
 
         // Fetch current user ID and check if they are an admin
-        Long currentUserId = SecurityUtils.getCurrentUserLogin().orElse(null);
+        String currentUsername = SecurityUtils.getCurrentUserLogin().orElse(null);
         boolean isAdmin = SecurityUtils.hasCurrentUserThisAuthority("ROLE_ADMIN");
 
         Optional<Playlist> playlistOpt = playlistRepository.findOneWithEagerRelationships(id);
@@ -314,9 +328,10 @@ public class PlaylistResource {
         if (isAdmin) {
             // Admin can view any playlist
             return ResponseEntity.ok(playlist);
-        } else if (currentUserId != null &&
-            (playlist.getIsPublic() ||
-                (playlist.getUser() != null && currentUserId.equals(playlist.getUser().getId())))) {
+        } else if (
+            currentUsername != null &&
+            (playlist.getIsPublic() || (playlist.getUser() != null && currentUsername.equals(playlist.getUser())))
+        ) {
             // Authenticated user can view public playlists or their own
             return ResponseEntity.ok(playlist);
         } else if (playlist.getIsPublic()) {
@@ -325,8 +340,15 @@ public class PlaylistResource {
         } else {
             // Access denied
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .headers(HeaderUtil.createFailureAlert(applicationName, false, ENTITY_NAME,
-                    "accessdenied", "You do not have permission to view this playlist"))
+                .headers(
+                    HeaderUtil.createFailureAlert(
+                        applicationName,
+                        false,
+                        ENTITY_NAME,
+                        "accessdenied",
+                        "You do not have permission to view this playlist"
+                    )
+                )
                 .build();
         }
     }
@@ -342,13 +364,20 @@ public class PlaylistResource {
         LOG.debug("REST request to delete Playlist : {}", id);
 
         // Fetch current user ID and check if they are an admin
-        Long currentUserId = SecurityUtils.getCurrentUserLogin().orElse(null);
+        String currentUsername = SecurityUtils.getCurrentUserLogin().orElse(null);
         boolean isAdmin = SecurityUtils.hasCurrentUserThisAuthority("ROLE_ADMIN");
 
-        if (currentUserId == null) {
+        if (currentUsername == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .headers(HeaderUtil.createFailureAlert(applicationName, false, ENTITY_NAME,
-                    "unauthorized", "You must be logged in to delete a playlist"))
+                .headers(
+                    HeaderUtil.createFailureAlert(
+                        applicationName,
+                        false,
+                        ENTITY_NAME,
+                        "unauthorized",
+                        "You must be logged in to delete a playlist"
+                    )
+                )
                 .build();
         }
 
@@ -359,15 +388,22 @@ public class PlaylistResource {
 
         Playlist playlist = playlistOpt.get();
 
-        if (isAdmin || (playlist.getUser() != null && currentUserId.equals(playlist.getUser().getId()))) {
+        if (isAdmin || (playlist.getUser() != null && currentUsername.equals(playlist.getUser()))) {
             playlistRepository.deleteById(id);
             return ResponseEntity.noContent()
                 .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
                 .build();
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .headers(HeaderUtil.createFailureAlert(applicationName, false, ENTITY_NAME,
-                    "notauthorized", "You are not authorized to delete this playlist"))
+                .headers(
+                    HeaderUtil.createFailureAlert(
+                        applicationName,
+                        false,
+                        ENTITY_NAME,
+                        "notauthorized",
+                        "You are not authorized to delete this playlist"
+                    )
+                )
                 .build();
         }
     }
