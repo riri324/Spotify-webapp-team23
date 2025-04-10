@@ -41,13 +41,11 @@ export class RecommenderComponent implements OnInit {
     this.http.get<any>(apiUrl).subscribe(userData => {
       if (userData) {
         this.userName = userData.firstName || null;
-        this.currentUserId = userData.id;
 
         // After getting user ID, load playlists that have at least one song
-        if (this.currentUserId) {
-          this.playlistService.queryUserPlaylists(this.currentUserId).subscribe(response => {
+        if (this.userName) {
+          this.playlistService.queryUserPlaylists().subscribe(response => {
             this.playlists = (response.body ?? []).filter(playlist => playlist.songs && playlist.songs.length > 0);
-            // this.initializeCache();
 
             this.loadSongs();
           });
