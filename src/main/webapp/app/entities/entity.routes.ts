@@ -87,6 +87,11 @@ const routes: Routes = [
     data: { pageTitle: 'Profile' },
     canActivate: [UserRouteAccessService],
   },
+  {
+    path: 'concert',
+    data: { pageTitle: 'Concerts' },
+    loadChildren: () => import('./concert/concert.routes'),
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

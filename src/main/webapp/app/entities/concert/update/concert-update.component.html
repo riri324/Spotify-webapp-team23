@@ -1,0 +1,140 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-concert-heading" data-cy="ConcertCreateUpdateHeading">Create or edit a Concert</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let artistNameRef = editForm.get('artistName')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_artistName">Artist Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="artistName"
+            id="field_artistName"
+            data-cy="artistName"
+            formControlName="artistName"
+          />
+          @if (artistNameRef.invalid && (artistNameRef.dirty || artistNameRef.touched)) {
+            <div>
+              @if (editForm.get('artistName')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let venueNameRef = editForm.get('venueName')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_venueName">Venue Name</label>
+          <input type="text" class="form-control" name="venueName" id="field_venueName" data-cy="venueName" formControlName="venueName" />
+          @if (venueNameRef.invalid && (venueNameRef.dirty || venueNameRef.touched)) {
+            <div>
+              @if (editForm.get('venueName')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let countryRef = editForm.get('country')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_country">Country</label>
+          <input type="text" class="form-control" name="country" id="field_country" data-cy="country" formControlName="country" />
+          @if (countryRef.invalid && (countryRef.dirty || countryRef.touched)) {
+            <div>
+              @if (editForm.get('country')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_region">Region</label>
+          <input type="text" class="form-control" name="region" id="field_region" data-cy="region" formControlName="region" />
+        </div>
+
+        @let eventDateRef = editForm.get('eventDate')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_eventDate">Event Date</label>
+          <div class="d-flex">
+            <input
+              id="field_eventDate"
+              data-cy="eventDate"
+              type="datetime-local"
+              class="form-control"
+              name="eventDate"
+              formControlName="eventDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (eventDateRef.invalid && (eventDateRef.dirty || eventDateRef.touched)) {
+            <div>
+              @if (editForm.get('eventDate')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('eventDate')?.errors?.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_ticketmasterEventId">Ticketmaster Event Id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="ticketmasterEventId"
+            id="field_ticketmasterEventId"
+            data-cy="ticketmasterEventId"
+            formControlName="ticketmasterEventId"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_imageUrl">Image Url</label>
+          <input type="text" class="form-control" name="imageUrl" id="field_imageUrl" data-cy="imageUrl" formControlName="imageUrl" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_externalUrl">External Url</label>
+          <input
+            type="text"
+            class="form-control"
+            name="externalUrl"
+            id="field_externalUrl"
+            data-cy="externalUrl"
+            formControlName="externalUrl"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (concert(); as concertRef) {
+      <div>
+        <h2 data-cy="concertDetailsHeading"><span>Concert</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ concertRef.id }}</span>
+          </dd>
+          <dt><span>Artist Name</span></dt>
+          <dd>
+            <span>{{ concertRef.artistName }}</span>
+          </dd>
+          <dt><span>Venue Name</span></dt>
+          <dd>
+            <span>{{ concertRef.venueName }}</span>
+          </dd>
+          <dt><span>Country</span></dt>
+          <dd>
+            <span>{{ concertRef.country }}</span>
+          </dd>
+          <dt><span>Region</span></dt>
+          <dd>
+            <span>{{ concertRef.region }}</span>
+          </dd>
+          <dt><span>Event Date</span></dt>
+          <dd>
+            <span>{{ concertRef.eventDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span>Ticketmaster Event Id</span></dt>
+          <dd>
+            <span>{{ concertRef.ticketmasterEventId }}</span>
+          </dd>
+          <dt><span>Image Url</span></dt>
+          <dd>
+            <span>{{ concertRef.imageUrl }}</span>
+          </dd>
+          <dt><span>External Url</span></dt>
+          <dd>
+            <span>{{ concertRef.externalUrl }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/concert', concertRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

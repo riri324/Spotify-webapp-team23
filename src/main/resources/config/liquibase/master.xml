@@ -30,6 +30,7 @@
     <include file="config/liquibase/changelog/20250403234356_added_entity_ListeningHistory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250403234357_added_entity_LikedSongs.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250409144041_added_entity_UserProfile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250326134138_added_entity_Concert.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20250302040024_added_entity_constraints_Playlist.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250302040025_added_entity_constraints_Song.xml" relativeToChangelogFile="false"/>

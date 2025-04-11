@@ -30,7 +30,8 @@
       "Genre",
       "ListeningHistory",
       "LikedSongs",
-      "UserProfile"
+      "UserProfile",
+      "Concert"
     ],
     "feignClient": null,
     "jhipsterVersion": "8.7.3",

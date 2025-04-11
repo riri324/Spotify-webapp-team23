@@ -1,0 +1,18 @@
+entity Concert {
+  artistName String required
+  venueName String required
+  country String required
+  region String
+  eventDate ZonedDateTime required
+  ticketmasterEventId String
+  imageUrl String
+  externalUrl String
+}
+
+paginate Concert with pagination
+
+service Concert with serviceClass
+
+dto Concert with mapstruct
+
+filter Concert

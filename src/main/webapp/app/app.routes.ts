@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { Authority } from 'app/config/authority.constants';
-
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { errorRoute } from './layouts/error/error.route';
 import { TopSongsComponent } from '../app/top-song/top-song.component';
@@ -51,13 +50,17 @@ const routes: Routes = [
     loadChildren: () => import(`./entities/entity.routes`),
   },
   {
-    path: 'recommender',
-    loadComponent: () => import('./recommender/recommender.component').then(m => m.RecommenderComponent),
-  },
-  {
     path: 'venue-recommendations',
     loadComponent: () => import('./venue-recc/venue-recc.component').then(m => m.VenueReccComponent),
     title: 'Venue Recommendations',
+    // Explicitly allow access without authentication by not including UserRouteAccessService
+    data: {
+      authorities: [], // Empty array means no specific authority required
+    },
+  },
+  {
+    path: 'recommender',
+    loadComponent: () => import('./recommender/recommender.component').then(m => m.RecommenderComponent),
   },
   {
     path: 'feedback-page',

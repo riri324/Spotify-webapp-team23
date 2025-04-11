@@ -73,6 +73,7 @@ public class CacheConfiguration {
             createCache(cm, bham.team.domain.ListeningHistory.class.getName() + ".songs");
             createCache(cm, bham.team.domain.LikedSongs.class.getName());
             createCache(cm, bham.team.domain.UserProfile.class.getName());
+            createCache(cm, bham.team.domain.Concert.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

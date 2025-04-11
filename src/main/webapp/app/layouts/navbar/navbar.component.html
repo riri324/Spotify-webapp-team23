@@ -5,6 +5,7 @@
       <span class="navbar-title">Teamproject24</span>
       <span class="navbar-version">{{ version }}</span>
     </a>
+
     <a
       class="navbar-toggler d-lg-none"
       href="javascript:void(0);"
@@ -24,6 +25,14 @@
             <span>
               <fa-icon icon="home"></fa-icon>
               <span>Home</span>
+            </span>
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link" routerLink="/venue-recommendations" (click)="collapseNavbar()">
+            <span>
+              <fa-icon icon="music"></fa-icon>
+              <span>Concerts</span>
             </span>
           </a>
         </li>
@@ -197,6 +206,18 @@
                 >
                   <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                   <span>User Profile</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/concert"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Concert</span>
                 </a>
               </li>
               <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
