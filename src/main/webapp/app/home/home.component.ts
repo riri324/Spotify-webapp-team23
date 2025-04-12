@@ -15,8 +15,11 @@ import { Account } from 'app/core/auth/account.model';
   imports: [SharedModule, RouterModule],
 })
 export default class HomeComponent implements OnInit, OnDestroy {
-  account = signal<Account | null>(null);
+  // Navigation links for logged-in users
+  navLinks = [{ label: 'AI Song Recommender', route: '/recommender' }];
 
+  focusedIndex = 0;
+  account = signal<Account | null>(null);
   private readonly destroy$ = new Subject<void>();
 
   private readonly accountService = inject(AccountService);
@@ -29,12 +32,41 @@ export default class HomeComponent implements OnInit, OnDestroy {
       .subscribe(account => this.account.set(account));
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   login(): void {
     this.router.navigate(['/login']);
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  // Handle keyboard navigation
+  handleKeyDown(event: KeyboardEvent): void {
+    const max = this.navLinks.length - 1;
+    switch (event.key) {
+      case 'ArrowDown':
+        this.focusedIndex = this.focusedIndex + 1 > max ? 0 : this.focusedIndex + 1;
+        this.focusElement(this.focusedIndex);
+        event.preventDefault();
+        break;
+      case 'ArrowUp':
+        this.focusedIndex = this.focusedIndex - 1 < 0 ? max : this.focusedIndex - 1;
+        this.focusElement(this.focusedIndex);
+        event.preventDefault();
+        break;
+      case 'Enter':
+        this.navigateTo(this.navLinks[this.focusedIndex].route);
+        break;
+    }
+  }
+
+  focusElement(index: number): void {
+    const el = document.querySelector(`[data-index="${index}"]`) as HTMLElement;
+    el.focus();
+  }
+
+  navigateTo(route: string): void {
+    this.router.navigate([route]);
   }
 }

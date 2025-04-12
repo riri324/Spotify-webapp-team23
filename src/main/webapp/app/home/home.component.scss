@@ -2,22 +2,96 @@
 Main page styles
 ========================================================================== */
 
-.hipster {
-  display: inline-block;
-  width: 347px;
-  height: 497px;
-  background: url('../../content/images/jhipster_family_member_2.svg') no-repeat center top;
-  background-size: contain;
+.home-content {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 20px;
 }
 
-/* wait autoprefixer update to allow simple generation of high pixel density media query */
-@media only screen and (-webkit-min-device-pixel-ratio: 2),
-  only screen and (-moz-min-device-pixel-ratio: 2),
-  only screen and (-o-min-device-pixel-ratio: 2/1),
-  only screen and (min-resolution: 192dpi),
-  only screen and (min-resolution: 2dppx) {
-  .hipster {
-    background: url('../../content/images/jhipster_family_member_2.svg') no-repeat center top;
-    background-size: contain;
+.welcome-section {
+  flex: 1;
+  text-align: center;
+
+  h1 {
+    color: #39ff14; // Neon green
+    margin-bottom: 10px;
+  }
+
+  p.lead {
+    color: #999;
+    font-size: 1.1rem;
+  }
+
+  .alert {
+    background-color: #222;
+    border: 1px solid #555;
+    border-radius: 6px;
+    color: white;
+    padding: 20px;
+    margin-top: 20px;
+
+    a.alert-link {
+      color: #39ff14;
+      text-decoration: underline;
+
+      &:hover {
+        color: #32d512;
+      }
+    }
+  }
+}
+
+.nav-menu {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+
+  .list-group-item {
+    background-color: #333;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: bold;
+
+    &:hover,
+    &.active {
+      background-color: #444;
+      transform: scale(1.02);
+      outline: 2px solid #39ff14;
+    }
+
+    &:focus {
+      outline: 2px solid #39ff14;
+    }
+  }
+}
+
+.hipster {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .home-content {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .welcome-section {
+    text-align: center;
+
+    .hipster {
+      margin-bottom: 20px;
+    }
   }
 }
