@@ -18,16 +18,6 @@ export default class HomeComponent implements OnInit, OnDestroy {
   // Navigation links for logged-in users
   navLinks = [
     {
-      label: 'AI Song Recommender',
-      route: '/recommender',
-      description: 'Want smart song picks from our AI? 🎵',
-    },
-    {
-      label: 'Venue Recommendations',
-      route: '/venue-recommendations',
-      description: 'Find your local events that match your vibes',
-    },
-    {
       label: 'Show all playlists',
       route: '/playlist',
       description: 'Explore all of your curated playlists and other peoples public playlists',
@@ -38,9 +28,24 @@ export default class HomeComponent implements OnInit, OnDestroy {
       description: 'Browse through our full song collection',
     },
     {
-      label: 'Feedback',
-      route: '/feedback',
-      description: 'If you have any feedback, share your thoughts with us!',
+      label: 'User Song Recommender',
+      route: '/recommend',
+      description: 'Recommend a song to a friend? 🎵',
+    },
+    {
+      label: 'AI Song Recommender',
+      route: '/recommender',
+      description: 'Want smart song picks from our AI? 🎵',
+    },
+    {
+      label: 'Global Top Songs',
+      route: '/global-top-songs',
+      description: 'Discover the top global songs and artists currently!',
+    },
+    {
+      label: 'Venue Recommendations',
+      route: '/venue-recommendations',
+      description: 'Find your local events that match your vibes',
     },
     {
       label: 'Messages',
@@ -51,7 +56,12 @@ export default class HomeComponent implements OnInit, OnDestroy {
       label: 'Preferences',
       route: '/preferences',
       description: 'Customize your app experience ⚙️',
-    }
+    },
+    {
+      label: 'Feedback',
+      route: '/feedback',
+      description: 'If you have any feedback, share your thoughts with us!',
+    },
   ];
 
   guestLinks = [
