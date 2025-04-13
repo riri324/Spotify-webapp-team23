@@ -15,90 +15,57 @@ import { Account } from 'app/core/auth/account.model';
   imports: [SharedModule, RouterModule],
 })
 export default class HomeComponent implements OnInit, OnDestroy {
-  // Navigation links for logged-in users
-  navLinks = [
-    {
-      label: 'Show all playlists',
-      route: '/playlist',
-      description: 'Explore all of your curated playlists and other peoples public playlists',
-    },
-    {
-      label: 'Show all songs',
-      route: '/song',
-      description: 'Browse through our full song collection',
-    },
-    {
-      label: 'User Song Recommender',
-      route: '/recommend',
-      description: 'Recommend a song to a friend? 🎵',
-    },
+  // Track active section for better keyboard navigation
+  activeSection: 'playlists' | 'songs' | 'features' = 'playlists';
+  focusedIndex = 0;
+  account = signal<Account | null>(null);
+
+  // Features links for logged-in users
+  featuresLinks = [
     {
       label: 'AI Song Recommender',
       route: '/recommender',
-      description: 'Want smart song picks from our AI? 🎵',
+      description: 'Get personalized song recommendations from our AI',
+      icon: ':robot:',
     },
     {
-      label: 'Global Top Songs',
-      route: '/global-top-songs',
-      description: 'Discover the top global songs and artists currently!',
-    },
-    {
-      label: 'Venue Recommendations',
-      route: '/venue-recommendations',
-      description: 'Find your local events that match your vibes',
-    },
-    {
-      label: 'Messages',
-      route: '/messages',
-      description: '💬 Check out your messages! 💬',
-    },
-    {
-      label: 'Preferences',
-      route: '/preferences',
-      description: 'Customize your app experience ⚙️',
-    },
-    {
-      label: 'Feedback',
-      route: '/feedback',
-      description: 'If you have any feedback, share your thoughts with us!',
+      label: 'Create Playlist',
+      route: '/playlist/new',
+      description: 'Start a new collection of your favorite songs',
+      icon: ':heavy_plus_sign:',
     },
   ];
 
-  guestLinks = [
+  // Features for guests
+  guestFeatures = [
     {
-      label: 'Playlists',
+      label: 'Popular Playlists',
       route: '/playlist',
-      description: 'Browse public playlists',
+      description: 'Check out what everyone is listening to',
+      icon: ':fire:',
     },
     {
-      label: 'Songs',
+      label: 'Top Songs',
       route: '/song',
-      description: 'Browse through our full song collection',
+      description: 'See the most played songs',
+      icon: ':bar_chart:',
     },
-    {
-      label: 'Global Top Songs',
-      route: '/global-top-songs',
-      description: 'Discover the top global songs and artists currently!',
-    },
-    {
-      label: 'GDPR Policy',
-      route: '/gdpr-policy',
-      description: 'Understand how we protect your data',
-    }
   ];
-
-  focusedIndex = 0;
-  account = signal<Account | null>(null);
-  private readonly destroy$ = new Subject<void>();
 
   private readonly accountService = inject(AccountService);
   private readonly router = inject(Router);
+  private readonly destroy$ = new Subject<void>();
 
   ngOnInit(): void {
     this.accountService
       .getAuthenticationState()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(account => this.account.set(account));
+      .subscribe(account => {
+        this.account.set(account);
+        // Reset focus when login state changes
+        this.focusedIndex = 0;
+        this.activeSection = 'playlists';
+      });
   }
 
   ngOnDestroy(): void {
@@ -110,28 +77,46 @@ export default class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['/login']);
   }
 
-  // Handle keyboard navigation
-  handleKeyDown(event: KeyboardEvent): void {
-    const max = this.navLinks.length - 1;
+  // Updated keyboard navigation with sections
+  handleKeyDown(event: KeyboardEvent, section: string): void {
+    this.activeSection = section as any;
+    const links = this.getLinksBySection(section);
+    const max = links.length - 1;
+
     switch (event.key) {
       case 'ArrowDown':
         this.focusedIndex = this.focusedIndex + 1 > max ? 0 : this.focusedIndex + 1;
-        this.focusElement(this.focusedIndex);
+        this.focusElement(section, this.focusedIndex);
         event.preventDefault();
         break;
       case 'ArrowUp':
         this.focusedIndex = this.focusedIndex - 1 < 0 ? max : this.focusedIndex - 1;
-        this.focusElement(this.focusedIndex);
+        this.focusElement(section, this.focusedIndex);
         event.preventDefault();
         break;
       case 'Enter':
-        this.navigateTo(this.navLinks[this.focusedIndex].route);
+        this.navigateTo(links[this.focusedIndex].route);
+        break;
+      case 'Tab':
+        // Allow tab navigation without interference
         break;
     }
   }
 
-  focusElement(index: number): void {
-    const el = document.querySelector(`[data-index="${index}"]`) as HTMLElement;
+  getLinksBySection(section: string): any[] {
+    switch (section) {
+      case 'features':
+        return this.account() ? this.featuresLinks : this.guestFeatures;
+      case 'playlists':
+      case 'songs':
+      default:
+        return [{ route: section === 'playlists' ? '/playlist' : '/song' }];
+    }
+  }
+
+  focusElement(section: string, index: number): void {
+    const selector = section === 'features' ? `[data-index="${index}"]` : `.${section}-container .list-group-item`;
+    const el = document.querySelector(selector) as HTMLElement;
     el.focus();
   }
 
