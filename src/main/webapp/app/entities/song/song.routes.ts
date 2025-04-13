@@ -11,7 +11,6 @@ const songRoute: Routes = [
     data: {
       defaultSort: `id,${ASC}`,
     },
-    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/view',
@@ -19,7 +18,6 @@ const songRoute: Routes = [
     resolve: {
       song: SongResolve,
     },
-    canActivate: [UserRouteAccessService],
   },
   {
     path: 'new',

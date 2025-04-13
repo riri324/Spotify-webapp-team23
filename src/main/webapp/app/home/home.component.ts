@@ -16,7 +16,36 @@ import { Account } from 'app/core/auth/account.model';
 })
 export default class HomeComponent implements OnInit, OnDestroy {
   // Navigation links for logged-in users
-  navLinks = [{ label: 'AI Song Recommender', route: '/recommender' }];
+  navLinks = [
+    {
+      label: 'AI Song Recommender',
+      route: '/recommender',
+      description: '🎵 Want smart song picks from our AI?',
+    },
+    {
+      label: 'Show all playlists',
+      route: '/playlist',
+      description: '📂 Explore all your curated playlists',
+    },
+    {
+      label: 'Show all songs',
+      route: '/song',
+      description: '🎶 Browse through your full song collection',
+    },
+  ];
+
+  guestLinks = [
+    {
+      label: 'Playlists',
+      route: '/playlist',
+      description: 'Browse public playlists',
+    },
+    {
+      label: 'Songs',
+      route: '/song',
+      description: 'Check out all list of songs',
+    },
+  ];
 
   focusedIndex = 0;
   account = signal<Account | null>(null);

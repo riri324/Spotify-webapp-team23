@@ -7,33 +7,50 @@
     </div>
 
     <div class="list-group mt-4" (keydown)="handleKeyDown($event)">
-      <a
-        *ngFor="let link of navLinks; let i = index"
-        class="list-group-item list-group-item-action"
-        routerLink="{{ link.route }}"
-        tabindex="0"
-        [attr.data-index]="i"
-        [class.active]="i === focusedIndex"
-        (focus)="focusedIndex = i"
-        (click)="navigateTo(link.route)"
-      >
-        {{ link.label }}
-      </a>
+      <ng-container *ngFor="let link of navLinks; let i = index">
+        <div class="nav-description">{{ link.description }}</div>
+        <a
+          class="list-group-item list-group-item-action"
+          routerLink="{{ link.route }}"
+          tabindex="0"
+          [attr.data-index]="i"
+          [class.active]="i === focusedIndex"
+          (focus)="focusedIndex = i"
+          (click)="navigateTo(link.route)"
+        >
+          {{ link.label }}
+        </a>
+      </ng-container>
     </div>
   } @else {
     <!-- Guest view directly shown here -->
-    <div class="alert alert-info">
-      <p><strong>Welcome to Tifopsy :notes:</strong></p>
-      <p>
-        <a class="alert-link" routerLink="/account/register">
-          Click here now to register and join our music community!
-        </a>
+    <div class="welcome-section">
+      <p class="welcome-title"><strong>Welcome to Tifopsy</strong></p>
+
+      <p class="welcome-register">
+        <a class="alert-link" routerLink="/account/register"> Click here now to register and join our music community! </a>
       </p>
-      <p>
-        <a class="alert-link" (click)="login()">
-          If you are already a member, login here
-        </a>
+
+      <p class="welcome-login">
+        <a class="alert-link" (click)="login()"> If you are already a member, login here </a>
       </p>
+
+      <div class="list-group mt-4" (keydown)="handleKeyDown($event)">
+        <ng-container *ngFor="let link of guestLinks; let i = index">
+          <div class="nav-description">{{ link.description }}</div>
+          <a
+            class="list-group-item list-group-item-action"
+            routerLink="{{ link.route }}"
+            tabindex="0"
+            [attr.data-index]="i"
+            [class.active]="i === focusedIndex"
+            (focus)="focusedIndex = i"
+            (click)="navigateTo(link.route)"
+          >
+            {{ link.label }}
+          </a>
+        </ng-container>
+      </div>
     </div>
   }
 </div>

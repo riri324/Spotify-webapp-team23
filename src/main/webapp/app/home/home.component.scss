@@ -2,6 +2,10 @@
 Main page styles
 ========================================================================== */
 
+html {
+  font-size: 20px;
+}
+
 .home-content {
   display: flex;
   flex-direction: row;
@@ -10,33 +14,26 @@ Main page styles
 }
 
 .welcome-section {
-  flex: 1;
   text-align: center;
+  padding: 20px;
 
-  h1 {
-    color: #39ff14; // Neon green
-    margin-bottom: 10px;
+  .welcome-title {
+    font-size: 4rem;
+    color: #39ff14;
+    margin-bottom: 2rem;
   }
 
-  p.lead {
-    color: #999;
-    font-size: 1.1rem;
-  }
+  .welcome-register,
+  .welcome-login {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
 
-  .alert {
-    background-color: #222;
-    border: 1px solid #555;
-    border-radius: 6px;
-    color: white;
-    padding: 20px;
-    margin-top: 20px;
-
-    a.alert-link {
-      color: #39ff14;
+    a {
+      color: white;
       text-decoration: underline;
 
       &:hover {
-        color: #32d512;
+        color: white;
       }
     }
   }
@@ -47,38 +44,50 @@ Main page styles
   display: flex;
   flex-direction: column;
   margin-top: 20px;
-
-  .list-group-item {
-    background-color: #333;
-    color: white;
-    border: 1px solid #555;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    padding: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-weight: bold;
-
-    &:hover,
-    &.active {
-      background-color: #444;
-      transform: scale(1.02);
-      outline: 2px solid #39ff14;
-    }
-
-    &:focus {
-      outline: 2px solid #39ff14;
-    }
-  }
+  align-items: center;
 }
 
-.hipster {
-  width: 100%;
+.list-group-item {
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: bold;
   max-width: 200px;
-  height: auto;
-  display: block;
-  border-radius: 12px;
-  margin: 0 auto;
+  width: auto;
+  text-align: center;
+}
+
+.list-group-item:hover,
+.list-group-item.active {
+  background-color: #444;
+  transform: scale(1.02);
+  outline: 2px solid #39ff14;
+}
+
+.list-group-item:focus {
+  outline: 2px solid #39ff14;
+}
+
+.nav-description {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #39ff14;
+  margin-bottom: 20px;
+  text-shadow: 0 0 5px #39ff14;
+  text-align: left;
+}
+
+.guest-links {
+  font-size: 0.9rem;
+}
+
+.guest-links .nav-description {
+  font-size: 2rem;
 }
 
 @media (max-width: 768px) {
@@ -89,9 +98,5 @@ Main page styles
 
   .welcome-section {
     text-align: center;
-
-    .hipster {
-      margin-bottom: 20px;
-    }
   }
 }
