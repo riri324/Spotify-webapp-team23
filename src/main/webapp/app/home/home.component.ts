@@ -20,18 +20,38 @@ export default class HomeComponent implements OnInit, OnDestroy {
     {
       label: 'AI Song Recommender',
       route: '/recommender',
-      description: '🎵 Want smart song picks from our AI?',
+      description: 'Want smart song picks from our AI? 🎵',
+    },
+    {
+      label: 'Venue Recommendations',
+      route: '/venue-recommendations',
+      description: 'Find your local events that match your vibes',
     },
     {
       label: 'Show all playlists',
       route: '/playlist',
-      description: '📂 Explore all your curated playlists',
+      description: 'Explore all of your curated playlists and other peoples public playlists',
     },
     {
       label: 'Show all songs',
       route: '/song',
-      description: '🎶 Browse through your full song collection',
+      description: 'Browse through our full song collection',
     },
+    {
+      label: 'Feedback',
+      route: '/feedback',
+      description: 'If you have any feedback, share your thoughts with us!',
+    },
+    {
+      label: 'Messages',
+      route: '/messages',
+      description: '💬 Check out your messages! 💬',
+    },
+    {
+      label: 'Preferences',
+      route: '/preferences',
+      description: 'Customize your app experience ⚙️',
+    }
   ];
 
   guestLinks = [
@@ -43,8 +63,18 @@ export default class HomeComponent implements OnInit, OnDestroy {
     {
       label: 'Songs',
       route: '/song',
-      description: 'Check out all list of songs',
+      description: 'Browse through our full song collection',
     },
+    {
+      label: 'Global Top Songs',
+      route: '/global-top-songs',
+      description: 'Discover the top global songs and artists currently!',
+    },
+    {
+      label: 'GDPR Policy',
+      route: '/gdpr-policy',
+      description: 'Understand how we protect your data',
+    }
   ];
 
   focusedIndex = 0;
