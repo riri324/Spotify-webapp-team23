@@ -55,13 +55,13 @@ export default class HomeComponent implements OnInit, OnDestroy {
     {
       label: 'Messages',
       route: '/messages',
-      description: ':speech_balloon: Check out your messages! :speech_balloon:',
+      description: '💬 Check out your messages! 💬',
       icon: '💬'
     },
     {
       label: 'Preferences',
       route: '/preferences',
-      description: 'Customize your app experience :gear:',
+      description: 'Customize your app experience',
       icon: '🤔'
     },
 
