@@ -23,32 +23,57 @@ export default class HomeComponent implements OnInit, OnDestroy {
   // Features links for logged-in users
   featuresLinks = [
     {
+      label: 'Create a Playlist now',
+      route: '/playlist/new',
+      description: 'Start a new collection of your favorite songs',
+      icon: ':heavy_plus_sign:',
+    },
+    {
+      label: 'User Song Recommender',
+      route: '/recommend',
+      description: 'Recommend a song to a friend?',
+      icon: ':musical_note:'
+    },
+    {
       label: 'AI Song Recommender',
       route: '/recommender',
       description: 'Get personalized song recommendations from our AI',
       icon: ':robot:',
     },
     {
-      label: 'Create Playlist',
-      route: '/playlist/new',
-      description: 'Start a new collection of your favorite songs',
-      icon: ':heavy_plus_sign:',
+      label: 'Global Top Songs',
+      route: '/global-top-songs',
+      description: 'Discover the top global songs and artists currently!',
+      icon: '📊'
     },
+    {
+      label: 'Venue Recommendations',
+      route: '/venue-recommendations',
+      description: 'Find your local events that match your vibes',
+      icon: '📍'
+    },
+    {
+      label: 'Messages',
+      route: '/messages',
+      description: ':speech_balloon: Check out your messages! :speech_balloon:',
+      icon: '💬'
+    },
+    {
+      label: 'Preferences',
+      route: '/preferences',
+      description: 'Customize your app experience :gear:',
+      icon: '🤔'
+    },
+
   ];
 
   // Features for guests
   guestFeatures = [
     {
-      label: 'Popular Playlists',
-      route: '/playlist',
-      description: 'Check out what everyone is listening to',
-      icon: ':fire:',
-    },
-    {
-      label: 'Top Songs',
-      route: '/song',
-      description: 'See the most played songs',
-      icon: ':bar_chart:',
+      label: 'Global Top Songs',
+      route: '/global-top-songs',
+      description: 'Discover the top global songs and artists currently!',
+      icon: '📊'
     },
   ];
 
