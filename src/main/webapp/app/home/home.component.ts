@@ -26,19 +26,19 @@ export default class HomeComponent implements OnInit, OnDestroy {
       label: 'Create a Playlist now',
       route: '/playlist/new',
       description: 'Start a new collection of your favorite songs',
-      icon: ':heavy_plus_sign:',
+      icon: '➕',
     },
     {
       label: 'User Song Recommender',
       route: '/recommend',
       description: 'Recommend a song to a friend?',
-      icon: ':musical_note:'
+      icon: '🎵'
     },
     {
       label: 'AI Song Recommender',
       route: '/recommender',
       description: 'Get personalized song recommendations from our AI',
-      icon: ':robot:',
+      icon: '🤖',
     },
     {
       label: 'Global Top Songs',
