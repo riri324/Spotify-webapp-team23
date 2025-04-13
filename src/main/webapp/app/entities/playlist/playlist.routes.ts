@@ -11,7 +11,6 @@ const playlistRoute: Routes = [
     data: {
       defaultSort: `id,${ASC}`,
     },
-    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/view',
@@ -19,7 +18,6 @@ const playlistRoute: Routes = [
     resolve: {
       playlist: PlaylistResolve,
     },
-    canActivate: [UserRouteAccessService],
   },
   {
     path: 'new',
