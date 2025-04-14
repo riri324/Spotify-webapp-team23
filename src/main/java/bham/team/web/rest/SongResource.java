@@ -48,6 +48,7 @@ public class SongResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Song> createSong(@Valid @RequestBody Song song) throws URISyntaxException {
         LOG.debug("REST request to save Song : {}", song);
         if (song.getId() != null) {
@@ -70,6 +71,7 @@ public class SongResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Song> updateSong(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Song song)
         throws URISyntaxException {
         LOG.debug("REST request to update Song : {}, {}", id, song);
@@ -102,6 +104,7 @@ public class SongResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Song> partialUpdateSong(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Song song
@@ -193,6 +196,7 @@ public class SongResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteSong(@PathVariable("id") Long id) {
         LOG.debug("REST request to delete Song : {}", id);
         songRepository.deleteById(id);
