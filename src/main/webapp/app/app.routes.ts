@@ -57,7 +57,7 @@ const routes: Routes = [
     title: 'Venue Recommendations',
   },
   {
-    path: 'feedback',
+    path: 'feedback-page',
     loadComponent: () => import('./feedback/feedback.component').then(m => m.FeedbackComponent),
     title: 'Feedback',
   },
