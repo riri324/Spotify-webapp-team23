@@ -1,0 +1,47 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (listeningHistory(); as listeningHistoryRef) {
+      <div>
+        <h2 data-cy="listeningHistoryDetailsHeading"><span>Listening History</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ listeningHistoryRef.id }}</span>
+          </dd>
+          <dt><span>History ID</span></dt>
+          <dd>
+            <span>{{ listeningHistoryRef.historyID }}</span>
+          </dd>
+          <dt><span>Timestamp</span></dt>
+          <dd>
+            <span>{{ listeningHistoryRef.timestamp | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span>Song</span></dt>
+          <dd>
+            @for (song of listeningHistoryRef.songs; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/song', song.id, 'view']">{{ song?.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/listening-history', listeningHistoryRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

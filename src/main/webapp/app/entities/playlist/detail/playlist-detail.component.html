@@ -1,0 +1,59 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (playlist(); as playlistRef) {
+      <div>
+        <h2 data-cy="playlistDetailsHeading"><span>Playlist</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ playlistRef.id }}</span>
+          </dd>
+          <dt><span>Playlist ID</span></dt>
+          <dd>
+            <span>{{ playlistRef.playlistID }}</span>
+          </dd>
+          <dt><span>Name</span></dt>
+          <dd>
+            <span>{{ playlistRef.name }}</span>
+          </dd>
+          <dt><span>Description</span></dt>
+          <dd>
+            <span>{{ playlistRef.description }}</span>
+          </dd>
+          <dt><span>Is Public</span></dt>
+          <dd>
+            <span>{{ playlistRef.isPublic }}</span>
+          </dd>
+          <dt><span>Song</span></dt>
+          <dd>
+            @for (song of playlistRef.songs; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/song', song.id, 'view']">{{ song?.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+          <dt><span>User</span></dt>
+          <dd>
+            <span>{{ playlistRef.user?.login }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/playlist', playlistRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

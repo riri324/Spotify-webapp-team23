@@ -1,0 +1,30 @@
+{
+  "annotations": {
+    "changelogDate": "20250320001900"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "genreID",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "songGenre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "50"
+    }
+  ],
+  "name": "Genre",
+  "relationships": [
+    {
+      "otherEntityName": "song",
+      "otherEntityRelationshipName": "genre",
+      "relationshipName": "song",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}

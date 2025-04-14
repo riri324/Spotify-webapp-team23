@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music & User Recommendations</title>
+    <link rel="stylesheet" href="recommend.component.scss" />
+  </head>
+  <body>
+    <div class="recommend-container">
+      <!-- Music Suggestions -->
+      <div class="suggestions-box">
+        <div class="suggestions-header">
+          <h3>🎶 Music Suggestions</h3>
+          <div class="search-icon">🔍</div>
+        </div>
+        <p class="subtitle">Similar users also listen to:</p>
+        <div class="music-list">
+          <div class="music-item">
+            <img src="artist.png" alt="Album Cover" class="album-art" />
+            <p class="album-info"><strong>Album</strong> <br />Artist</p>
+          </div>
+          <div class="music-item">
+            <img src="cover.png" alt="Album Cover" class="album-art" />
+            <p class="album-info"><strong>Album</strong> <br />Artist</p>
+          </div>
+        </div>
+        <div class="next-arrow">➡</div>
+      </div>
+
+      <!-- User Suggestions -->
+      <div class="suggestions-box">
+        <div class="suggestions-header">
+          <h3>👥 User Suggestions</h3>
+          <div class="search-icon">🔍</div>
+        </div>
+        <p class="subtitle">Users with similar taste:</p>
+        <div class="user-list">
+          <div class="user-item">
+            <div class="user-avatar">👤</div>
+            <div class="user-info">
+              <p class="username">Username</p>
+              <button class="follow-btn">Follow</button>
+            </div>
+            <div class="similar-artists">🎵 Artist 🎵 Artist 🎵 Artist</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

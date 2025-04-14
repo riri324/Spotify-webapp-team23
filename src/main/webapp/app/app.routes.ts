@@ -34,8 +34,42 @@ const routes: Routes = [
     title: 'login.title',
   },
   {
+    path: 'recommend',
+    loadComponent: () => import('./recommend/recommend.component').then(m => m.RecommendComponent),
+    title: 'recommend.title',
+  },
+  {
     path: '',
     loadChildren: () => import(`./entities/entity.routes`),
+  },
+  {
+    path: 'recommender',
+    loadComponent: () => import('./recommender/recommender.component').then(m => m.RecommenderComponent),
+  },
+  {
+    path: 'venue-recommendations',
+    loadComponent: () => import('./venue-recc/venue-recc.component').then(m => m.VenueReccComponent),
+    title: 'Venue Recommendations',
+  },
+  {
+    path: 'feedback-page',
+    loadComponent: () => import('./feedback/feedback.component').then(m => m.FeedbackComponent),
+    title: 'Feedback',
+  },
+  {
+    path: 'messages',
+    loadComponent: () => import('./messages/messages.component').then(m => m.MessagesComponent),
+    title: 'Messages',
+  },
+  {
+    path: 'global-top-songs',
+    data: { pageTitle: 'Global Top Songs' },
+    loadChildren: () => import('./top-song/top-song.routes').then(m => m.default),
+  },
+  {
+    path: 'preferences',
+    data: { pageTitle: 'Preferences' },
+    loadChildren: () => import('./entities/preferences/preferences.routes').then(m => m.default),
   },
   ...errorRoute,
 ];

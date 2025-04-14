@@ -1,0 +1,53 @@
+{
+  "annotations": {
+    "changelogDate": "20250228002743",
+    "spotify": true
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "favoriteGenre",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "musicPurpose",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "musicMood",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "vocalPreference",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "listeningTime",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "listeningPattern",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "songLength",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lyricsImportance",
+      "fieldType": "String"
+    }
+  ],
+  "name": "UserPreference",
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one",
+      "relationshipWithBuiltInEntity": true
+    }
+  ],
+  "searchEngine": "no"
+}

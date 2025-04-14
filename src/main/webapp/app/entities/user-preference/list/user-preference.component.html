@@ -1,0 +1,150 @@
+<div>
+  <h2 id="page-heading" data-cy="UserPreferenceHeading">
+    <span>User Preferences</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-user-preference"
+        [routerLink]="['/user-preference/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span>Create a new User Preference</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (userPreferences?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span>No User Preferences found</span>
+    </div>
+  }
+
+  @if (userPreferences && userPreferences.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span>ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="favoriteGenre">
+              <div class="d-flex">
+                <span>Favorite Genre</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="musicPurpose">
+              <div class="d-flex">
+                <span>Music Purpose</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="musicMood">
+              <div class="d-flex">
+                <span>Music Mood</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="vocalPreference">
+              <div class="d-flex">
+                <span>Vocal Preference</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="listeningTime">
+              <div class="d-flex">
+                <span>Listening Time</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="listeningPattern">
+              <div class="d-flex">
+                <span>Listening Pattern</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="songLength">
+              <div class="d-flex">
+                <span>Song Length</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="lyricsImportance">
+              <div class="d-flex">
+                <span>Lyrics Importance</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (userPreference of userPreferences; track trackId(userPreference)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/user-preference', userPreference.id, 'view']">{{ userPreference.id }}</a>
+              </td>
+              <td>{{ userPreference.favoriteGenre }}</td>
+              <td>{{ userPreference.musicPurpose }}</td>
+              <td>{{ userPreference.musicMood }}</td>
+              <td>{{ userPreference.vocalPreference }}</td>
+              <td>{{ userPreference.listeningTime }}</td>
+              <td>{{ userPreference.listeningPattern }}</td>
+              <td>{{ userPreference.songLength }}</td>
+              <td>{{ userPreference.lyricsImportance }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/user-preference', userPreference.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/user-preference', userPreference.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(userPreference)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

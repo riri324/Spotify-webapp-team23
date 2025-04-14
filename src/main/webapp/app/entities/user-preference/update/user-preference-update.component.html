@@ -1,0 +1,193 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-user-preference-heading" data-cy="UserPreferenceCreateUpdateHeading">Create or edit a User Preference</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let favoriteGenreRef = editForm.get('favoriteGenre')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_favoriteGenre">Favorite Genre</label>
+          <input
+            type="text"
+            class="form-control"
+            name="favoriteGenre"
+            id="field_favoriteGenre"
+            data-cy="favoriteGenre"
+            formControlName="favoriteGenre"
+          />
+          @if (favoriteGenreRef.invalid && (favoriteGenreRef.dirty || favoriteGenreRef.touched)) {
+            <div>
+              @if (editForm.get('favoriteGenre')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (editForm.get('favoriteGenre')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 20 characters.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let musicPurposeRef = editForm.get('musicPurpose')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_musicPurpose">Music Purpose</label>
+          <input
+            type="text"
+            class="form-control"
+            name="musicPurpose"
+            id="field_musicPurpose"
+            data-cy="musicPurpose"
+            formControlName="musicPurpose"
+          />
+          @if (musicPurposeRef.invalid && (musicPurposeRef.dirty || musicPurposeRef.touched)) {
+            <div>
+              @if (editForm.get('musicPurpose')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (editForm.get('musicPurpose')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 50 characters.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let musicMoodRef = editForm.get('musicMood')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_musicMood">Music Mood</label>
+          <input type="text" class="form-control" name="musicMood" id="field_musicMood" data-cy="musicMood" formControlName="musicMood" />
+          @if (musicMoodRef.invalid && (musicMoodRef.dirty || musicMoodRef.touched)) {
+            <div>
+              @if (editForm.get('musicMood')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 50 characters.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let vocalPreferenceRef = editForm.get('vocalPreference')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_vocalPreference">Vocal Preference</label>
+          <input
+            type="text"
+            class="form-control"
+            name="vocalPreference"
+            id="field_vocalPreference"
+            data-cy="vocalPreference"
+            formControlName="vocalPreference"
+          />
+          @if (vocalPreferenceRef.invalid && (vocalPreferenceRef.dirty || vocalPreferenceRef.touched)) {
+            <div>
+              @if (editForm.get('vocalPreference')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 50 characters.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let listeningTimeRef = editForm.get('listeningTime')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_listeningTime">Listening Time</label>
+          <input
+            type="text"
+            class="form-control"
+            name="listeningTime"
+            id="field_listeningTime"
+            data-cy="listeningTime"
+            formControlName="listeningTime"
+          />
+          @if (listeningTimeRef.invalid && (listeningTimeRef.dirty || listeningTimeRef.touched)) {
+            <div>
+              @if (editForm.get('listeningTime')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 50 characters.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let listeningPatternRef = editForm.get('listeningPattern')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_listeningPattern">Listening Pattern</label>
+          <input
+            type="text"
+            class="form-control"
+            name="listeningPattern"
+            id="field_listeningPattern"
+            data-cy="listeningPattern"
+            formControlName="listeningPattern"
+          />
+          @if (listeningPatternRef.invalid && (listeningPatternRef.dirty || listeningPatternRef.touched)) {
+            <div>
+              @if (editForm.get('listeningPattern')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 50 characters.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let songLengthRef = editForm.get('songLength')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_songLength">Song Length</label>
+          <input
+            type="text"
+            class="form-control"
+            name="songLength"
+            id="field_songLength"
+            data-cy="songLength"
+            formControlName="songLength"
+          />
+          @if (songLengthRef.invalid && (songLengthRef.dirty || songLengthRef.touched)) {
+            <div>
+              @if (editForm.get('songLength')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 20 characters.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let lyricsImportanceRef = editForm.get('lyricsImportance')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_lyricsImportance">Lyrics Importance</label>
+          <input
+            type="text"
+            class="form-control"
+            name="lyricsImportance"
+            id="field_lyricsImportance"
+            data-cy="lyricsImportance"
+            formControlName="lyricsImportance"
+          />
+          @if (lyricsImportanceRef.invalid && (lyricsImportanceRef.dirty || lyricsImportanceRef.touched)) {
+            <div>
+              @if (editForm.get('lyricsImportance')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 50 characters.</small>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

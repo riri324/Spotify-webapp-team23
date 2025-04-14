@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (globalTopsongs(); as globalTopsongsRef) {
+      <div>
+        <h2 data-cy="globalTopsongsDetailsHeading"><span>Global Topsongs</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ globalTopsongsRef.id }}</span>
+          </dd>
+          <dt><span>Play Count</span></dt>
+          <dd>
+            <span>{{ globalTopsongsRef.playCount }}</span>
+          </dd>
+          <dt><span>Month Year</span></dt>
+          <dd>
+            <span>{{ globalTopsongsRef.monthYear | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span>Year</span></dt>
+          <dd>
+            <span>{{ globalTopsongsRef.year }}</span>
+          </dd>
+          <dt><span>Song</span></dt>
+          <dd>
+            @if (globalTopsongs()!.song) {
+              <div>
+                <a [routerLink]="['/song', globalTopsongs()!.song?.id, 'view']">{{ globalTopsongsRef.song?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/global-topsongs', globalTopsongsRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

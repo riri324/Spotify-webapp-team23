@@ -18,13 +18,12 @@ type FeedbackFormDefaults = Pick<NewFeedback, 'id'>;
 
 type FeedbackFormGroupContent = {
   id: FormControl<IFeedback['id'] | NewFeedback['id']>;
-  feedbackId: FormControl<IFeedback['feedbackId']>;
-  username: FormControl<IFeedback['username']>;
+  feedbackID: FormControl<IFeedback['feedbackID']>;
+  userName: FormControl<IFeedback['userName']>;
   userEmail: FormControl<IFeedback['userEmail']>;
-  userPhineNum: FormControl<IFeedback['userPhineNum']>;
+  userPhoneNum: FormControl<IFeedback['userPhoneNum']>;
   message: FormControl<IFeedback['message']>;
   rating: FormControl<IFeedback['rating']>;
-  user: FormControl<IFeedback['user']>;
 };
 
 export type FeedbackFormGroup = FormGroup<FeedbackFormGroupContent>;
@@ -44,13 +43,24 @@ export class FeedbackFormService {
           validators: [Validators.required],
         },
       ),
-      feedbackId: new FormControl(feedbackRawValue.feedbackId),
-      username: new FormControl(feedbackRawValue.username),
-      userEmail: new FormControl(feedbackRawValue.userEmail),
-      userPhineNum: new FormControl(feedbackRawValue.userPhineNum),
-      message: new FormControl(feedbackRawValue.message),
-      rating: new FormControl(feedbackRawValue.rating),
-      user: new FormControl(feedbackRawValue.user),
+      feedbackID: new FormControl(feedbackRawValue.feedbackID, {
+        validators: [Validators.required],
+      }),
+      userName: new FormControl(feedbackRawValue.userName, {
+        validators: [Validators.required, Validators.maxLength(100)],
+      }),
+      userEmail: new FormControl(feedbackRawValue.userEmail, {
+        validators: [Validators.required, Validators.maxLength(100)],
+      }),
+      userPhoneNum: new FormControl(feedbackRawValue.userPhoneNum, {
+        validators: [Validators.maxLength(25)],
+      }),
+      message: new FormControl(feedbackRawValue.message, {
+        validators: [Validators.maxLength(2048)],
+      }),
+      rating: new FormControl(feedbackRawValue.rating, {
+        validators: [Validators.required, Validators.min(1), Validators.max(10)],
+      }),
     });
   }
 

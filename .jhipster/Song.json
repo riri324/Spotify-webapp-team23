@@ -1,0 +1,105 @@
+{
+  "annotations": {
+    "changelogDate": "20250302040025"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "songId",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "50"
+    },
+    {
+      "fieldName": "trackName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "150"
+    },
+    {
+      "fieldName": "danceability",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "energy",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "speechiness",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "acousticness",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "instrumentalness",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "liveness",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "valence",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "tempo",
+      "fieldType": "Float"
+    }
+  ],
+  "name": "Song",
+  "relationships": [
+    {
+      "otherEntityName": "globalTopsongs",
+      "otherEntityRelationshipName": "song",
+      "relationshipName": "globalTopsongs",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "album",
+      "otherEntityRelationshipName": "song",
+      "relationshipName": "album",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "genre",
+      "otherEntityRelationshipName": "song",
+      "relationshipName": "genre",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "artist",
+      "otherEntityRelationshipName": "song",
+      "relationshipName": "artist",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "likedSongs",
+      "otherEntityRelationshipName": "song",
+      "relationshipName": "likedSongs",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "playlist",
+      "otherEntityRelationshipName": "song",
+      "relationshipName": "playlist",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "listeningHistory",
+      "otherEntityRelationshipName": "song",
+      "relationshipName": "listeningHistory",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}

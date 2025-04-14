@@ -1,8 +1,12 @@
 package bham.team.repository;
+
 import bham.team.domain.Feedback;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Spring Data JPA repository for the Feedback entity.
+ */
+@SuppressWarnings("unused")
 @Repository
-public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
-}
+public interface FeedbackRepository extends JpaRepository<Feedback, Long> {}
