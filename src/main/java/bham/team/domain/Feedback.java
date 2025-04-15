@@ -1,6 +1,7 @@
 package bham.team.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -22,26 +23,33 @@ public class Feedback implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "feedback_id")
-    private Integer feedbackId;
+    @NotNull
+    @Column(name = "feedback_id", nullable = false, unique = true)
+    private Long feedbackID;
 
-    @Column(name = "username")
-    private String username;
+    @NotNull
+    @Size(max = 100)
+    @Column(name = "user_name", length = 100, nullable = false)
+    private String userName;
 
-    @Column(name = "user_email")
+    @NotNull
+    @Size(max = 100)
+    @Column(name = "user_email", length = 100, nullable = false)
     private String userEmail;
 
-    @Column(name = "user_phine_num")
-    private Integer userPhineNum;
+    @Size(max = 25)
+    @Column(name = "user_phone_num", length = 25)
+    private String userPhoneNum;
 
-    @Column(name = "message")
+    @Size(max = 2048)
+    @Column(name = "message", length = 2048)
     private String message;
 
-    @Column(name = "rating")
+    @NotNull
+    @Min(value = 1)
+    @Max(value = 10)
+    @Column(name = "rating", nullable = false)
     private Integer rating;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -58,30 +66,30 @@ public class Feedback implements Serializable {
         this.id = id;
     }
 
-    public Integer getFeedbackId() {
-        return this.feedbackId;
+    public Long getFeedbackID() {
+        return this.feedbackID;
     }
 
-    public Feedback feedbackId(Integer feedbackId) {
-        this.setFeedbackId(feedbackId);
+    public Feedback feedbackID(Long feedbackID) {
+        this.setFeedbackID(feedbackID);
         return this;
     }
 
-    public void setFeedbackId(Integer feedbackId) {
-        this.feedbackId = feedbackId;
+    public void setFeedbackID(Long feedbackID) {
+        this.feedbackID = feedbackID;
     }
 
-    public String getUsername() {
-        return this.username;
+    public String getUserName() {
+        return this.userName;
     }
 
-    public Feedback username(String username) {
-        this.setUsername(username);
+    public Feedback userName(String userName) {
+        this.setUserName(userName);
         return this;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getUserEmail() {
@@ -97,17 +105,17 @@ public class Feedback implements Serializable {
         this.userEmail = userEmail;
     }
 
-    public Integer getUserPhineNum() {
-        return this.userPhineNum;
+    public String getUserPhoneNum() {
+        return this.userPhoneNum;
     }
 
-    public Feedback userPhineNum(Integer userPhineNum) {
-        this.setUserPhineNum(userPhineNum);
+    public Feedback userPhoneNum(String userPhoneNum) {
+        this.setUserPhoneNum(userPhoneNum);
         return this;
     }
 
-    public void setUserPhineNum(Integer userPhineNum) {
-        this.userPhineNum = userPhineNum;
+    public void setUserPhoneNum(String userPhoneNum) {
+        this.userPhoneNum = userPhoneNum;
     }
 
     public String getMessage() {
@@ -136,21 +144,7 @@ public class Feedback implements Serializable {
         this.rating = rating;
     }
 
-    public User getUser() {
-        return this.user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Feedback user(User user) {
-        this.setUser(user);
-        return this;
-    }
-
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -173,10 +167,10 @@ public class Feedback implements Serializable {
     public String toString() {
         return "Feedback{" +
             "id=" + getId() +
-            ", feedbackId=" + getFeedbackId() +
-            ", username='" + getUsername() + "'" +
+            ", feedbackID=" + getFeedbackID() +
+            ", userName='" + getUserName() + "'" +
             ", userEmail='" + getUserEmail() + "'" +
-            ", userPhineNum=" + getUserPhineNum() +
+            ", userPhoneNum='" + getUserPhoneNum() + "'" +
             ", message='" + getMessage() + "'" +
             ", rating=" + getRating() +
             "}";

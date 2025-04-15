@@ -1,34 +1,32 @@
 import { IAlbum, NewAlbum } from './album.model';
 
 export const sampleWithRequiredData: IAlbum = {
-  id: 6803,
-  albumID: 10614,
-  albumName: 'meh gah',
-  numberOfSongs: 13185,
+  id: 6680,
+  albumID: 16006,
+  albumName: 'around',
+  numberOfSongs: 2058,
 };
 
 export const sampleWithPartialData: IAlbum = {
-  id: 23198,
-  albumID: 7761,
-  albumName: 'detective contrast',
-  numberOfSongs: 19394,
-  image: '../fake-data/blob/hipster.png',
-  imageContentType: 'unknown',
+  id: 26791,
+  albumID: 20409,
+  albumName: 'king',
+  numberOfSongs: 6682,
 };
 
 export const sampleWithFullData: IAlbum = {
-  id: 19762,
-  albumID: 11382,
-  albumName: 'gray anticodon',
-  numberOfSongs: 8421,
+  id: 9192,
+  albumID: 31188,
+  albumName: 'serve since lieu',
+  numberOfSongs: 30276,
   image: '../fake-data/blob/hipster.png',
   imageContentType: 'unknown',
 };
 
 export const sampleWithNewData: NewAlbum = {
-  albumID: 15972,
-  albumName: 'decode',
-  numberOfSongs: 20811,
+  albumID: 31383,
+  albumName: 'now joint modulo',
+  numberOfSongs: 13816,
   id: null,
 };
 

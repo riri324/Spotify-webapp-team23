@@ -42,16 +42,16 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="feedbackId">
+            <th scope="col" jhiSortBy="feedbackID">
               <div class="d-flex">
-                <span>Feedback Id</span>
+                <span>Feedback ID</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="username">
+            <th scope="col" jhiSortBy="userName">
               <div class="d-flex">
-                <span>Username</span>
+                <span>User Name</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
@@ -63,9 +63,9 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="userPhineNum">
+            <th scope="col" jhiSortBy="userPhoneNum">
               <div class="d-flex">
-                <span>User Phine Num</span>
+                <span>User Phone Num</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
@@ -84,12 +84,6 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="user.login">
-              <div class="d-flex">
-                <span>User</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -99,15 +93,12 @@
               <td>
                 <a [routerLink]="['/feedback', feedback.id, 'view']">{{ feedback.id }}</a>
               </td>
-              <td>{{ feedback.feedbackId }}</td>
-              <td>{{ feedback.username }}</td>
+              <td>{{ feedback.feedbackID }}</td>
+              <td>{{ feedback.userName }}</td>
               <td>{{ feedback.userEmail }}</td>
-              <td>{{ feedback.userPhineNum }}</td>
+              <td>{{ feedback.userPhoneNum }}</td>
               <td>{{ feedback.message }}</td>
               <td>{{ feedback.rating }}</td>
-              <td>
-                {{ feedback.user?.login }}
-              </td>
               <td class="text-end">
                 <div class="btn-group">
                   <a [routerLink]="['/feedback', feedback.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
@@ -130,25 +121,6 @@
           }
         </tbody>
       </table>
-    </div>
-  }
-  @if (feedbacks && feedbacks.length > 0) {
-    <div>
-      <div class="d-flex justify-content-center">
-        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
-      </div>
-
-      <div class="d-flex justify-content-center">
-        <ngb-pagination
-          [collectionSize]="totalItems"
-          [page]="page"
-          [pageSize]="itemsPerPage"
-          [maxSize]="5"
-          [rotate]="true"
-          [boundaryLinks]="true"
-          (pageChange)="navigateToPage($event)"
-        ></ngb-pagination>
-      </div>
     </div>
   }
 </div>

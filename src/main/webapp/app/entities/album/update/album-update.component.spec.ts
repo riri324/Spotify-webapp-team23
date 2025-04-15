@@ -49,10 +49,10 @@ describe('Album Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Artist query and add missing value', () => {
       const album: IAlbum = { id: 456 };
-      const artist: IArtist = { id: 8010 };
+      const artist: IArtist = { id: 26710 };
       album.artist = artist;
 
-      const artistCollection: IArtist[] = [{ id: 29341 }];
+      const artistCollection: IArtist[] = [{ id: 28632 }];
       jest.spyOn(artistService, 'query').mockReturnValue(of(new HttpResponse({ body: artistCollection })));
       const additionalArtists = [artist];
       const expectedCollection: IArtist[] = [...additionalArtists, ...artistCollection];
@@ -71,7 +71,7 @@ describe('Album Management Update Component', () => {
 
     it('Should update editForm', () => {
       const album: IAlbum = { id: 456 };
-      const artist: IArtist = { id: 8898 };
+      const artist: IArtist = { id: 11284 };
       album.artist = artist;
 
       activatedRoute.data = of({ album });

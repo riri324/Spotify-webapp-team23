@@ -37,7 +37,10 @@ public class Genre implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "genre")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "album", "genre", "artist", "playlists" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "globalTopsongs", "album", "genre", "artist", "likedSongs", "playlists", "listeningHistories" },
+        allowSetters = true
+    )
     private Set<Song> songs = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -100,13 +103,13 @@ public class Genre implements Serializable {
         return this;
     }
 
-    public Genre addSongs(Song song) {
+    public Genre addSong(Song song) {
         this.songs.add(song);
         song.setGenre(this);
         return this;
     }
 
-    public Genre removeSongs(Song song) {
+    public Genre removeSong(Song song) {
         this.songs.remove(song);
         song.setGenre(null);
         return this;

@@ -1,0 +1,16 @@
+@Spotify // we are working on a playlist app
+
+entity UserPreference {
+  favoriteGenre String,
+  musicPurpose String,
+  musicMood String,
+  vocalPreference String,
+  listeningTime String,
+  listeningPattern String,
+  songLength String,
+  lyricsImportance String
+}
+
+relationship OneToOne {
+  UserPreference{user(id)} to User with builtInEntity
+}

@@ -59,17 +59,17 @@ public class FeedbackService {
         return feedbackRepository
             .findById(feedback.getId())
             .map(existingFeedback -> {
-                if (feedback.getFeedbackId() != null) {
-                    existingFeedback.setFeedbackId(feedback.getFeedbackId());
+                if (feedback.getFeedbackID() != null) {
+                    existingFeedback.setFeedbackID(feedback.getFeedbackID());
                 }
-                if (feedback.getUsername() != null) {
-                    existingFeedback.setUsername(feedback.getUsername());
+                if (feedback.getUserName() != null) {
+                    existingFeedback.setUserName(feedback.getUserName());
                 }
                 if (feedback.getUserEmail() != null) {
                     existingFeedback.setUserEmail(feedback.getUserEmail());
                 }
-                if (feedback.getUserPhineNum() != null) {
-                    existingFeedback.setUserPhineNum(feedback.getUserPhineNum());
+                if (feedback.getUserPhoneNum() != null) {
+                    existingFeedback.setUserPhoneNum(feedback.getUserPhoneNum());
                 }
                 if (feedback.getMessage() != null) {
                     existingFeedback.setMessage(feedback.getMessage());

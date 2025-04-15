@@ -14,26 +14,23 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="feedback_id" type="integer">
+            <column name="feedback_id" type="bigint">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_feedback__feedback_id" />
+            </column>
+            <column name="user_name" type="varchar(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="user_email" type="varchar(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="user_phone_num" type="varchar(25)">
                 <constraints nullable="true" />
             </column>
-            <column name="username" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="user_email" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="user_phine_num" type="integer">
-                <constraints nullable="true" />
-            </column>
-            <column name="message" type="varchar(255)">
+            <column name="message" type="varchar(2048)">
                 <constraints nullable="true" />
             </column>
             <column name="rating" type="integer">
-                <constraints nullable="true" />
-            </column>
-            <column name="user_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -57,9 +54,9 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="feedback_id" type="numeric"/>
-            <column name="username" type="string"/>
+            <column name="user_name" type="string"/>
             <column name="user_email" type="string"/>
-            <column name="user_phine_num" type="numeric"/>
+            <column name="user_phone_num" type="string"/>
             <column name="message" type="string"/>
             <column name="rating" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->

@@ -313,6 +313,8 @@ class ArtistResourceIT {
         Artist partialUpdatedArtist = new Artist();
         partialUpdatedArtist.setId(artist.getId());
 
+        partialUpdatedArtist.image(UPDATED_IMAGE).imageContentType(UPDATED_IMAGE_CONTENT_TYPE);
+
         restArtistMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedArtist.getId())

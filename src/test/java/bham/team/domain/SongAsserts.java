@@ -71,6 +71,7 @@ public class SongAsserts {
             .satisfies(e -> assertThat(e.getAlbum()).as("check album").isEqualTo(actual.getAlbum()))
             .satisfies(e -> assertThat(e.getGenre()).as("check genre").isEqualTo(actual.getGenre()))
             .satisfies(e -> assertThat(e.getArtist()).as("check artist").isEqualTo(actual.getArtist()))
-            .satisfies(e -> assertThat(e.getPlaylists()).as("check playlists").isEqualTo(actual.getPlaylists()));
+            .satisfies(e -> assertThat(e.getPlaylists()).as("check playlists").isEqualTo(actual.getPlaylists()))
+            .satisfies(e -> assertThat(e.getListeningHistories()).as("check listeningHistories").isEqualTo(actual.getListeningHistories()));
     }
 }

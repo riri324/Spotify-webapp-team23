@@ -4,30 +4,21 @@ import static bham.team.domain.FeedbackAsserts.*;
 import static bham.team.web.rest.TestUtil.createUpdateProxyForBean;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import bham.team.IntegrationTest;
 import bham.team.domain.Feedback;
 import bham.team.repository.FeedbackRepository;
-import bham.team.repository.UserRepository;
-import bham.team.service.FeedbackService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,22 +28,21 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link FeedbackResource} REST controller.
  */
 @IntegrationTest
-@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class FeedbackResourceIT {
 
-    private static final Integer DEFAULT_FEEDBACK_ID = 1;
-    private static final Integer UPDATED_FEEDBACK_ID = 2;
+    private static final Long DEFAULT_FEEDBACK_ID = 1L;
+    private static final Long UPDATED_FEEDBACK_ID = 2L;
 
-    private static final String DEFAULT_USERNAME = "AAAAAAAAAA";
-    private static final String UPDATED_USERNAME = "BBBBBBBBBB";
+    private static final String DEFAULT_USER_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_USER_NAME = "BBBBBBBBBB";
 
     private static final String DEFAULT_USER_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_USER_EMAIL = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_USER_PHINE_NUM = 1;
-    private static final Integer UPDATED_USER_PHINE_NUM = 2;
+    private static final String DEFAULT_USER_PHONE_NUM = "AAAAAAAAAA";
+    private static final String UPDATED_USER_PHONE_NUM = "BBBBBBBBBB";
 
     private static final String DEFAULT_MESSAGE = "AAAAAAAAAA";
     private static final String UPDATED_MESSAGE = "BBBBBBBBBB";
@@ -73,15 +63,6 @@ class FeedbackResourceIT {
     private FeedbackRepository feedbackRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Mock
-    private FeedbackRepository feedbackRepositoryMock;
-
-    @Mock
-    private FeedbackService feedbackServiceMock;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -99,10 +80,10 @@ class FeedbackResourceIT {
      */
     public static Feedback createEntity() {
         return new Feedback()
-            .feedbackId(DEFAULT_FEEDBACK_ID)
-            .username(DEFAULT_USERNAME)
+            .feedbackID(DEFAULT_FEEDBACK_ID)
+            .userName(DEFAULT_USER_NAME)
             .userEmail(DEFAULT_USER_EMAIL)
-            .userPhineNum(DEFAULT_USER_PHINE_NUM)
+            .userPhoneNum(DEFAULT_USER_PHONE_NUM)
             .message(DEFAULT_MESSAGE)
             .rating(DEFAULT_RATING);
     }
@@ -115,10 +96,10 @@ class FeedbackResourceIT {
      */
     public static Feedback createUpdatedEntity() {
         return new Feedback()
-            .feedbackId(UPDATED_FEEDBACK_ID)
-            .username(UPDATED_USERNAME)
+            .feedbackID(UPDATED_FEEDBACK_ID)
+            .userName(UPDATED_USER_NAME)
             .userEmail(UPDATED_USER_EMAIL)
-            .userPhineNum(UPDATED_USER_PHINE_NUM)
+            .userPhoneNum(UPDATED_USER_PHONE_NUM)
             .message(UPDATED_MESSAGE)
             .rating(UPDATED_RATING);
     }
@@ -177,6 +158,70 @@ class FeedbackResourceIT {
 
     @Test
     @Transactional
+    void checkFeedbackIDIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        feedback.setFeedbackID(null);
+
+        // Create the Feedback, which fails.
+
+        restFeedbackMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(feedback)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkUserNameIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        feedback.setUserName(null);
+
+        // Create the Feedback, which fails.
+
+        restFeedbackMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(feedback)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkUserEmailIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        feedback.setUserEmail(null);
+
+        // Create the Feedback, which fails.
+
+        restFeedbackMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(feedback)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkRatingIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        feedback.setRating(null);
+
+        // Create the Feedback, which fails.
+
+        restFeedbackMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(feedback)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllFeedbacks() throws Exception {
         // Initialize the database
         insertedFeedback = feedbackRepository.saveAndFlush(feedback);
@@ -187,29 +232,12 @@ class FeedbackResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(feedback.getId().intValue())))
-            .andExpect(jsonPath("$.[*].feedbackId").value(hasItem(DEFAULT_FEEDBACK_ID)))
-            .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME)))
+            .andExpect(jsonPath("$.[*].feedbackID").value(hasItem(DEFAULT_FEEDBACK_ID.intValue())))
+            .andExpect(jsonPath("$.[*].userName").value(hasItem(DEFAULT_USER_NAME)))
             .andExpect(jsonPath("$.[*].userEmail").value(hasItem(DEFAULT_USER_EMAIL)))
-            .andExpect(jsonPath("$.[*].userPhineNum").value(hasItem(DEFAULT_USER_PHINE_NUM)))
+            .andExpect(jsonPath("$.[*].userPhoneNum").value(hasItem(DEFAULT_USER_PHONE_NUM)))
             .andExpect(jsonPath("$.[*].message").value(hasItem(DEFAULT_MESSAGE)))
             .andExpect(jsonPath("$.[*].rating").value(hasItem(DEFAULT_RATING)));
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void getAllFeedbacksWithEagerRelationshipsIsEnabled() throws Exception {
-        when(feedbackServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restFeedbackMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
-
-        verify(feedbackServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void getAllFeedbacksWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(feedbackServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restFeedbackMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
-        verify(feedbackRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
@@ -224,10 +252,10 @@ class FeedbackResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(feedback.getId().intValue()))
-            .andExpect(jsonPath("$.feedbackId").value(DEFAULT_FEEDBACK_ID))
-            .andExpect(jsonPath("$.username").value(DEFAULT_USERNAME))
+            .andExpect(jsonPath("$.feedbackID").value(DEFAULT_FEEDBACK_ID.intValue()))
+            .andExpect(jsonPath("$.userName").value(DEFAULT_USER_NAME))
             .andExpect(jsonPath("$.userEmail").value(DEFAULT_USER_EMAIL))
-            .andExpect(jsonPath("$.userPhineNum").value(DEFAULT_USER_PHINE_NUM))
+            .andExpect(jsonPath("$.userPhoneNum").value(DEFAULT_USER_PHONE_NUM))
             .andExpect(jsonPath("$.message").value(DEFAULT_MESSAGE))
             .andExpect(jsonPath("$.rating").value(DEFAULT_RATING));
     }
@@ -252,10 +280,10 @@ class FeedbackResourceIT {
         // Disconnect from session so that the updates on updatedFeedback are not directly saved in db
         em.detach(updatedFeedback);
         updatedFeedback
-            .feedbackId(UPDATED_FEEDBACK_ID)
-            .username(UPDATED_USERNAME)
+            .feedbackID(UPDATED_FEEDBACK_ID)
+            .userName(UPDATED_USER_NAME)
             .userEmail(UPDATED_USER_EMAIL)
-            .userPhineNum(UPDATED_USER_PHINE_NUM)
+            .userPhoneNum(UPDATED_USER_PHONE_NUM)
             .message(UPDATED_MESSAGE)
             .rating(UPDATED_RATING);
 
@@ -335,11 +363,7 @@ class FeedbackResourceIT {
         Feedback partialUpdatedFeedback = new Feedback();
         partialUpdatedFeedback.setId(feedback.getId());
 
-        partialUpdatedFeedback
-            .feedbackId(UPDATED_FEEDBACK_ID)
-            .username(UPDATED_USERNAME)
-            .userEmail(UPDATED_USER_EMAIL)
-            .message(UPDATED_MESSAGE);
+        partialUpdatedFeedback.userPhoneNum(UPDATED_USER_PHONE_NUM).rating(UPDATED_RATING);
 
         restFeedbackMockMvc
             .perform(
@@ -368,10 +392,10 @@ class FeedbackResourceIT {
         partialUpdatedFeedback.setId(feedback.getId());
 
         partialUpdatedFeedback
-            .feedbackId(UPDATED_FEEDBACK_ID)
-            .username(UPDATED_USERNAME)
+            .feedbackID(UPDATED_FEEDBACK_ID)
+            .userName(UPDATED_USER_NAME)
             .userEmail(UPDATED_USER_EMAIL)
-            .userPhineNum(UPDATED_USER_PHINE_NUM)
+            .userPhoneNum(UPDATED_USER_PHONE_NUM)
             .message(UPDATED_MESSAGE)
             .rating(UPDATED_RATING);
 

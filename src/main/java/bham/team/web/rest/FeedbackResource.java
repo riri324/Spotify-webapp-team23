@@ -2,8 +2,9 @@ package bham.team.web.rest;
 
 import bham.team.domain.Feedback;
 import bham.team.repository.FeedbackRepository;
-import bham.team.service.FeedbackService;
 import bham.team.web.rest.errors.BadRequestAlertException;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -12,14 +13,10 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
-import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -27,6 +24,7 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api/feedbacks")
+@Transactional
 public class FeedbackResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(FeedbackResource.class);
@@ -36,12 +34,9 @@ public class FeedbackResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final FeedbackService feedbackService;
-
     private final FeedbackRepository feedbackRepository;
 
-    public FeedbackResource(FeedbackService feedbackService, FeedbackRepository feedbackRepository) {
-        this.feedbackService = feedbackService;
+    public FeedbackResource(FeedbackRepository feedbackRepository) {
         this.feedbackRepository = feedbackRepository;
     }
 
@@ -53,12 +48,12 @@ public class FeedbackResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
-    public ResponseEntity<Feedback> createFeedback(@RequestBody Feedback feedback) throws URISyntaxException {
+    public ResponseEntity<Feedback> createFeedback(@Valid @RequestBody Feedback feedback) throws URISyntaxException {
         LOG.debug("REST request to save Feedback : {}", feedback);
         if (feedback.getId() != null) {
             throw new BadRequestAlertException("A new feedback cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        feedback = feedbackService.save(feedback);
+        feedback = feedbackRepository.save(feedback);
         return ResponseEntity.created(new URI("/api/feedbacks/" + feedback.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, feedback.getId().toString()))
             .body(feedback);
@@ -77,7 +72,7 @@ public class FeedbackResource {
     @PutMapping("/{id}")
     public ResponseEntity<Feedback> updateFeedback(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Feedback feedback
+        @Valid @RequestBody Feedback feedback
     ) throws URISyntaxException {
         LOG.debug("REST request to update Feedback : {}, {}", id, feedback);
         if (feedback.getId() == null) {
@@ -91,7 +86,7 @@ public class FeedbackResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        feedback = feedbackService.update(feedback);
+        feedback = feedbackRepository.save(feedback);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, feedback.getId().toString()))
             .body(feedback);
@@ -111,7 +106,7 @@ public class FeedbackResource {
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Feedback> partialUpdateFeedback(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Feedback feedback
+        @NotNull @RequestBody Feedback feedback
     ) throws URISyntaxException {
         LOG.debug("REST request to partial update Feedback partially : {}, {}", id, feedback);
         if (feedback.getId() == null) {
@@ -125,7 +120,31 @@ public class FeedbackResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Feedback> result = feedbackService.partialUpdate(feedback);
+        Optional<Feedback> result = feedbackRepository
+            .findById(feedback.getId())
+            .map(existingFeedback -> {
+                if (feedback.getFeedbackID() != null) {
+                    existingFeedback.setFeedbackID(feedback.getFeedbackID());
+                }
+                if (feedback.getUserName() != null) {
+                    existingFeedback.setUserName(feedback.getUserName());
+                }
+                if (feedback.getUserEmail() != null) {
+                    existingFeedback.setUserEmail(feedback.getUserEmail());
+                }
+                if (feedback.getUserPhoneNum() != null) {
+                    existingFeedback.setUserPhoneNum(feedback.getUserPhoneNum());
+                }
+                if (feedback.getMessage() != null) {
+                    existingFeedback.setMessage(feedback.getMessage());
+                }
+                if (feedback.getRating() != null) {
+                    existingFeedback.setRating(feedback.getRating());
+                }
+
+                return existingFeedback;
+            })
+            .map(feedbackRepository::save);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -136,24 +155,12 @@ public class FeedbackResource {
     /**
      * {@code GET  /feedbacks} : get all the feedbacks.
      *
-     * @param pageable the pagination information.
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of feedbacks in body.
      */
     @GetMapping("")
-    public ResponseEntity<List<Feedback>> getAllFeedbacks(
-        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
-        @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload
-    ) {
-        LOG.debug("REST request to get a page of Feedbacks");
-        Page<Feedback> page;
-        if (eagerload) {
-            page = feedbackService.findAllWithEagerRelationships(pageable);
-        } else {
-            page = feedbackService.findAll(pageable);
-        }
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<Feedback> getAllFeedbacks() {
+        LOG.debug("REST request to get all Feedbacks");
+        return feedbackRepository.findAll();
     }
 
     /**
@@ -165,7 +172,7 @@ public class FeedbackResource {
     @GetMapping("/{id}")
     public ResponseEntity<Feedback> getFeedback(@PathVariable("id") Long id) {
         LOG.debug("REST request to get Feedback : {}", id);
-        Optional<Feedback> feedback = feedbackService.findOne(id);
+        Optional<Feedback> feedback = feedbackRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(feedback);
     }
 
@@ -178,7 +185,8 @@ public class FeedbackResource {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFeedback(@PathVariable("id") Long id) {
         LOG.debug("REST request to delete Feedback : {}", id);
-        feedbackService.delete(id);
+        feedbackRepository.deleteById(id);
+
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();

@@ -15,6 +15,8 @@ import { IArtist } from 'app/entities/artist/artist.model';
 import { ArtistService } from 'app/entities/artist/service/artist.service';
 import { IPlaylist } from 'app/entities/playlist/playlist.model';
 import { PlaylistService } from 'app/entities/playlist/service/playlist.service';
+import { IListeningHistory } from 'app/entities/listening-history/listening-history.model';
+import { ListeningHistoryService } from 'app/entities/listening-history/service/listening-history.service';
 import { SongService } from '../service/song.service';
 import { ISong } from '../song.model';
 import { SongFormGroup, SongFormService } from './song-form.service';
@@ -33,6 +35,7 @@ export class SongUpdateComponent implements OnInit {
   genresSharedCollection: IGenre[] = [];
   artistsSharedCollection: IArtist[] = [];
   playlistsSharedCollection: IPlaylist[] = [];
+  listeningHistoriesSharedCollection: IListeningHistory[] = [];
 
   protected songService = inject(SongService);
   protected songFormService = inject(SongFormService);
@@ -40,6 +43,7 @@ export class SongUpdateComponent implements OnInit {
   protected genreService = inject(GenreService);
   protected artistService = inject(ArtistService);
   protected playlistService = inject(PlaylistService);
+  protected listeningHistoryService = inject(ListeningHistoryService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -52,6 +56,9 @@ export class SongUpdateComponent implements OnInit {
   compareArtist = (o1: IArtist | null, o2: IArtist | null): boolean => this.artistService.compareArtist(o1, o2);
 
   comparePlaylist = (o1: IPlaylist | null, o2: IPlaylist | null): boolean => this.playlistService.comparePlaylist(o1, o2);
+
+  compareListeningHistory = (o1: IListeningHistory | null, o2: IListeningHistory | null): boolean =>
+    this.listeningHistoryService.compareListeningHistory(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ song }) => {
@@ -108,6 +115,10 @@ export class SongUpdateComponent implements OnInit {
       this.playlistsSharedCollection,
       ...(song.playlists ?? []),
     );
+    this.listeningHistoriesSharedCollection = this.listeningHistoryService.addListeningHistoryToCollectionIfMissing<IListeningHistory>(
+      this.listeningHistoriesSharedCollection,
+      ...(song.listeningHistories ?? []),
+    );
   }
 
   protected loadRelationshipsOptions(): void {
@@ -138,5 +149,18 @@ export class SongUpdateComponent implements OnInit {
         ),
       )
       .subscribe((playlists: IPlaylist[]) => (this.playlistsSharedCollection = playlists));
+
+    this.listeningHistoryService
+      .query()
+      .pipe(map((res: HttpResponse<IListeningHistory[]>) => res.body ?? []))
+      .pipe(
+        map((listeningHistories: IListeningHistory[]) =>
+          this.listeningHistoryService.addListeningHistoryToCollectionIfMissing<IListeningHistory>(
+            listeningHistories,
+            ...(this.song?.listeningHistories ?? []),
+          ),
+        ),
+      )
+      .subscribe((listeningHistories: IListeningHistory[]) => (this.listeningHistoriesSharedCollection = listeningHistories));
   }
 }

@@ -1,4 +1,8 @@
+import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
+import { UserPreferenceComponent } from './preferences/preferences.component';
+import { StudentProfileComponent } from './student-profile/student-profile.component';
+import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 
 const routes: Routes = [
   {
@@ -55,6 +59,33 @@ const routes: Routes = [
     path: 'message',
     data: { pageTitle: 'Messages' },
     loadChildren: () => import('./message/message.routes'),
+  },
+  {
+    path: 'listening-history',
+    data: { pageTitle: 'ListeningHistories' },
+    loadChildren: () => import('./listening-history/listening-history.routes'),
+  },
+  {
+    path: 'liked-songs',
+    data: { pageTitle: 'LikedSongs' },
+    loadChildren: () => import('./liked-songs/liked-songs.routes'),
+  },
+  {
+    path: 'user-profile',
+    data: { pageTitle: 'UserProfiles' },
+    loadChildren: () => import('./user-profile/user-profile.routes'),
+  },
+  {
+    path: 'preferences',
+    component: UserPreferenceComponent,
+    data: { pageTitle: 'Preferences Form' },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'profile',
+    component: StudentProfileComponent,
+    data: { pageTitle: 'Profile' },
+    canActivate: [UserRouteAccessService],
   },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];

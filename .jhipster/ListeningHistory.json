@@ -1,0 +1,29 @@
+{
+  "annotations": {
+    "changelogDate": "20250403234356"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "historyID",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "timestamp",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "ListeningHistory",
+  "relationships": [
+    {
+      "otherEntityName": "song",
+      "otherEntityRelationshipName": "listeningHistory",
+      "relationshipName": "song",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}

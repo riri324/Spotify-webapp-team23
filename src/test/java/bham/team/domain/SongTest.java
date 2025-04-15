@@ -3,6 +3,9 @@ package bham.team.domain;
 import static bham.team.domain.AlbumTestSamples.*;
 import static bham.team.domain.ArtistTestSamples.*;
 import static bham.team.domain.GenreTestSamples.*;
+import static bham.team.domain.GlobalTopsongsTestSamples.*;
+import static bham.team.domain.LikedSongsTestSamples.*;
+import static bham.team.domain.ListeningHistoryTestSamples.*;
 import static bham.team.domain.PlaylistTestSamples.*;
 import static bham.team.domain.SongTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,6 +29,28 @@ class SongTest {
 
         song2 = getSongSample2();
         assertThat(song1).isNotEqualTo(song2);
+    }
+
+    @Test
+    void globalTopsongsTest() {
+        Song song = getSongRandomSampleGenerator();
+        GlobalTopsongs globalTopsongsBack = getGlobalTopsongsRandomSampleGenerator();
+
+        song.addGlobalTopsongs(globalTopsongsBack);
+        assertThat(song.getGlobalTopsongs()).containsOnly(globalTopsongsBack);
+        assertThat(globalTopsongsBack.getSong()).isEqualTo(song);
+
+        song.removeGlobalTopsongs(globalTopsongsBack);
+        assertThat(song.getGlobalTopsongs()).doesNotContain(globalTopsongsBack);
+        assertThat(globalTopsongsBack.getSong()).isNull();
+
+        song.setGlobalTopsongs(new HashSet<>(Set.of(globalTopsongsBack)));
+        assertThat(song.getGlobalTopsongs()).containsOnly(globalTopsongsBack);
+        assertThat(globalTopsongsBack.getSong()).isEqualTo(song);
+
+        song.setGlobalTopsongs(new HashSet<>());
+        assertThat(song.getGlobalTopsongs()).doesNotContain(globalTopsongsBack);
+        assertThat(globalTopsongsBack.getSong()).isNull();
     }
 
     @Test
@@ -65,7 +90,21 @@ class SongTest {
     }
 
     @Test
-    void playlistsTest() {
+    void likedSongsTest() {
+        Song song = getSongRandomSampleGenerator();
+        LikedSongs likedSongsBack = getLikedSongsRandomSampleGenerator();
+
+        song.setLikedSongs(likedSongsBack);
+        assertThat(song.getLikedSongs()).isEqualTo(likedSongsBack);
+        assertThat(likedSongsBack.getSong()).isEqualTo(song);
+
+        song.likedSongs(null);
+        assertThat(song.getLikedSongs()).isNull();
+        assertThat(likedSongsBack.getSong()).isNull();
+    }
+
+    @Test
+    void playlistTest() {
         Song song = getSongRandomSampleGenerator();
         Playlist playlistBack = getPlaylistRandomSampleGenerator();
 
@@ -84,5 +123,27 @@ class SongTest {
         song.setPlaylists(new HashSet<>());
         assertThat(song.getPlaylists()).doesNotContain(playlistBack);
         assertThat(playlistBack.getSongs()).doesNotContain(song);
+    }
+
+    @Test
+    void listeningHistoryTest() {
+        Song song = getSongRandomSampleGenerator();
+        ListeningHistory listeningHistoryBack = getListeningHistoryRandomSampleGenerator();
+
+        song.addListeningHistory(listeningHistoryBack);
+        assertThat(song.getListeningHistories()).containsOnly(listeningHistoryBack);
+        assertThat(listeningHistoryBack.getSongs()).containsOnly(song);
+
+        song.removeListeningHistory(listeningHistoryBack);
+        assertThat(song.getListeningHistories()).doesNotContain(listeningHistoryBack);
+        assertThat(listeningHistoryBack.getSongs()).doesNotContain(song);
+
+        song.listeningHistories(new HashSet<>(Set.of(listeningHistoryBack)));
+        assertThat(song.getListeningHistories()).containsOnly(listeningHistoryBack);
+        assertThat(listeningHistoryBack.getSongs()).containsOnly(song);
+
+        song.setListeningHistories(new HashSet<>());
+        assertThat(song.getListeningHistories()).doesNotContain(listeningHistoryBack);
+        assertThat(listeningHistoryBack.getSongs()).doesNotContain(song);
     }
 }

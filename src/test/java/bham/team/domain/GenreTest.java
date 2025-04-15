@@ -26,15 +26,15 @@ class GenreTest {
     }
 
     @Test
-    void songsTest() {
+    void songTest() {
         Genre genre = getGenreRandomSampleGenerator();
         Song songBack = getSongRandomSampleGenerator();
 
-        genre.addSongs(songBack);
+        genre.addSong(songBack);
         assertThat(genre.getSongs()).containsOnly(songBack);
         assertThat(songBack.getGenre()).isEqualTo(genre);
 
-        genre.removeSongs(songBack);
+        genre.removeSong(songBack);
         assertThat(genre.getSongs()).doesNotContain(songBack);
         assertThat(songBack.getGenre()).isNull();
 

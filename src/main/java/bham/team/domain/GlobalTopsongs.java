@@ -128,6 +128,20 @@ public class GlobalTopsongs implements Serializable {
         this.songYear = songYear;
     }
 
+    ///////
+    @ManyToOne
+    private Song song;
+
+    public Song getSong() {
+        return this.song;
+    }
+
+    public void setSong(Song song) {
+        this.song = song;
+    }
+
+    ///////////
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override

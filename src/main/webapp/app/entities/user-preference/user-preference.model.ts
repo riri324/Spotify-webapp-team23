@@ -1,3 +1,5 @@
+import { IUser } from 'app/entities/user/user.model';
+
 export interface IUserPreference {
   id: number;
   favoriteGenre?: string | null;
@@ -8,6 +10,7 @@ export interface IUserPreference {
   listeningPattern?: string | null;
   songLength?: string | null;
   lyricsImportance?: string | null;
+  user?: IUser;
 }
 
 export type NewUserPreference = Omit<IUserPreference, 'id'> & { id: null };
