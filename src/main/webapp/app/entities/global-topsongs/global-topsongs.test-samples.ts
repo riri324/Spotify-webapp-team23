@@ -3,30 +3,38 @@ import dayjs from 'dayjs/esm';
 import { IGlobalTopsongs, NewGlobalTopsongs } from './global-topsongs.model';
 
 export const sampleWithRequiredData: IGlobalTopsongs = {
-  id: 32330,
-  playCount: 22061,
-  monthYear: dayjs('2025-02-28T01:02'),
-  year: 2089,
+  id: 5655,
+  songTitle: 'scarcely wry ew',
+  artistName: 'intervention poorly hovercraft',
+  playCount: 18753,
+  monthYear: dayjs('2025-02-27T18:52'),
+  songYear: 2053,
 };
 
 export const sampleWithPartialData: IGlobalTopsongs = {
-  id: 12775,
-  playCount: 14825,
-  monthYear: dayjs('2025-02-28T06:51'),
-  year: 2056,
+  id: 27736,
+  songTitle: 'appropriate oh',
+  artistName: 'geez',
+  playCount: 8223,
+  monthYear: dayjs('2025-02-27T18:05'),
+  songYear: 2028,
 };
 
 export const sampleWithFullData: IGlobalTopsongs = {
-  id: 26909,
-  playCount: 6103,
-  monthYear: dayjs('2025-02-27T18:44'),
-  year: 2069,
+  id: 32493,
+  songTitle: 'legging',
+  artistName: 'ah override',
+  playCount: 1143,
+  monthYear: dayjs('2025-02-28T03:08'),
+  songYear: 2091,
 };
 
 export const sampleWithNewData: NewGlobalTopsongs = {
-  playCount: 15892,
-  monthYear: dayjs('2025-02-28T06:09'),
-  year: 2051,
+  songTitle: 'pilot scale portray',
+  artistName: 'swanling',
+  playCount: 13822,
+  monthYear: dayjs('2025-02-28T05:18'),
+  songYear: 2010,
   id: null,
 };
 

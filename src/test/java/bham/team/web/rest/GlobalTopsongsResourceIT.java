@@ -10,6 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import bham.team.IntegrationTest;
 import bham.team.domain.GlobalTopsongs;
 import bham.team.repository.GlobalTopsongsRepository;
+import bham.team.service.dto.GlobalTopsongsDTO;
+import bham.team.service.mapper.GlobalTopsongsMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
@@ -34,14 +36,20 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class GlobalTopsongsResourceIT {
 
-    private static final Integer DEFAULT_PLAY_COUNT = 1;
-    private static final Integer UPDATED_PLAY_COUNT = 2;
+    private static final String DEFAULT_SONG_TITLE = "AAAAAAAAAA";
+    private static final String UPDATED_SONG_TITLE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ARTIST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_ARTIST_NAME = "BBBBBBBBBB";
+
+    private static final Integer DEFAULT_PLAY_COUNT = 0;
+    private static final Integer UPDATED_PLAY_COUNT = 1;
 
     private static final Instant DEFAULT_MONTH_YEAR = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_MONTH_YEAR = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final Integer DEFAULT_YEAR = 2000;
-    private static final Integer UPDATED_YEAR = 2001;
+    private static final Integer DEFAULT_SONG_YEAR = 2000;
+    private static final Integer UPDATED_SONG_YEAR = 2001;
 
     private static final String ENTITY_API_URL = "/api/global-topsongs";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -54,6 +62,9 @@ class GlobalTopsongsResourceIT {
 
     @Autowired
     private GlobalTopsongsRepository globalTopsongsRepository;
+
+    @Autowired
+    private GlobalTopsongsMapper globalTopsongsMapper;
 
     @Autowired
     private EntityManager em;
@@ -72,7 +83,12 @@ class GlobalTopsongsResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static GlobalTopsongs createEntity() {
-        return new GlobalTopsongs().playCount(DEFAULT_PLAY_COUNT).monthYear(DEFAULT_MONTH_YEAR).year(DEFAULT_YEAR);
+        return new GlobalTopsongs()
+            .songTitle(DEFAULT_SONG_TITLE)
+            .artistName(DEFAULT_ARTIST_NAME)
+            .playCount(DEFAULT_PLAY_COUNT)
+            .monthYear(DEFAULT_MONTH_YEAR)
+            .songYear(DEFAULT_SONG_YEAR);
     }
 
     /**
@@ -82,7 +98,12 @@ class GlobalTopsongsResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static GlobalTopsongs createUpdatedEntity() {
-        return new GlobalTopsongs().playCount(UPDATED_PLAY_COUNT).monthYear(UPDATED_MONTH_YEAR).year(UPDATED_YEAR);
+        return new GlobalTopsongs()
+            .songTitle(UPDATED_SONG_TITLE)
+            .artistName(UPDATED_ARTIST_NAME)
+            .playCount(UPDATED_PLAY_COUNT)
+            .monthYear(UPDATED_MONTH_YEAR)
+            .songYear(UPDATED_SONG_YEAR);
     }
 
     @BeforeEach
@@ -103,18 +124,20 @@ class GlobalTopsongsResourceIT {
     void createGlobalTopsongs() throws Exception {
         long databaseSizeBeforeCreate = getRepositoryCount();
         // Create the GlobalTopsongs
-        var returnedGlobalTopsongs = om.readValue(
+        GlobalTopsongsDTO globalTopsongsDTO = globalTopsongsMapper.toDto(globalTopsongs);
+        var returnedGlobalTopsongsDTO = om.readValue(
             restGlobalTopsongsMockMvc
-                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(globalTopsongs)))
+                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(globalTopsongsDTO)))
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse()
                 .getContentAsString(),
-            GlobalTopsongs.class
+            GlobalTopsongsDTO.class
         );
 
         // Validate the GlobalTopsongs in the database
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
+        var returnedGlobalTopsongs = globalTopsongsMapper.toEntity(returnedGlobalTopsongsDTO);
         assertGlobalTopsongsUpdatableFieldsEquals(returnedGlobalTopsongs, getPersistedGlobalTopsongs(returnedGlobalTopsongs));
 
         insertedGlobalTopsongs = returnedGlobalTopsongs;
@@ -125,16 +148,51 @@ class GlobalTopsongsResourceIT {
     void createGlobalTopsongsWithExistingId() throws Exception {
         // Create the GlobalTopsongs with an existing ID
         globalTopsongs.setId(1L);
+        GlobalTopsongsDTO globalTopsongsDTO = globalTopsongsMapper.toDto(globalTopsongs);
 
         long databaseSizeBeforeCreate = getRepositoryCount();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restGlobalTopsongsMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(globalTopsongs)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(globalTopsongsDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the GlobalTopsongs in the database
         assertSameRepositoryCount(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
+    void checkSongTitleIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        globalTopsongs.setSongTitle(null);
+
+        // Create the GlobalTopsongs, which fails.
+        GlobalTopsongsDTO globalTopsongsDTO = globalTopsongsMapper.toDto(globalTopsongs);
+
+        restGlobalTopsongsMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(globalTopsongsDTO)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkArtistNameIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        globalTopsongs.setArtistName(null);
+
+        // Create the GlobalTopsongs, which fails.
+        GlobalTopsongsDTO globalTopsongsDTO = globalTopsongsMapper.toDto(globalTopsongs);
+
+        restGlobalTopsongsMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(globalTopsongsDTO)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
     }
 
     @Test
@@ -145,9 +203,10 @@ class GlobalTopsongsResourceIT {
         globalTopsongs.setPlayCount(null);
 
         // Create the GlobalTopsongs, which fails.
+        GlobalTopsongsDTO globalTopsongsDTO = globalTopsongsMapper.toDto(globalTopsongs);
 
         restGlobalTopsongsMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(globalTopsongs)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(globalTopsongsDTO)))
             .andExpect(status().isBadRequest());
 
         assertSameRepositoryCount(databaseSizeBeforeTest);
@@ -161,9 +220,10 @@ class GlobalTopsongsResourceIT {
         globalTopsongs.setMonthYear(null);
 
         // Create the GlobalTopsongs, which fails.
+        GlobalTopsongsDTO globalTopsongsDTO = globalTopsongsMapper.toDto(globalTopsongs);
 
         restGlobalTopsongsMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(globalTopsongs)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(globalTopsongsDTO)))
             .andExpect(status().isBadRequest());
 
         assertSameRepositoryCount(databaseSizeBeforeTest);
@@ -171,15 +231,16 @@ class GlobalTopsongsResourceIT {
 
     @Test
     @Transactional
-    void checkYearIsRequired() throws Exception {
+    void checkSongYearIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
-        globalTopsongs.setYear(null);
+        globalTopsongs.setSongYear(null);
 
         // Create the GlobalTopsongs, which fails.
+        GlobalTopsongsDTO globalTopsongsDTO = globalTopsongsMapper.toDto(globalTopsongs);
 
         restGlobalTopsongsMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(globalTopsongs)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(globalTopsongsDTO)))
             .andExpect(status().isBadRequest());
 
         assertSameRepositoryCount(databaseSizeBeforeTest);
@@ -197,9 +258,11 @@ class GlobalTopsongsResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(globalTopsongs.getId().intValue())))
+            .andExpect(jsonPath("$.[*].songTitle").value(hasItem(DEFAULT_SONG_TITLE)))
+            .andExpect(jsonPath("$.[*].artistName").value(hasItem(DEFAULT_ARTIST_NAME)))
             .andExpect(jsonPath("$.[*].playCount").value(hasItem(DEFAULT_PLAY_COUNT)))
             .andExpect(jsonPath("$.[*].monthYear").value(hasItem(DEFAULT_MONTH_YEAR.toString())))
-            .andExpect(jsonPath("$.[*].year").value(hasItem(DEFAULT_YEAR)));
+            .andExpect(jsonPath("$.[*].songYear").value(hasItem(DEFAULT_SONG_YEAR)));
     }
 
     @Test
@@ -214,9 +277,11 @@ class GlobalTopsongsResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(globalTopsongs.getId().intValue()))
+            .andExpect(jsonPath("$.songTitle").value(DEFAULT_SONG_TITLE))
+            .andExpect(jsonPath("$.artistName").value(DEFAULT_ARTIST_NAME))
             .andExpect(jsonPath("$.playCount").value(DEFAULT_PLAY_COUNT))
             .andExpect(jsonPath("$.monthYear").value(DEFAULT_MONTH_YEAR.toString()))
-            .andExpect(jsonPath("$.year").value(DEFAULT_YEAR));
+            .andExpect(jsonPath("$.songYear").value(DEFAULT_SONG_YEAR));
     }
 
     @Test
@@ -238,13 +303,19 @@ class GlobalTopsongsResourceIT {
         GlobalTopsongs updatedGlobalTopsongs = globalTopsongsRepository.findById(globalTopsongs.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedGlobalTopsongs are not directly saved in db
         em.detach(updatedGlobalTopsongs);
-        updatedGlobalTopsongs.playCount(UPDATED_PLAY_COUNT).monthYear(UPDATED_MONTH_YEAR).year(UPDATED_YEAR);
+        updatedGlobalTopsongs
+            .songTitle(UPDATED_SONG_TITLE)
+            .artistName(UPDATED_ARTIST_NAME)
+            .playCount(UPDATED_PLAY_COUNT)
+            .monthYear(UPDATED_MONTH_YEAR)
+            .songYear(UPDATED_SONG_YEAR);
+        GlobalTopsongsDTO globalTopsongsDTO = globalTopsongsMapper.toDto(updatedGlobalTopsongs);
 
         restGlobalTopsongsMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedGlobalTopsongs.getId())
+                put(ENTITY_API_URL_ID, globalTopsongsDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(updatedGlobalTopsongs))
+                    .content(om.writeValueAsBytes(globalTopsongsDTO))
             )
             .andExpect(status().isOk());
 
@@ -259,12 +330,15 @@ class GlobalTopsongsResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         globalTopsongs.setId(longCount.incrementAndGet());
 
+        // Create the GlobalTopsongs
+        GlobalTopsongsDTO globalTopsongsDTO = globalTopsongsMapper.toDto(globalTopsongs);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restGlobalTopsongsMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, globalTopsongs.getId())
+                put(ENTITY_API_URL_ID, globalTopsongsDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(globalTopsongs))
+                    .content(om.writeValueAsBytes(globalTopsongsDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -278,12 +352,15 @@ class GlobalTopsongsResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         globalTopsongs.setId(longCount.incrementAndGet());
 
+        // Create the GlobalTopsongs
+        GlobalTopsongsDTO globalTopsongsDTO = globalTopsongsMapper.toDto(globalTopsongs);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restGlobalTopsongsMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(globalTopsongs))
+                    .content(om.writeValueAsBytes(globalTopsongsDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -297,9 +374,12 @@ class GlobalTopsongsResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         globalTopsongs.setId(longCount.incrementAndGet());
 
+        // Create the GlobalTopsongs
+        GlobalTopsongsDTO globalTopsongsDTO = globalTopsongsMapper.toDto(globalTopsongs);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restGlobalTopsongsMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(globalTopsongs)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(globalTopsongsDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the GlobalTopsongs in the database
@@ -318,7 +398,7 @@ class GlobalTopsongsResourceIT {
         GlobalTopsongs partialUpdatedGlobalTopsongs = new GlobalTopsongs();
         partialUpdatedGlobalTopsongs.setId(globalTopsongs.getId());
 
-        partialUpdatedGlobalTopsongs.year(UPDATED_YEAR);
+        partialUpdatedGlobalTopsongs.songTitle(UPDATED_SONG_TITLE).artistName(UPDATED_ARTIST_NAME).songYear(UPDATED_SONG_YEAR);
 
         restGlobalTopsongsMockMvc
             .perform(
@@ -349,7 +429,12 @@ class GlobalTopsongsResourceIT {
         GlobalTopsongs partialUpdatedGlobalTopsongs = new GlobalTopsongs();
         partialUpdatedGlobalTopsongs.setId(globalTopsongs.getId());
 
-        partialUpdatedGlobalTopsongs.playCount(UPDATED_PLAY_COUNT).monthYear(UPDATED_MONTH_YEAR).year(UPDATED_YEAR);
+        partialUpdatedGlobalTopsongs
+            .songTitle(UPDATED_SONG_TITLE)
+            .artistName(UPDATED_ARTIST_NAME)
+            .playCount(UPDATED_PLAY_COUNT)
+            .monthYear(UPDATED_MONTH_YEAR)
+            .songYear(UPDATED_SONG_YEAR);
 
         restGlobalTopsongsMockMvc
             .perform(
@@ -371,12 +456,15 @@ class GlobalTopsongsResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         globalTopsongs.setId(longCount.incrementAndGet());
 
+        // Create the GlobalTopsongs
+        GlobalTopsongsDTO globalTopsongsDTO = globalTopsongsMapper.toDto(globalTopsongs);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restGlobalTopsongsMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, globalTopsongs.getId())
+                patch(ENTITY_API_URL_ID, globalTopsongsDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(om.writeValueAsBytes(globalTopsongs))
+                    .content(om.writeValueAsBytes(globalTopsongsDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -390,12 +478,15 @@ class GlobalTopsongsResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         globalTopsongs.setId(longCount.incrementAndGet());
 
+        // Create the GlobalTopsongs
+        GlobalTopsongsDTO globalTopsongsDTO = globalTopsongsMapper.toDto(globalTopsongs);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restGlobalTopsongsMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(om.writeValueAsBytes(globalTopsongs))
+                    .content(om.writeValueAsBytes(globalTopsongsDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -409,9 +500,12 @@ class GlobalTopsongsResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         globalTopsongs.setId(longCount.incrementAndGet());
 
+        // Create the GlobalTopsongs
+        GlobalTopsongsDTO globalTopsongsDTO = globalTopsongsMapper.toDto(globalTopsongs);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restGlobalTopsongsMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(globalTopsongs)))
+            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(globalTopsongsDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the GlobalTopsongs in the database

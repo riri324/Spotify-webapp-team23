@@ -36,11 +36,8 @@ describe('GlobalTopsongs Management Detail Component', () => {
 
   describe('OnInit', () => {
     it('Should load globalTopsongs on init', async () => {
-      const harness = await RouterTestingHarness.create();
-      const instance = await harness.navigateByUrl('/', GlobalTopsongsDetailComponent);
-
-      // THEN
-      expect(instance.globalTopsongs()).toEqual(expect.objectContaining({ id: 123 }));
+      await fixture.whenStable();
+      expect(comp.globalTopsongs).toEqual(expect.objectContaining({ id: 123 }));
     });
   });
 

@@ -60,11 +60,6 @@ public class Song implements Serializable {
     @Column(name = "tempo")
     private Float tempo;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "song")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "song" }, allowSetters = true)
-    private Set<GlobalTopsongs> globalTopsongs = new HashSet<>();
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "artist", "songs" }, allowSetters = true)
     private Album album;
@@ -74,22 +69,24 @@ public class Song implements Serializable {
     private Genre genre;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "events", "albums", "songs" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "albums", "songs" }, allowSetters = true)
     private Artist artist;
-
-    @JsonIgnoreProperties(value = { "song" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "song")
-    private LikedSongs likedSongs;
-
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "songs")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "songs", "user" }, allowSetters = true)
-    private Set<Playlist> playlists = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "songs")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "songs" }, allowSetters = true)
+    private Set<Playlist> playlists = new HashSet<>();
+
+    /////////
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "song")
+    @JsonIgnoreProperties(value = { "song" }, allowSetters = true)
+    private LikedSongs likedSongs;
+
+    @ManyToMany(mappedBy = "songs")
+    @JsonIgnoreProperties(value = { "songs" }, allowSetters = true)
     private Set<ListeningHistory> listeningHistories = new HashSet<>();
+
+    /////////
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -236,37 +233,6 @@ public class Song implements Serializable {
         this.tempo = tempo;
     }
 
-    public Set<GlobalTopsongs> getGlobalTopsongs() {
-        return this.globalTopsongs;
-    }
-
-    public void setGlobalTopsongs(Set<GlobalTopsongs> globalTopsongs) {
-        if (this.globalTopsongs != null) {
-            this.globalTopsongs.forEach(i -> i.setSong(null));
-        }
-        if (globalTopsongs != null) {
-            globalTopsongs.forEach(i -> i.setSong(this));
-        }
-        this.globalTopsongs = globalTopsongs;
-    }
-
-    public Song globalTopsongs(Set<GlobalTopsongs> globalTopsongs) {
-        this.setGlobalTopsongs(globalTopsongs);
-        return this;
-    }
-
-    public Song addGlobalTopsongs(GlobalTopsongs globalTopsongs) {
-        this.globalTopsongs.add(globalTopsongs);
-        globalTopsongs.setSong(this);
-        return this;
-    }
-
-    public Song removeGlobalTopsongs(GlobalTopsongs globalTopsongs) {
-        this.globalTopsongs.remove(globalTopsongs);
-        globalTopsongs.setSong(null);
-        return this;
-    }
-
     public Album getAlbum() {
         return this.album;
     }
@@ -306,25 +272,6 @@ public class Song implements Serializable {
         return this;
     }
 
-    public LikedSongs getLikedSongs() {
-        return this.likedSongs;
-    }
-
-    public void setLikedSongs(LikedSongs likedSongs) {
-        if (this.likedSongs != null) {
-            this.likedSongs.setSong(null);
-        }
-        if (likedSongs != null) {
-            likedSongs.setSong(this);
-        }
-        this.likedSongs = likedSongs;
-    }
-
-    public Song likedSongs(LikedSongs likedSongs) {
-        this.setLikedSongs(likedSongs);
-        return this;
-    }
-
     public Set<Playlist> getPlaylists() {
         return this.playlists;
     }
@@ -344,16 +291,60 @@ public class Song implements Serializable {
         return this;
     }
 
-    public Song addPlaylist(Playlist playlist) {
+    public Song addPlaylists(Playlist playlist) {
         this.playlists.add(playlist);
         playlist.getSongs().add(this);
         return this;
     }
 
-    public Song removePlaylist(Playlist playlist) {
+    public Song removePlaylists(Playlist playlist) {
         this.playlists.remove(playlist);
         playlist.getSongs().remove(this);
         return this;
+    }
+
+    ////////
+    public LikedSongs getLikedSongs() {
+        return this.likedSongs;
+    }
+
+    public void setLikedSongs(LikedSongs likedSongs) {
+        if (this.likedSongs != null) {
+            this.likedSongs.setSong(null);
+        }
+        if (likedSongs != null) {
+            likedSongs.setSong(this);
+        }
+        this.likedSongs = likedSongs;
+    }
+
+    public Song likedSongs(LikedSongs likedSongs) {
+        this.setLikedSongs(likedSongs);
+        return this;
+    }
+
+    @OneToMany(mappedBy = "song", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = { "song" }, allowSetters = true)
+    private Set<GlobalTopsongs> globalTopsongs = new HashSet<>();
+
+    public Set<GlobalTopsongs> getGlobalTopsongs() {
+        return this.globalTopsongs;
+    }
+
+    public Song addGlobalTopsongs(GlobalTopsongs globalTopsong) {
+        this.globalTopsongs.add(globalTopsong);
+        globalTopsong.setSong(this);
+        return this;
+    }
+
+    public Song removeGlobalTopsongs(GlobalTopsongs globalTopsong) {
+        this.globalTopsongs.remove(globalTopsong);
+        globalTopsong.setSong(null);
+        return this;
+    }
+
+    public void setGlobalTopsongs(Set<GlobalTopsongs> globalTopsongs) {
+        this.globalTopsongs = globalTopsongs;
     }
 
     public Set<ListeningHistory> getListeningHistories() {
@@ -362,10 +353,10 @@ public class Song implements Serializable {
 
     public void setListeningHistories(Set<ListeningHistory> listeningHistories) {
         if (this.listeningHistories != null) {
-            this.listeningHistories.forEach(i -> i.removeSong(this));
+            this.listeningHistories.forEach(i -> i.getSongs().remove(this));
         }
         if (listeningHistories != null) {
-            listeningHistories.forEach(i -> i.addSong(this));
+            listeningHistories.forEach(i -> i.getSongs().add(this));
         }
         this.listeningHistories = listeningHistories;
     }
@@ -386,6 +377,8 @@ public class Song implements Serializable {
         listeningHistory.getSongs().remove(this);
         return this;
     }
+
+    //////////
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

@@ -21,6 +21,9 @@ logging:
     bham.team: DEBUG
 
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
   devtools:
     restart:
       enabled: true
@@ -48,8 +51,8 @@ spring:
       # JHipster uses a custom h2-console initializer
       enabled: true
   liquibase:
-    # Remove 'faker' if you do not want the sample data to be loaded automatically
-    contexts: dev, faker
+    contexts: faker
+    drop-first: true
   mail:
     host: localhost
     port: 25
