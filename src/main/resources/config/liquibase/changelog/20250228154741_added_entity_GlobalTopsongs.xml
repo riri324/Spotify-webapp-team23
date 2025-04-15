@@ -26,6 +26,7 @@
             <column name="song_id" type="bigint">
                 <constraints nullable="true" />
             </column>
+            <column name="song_id" type="bigint"/>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="global_topsongs" columnName="month_year" columnDataType="${datetimeType}"/>
