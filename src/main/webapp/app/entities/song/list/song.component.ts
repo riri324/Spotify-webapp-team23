@@ -51,14 +51,7 @@ export class SongComponent implements OnInit {
   ngOnInit(): void {
     this.loadUserData();
     this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])
-      .pipe(
-        tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
-        tap(() => {
-          if (!this.songs || this.songs.length === 0) {
-            this.load();
-          }
-        }),
-      )
+      .pipe(tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)))
       .subscribe();
   }
 
@@ -95,6 +88,7 @@ export class SongComponent implements OnInit {
     this.http.get<any>(apiUrl).subscribe(userData => {
       if (userData) {
         this.userRole = userData.authorities ?? [];
+        this.load();
       }
     });
   }
