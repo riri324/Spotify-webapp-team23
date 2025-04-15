@@ -44,7 +44,7 @@ class SongTest {
         assertThat(song.getGlobalTopsongs()).doesNotContain(globalTopsongsBack);
         assertThat(globalTopsongsBack.getSong()).isNull();
 
-        song.globalTopsongs(new HashSet<>(Set.of(globalTopsongsBack)));
+        song.setGlobalTopsongs(new HashSet<>(Set.of(globalTopsongsBack)));
         assertThat(song.getGlobalTopsongs()).containsOnly(globalTopsongsBack);
         assertThat(globalTopsongsBack.getSong()).isEqualTo(song);
 
@@ -108,11 +108,11 @@ class SongTest {
         Song song = getSongRandomSampleGenerator();
         Playlist playlistBack = getPlaylistRandomSampleGenerator();
 
-        song.addPlaylist(playlistBack);
+        song.addPlaylists(playlistBack);
         assertThat(song.getPlaylists()).containsOnly(playlistBack);
         assertThat(playlistBack.getSongs()).containsOnly(song);
 
-        song.removePlaylist(playlistBack);
+        song.removePlaylists(playlistBack);
         assertThat(song.getPlaylists()).doesNotContain(playlistBack);
         assertThat(playlistBack.getSongs()).doesNotContain(song);
 

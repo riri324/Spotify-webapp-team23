@@ -32,7 +32,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
       label: 'User Song Recommender',
       route: '/recommend',
       description: 'Recommend a song to a friend?',
-      icon: '🎵'
+      icon: '🎵',
     },
     {
       label: 'AI Song Recommender',
@@ -44,27 +44,26 @@ export default class HomeComponent implements OnInit, OnDestroy {
       label: 'Global Top Songs',
       route: '/global-top-songs',
       description: 'Discover the top global songs and artists currently!',
-      icon: '📊'
+      icon: '📊',
     },
     {
       label: 'Venue Recommendations',
       route: '/venue-recommendations',
       description: 'Find your local events that match your vibes',
-      icon: '📍'
+      icon: '📍',
     },
     {
       label: 'Messages',
       route: '/messages',
       description: '💬 Check out your messages! 💬',
-      icon: '💬'
+      icon: '💬',
     },
     {
       label: 'Preferences',
       route: '/preferences',
       description: 'Customize your app experience',
-      icon: '🤔'
+      icon: '🤔',
     },
-
   ];
 
   // Features for guests
@@ -73,7 +72,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
       label: 'Global Top Songs',
       route: '/global-top-songs',
       description: 'Discover the top global songs and artists currently!',
-      icon: '📊'
+      icon: '📊',
     },
   ];
 

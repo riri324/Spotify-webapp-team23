@@ -20,10 +20,11 @@ describe('GlobalTopsongs Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
+            songTitle: expect.any(Object),
+            artistName: expect.any(Object),
             playCount: expect.any(Object),
             monthYear: expect.any(Object),
-            year: expect.any(Object),
-            song: expect.any(Object),
+            songYear: expect.any(Object),
           }),
         );
       });
@@ -34,10 +35,11 @@ describe('GlobalTopsongs Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
+            songTitle: expect.any(Object),
+            artistName: expect.any(Object),
             playCount: expect.any(Object),
             monthYear: expect.any(Object),
-            year: expect.any(Object),
-            song: expect.any(Object),
+            songYear: expect.any(Object),
           }),
         );
       });

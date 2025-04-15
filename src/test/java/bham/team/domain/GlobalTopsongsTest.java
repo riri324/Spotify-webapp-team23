@@ -1,7 +1,6 @@
 package bham.team.domain;
 
 import static bham.team.domain.GlobalTopsongsTestSamples.*;
-import static bham.team.domain.SongTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import bham.team.web.rest.TestUtil;
@@ -21,17 +20,5 @@ class GlobalTopsongsTest {
 
         globalTopsongs2 = getGlobalTopsongsSample2();
         assertThat(globalTopsongs1).isNotEqualTo(globalTopsongs2);
-    }
-
-    @Test
-    void songTest() {
-        GlobalTopsongs globalTopsongs = getGlobalTopsongsRandomSampleGenerator();
-        Song songBack = getSongRandomSampleGenerator();
-
-        globalTopsongs.setSong(songBack);
-        assertThat(globalTopsongs.getSong()).isEqualTo(songBack);
-
-        globalTopsongs.song(null);
-        assertThat(globalTopsongs.getSong()).isNull();
     }
 }

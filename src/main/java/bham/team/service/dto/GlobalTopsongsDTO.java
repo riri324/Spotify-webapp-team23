@@ -30,7 +30,7 @@ public class GlobalTopsongsDTO implements Serializable {
     @NotNull
     @Min(value = 2000)
     @Max(value = 2100)
-    private Integer year;
+    private Integer songYear;
 
     public Long getId() {
         return id;
@@ -72,12 +72,12 @@ public class GlobalTopsongsDTO implements Serializable {
         this.monthYear = monthYear;
     }
 
-    public Integer getYear() {
-        return year;
+    public Integer getSongYear() {
+        return songYear;
     }
 
-    public void setYear(Integer year) {
-        this.year = year;
+    public void setSongYear(Integer songYear) {
+        this.songYear = songYear;
     }
 
     @Override
@@ -110,7 +110,7 @@ public class GlobalTopsongsDTO implements Serializable {
             ", artistName='" + getArtistName() + "'" +
             ", playCount=" + getPlayCount() +
             ", monthYear='" + getMonthYear() + "'" +
-            ", year=" + getYear() +
+            ", songYear=" + getSongYear() +
             "}";
     }
 }

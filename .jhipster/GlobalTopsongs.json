@@ -3,11 +3,28 @@
     "changelogDate": "20250228154741"
   },
   "applications": "*",
+  "dto": "mapstruct",
   "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "songTitle",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "artistName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
     {
       "fieldName": "playCount",
       "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "0"
     },
     {
       "fieldName": "monthYear",
@@ -15,7 +32,7 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "year",
+      "fieldName": "songYear",
       "fieldType": "Integer",
       "fieldValidateRules": ["required", "min", "max"],
       "fieldValidateRulesMax": "2100",
@@ -23,14 +40,8 @@
     }
   ],
   "name": "GlobalTopsongs",
-  "relationships": [
-    {
-      "otherEntityName": "song",
-      "otherEntityRelationshipName": "globalTopsongs",
-      "relationshipName": "song",
-      "relationshipSide": "right",
-      "relationshipType": "many-to-one"
-    }
-  ],
-  "searchEngine": "no"
+  "pagination": "pagination",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
 }

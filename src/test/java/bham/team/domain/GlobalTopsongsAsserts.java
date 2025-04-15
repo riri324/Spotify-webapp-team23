@@ -47,9 +47,11 @@ public class GlobalTopsongsAsserts {
     public static void assertGlobalTopsongsUpdatableFieldsEquals(GlobalTopsongs expected, GlobalTopsongs actual) {
         assertThat(expected)
             .as("Verify GlobalTopsongs relevant properties")
+            .satisfies(e -> assertThat(e.getSongTitle()).as("check songTitle").isEqualTo(actual.getSongTitle()))
+            .satisfies(e -> assertThat(e.getArtistName()).as("check artistName").isEqualTo(actual.getArtistName()))
             .satisfies(e -> assertThat(e.getPlayCount()).as("check playCount").isEqualTo(actual.getPlayCount()))
             .satisfies(e -> assertThat(e.getMonthYear()).as("check monthYear").isEqualTo(actual.getMonthYear()))
-            .satisfies(e -> assertThat(e.getYear()).as("check year").isEqualTo(actual.getYear()));
+            .satisfies(e -> assertThat(e.getSongYear()).as("check songYear").isEqualTo(actual.getSongYear()));
     }
 
     /**
@@ -59,8 +61,6 @@ public class GlobalTopsongsAsserts {
      * @param actual the actual entity
      */
     public static void assertGlobalTopsongsUpdatableRelationshipsEquals(GlobalTopsongs expected, GlobalTopsongs actual) {
-        assertThat(expected)
-            .as("Verify GlobalTopsongs relationships")
-            .satisfies(e -> assertThat(e.getSong()).as("check song").isEqualTo(actual.getSong()));
+        // empty method
     }
 }

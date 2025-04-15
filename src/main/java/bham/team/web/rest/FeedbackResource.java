@@ -186,6 +186,7 @@ public class FeedbackResource {
     public ResponseEntity<Void> deleteFeedback(@PathVariable("id") Long id) {
         LOG.debug("REST request to delete Feedback : {}", id);
         feedbackRepository.deleteById(id);
+
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();

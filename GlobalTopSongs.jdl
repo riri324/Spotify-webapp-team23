@@ -1,7 +1,7 @@
 // GlobalTopsongs entity
 entity GlobalTopsongs {
   id Long required,
-  songTitle String required unique,
+  songTitle String required,
   artistName String required,
   playCount Integer required min(0),
   monthYear Instant required,

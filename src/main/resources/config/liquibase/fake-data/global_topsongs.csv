@@ -1,11 +1,400 @@
-id;play_count;month_year;year
-1;2686;2025-02-28T15:03:24;2002
-2;22075;2025-02-28T06:23:44;2004
-3;17902;2025-02-28T07:12:04;2030
-4;2133;2025-02-28T08:50:05;2085
-5;12071;2025-02-28T06:10:48;2038
-6;1378;2025-02-28T12:30:00;2086
-7;16237;2025-02-27T16:37:15;2043
-8;954;2025-02-28T13:50:23;2009
-9;18707;2025-02-28T00:51:39;2090
-10;6827;2025-02-28T06:17:38;2026
+id,song_title,artist_name,play_count,month_year,song_year
+1,Anti-Hero,Taylor Swift,40659081,2023-03-01,2023
+2,Unholy,Sam Smith & Kim Petras,43968166,2023-03-01,2023
+3,Shape of You,Ed Sheeran,45825367,2023-03-01,2023
+4,Unholy,Sam Smith & Kim Petras,45482866,2023-02-01,2023
+5,I'm Good (Blue),David Guetta & Bebe Rexha,4183450,2023-05-01,2023
+6,Bad Habits,Ed Sheeran,33047190,2023-12-01,2023
+7,Dance The Night,Dua Lipa,18579420,2024-03-01,2024
+8,Bad Habits,Ed Sheeran,2555356,2023-03-01,2023
+9,Good 4 U,Olivia Rodrigo,8812340,2023-03-01,2023
+10,Stay,The Kid LAROI & Justin Bieber,30762358,2023-02-01,2023
+11,As It Was,Harry Styles,37812248,2023-03-01,2023
+12,Blinding Lights,The Weeknd,3582176,2023-03-01,2023
+13,As It Was,Harry Styles,23248430,2023-03-01,2023
+14,I'm Good (Blue),David Guetta & Bebe Rexha,42974261,2023-03-01,2023
+15,Shivers,Ed Sheeran,46428324,2023-02-01,2023
+16,Blinding Lights,The Weeknd,26761477,2023-03-01,2023
+17,Stay,The Kid LAROI & Justin Bieber,48263868,2023-03-01,2023
+18,Kill Bill,SZA,37396164,2023-03-01,2023
+19,Bad Habits,Ed Sheeran,43333581,2023-03-01,2023
+20,Drivers License,Olivia Rodrigo,44065460,2023-10-01,2023
+21,Shape of You,Ed Sheeran,18466814,2023-04-01,2023
+22,Bad Habits,Ed Sheeran,30486282,2023-03-01,2023
+23,Flowers,Miley Cyrus,37804631,2023-03-01,2023
+24,Dance The Night,Dua Lipa,3805368,2023-03-01,2023
+25,Levitating,Dua Lipa,45470627,2024-03-01,2024
+26,Dance The Night,Dua Lipa,14956787,2023-03-01,2023
+27,Bad Habits,Ed Sheeran,24033831,2023-03-01,2023
+28,Drivers License,Olivia Rodrigo,12393331,2023-03-01,2023
+29,Unholy,Sam Smith & Kim Petras,24152603,2023-03-01,2023
+30,Shivers,Ed Sheeran,29650848,2023-02-01,2023
+31,Dance The Night,Dua Lipa,37065333,2024-01-01,2024
+32,Save Your Tears,The Weeknd,35943836,2024-03-01,2024
+33,Shivers,Ed Sheeran,40080915,2023-12-01,2023
+34,Save Your Tears,The Weeknd,17378357,2023-10-01,2023
+35,Drivers License,Olivia Rodrigo,26457951,2023-05-01,2023
+36,Unholy,Sam Smith & Kim Petras,1961981,2023-12-01,2023
+37,Stay,The Kid LAROI & Justin Bieber,37582116,2023-06-01,2023
+38,Creepin',"Metro Boomin, The Weeknd & 21 Savage",42041565,2023-08-01,2023
+39,Montero (Call Me By Your Name),Lil Nas X,7976358,2023-09-01,2023
+40,Montero (Call Me By Your Name),Lil Nas X,48109704,2023-11-01,2023
+41,Kill Bill,SZA,18596565,2023-03-01,2023
+42,Kill Bill,SZA,1420861,2023-03-01,2023
+43,I'm Good (Blue),David Guetta & Bebe Rexha,10474036,2023-03-01,2023
+44,Shivers,Ed Sheeran,14347122,2023-03-01,2023
+45,Shivers,Ed Sheeran,8677210,2023-03-01,2023
+46,Levitating,Dua Lipa,29240403,2023-03-01,2023
+47,Flowers,Miley Cyrus,36215906,2023-03-01,2023
+48,As It Was,Harry Styles,47621502,2023-01-01,2023
+49,Flowers,Miley Cyrus,6965780,2023-03-01,2023
+50,Anti-Hero,Taylor Swift,24078560,2024-01-01,2024
+51,Blinding Lights,The Weeknd,41267065,2023-08-01,2023
+52,Montero (Call Me By Your Name),Lil Nas X,1496460,2024-02-01,2024
+53,Calm Down,Rema & Selena Gomez,11434575,2023-05-01,2023
+54,Bad Habits,Ed Sheeran,8874091,2024-02-01,2024
+55,Good 4 U,Olivia Rodrigo,27249179,2023-06-01,2023
+56,Good 4 U,Olivia Rodrigo,3596318,2023-03-01,2023
+57,As It Was,Harry Styles,48238552,2024-03-01,2024
+58,Drivers License,Olivia Rodrigo,6226272,2023-03-01,2023
+59,Bad Habits,Ed Sheeran,26143674,2023-03-01,2023
+60,Save Your Tears,The Weeknd,6238246,2023-03-01,2023
+61,Drivers License,Olivia Rodrigo,34217255,2023-03-01,2023
+62,Shivers,Ed Sheeran,17640188,2023-05-01,2023
+63,I'm Good (Blue),David Guetta & Bebe Rexha,39783933,2023-02-01,2023
+64,Peaches,Justin Bieber,36130898,2023-10-01,2023
+65,Good 4 U,Olivia Rodrigo,20499892,2023-08-01,2023
+66,Peaches,Justin Bieber,5729811,2023-04-01,2023
+67,Unholy,Sam Smith & Kim Petras,18045073,2023-12-01,2023
+68,Kill Bill,SZA,9133651,2023-10-01,2023
+69,Montero (Call Me By Your Name),Lil Nas X,37346901,2023-05-01,2023
+70,Montero (Call Me By Your Name),Lil Nas X,13033284,2023-02-01,2023
+71,As It Was,Harry Styles,22995164,2023-01-01,2023
+72,As It Was,Harry Styles,12647479,2023-07-01,2023
+73,I'm Good (Blue),David Guetta & Bebe Rexha,34847883,2023-12-01,2023
+74,Unholy,Sam Smith & Kim Petras,24139974,2023-03-01,2023
+75,Unholy,Sam Smith & Kim Petras,43952430,2023-06-01,2023
+76,Shape of You,Ed Sheeran,37106190,2023-03-01,2023
+77,Bad Habits,Ed Sheeran,23888008,2023-03-01,2023
+78,Shape of You,Ed Sheeran,17540091,2023-03-01,2023
+79,Kill Bill,SZA,26234290,2023-03-01,2023
+80,Calm Down,Rema & Selena Gomez,26169711,2023-03-01,2023
+81,Good 4 U,Olivia Rodrigo,22079449,2023-03-01,2023
+82,Unholy,Sam Smith & Kim Petras,26319484,2023-02-01,2023
+83,Drivers License,Olivia Rodrigo,39203618,2023-10-01,2023
+84,Drivers License,Olivia Rodrigo,21695057,2023-02-01,2023
+85,Shivers,Ed Sheeran,2643990,2023-12-01,2023
+86,Shape of You,Ed Sheeran,1025711,2023-06-01,2023
+87,Good 4 U,Olivia Rodrigo,32730501,2023-02-01,2023
+88,As It Was,Harry Styles,13023066,2023-03-01,2023
+89,Kill Bill,SZA,47996417,2023-07-01,2023
+90,Dance The Night,Dua Lipa,5226614,2023-11-01,2023
+91,Montero (Call Me By Your Name),Lil Nas X,13614135,2023-06-01,2023
+92,Unholy,Sam Smith & Kim Petras,4728638,2024-01-01,2024
+93,Shivers,Ed Sheeran,39165910,2023-07-01,2023
+94,Peaches,Justin Bieber,47606434,2023-09-01,2023
+95,I'm Good (Blue),David Guetta & Bebe Rexha,12421059,2023-01-01,2023
+96,Montero (Call Me By Your Name),Lil Nas X,36381503,2023-06-01,2023
+97,Drivers License,Olivia Rodrigo,39835082,2023-06-01,2023
+98,Levitating,Dua Lipa,25004444,2024-01-01,2024
+99,Creepin',"Metro Boomin, The Weeknd & 21 Savage",11933892,2023-04-01,2023
+100,As It Was,Harry Styles,7789983,2023-10-01,2023
+101,I'm Good (Blue),David Guetta & Bebe Rexha,39596249,2023-09-01,2023
+102,Shape of You,Ed Sheeran,48729108,2023-03-01,2023
+103,Stay,The Kid LAROI & Justin Bieber,3806650,2023-03-01,2023
+104,Calm Down,Rema & Selena Gomez,6605742,2023-03-01,2023
+105,As It Was,Harry Styles,4581279,2023-03-01,2023
+106,Stay,The Kid LAROI & Justin Bieber,35611984,2023-11-01,2023
+107,Kill Bill,SZA,9928560,2023-01-01,2023
+108,Creepin',"Metro Boomin, The Weeknd & 21 Savage",26401402,2024-01-01,2024
+109,Peaches,Justin Bieber,13465051,2023-02-01,2023
+110,Unholy,Sam Smith & Kim Petras,23030207,2023-02-01,2023
+111,Montero (Call Me By Your Name),Lil Nas X,19296797,2023-07-01,2023
+112,Kill Bill,SZA,10857703,2023-02-01,2023
+113,Save Your Tears,The Weeknd,16640180,2023-06-01,2023
+114,Peaches,Justin Bieber,46189968,2023-12-01,2023
+115,Stay,The Kid LAROI & Justin Bieber,12325415,2023-09-01,2023
+116,Drivers License,Olivia Rodrigo,16743841,2024-01-01,2024
+117,Bad Habits,Ed Sheeran,25315457,2023-09-01,2023
+118,Good 4 U,Olivia Rodrigo,9933265,2023-03-01,2023
+119,Calm Down,Rema & Selena Gomez,5310119,2023-11-01,2023
+120,Kill Bill,SZA,11967991,2023-06-01,2023
+121,Kill Bill,SZA,12115006,2023-12-01,2023
+122,Stay,The Kid LAROI & Justin Bieber,1135177,2023-03-01,2023
+123,Drivers License,Olivia Rodrigo,3317927,2023-03-01,2023
+124,Unholy,Sam Smith & Kim Petras,45035505,2024-02-01,2024
+125,Calm Down,Rema & Selena Gomez,48888834,2023-03-01,2023
+126,Montero (Call Me By Your Name),Lil Nas X,2126117,2024-01-01,2024
+127,Peaches,Justin Bieber,14904486,2023-10-01,2023
+128,Drivers License,Olivia Rodrigo,28120165,2023-03-01,2023
+129,Dance The Night,Dua Lipa,41703005,2023-09-01,2023
+130,Kill Bill,SZA,31894889,2023-06-01,2023
+131,Bad Habits,Ed Sheeran,39120429,2023-11-01,2023
+132,As It Was,Harry Styles,44829241,2023-01-01,2023
+133,Levitating,Dua Lipa,46817129,2023-03-01,2023
+134,Creepin',"Metro Boomin, The Weeknd & 21 Savage",29104919,2023-06-01,2023
+135,As It Was,Harry Styles,1223124,2023-03-01,2023
+136,Calm Down,Rema & Selena Gomez,17500914,2023-04-01,2023
+137,As It Was,Harry Styles,37202665,2023-06-01,2023
+138,Save Your Tears,The Weeknd,28805532,2023-12-01,2023
+139,Peaches,Justin Bieber,34265714,2023-02-01,2023
+140,Peaches,Justin Bieber,28400449,2023-01-01,2023
+141,Peaches,Justin Bieber,33600573,2023-02-01,2023
+142,Shape of You,Ed Sheeran,27483905,2023-11-01,2023
+143,Unholy,Sam Smith & Kim Petras,22153614,2023-11-01,2023
+144,Levitating,Dua Lipa,30992768,2023-05-01,2023
+145,Shape of You,Ed Sheeran,31935144,2023-12-01,2023
+146,Shivers,Ed Sheeran,38724628,2023-04-01,2023
+147,Blinding Lights,The Weeknd,22744988,2023-05-01,2023
+148,Shape of You,Ed Sheeran,44051929,2023-01-01,2023
+149,Unholy,Sam Smith & Kim Petras,19720262,2023-10-01,2023
+150,Save Your Tears,The Weeknd,30218549,2023-10-01,2023
+151,As It Was,Harry Styles,3636645,2024-01-01,2024
+152,Shape of You,Ed Sheeran,31122118,2023-01-01,2023
+153,Shivers,Ed Sheeran,32800767,2023-04-01,2023
+154,Kill Bill,SZA,35843046,2023-06-01,2023
+155,Drivers License,Olivia Rodrigo,13850457,2023-02-01,2023
+156,Calm Down,Rema & Selena Gomez,19866027,2023-11-01,2023
+157,Kill Bill,SZA,28332791,2023-09-01,2023
+158,Bad Habits,Ed Sheeran,36892962,2023-02-01,2023
+159,Kill Bill,SZA,36843934,2024-02-01,2024
+160,Levitating,Dua Lipa,19117856,2023-04-01,2023
+161,Bad Habits,Ed Sheeran,28681340,2023-01-01,2023
+162,Dance The Night,Dua Lipa,4303901,2023-10-01,2023
+163,Shape of You,Ed Sheeran,28864838,2024-01-01,2024
+164,As It Was,Harry Styles,33043824,2023-10-01,2023
+165,Good 4 U,Olivia Rodrigo,21901501,2023-07-01,2023
+166,Dance The Night,Dua Lipa,11755742,2023-07-01,2023
+167,Bad Habits,Ed Sheeran,20690293,2023-09-01,2023
+168,I'm Good (Blue),David Guetta & Bebe Rexha,42291722,2023-11-01,2023
+169,I'm Good (Blue),David Guetta & Bebe Rexha,27756127,2023-10-01,2023
+170,Calm Down,Rema & Selena Gomez,8967769,2023-05-01,2023
+171,Good 4 U,Olivia Rodrigo,19952480,2023-09-01,2023
+172,Montero (Call Me By Your Name),Lil Nas X,4844195,2023-03-01,2023
+173,I'm Good (Blue),David Guetta & Bebe Rexha,27611292,2023-08-01,2023
+174,Kill Bill,SZA,49460870,2023-09-01,2023
+175,Levitating,Dua Lipa,24539834,2023-05-01,2023
+176,Anti-Hero,Taylor Swift,3330043,2023-07-01,2023
+177,Kill Bill,SZA,29460394,2023-05-01,2023
+178,Unholy,Sam Smith & Kim Petras,18677923,2024-03-01,2024
+179,Blinding Lights,The Weeknd,48646162,2023-03-01,2023
+180,Kill Bill,SZA,25174978,2023-02-01,2023
+181,As It Was,Harry Styles,40893263,2023-04-01,2023
+182,Unholy,Sam Smith & Kim Petras,35169484,2023-02-01,2023
+183,Stay,The Kid LAROI & Justin Bieber,47382719,2023-04-01,2023
+184,Peaches,Justin Bieber,19205037,2023-04-01,2023
+185,Blinding Lights,The Weeknd,22273519,2023-06-01,2023
+186,Unholy,Sam Smith & Kim Petras,28487277,2023-10-01,2023
+187,Creepin',"Metro Boomin, The Weeknd & 21 Savage",30200979,2023-11-01,2023
+188,Anti-Hero,Taylor Swift,15579155,2024-03-01,2024
+189,Blinding Lights,The Weeknd,13689003,2023-03-01,2023
+190,Anti-Hero,Taylor Swift,16308138,2023-08-01,2023
+191,Good 4 U,Olivia Rodrigo,13093978,2023-08-01,2023
+192,Shape of You,Ed Sheeran,42016065,2023-10-01,2023
+193,Montero (Call Me By Your Name),Lil Nas X,9632101,2023-06-01,2023
+194,I'm Good (Blue),David Guetta & Bebe Rexha,7064078,2023-12-01,2023
+195,Dance The Night,Dua Lipa,2940012,2023-07-01,2023
+196,I'm Good (Blue),David Guetta & Bebe Rexha,14985323,2023-03-01,2023
+197,Stay,The Kid LAROI & Justin Bieber,5847391,2023-08-01,2023
+198,Kill Bill,SZA,17479156,2023-06-01,2023
+199,Calm Down,Rema & Selena Gomez,12175665,2023-11-01,2023
+200,Dance The Night,Dua Lipa,42825860,2023-03-01,2023
+201,Stay,The Kid LAROI & Justin Bieber,31337267,2023-06-01,2023
+202,I'm Good (Blue),David Guetta & Bebe Rexha,24836208,2024-03-01,2024
+203,Shivers,Ed Sheeran,16877759,2023-06-01,2023
+204,Kill Bill,SZA,43735255,2023-09-01,2023
+205,Blinding Lights,The Weeknd,21931004,2023-08-01,2023
+206,Peaches,Justin Bieber,28125770,2024-02-01,2024
+207,Peaches,Justin Bieber,33713343,2023-01-01,2023
+208,Kill Bill,SZA,21734274,2023-04-01,2023
+209,Stay,The Kid LAROI & Justin Bieber,27315098,2023-09-01,2023
+210,Flowers,Miley Cyrus,25272255,2023-06-01,2023
+211,Creepin',"Metro Boomin, The Weeknd & 21 Savage",14155780,2023-11-01,2023
+212,Drivers License,Olivia Rodrigo,12620936,2023-04-01,2023
+213,Flowers,Miley Cyrus,10424330,2023-11-01,2023
+214,Levitating,Dua Lipa,4271607,2023-10-01,2023
+215,Calm Down,Rema & Selena Gomez,20714694,2023-05-01,2023
+216,Unholy,Sam Smith & Kim Petras,9128288,2023-04-01,2023
+217,Levitating,Dua Lipa,11586243,2023-02-01,2023
+218,Bad Habits,Ed Sheeran,1547379,2023-09-01,2023
+219,Stay,The Kid LAROI & Justin Bieber,30384932,2023-11-01,2023
+220,Save Your Tears,The Weeknd,29425198,2023-03-01,2023
+221,I'm Good (Blue),David Guetta & Bebe Rexha,3023477,2023-04-01,2023
+222,Stay,The Kid LAROI & Justin Bieber,30452735,2024-03-01,2024
+223,Creepin',"Metro Boomin, The Weeknd & 21 Savage",33651204,2023-04-01,2023
+224,Anti-Hero,Taylor Swift,9096063,2023-11-01,2023
+225,Peaches,Justin Bieber,45270336,2023-09-01,2023
+226,Dance The Night,Dua Lipa,4321568,2023-11-01,2023
+227,Shape of You,Ed Sheeran,48784433,2023-06-01,2023
+228,Bad Habits,Ed Sheeran,29632154,2023-08-01,2023
+229,Dance The Night,Dua Lipa,27906264,2023-09-01,2023
+230,Montero (Call Me By Your Name),Lil Nas X,45135767,2023-12-01,2023
+231,As It Was,Harry Styles,11413912,2024-01-01,2024
+232,Drivers License,Olivia Rodrigo,19918476,2023-09-01,2023
+233,Blinding Lights,The Weeknd,23615784,2023-10-01,2023
+234,Peaches,Justin Bieber,33626367,2023-06-01,2023
+235,I'm Good (Blue),David Guetta & Bebe Rexha,39299205,2023-01-01,2023
+236,Levitating,Dua Lipa,33081170,2023-04-01,2023
+237,Shivers,Ed Sheeran,41201444,2023-04-01,2023
+238,Bad Habits,Ed Sheeran,12644368,2023-11-01,2023
+239,Shape of You,Ed Sheeran,12131642,2023-04-01,2023
+240,Shivers,Ed Sheeran,32298180,2024-02-01,2024
+241,Peaches,Justin Bieber,18997252,2024-01-01,2024
+242,Montero (Call Me By Your Name),Lil Nas X,40995230,2023-10-01,2023
+243,As It Was,Harry Styles,36573944,2023-11-01,2023
+244,I'm Good (Blue),David Guetta & Bebe Rexha,49329626,2023-10-01,2023
+245,Shivers,Ed Sheeran,29469102,2023-06-01,2023
+246,Kill Bill,SZA,45985824,2024-02-01,2024
+247,Dance The Night,Dua Lipa,36925613,2023-04-01,2023
+248,Good 4 U,Olivia Rodrigo,6948053,2023-06-01,2023
+249,Save Your Tears,The Weeknd,28434953,2024-03-01,2024
+250,Unholy,Sam Smith & Kim Petras,17326719,2023-06-01,2023
+251,Shivers,Ed Sheeran,7979185,2023-10-01,2023
+252,Anti-Hero,Taylor Swift,4342751,2023-07-01,2023
+253,Shivers,Ed Sheeran,22762053,2023-07-01,2023
+254,Shivers,Ed Sheeran,18013222,2023-06-01,2023
+255,Dance The Night,Dua Lipa,23243438,2023-06-01,2023
+256,Bad Habits,Ed Sheeran,8350314,2023-11-01,2023
+257,Save Your Tears,The Weeknd,20071666,2023-12-01,2023
+258,Dance The Night,Dua Lipa,38730009,2023-05-01,2023
+259,Calm Down,Rema & Selena Gomez,5381558,2023-06-01,2023
+260,Levitating,Dua Lipa,18678591,2023-01-01,2023
+261,Flowers,Miley Cyrus,49849505,2024-03-01,2024
+262,Montero (Call Me By Your Name),Lil Nas X,39120780,2023-05-01,2023
+263,Dance The Night,Dua Lipa,16915198,2023-05-01,2023
+264,Shape of You,Ed Sheeran,13173670,2024-01-01,2024
+265,Blinding Lights,The Weeknd,29792104,2023-09-01,2023
+266,Creepin',"Metro Boomin, The Weeknd & 21 Savage",5491494,2023-02-01,2023
+267,Kill Bill,SZA,5724715,2023-03-01,2023
+268,Montero (Call Me By Your Name),Lil Nas X,13391982,2023-12-01,2023
+269,Save Your Tears,The Weeknd,15977331,2024-01-01,2024
+270,As It Was,Harry Styles,12472954,2023-12-01,2023
+271,Unholy,Sam Smith & Kim Petras,9589624,2023-11-01,2023
+272,Drivers License,Olivia Rodrigo,2247148,2023-05-01,2023
+273,Good 4 U,Olivia Rodrigo,49631731,2023-12-01,2023
+274,Good 4 U,Olivia Rodrigo,23202166,2023-06-01,2023
+275,Levitating,Dua Lipa,49932607,2024-02-01,2024
+276,Bad Habits,Ed Sheeran,14284689,2024-01-01,2024
+277,As It Was,Harry Styles,17866946,2023-04-01,2023
+278,Levitating,Dua Lipa,6962722,2024-02-01,2024
+279,Bad Habits,Ed Sheeran,6729912,2023-06-01,2023
+280,Blinding Lights,The Weeknd,44726315,2023-11-01,2023
+281,Shivers,Ed Sheeran,19203065,2023-09-01,2023
+282,Shivers,Ed Sheeran,8587072,2024-03-01,2024
+283,Dance The Night,Dua Lipa,31753593,2023-03-01,2023
+284,As It Was,Harry Styles,12571808,2023-03-01,2023
+285,Levitating,Dua Lipa,9752512,2024-02-01,2024
+286,Montero (Call Me By Your Name),Lil Nas X,15907858,2024-01-01,2024
+287,Montero (Call Me By Your Name),Lil Nas X,45731259,2023-12-01,2023
+288,Dance The Night,Dua Lipa,27643231,2024-03-01,2024
+289,As It Was,Harry Styles,45530148,2024-03-01,2024
+290,Drivers License,Olivia Rodrigo,34446340,2023-01-01,2023
+291,As It Was,Harry Styles,38634983,2023-05-01,2023
+292,Shape of You,Ed Sheeran,3851709,2023-10-01,2023
+293,Stay,The Kid LAROI & Justin Bieber,11956620,2023-09-01,2023
+294,Levitating,Dua Lipa,22175615,2023-07-01,2023
+295,Peaches,Justin Bieber,26723068,2023-07-01,2023
+296,Good 4 U,Olivia Rodrigo,29043476,2024-02-01,2024
+297,Save Your Tears,The Weeknd,36594802,2023-07-01,2023
+298,Levitating,Dua Lipa,39836453,2023-09-01,2023
+299,Anti-Hero,Taylor Swift,25230284,2023-05-01,2023
+300,Montero (Call Me By Your Name),Lil Nas X,21996279,2023-12-01,2023
+301,Peaches,Justin Bieber,40868538,2024-01-01,2024
+302,Bad Habits,Ed Sheeran,30538853,2024-01-01,2024
+303,Levitating,Dua Lipa,26557234,2024-02-01,2024
+304,Drivers License,Olivia Rodrigo,25884209,2023-03-01,2023
+305,Shivers,Ed Sheeran,28597452,2023-03-01,2023
+306,As It Was,Harry Styles,25265202,2024-03-01,2024
+307,Save Your Tears,The Weeknd,24281061,2023-12-01,2023
+308,Stay,The Kid LAROI & Justin Bieber,7393497,2023-11-01,2023
+309,I'm Good (Blue),David Guetta & Bebe Rexha,25217229,2023-09-01,2023
+310,Calm Down,Rema & Selena Gomez,40240487,2023-02-01,2023
+311,Kill Bill,SZA,33472246,2023-01-01,2023
+312,Montero (Call Me By Your Name),Lil Nas X,36088200,2023-03-01,2023
+313,Shape of You,Ed Sheeran,38660496,2023-08-01,2023
+314,Blinding Lights,The Weeknd,21179983,2023-01-01,2023
+315,Unholy,Sam Smith & Kim Petras,4753583,2023-03-01,2023
+316,Unholy,Sam Smith & Kim Petras,29393251,2023-02-01,2023
+317,Stay,The Kid LAROI & Justin Bieber,19842115,2023-07-01,2023
+318,Drivers License,Olivia Rodrigo,41837628,2023-11-01,2023
+319,Shape of You,Ed Sheeran,16382760,2023-08-01,2023
+320,Creepin',"Metro Boomin, The Weeknd & 21 Savage",42287278,2023-04-01,2023
+321,Drivers License,Olivia Rodrigo,9210678,2024-01-01,2024
+322,Blinding Lights,The Weeknd,45128520,2023-05-01,2023
+323,Creepin',"Metro Boomin, The Weeknd & 21 Savage",23158515,2023-01-01,2023
+324,Bad Habits,Ed Sheeran,24250401,2023-08-01,2023
+325,Kill Bill,SZA,8245618,2023-07-01,2023
+326,Kill Bill,SZA,14468987,2023-02-01,2023
+327,Blinding Lights,The Weeknd,38619899,2023-01-01,2023
+328,Levitating,Dua Lipa,4908020,2024-03-01,2024
+329,Flowers,Miley Cyrus,3112282,2024-02-01,2024
+330,Shape of You,Ed Sheeran,31849699,2023-11-01,2023
+331,Dance The Night,Dua Lipa,4509535,2023-01-01,2023
+332,As It Was,Harry Styles,49211167,2024-03-01,2024
+333,Anti-Hero,Taylor Swift,28640384,2023-05-01,2023
+334,Good 4 U,Olivia Rodrigo,49682055,2023-07-01,2023
+335,Creepin',"Metro Boomin, The Weeknd & 21 Savage",30143212,2023-06-01,2023
+336,Dance The Night,Dua Lipa,37254803,2024-03-01,2024
+337,Calm Down,Rema & Selena Gomez,37507700,2023-11-01,2023
+338,Dance The Night,Dua Lipa,20709003,2023-04-01,2023
+339,Save Your Tears,The Weeknd,33071940,2023-08-01,2023
+340,Unholy,Sam Smith & Kim Petras,17272744,2023-07-01,2023
+341,Unholy,Sam Smith & Kim Petras,5091249,2024-01-01,2024
+342,Anti-Hero,Taylor Swift,17662450,2024-03-01,2024
+343,Good 4 U,Olivia Rodrigo,36795905,2024-03-01,2024
+344,Montero (Call Me By Your Name),Lil Nas X,47670231,2023-06-01,2023
+345,I'm Good (Blue),David Guetta & Bebe Rexha,35566497,2023-04-01,2023
+346,Shivers,Ed Sheeran,37644381,2023-10-01,2023
+347,Calm Down,Rema & Selena Gomez,37056046,2023-02-01,2023
+348,Montero (Call Me By Your Name),Lil Nas X,9458169,2023-04-01,2023
+349,I'm Good (Blue),David Guetta & Bebe Rexha,22054562,2024-03-01,2024
+350,Anti-Hero,Taylor Swift,36363588,2024-02-01,2024
+351,Shivers,Ed Sheeran,33463165,2023-12-01,2023
+352,Shape of You,Ed Sheeran,12426281,2023-07-01,2023
+353,Save Your Tears,The Weeknd,1436863,2023-08-01,2023
+354,Dance The Night,Dua Lipa,7903658,2023-01-01,2023
+355,Dance The Night,Dua Lipa,17280357,2023-06-01,2023
+356,Peaches,Justin Bieber,17395199,2023-11-01,2023
+357,Shivers,Ed Sheeran,32443862,2024-02-01,2024
+358,Dance The Night,Dua Lipa,27228373,2023-08-01,2023
+359,Blinding Lights,The Weeknd,9509809,2023-07-01,2023
+360,Creepin',"Metro Boomin, The Weeknd & 21 Savage",22643201,2023-06-01,2023
+361,Bad Habits,Ed Sheeran,6349576,2023-07-01,2023
+362,Kill Bill,SZA,38430316,2023-07-01,2023
+363,Montero (Call Me By Your Name),Lil Nas X,40156284,2023-09-01,2023
+364,Save Your Tears,The Weeknd,27445838,2023-03-01,2023
+365,Creepin',"Metro Boomin, The Weeknd & 21 Savage",34676174,2023-01-01,2023
+366,Peaches,Justin Bieber,47203552,2023-07-01,2023
+367,Anti-Hero,Taylor Swift,3083072,2023-08-01,2023
+368,Dance The Night,Dua Lipa,26641695,2023-12-01,2023
+369,As It Was,Harry Styles,36722902,2024-02-01,2024
+370,I'm Good (Blue),David Guetta & Bebe Rexha,23781944,2023-12-01,2023
+371,Shivers,Ed Sheeran,44906792,2024-03-01,2024
+372,Blinding Lights,The Weeknd,47635297,2023-01-01,2023
+373,Dance The Night,Dua Lipa,23195885,2023-01-01,2023
+374,Unholy,Sam Smith & Kim Petras,19129987,2023-01-01,2023
+375,Creepin',"Metro Boomin, The Weeknd & 21 Savage",3737670,2023-06-01,2023
+376,Good 4 U,Olivia Rodrigo,15627733,2023-01-01,2023
+377,I'm Good (Blue),David Guetta & Bebe Rexha,29430672,2023-01-01,2023
+378,Kill Bill,SZA,34798901,2023-01-01,2023
+379,Shivers,Ed Sheeran,15814172,2023-03-01,2023
+380,Kill Bill,SZA,8798441,2023-09-01,2023
+381,Unholy,Sam Smith & Kim Petras,36867390,2023-10-01,2023
+382,Drivers License,Olivia Rodrigo,48037513,2023-05-01,2023
+383,Stay,The Kid LAROI & Justin Bieber,26691655,2023-06-01,2023
+384,Kill Bill,SZA,33912890,2023-06-01,2023
+385,Dance The Night,Dua Lipa,19922439,2023-04-01,2023
+386,Blinding Lights,The Weeknd,44978324,2024-03-01,2024
+387,Montero (Call Me By Your Name),Lil Nas X,47920422,2023-07-01,2023
+388,Blinding Lights,The Weeknd,15139584,2023-10-01,2023
+389,Unholy,Sam Smith & Kim Petras,31093904,2023-06-01,2023
+390,Kill Bill,SZA,27576008,2023-06-01,2023
+391,Blinding Lights,The Weeknd,23453702,2023-02-01,2023
+392,Dance The Night,Dua Lipa,49847512,2023-03-01,2023
+393,Unholy,Sam Smith & Kim Petras,16576378,2023-11-01,2023
+394,Dance The Night,Dua Lipa,39568764,2023-04-01,2023
+395,Montero (Call Me By Your Name),Lil Nas X,38038089,2023-05-01,2023
+396,Calm Down,Rema & Selena Gomez,40259926,2023-03-01,2023
+397,Levitating,Dua Lipa,32877575,2023-03-01,2023
+398,As It Was,Harry Styles,17343142,2023-02-01,2023
+399,Save Your Tears,The Weeknd,2170929,2023-12-01,2023
