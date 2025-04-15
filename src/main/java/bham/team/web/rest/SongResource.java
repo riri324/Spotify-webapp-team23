@@ -2,6 +2,7 @@ package bham.team.web.rest;
 
 import bham.team.domain.Song;
 import bham.team.repository.SongRepository;
+import bham.team.security.AuthoritiesConstants;
 import bham.team.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -10,11 +11,11 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -49,6 +50,7 @@ public class SongResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Song> createSong(@Valid @RequestBody Song song) throws URISyntaxException {
         LOG.debug("REST request to save Song : {}", song);
         if (song.getId() != null) {
@@ -71,6 +73,7 @@ public class SongResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Song> updateSong(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Song song)
         throws URISyntaxException {
         LOG.debug("REST request to update Song : {}, {}", id, song);
@@ -103,6 +106,7 @@ public class SongResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Song> partialUpdateSong(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Song song
@@ -166,17 +170,10 @@ public class SongResource {
     /**
      * {@code GET  /songs} : get all the songs.
      *
-     * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of songs in body.
      */
     @GetMapping("")
-    public List<Song> getAllSongs(@RequestParam(name = "filter", required = false) String filter) {
-        if ("likedsongs-is-null".equals(filter)) {
-            LOG.debug("REST request to get all Songs where likedSongs is null");
-            return StreamSupport.stream(songRepository.findAll().spliterator(), false)
-                .filter(song -> song.getLikedSongs() == null)
-                .toList();
-        }
+    public List<Song> getAllSongs() {
         LOG.debug("REST request to get all Songs");
         return songRepository.findAll();
     }
@@ -201,6 +198,7 @@ public class SongResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Void> deleteSong(@PathVariable("id") Long id) {
         LOG.debug("REST request to delete Song : {}", id);
         songRepository.deleteById(id);
@@ -208,4 +206,21 @@ public class SongResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
+    //    /**
+    //     * {@code GET  /songs/:id/similarSong} : get the closest related song.
+    //     *
+    //     * @param id the id of the song to retrieve.
+    //     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the closest song,
+    //     *         or with status {@code 404 (Not Found)} if no similar song is found.
+    //     */
+    //    @GetMapping("/{id}/similarSong")
+    //    public ResponseEntity<Song> getClosestSong(@PathVariable("id") Long id) {
+    //        LOG.debug("REST request to get the closest related song for Song : {}", id);
+    //
+    //        // Call the service to get the closest song
+    //        Optional<Song> closestSong = songService.findClosestSong(id);
+    //
+    //        // Wrap and return the result
+    //        return ResponseUtil.wrapOrNotFound(closestSong);
+    //    }
 }
