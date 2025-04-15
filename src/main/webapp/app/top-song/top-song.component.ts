@@ -49,8 +49,9 @@ export class TopSongsComponent implements OnInit {
   filterSongs(): void {
     if (this.globalTopsongs.length === 0) return;
 
-    const targetYear = 2023;
-    const targetMonth = 3;
+    const now = new Date();
+    const targetYear = now.getFullYear();
+    const targetMonth = now.getMonth() + 1;
 
     this.filteredSongs = this.globalTopsongs
       .filter(song => {
