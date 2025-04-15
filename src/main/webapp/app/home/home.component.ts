@@ -42,7 +42,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
     },
     {
       label: 'Global Top Songs',
-      route: '/global-top-songs',
+      route: '/topsongs',
       description: 'Discover the top global songs and artists currently!',
       icon: '📊',
     },
@@ -70,7 +70,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
   guestFeatures = [
     {
       label: 'Global Top Songs',
-      route: '/global-top-songs',
+      route: '/topsongs',
       description: 'Discover the top global songs and artists currently!',
       icon: '📊',
     },
