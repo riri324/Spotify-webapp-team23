@@ -139,7 +139,7 @@ public class PlaylistResource {
         Playlist existingPlaylist = existingPlaylistOpt.get();
 
         // Check if current user is authorized to update this playlist
-        if (!isAdmin && (existingPlaylist.getUser() == null || !currentUsername.equals(existingPlaylist.getUser()))) {
+        if (!isAdmin && (existingPlaylist.getUser() == null || !currentUsername.equals(existingPlaylist.getUser().getLogin()))) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .headers(
                     HeaderUtil.createFailureAlert(
@@ -217,7 +217,7 @@ public class PlaylistResource {
         Playlist existingPlaylist = existingPlaylistOpt.get();
 
         // Check if current user is authorized to update this playlist
-        if (!isAdmin && (existingPlaylist.getUser() == null || !currentUsername.equals(existingPlaylist.getUser()))) {
+        if (!isAdmin && (existingPlaylist.getUser() == null || !currentUsername.equals(existingPlaylist.getUser().getLogin()))) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .headers(
                     HeaderUtil.createFailureAlert(
@@ -330,7 +330,7 @@ public class PlaylistResource {
             return ResponseEntity.ok(playlist);
         } else if (
             currentUsername != null &&
-            (playlist.getIsPublic() || (playlist.getUser() != null && currentUsername.equals(playlist.getUser())))
+            (playlist.getIsPublic() || (playlist.getUser() != null && currentUsername.equals(playlist.getUser().getLogin())))
         ) {
             // Authenticated user can view public playlists or their own
             return ResponseEntity.ok(playlist);
@@ -388,7 +388,7 @@ public class PlaylistResource {
 
         Playlist playlist = playlistOpt.get();
 
-        if (isAdmin || (playlist.getUser() != null && currentUsername.equals(playlist.getUser()))) {
+        if (isAdmin || (playlist.getUser() != null && currentUsername.equals(playlist.getUser().getLogin()))) {
             playlistRepository.deleteById(id);
             return ResponseEntity.noContent()
                 .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
@@ -409,18 +409,21 @@ public class PlaylistResource {
     }
 
     /**
-     * {@code GET  /playlists/user_id/:userId} : get all playlists for a given userId.
+     * {@code GET  /playlists/user} : get all playlists for a given username.
      *
-     * @param userId the ID of the user whose playlists should be retrieved.
      * @param eagerload flag to eager load entities from relationships.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of playlists in body.
      */
-    @GetMapping("/user_id/{userId}")
+    @GetMapping("/user")
+    @Transactional(readOnly = true)
     public List<Playlist> getAllPlaylistsByUserId(
-        @PathVariable("userId") Long userId,
         @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload
     ) {
-        LOG.debug("REST request to get all Playlists for user: {}", userId);
+        String currentUsername = SecurityUtils.getCurrentUserLogin().orElse(null);
+        User user = userRepository.findOneByLogin(currentUsername).orElseThrow(() -> new RuntimeException("User not found for login"));
+        Long userId = user.getId();
+
+        LOG.debug("REST request to get all Playlists for user: {}", currentUsername);
         if (eagerload) {
             return playlistRepository.findAllByUserIdWithEagerRelationships(userId);
         } else {
