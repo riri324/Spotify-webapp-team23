@@ -54,10 +54,11 @@ public class SecurityConfiguration {
                 headers
                     .contentSecurityPolicy(csp ->
                         csp.policyDirectives(
-                            jHipsterProperties.getSecurity().getContentSecurityPolicy() +
-                            "; connect-src 'self' https://api.spotify.com https://nominatim.openstreetmap.org" +
-                            "; img-src 'self' data: https://s1.ticketm.net https://*.ticketm.net https://images.universe.com" +
-                            "; version=1.0"
+                            "default-src 'self'; " +
+                            "connect-src 'self' https://api.spotify.com https://nominatim.openstreetmap.org; " +
+                            "img-src 'self' data: https://s1.ticketm.net https://*.ticketm.net https://images.universe.com; " +
+                            "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+                            "style-src 'self' 'unsafe-inline'"
                         )
                     )
                     .frameOptions(FrameOptionsConfig::sameOrigin)
