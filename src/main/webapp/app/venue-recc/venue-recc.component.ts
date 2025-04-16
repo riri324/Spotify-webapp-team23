@@ -265,16 +265,37 @@ export class VenueReccComponent implements OnInit {
   getUserLocation(): void {
     this.locationLoading = true;
 
+    // First check if we're on HTTPS or localhost
+    const isSecureContext = window.location.protocol === 'https:' || window.location.hostname === 'localhost';
+
+    if (!isSecureContext) {
+      console.warn('Geolocation requires HTTPS in production environments');
+      this.locationLoading = false;
+      this.locationError = true;
+      this.setDefaultLocation();
+      return;
+    }
+
+    // Fix the linting error by checking for geolocation differently
+    if (typeof navigator === 'undefined' || !('geolocation' in navigator)) {
+      console.warn('Geolocation is not supported by this browser');
+      this.locationLoading = false;
+      this.locationError = true;
+      this.setDefaultLocation();
+      return;
+    }
+
     const geolocationTimeoutMs = 5000;
 
     try {
       navigator.geolocation.getCurrentPosition(
         position => {
+          console.log('Got geolocation:', position.coords.latitude, position.coords.longitude);
           this.locationLoading = false;
           this.reverseGeocode(position.coords.latitude, position.coords.longitude);
         },
-        () => {
-          console.warn('Geolocation error - using fallback');
+        error => {
+          console.warn('Geolocation error:', error.code, error.message);
           this.locationLoading = false;
           this.locationError = true;
           this.setDefaultLocation();
@@ -302,21 +323,36 @@ export class VenueReccComponent implements OnInit {
   reverseGeocode(latitude: number, longitude: number): void {
     const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10`;
 
-    this.http.get<GeocodingResponse>(url, { headers: { 'Accept-Language': 'en-US,en' } }).subscribe({
-      next: response => {
-        const code = response.address?.country_code;
-        this.userCountry = code === undefined ? '' : code.toUpperCase();
+    this.http
+      .get<GeocodingResponse>(url, {
+        headers: {
+          'Accept-Language': 'en-US,en',
+          'User-Agent': 'team23-music-app', // Add a proper User-Agent
+        },
+      })
+      .subscribe({
+        next: response => {
+          console.log('Geocoding response:', response);
+          const code = response.address?.country_code;
+          this.userCountry = code === undefined ? '' : code.toUpperCase();
+          this.userCity = response.address?.city ?? response.address?.town ?? response.address?.village ?? '';
 
-        this.userCity = response.address?.city ?? response.address?.town ?? response.address?.village ?? '';
+          // Store in local storage to avoid multiple API calls
+          try {
+            localStorage.setItem('user_country', this.userCountry);
+            localStorage.setItem('user_city', this.userCity);
+          } catch (e) {
+            console.warn('Could not save location to local storage:', e);
+          }
 
-        this.fetchLocalConcerts();
-      },
-      error: error => {
-        console.error('Reverse geocoding error:', error);
-        // Fall back to default values
-        this.setDefaultLocation();
-      },
-    });
+          this.fetchLocalConcerts();
+        },
+        error: error => {
+          console.error('Reverse geocoding error:', error);
+          // Fall back to default values
+          this.setDefaultLocation();
+        },
+      });
   }
 
   fetchLocalConcerts(): void {
