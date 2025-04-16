@@ -276,7 +276,6 @@ export class VenueReccComponent implements OnInit {
       return;
     }
 
-    // Fix the linting error by checking for geolocation differently
     if (typeof navigator === 'undefined' || !('geolocation' in navigator)) {
       console.warn('Geolocation is not supported by this browser');
       this.locationLoading = false;
@@ -337,7 +336,6 @@ export class VenueReccComponent implements OnInit {
           this.userCountry = code === undefined ? '' : code.toUpperCase();
           this.userCity = response.address?.city ?? response.address?.town ?? response.address?.village ?? '';
 
-          // Store in local storage to avoid multiple API calls
           try {
             localStorage.setItem('user_country', this.userCountry);
             localStorage.setItem('user_city', this.userCity);
@@ -349,7 +347,7 @@ export class VenueReccComponent implements OnInit {
         },
         error: error => {
           console.error('Reverse geocoding error:', error);
-          // Fall back to default values
+
           this.setDefaultLocation();
         },
       });
