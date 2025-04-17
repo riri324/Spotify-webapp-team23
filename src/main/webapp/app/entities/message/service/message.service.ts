@@ -32,7 +32,7 @@ export class MessageService {
 
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/messages');
 
-  create(message: IMessage | (Omit<IMessage, "id"> & { id: null })): Observable<EntityResponseType> {
+  create(message: IMessage | (Omit<IMessage, 'id'> & { id: null })): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(message);
     return this.http
       .post<RestMessage>(this.resourceUrl, copy, { observe: 'response' })
