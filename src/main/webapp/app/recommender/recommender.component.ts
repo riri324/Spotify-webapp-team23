@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlaylistService } from '../entities/playlist/service/playlist.service';
-import {SongService} from "../entities/song/service/song.service";
+import { SongService } from '../entities/song/service/song.service';
 import { AccountService } from '../core/auth/account.service';
 import { IPlaylist } from '../entities/playlist/playlist.model';
 import { ISong } from '../entities/song/song.model';
@@ -74,7 +74,7 @@ export class RecommenderComponent implements OnInit {
 
     this.playlists.forEach(playlist => {
       if (playlist.id) {
-        const playlistSongIds = new Set((playlist.songs || []).map(song => song.id));
+        const playlistSongIds = new Set((playlist.songs ?? []).map(song => song.id));
         const availableSongs = this.allSongs!.filter(song => song.id && !playlistSongIds.has(song.id));
 
         this.playlistCache.set(playlist.id, availableSongs);
