@@ -1,231 +1,10 @@
-<!--<div class="messages-container">-->
-<!--    <div class="messages-card">-->
-<!--        <header class="header">-->
-<!--            <h1>Messages</h1>-->
-<!--            <p>Welcome, Custom User!</p>-->
-<!--            <hr />-->
-<!--            <div class="messages-actions">-->
-<!--                <div class="search-user">-->
-<!--                    <label for="searchInput">Search for a user:</label>-->
-<!--                    <input id="searchInput" type="text" placeholder="Enter user name" />-->
-<!--                    <button>Search</button>-->
-<!--                </div>-->
-<!--                <button class="create-message-button">Create a New Message</button>-->
-<!--            </div>-->
-<!--        </header>-->
-
-<!--        &lt;!&ndash; Main Content Area with Sidebar and Chat &ndash;&gt;-->
-<!--        <div class="messages-main">-->
-<!--            &lt;!&ndash; Sidebar for User List &ndash;&gt;-->
-<!--            <aside class="users-sidebar">-->
-<!--                <h2>Users</h2>-->
-<!--                <ul>-->
-<!--                    <li class="active">john_doe</li>-->
-<!--                    <li>jane_doe</li>-->
-<!--                    <li>alice</li>-->
-<!--                </ul>-->
-<!--            </aside>-->
-
-<!--            &lt;!&ndash; Chat Section &ndash;&gt;-->
-<!--            <section class="messages-content">-->
-<!--                <div class="messages-thread">-->
-<!--                    &lt;!&ndash; Hardcoded chat bubbles &ndash;&gt;-->
-<!--                    <div class="message-bubble sender">-->
-<!--                        <p>Hello, how are you?</p>-->
-<!--                        <span class="timestamp">10:31</span>-->
-<!--                    </div>-->
-<!--                    <div class="message-bubble recipient">-->
-<!--                        <p>I’m good, thanks! Working on our new playlist project.</p>-->
-<!--                        <span class="timestamp">10:32</span>-->
-<!--                    </div>-->
-<!--                    <div class="message-bubble sender">-->
-<!--                        <p>Great to hear! Let's catch up later.</p>-->
-<!--                        <span class="timestamp">10:33</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                &lt;!&ndash; Send Message Box &ndash;&gt;-->
-<!--                <div class="send-message-box">-->
-<!--                    <textarea rows="2" placeholder="Type your message here..."></textarea>-->
-<!--                    <button class="send-button">Send</button>-->
-<!--                </div>-->
-<!--            </section>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--<div class="messages-container">-->
-<!--  <div class="messages-card">-->
-<!--    <header class="header">-->
-<!--      <h1>Messages</h1>-->
-<!--      <p>Welcome, {{ currentAccount?.login }}!</p>-->
-<!--      <hr />-->
-<!--      <div class="messages-actions">-->
-<!--        <div class="search-user">-->
-<!--          <label for="searchInput">Search for a user:</label>-->
-<!--          <input id="searchInput" type="text" placeholder="Enter user name" />-->
-<!--          <button>Search</button>-->
-<!--        </div>-->
-<!--        <button class="create-message-button">Create a New Message</button>-->
-<!--      </div>-->
-<!--    </header>-->
-
-<!--    &lt;!&ndash; Main Content Area with Sidebar and Chat &ndash;&gt;-->
-<!--    <div class="messages-main">-->
-<!--      &lt;!&ndash; Sidebar for User List (you might load users dynamically later) &ndash;&gt;-->
-<!--      <aside class="users-sidebar">-->
-<!--        <h2>Users</h2>-->
-<!--        <ul>-->
-<!--          <li class="active">john_doe</li>-->
-<!--          <li>jane_doe</li>-->
-<!--          <li>alice</li>-->
-<!--        </ul>-->
-<!--      </aside>-->
-
-<!--      &lt;!&ndash; Chat Section &ndash;&gt;-->
-<!--      <section class="messages-content">-->
-<!--        <div class="messages-thread">-->
-<!--          &lt;!&ndash; Dynamic chat bubbles &ndash;&gt;-->
-<!--          <div class="message-bubble" *ngFor="let msg of conversationMessages">-->
-<!--            <div class="message-header">-->
-<!--              <strong>{{ msg.sender?.login }}</strong>-->
-<!--&lt;!&ndash;              <span class="timestamp">{{ msg.sent | date:'shortTime' }}</span>&ndash;&gt;-->
-<!--            </div>-->
-<!--            <div class="message-content">-->
-<!--              <p>{{ msg.content }}</p>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        &lt;!&ndash; Send Message Box &ndash;&gt;-->
-<!--        <div class="send-message-box">-->
-<!--          <textarea rows="2" [(ngModel)]="newMessageContent" placeholder="Type your message here..."></textarea>-->
-<!--          <button class="send-button" (click)="sendMessage()">Send</button>-->
-<!--        </div>-->
-<!--      </section>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-<!--<div class="messaging-container">-->
-<!--  <div class="messaging-card">-->
-<!--    <header class="header">-->
-<!--      <h1>Messages</h1>-->
-<!--      <p>Welcome, {{ currentAccount?.login }}!</p>-->
-<!--      <hr />-->
-<!--    </header>-->
-
-<!--    <div class="messaging-main">-->
-<!--      &lt;!&ndash; Sidebar: conversation partners &ndash;&gt;-->
-<!--      <aside class="users-sidebar">-->
-<!--        <h2>Conversations</h2>-->
-<!--        <ul>-->
-<!--          <li-->
-<!--            *ngFor="let u of users"-->
-<!--            (click)="selectUser(u)"-->
-<!--            [class.active]="u === selectedUser"-->
-<!--          >-->
-<!--            {{ u }}-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </aside>-->
-
-<!--      &lt;!&ndash; Chat Section &ndash;&gt;-->
-<!--      <section class="messages-content">-->
-<!--        <div class="messages-thread" #thread>-->
-<!--          <div-->
-<!--            class="message-bubble"-->
-<!--            *ngFor="let msg of conversationMessages"-->
-<!--            [class.sent-by-me]="msg.sender?.login === currentAccount?.login"-->
-<!--          >-->
-<!--            <div class="message-header">-->
-<!--              <strong>{{ msg.sender?.login }}</strong>-->
-<!--              <span class="timestamp">{{ msg.sent?.toDate() | date:'shortTime' }}</span>-->
-<!--            </div>-->
-<!--            <div class="message-body">-->
-<!--              {{ msg.content }}-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        &lt;!&ndash; Send box &ndash;&gt;-->
-<!--        <div class="send-box">-->
-<!--          <textarea-->
-<!--            rows="2"-->
-<!--            [(ngModel)]="newMessageContent"-->
-<!--            placeholder="Type your message..."-->
-<!--          ></textarea>-->
-<!--          <button class="send-btn" (click)="sendMessage()">Send</button>-->
-<!--        </div>-->
-<!--      </section>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-<!--<div class="messaging-container">-->
-<!--  <div class="messaging-card">-->
-<!--    <header class="header">-->
-<!--      <h1>Messages</h1>-->
-<!--      <p>Welcome, {{ currentAccount?.login }}!</p>-->
-<!--      <hr />-->
-<!--    </header>-->
-
-<!--    <div class="messaging-main">-->
-<!--      <aside class="users-sidebar">-->
-<!--        <h2>Conversations</h2>-->
-<!--        <ul>-->
-<!--          <li-->
-<!--            *ngFor="let u of users"-->
-<!--            (click)="selectUser(u)"-->
-<!--            [class.active]="u === selectedUser"-->
-<!--          >-->
-<!--            {{ u.login }}-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </aside>-->
-
-<!--      <section class="messages-content">-->
-<!--        <div class="messages-thread" #thread>-->
-<!--          <div-->
-<!--            class="message-bubble"-->
-<!--            *ngFor="let msg of conversationMessages"-->
-<!--            [class.sent-by-me]="msg.sender?.login === currentAccount?.login"-->
-<!--          >-->
-<!--            <div class="message-header">-->
-<!--              <strong>{{ msg.sender?.login }}</strong>-->
-<!--              <span class="timestamp">-->
-<!--                {{ msg.sent?.toDate() | date:'shortTime' }}-->
-<!--              </span>-->
-<!--            </div>-->
-<!--            <div class="message-body">-->
-<!--              {{ msg.content }}-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="send-box">-->
-<!--          <textarea-->
-<!--            rows="2"-->
-<!--            [(ngModel)]="newMessageContent"-->
-<!--            placeholder="Type your message..."-->
-<!--          ></textarea>-->
-<!--          <button class="send-btn" (click)="sendMessage()">Send</button>-->
-<!--        </div>-->
-<!--      </section>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
 <div class="messages-container">
   <div class="messages-card">
-    <!-- HEADER -->
     <header class="header">
       <h1>Messages</h1>
       <p>Welcome, {{ currentAccount?.login }}!</p>
       <hr />
-
       <div class="messages-actions">
-        <!-- Search User (no click handler for now) -->
         <div class="search-user">
           <div class="search-user">
             <label for="searchInput">Search for a user:</label>
@@ -235,22 +14,27 @@
         </div>
       </div>
     </header>
-
-    <!-- MAIN CONTENT -->
     <div class="messages-main">
-      <!-- SIDEBAR -->
       <aside class="users-sidebar">
         <h2>Users</h2>
-        <ul>
-          <li *ngFor="let u of users" (click)="selectUser(u)" [class.active]="u === selectedUser">
+        <ul role="listbox" aria-label="Conversation partners" tabindex="0">
+          <!--          <li *ngFor="let u of users" (click)="selectUser(u)" [class.active]="u === selectedUser">-->
+          <li
+            *ngFor="let u of users"
+            role="option"
+            [attr.aria-selected]="u === selectedUser"
+            tabindex="-1"
+            (click)="selectUser(u)"
+            (keydown.enter)="selectUser(u)"
+            (keydown.space)="selectUser(u)"
+            [class.active]="u === selectedUser"
+          >
             {{ u.login }}
           </li>
         </ul>
       </aside>
-
-      <!-- CHAT SECTION -->
       <section class="messages-content">
-        <div class="messages-thread" #thread>
+        <div class="messages-thread" #thread aria-live="polite" aria-atomic="false">
           <div
             *ngFor="let msg of conversationMessages"
             class="message-bubble"
@@ -268,8 +52,6 @@
             </div>
           </div>
         </div>
-
-        <!-- SEND BOX -->
         <div class="send-message-box">
           <textarea rows="2" [(ngModel)]="newMessageContent" placeholder="Type your message here..."></textarea>
           <button class="send-button" (click)="sendMessage()">Send</button>
