@@ -9,6 +9,11 @@ import { CommonModule } from '@angular/common';
 import { HttpResponse, HttpClient } from '@angular/common/http';
 import { ApplicationConfigService } from '../core/config/application-config.service';
 
+interface PlaylistRecommendation {
+  playlist: IPlaylist;
+  recommendedSong: ISong | null;
+}
+
 @Component({
   selector: 'jhi-recommender',
   standalone: true,
@@ -19,12 +24,11 @@ import { ApplicationConfigService } from '../core/config/application-config.serv
 export class RecommenderComponent implements OnInit {
   userName: string | null = null;
   currentUserId: number | null = null;
-  playlists?: IPlaylist[];
-  Songs?: ISong[];
+  playlists: IPlaylist[] = [];
   allSongs?: ISong[]; // Store all songs from the database
   playlistCache: Map<number, ISong[]> = new Map<number, ISong[]>();
-  selectedSong: ISong | null = null;
-  recommendedSongSource: Map<number, number> = new Map<number, number>();
+  playlistRecommendations: PlaylistRecommendation[] = [];
+
   public readonly router = inject(Router);
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
@@ -32,7 +36,7 @@ export class RecommenderComponent implements OnInit {
   constructor(
     protected playlistService: PlaylistService,
     protected accountService: AccountService,
-    protected songService: SongService, // Add SongService for fetching all songs
+    protected songService: SongService,
   ) {}
 
   ngOnInit(): void {
@@ -43,16 +47,11 @@ export class RecommenderComponent implements OnInit {
     const apiUrl = this.applicationConfigService.getEndpointFor('api/account');
     this.http.get<any>(apiUrl).subscribe(userData => {
       if (userData) {
-        // First, load all songs from the database
         this.loadAllSongs(() => {
-          // Then load user playlists
           this.playlistService.queryUserPlaylists().subscribe(response => {
             this.playlists = (response.body ?? []).filter(playlist => playlist.songs && playlist.songs.length > 0);
 
-            // Initialize the cache after loading playlists
             this.initializeCache();
-
-            // Then load recommendations
             this.loadRecommendations();
           });
         });
@@ -68,10 +67,7 @@ export class RecommenderComponent implements OnInit {
     });
   }
 
-  // Initialize in-memory cache for each playlist
   initializeCache(): void {
-    if (!this.playlists || !this.allSongs) return;
-
     this.playlists.forEach(playlist => {
       if (playlist.id) {
         const playlistSongIds = new Set((playlist.songs ?? []).map(song => song.id));
@@ -83,40 +79,58 @@ export class RecommenderComponent implements OnInit {
   }
 
   loadRecommendations(): void {
-    if (!this.playlists || this.playlists.length === 0) {
-      this.Songs = [];
-      return;
-    }
-    this.recommendedSongSource.clear();
-    const songSet = new Set<ISong>();
+    this.playlistRecommendations = [];
 
     this.playlists.forEach(playlist => {
       if (playlist.id) {
-        const availableSongs = this.playlistCache.get(playlist.id);
+        const recommendedSong = this.getRandomSongForPlaylist(playlist.id);
 
-        if (availableSongs && availableSongs.length > 0) {
-          const randomIndex = Math.floor(Math.random() * availableSongs.length);
-          const randomSong = availableSongs[randomIndex];
-          songSet.add(randomSong);
-
-          if (randomSong.id) {
-            this.recommendedSongSource.set(randomSong.id, playlist.id);
-          }
-        }
+        this.playlistRecommendations.push({
+          playlist,
+          recommendedSong,
+        });
       }
     });
+  }
 
-    this.Songs = Array.from(songSet);
+  // For now, get random song, swap out to KNN later
+  getRandomSongForPlaylist(playlistId: number): ISong | null {
+    const availableSongs = this.playlistCache.get(playlistId);
+
+    if (availableSongs && availableSongs.length > 0) {
+      const randomIndex = Math.floor(Math.random() * availableSongs.length);
+      return availableSongs[randomIndex];
+    }
+
+    return null;
+  }
+
+  getNewRecommendation(playlistId: number): void {
+    const pairIndex = this.playlistRecommendations.findIndex(pair => pair.playlist.id === playlistId);
+
+    if (pairIndex !== -1) {
+      const newRecommendation = this.getRandomSongForPlaylist(playlistId);
+      this.playlistRecommendations[pairIndex].recommendedSong = newRecommendation;
+
+      if (newRecommendation) {
+        this.showNotification(`New recommendation generated for "${this.playlistRecommendations[pairIndex].playlist.name}"`);
+      } else {
+        this.showNotification(`No more recommendations available for "${this.playlistRecommendations[pairIndex].playlist.name}"`);
+      }
+    }
+  }
+
+  rejectSong(song: ISong, playlistId: number): void {
+    if (!song.id || !playlistId) {
+      return;
+    }
+    this.removeSongFromCache(song.id, playlistId);
+    this.getNewRecommendation(playlistId);
   }
 
   // Method to navigate to the playlist detail page
   navigateToPlaylist(id: number): void {
     this.router.navigate(['/playlist', id, 'view']);
-  }
-
-  // Toggle the playlist selector dropdown for a song
-  togglePlaylistSelector(song: ISong | null): void {
-    this.selectedSong = song;
   }
 
   // Add a song to a playlist
@@ -128,15 +142,10 @@ export class RecommenderComponent implements OnInit {
     // Call the service method to add the song to the playlist
     this.playlistService.addSongToPlaylist(playlist.id, song.id).subscribe({
       next: response => {
-        // Show success message
         this.showNotification(`"${song.trackName}" added to "${playlist.name}" playlist`);
-
-        // Remove the song from the cache for this playlist
         this.removeSongFromCache(song.id, playlist.id);
-        this.togglePlaylistSelector(null);
 
-        // Refresh recommendations
-        this.loadRecommendations();
+        this.getNewRecommendation(playlist.id);
       },
       error: error => {
         this.showNotification('Failed to add song to playlist. Please try again.', true);
@@ -145,19 +154,6 @@ export class RecommenderComponent implements OnInit {
         // Comment so eslint doesnt break
       },
     });
-  }
-
-  rejectSong(song: ISong): void {
-    if (song.id) {
-      // Find which playlist this song was recommended from
-      const sourcePlaylistId = this.recommendedSongSource.get(song.id);
-
-      if (sourcePlaylistId) {
-        this.removeSongFromCache(song.id, sourcePlaylistId);
-        this.showNotification(`"${song.trackName}" removed from recommendations`);
-        this.loadRecommendations();
-      }
-    }
   }
 
   // Remove a song from a specific playlist's cache

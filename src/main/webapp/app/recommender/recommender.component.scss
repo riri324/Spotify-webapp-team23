@@ -1,42 +1,53 @@
 .recommender-content {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 20px;
 }
 
 .recommender-card h1 {
   text-align: center;
-  color: #39ff14; /* Neon green */
+  color: #39ff14;
 }
 
 .recommender-card > p {
   text-align: center;
-  color: #999; /* Grey */
+  color: #999;
 }
 
-.playlists-section h2,
-.recommended-section h2 {
-  color: #39ff14; /* Neon green */
+.playlist-recommendation-pair {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  border: 1px solid #555;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 20px;
 }
 
-.playlists-section {
+.playlist-section {
   flex: 1;
-  border-right: 1px solid #555;
-  padding-right: 20px;
+  padding: 15px;
+  background-color: #2a2a2a;
 }
 
-.recommended-section {
+.recommendation-section {
   flex: 1;
+  padding: 15px;
+  background-color: #333;
 }
 
-/* Playlist cards */
+.playlist-section h2,
+.recommendation-section h2 {
+  color: #39ff14;
+}
+
 .playlist-card {
-  margin-bottom: 15px;
+  margin-bottom: 0;
 }
 
 .playlist-button {
   width: 100%;
-  height: 120px; /* Fixed height for consistency */
+  height: 120px;
   text-align: left;
   background-color: #333;
   border: 1px solid #555;
@@ -63,7 +74,7 @@
 }
 
 .playlist-button p {
-  color: #999; /* Grey */
+  color: #999;
   margin: 0;
   font-size: 0.85rem;
   overflow: hidden;
@@ -72,14 +83,13 @@
   -webkit-box-orient: vertical;
 }
 
-/* Song cards and actions */
 .song-card {
   background-color: #333;
   border-radius: 6px;
   padding: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 0;
   border: 1px solid #555;
-  height: 120px; /* Fixed height to match playlist cards */
+  height: 120px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -104,6 +114,8 @@
 
 .song-actions {
   margin-top: auto;
+  display: flex;
+  gap: 10px;
   position: relative;
   z-index: 10;
 }
@@ -126,8 +138,8 @@
 }
 
 .reject-btn {
-  background-color: #FF1439; /* Bright Neon Red */
-  color: #fff; /* White text for contrast */
+  background-color: #FF1439;
+  color: #fff;
   border: none;
   padding: 6px 12px;
   border-radius: 4px;
@@ -138,66 +150,28 @@
 }
 
 .reject-btn:hover {
-  background-color: #D51232; /* Slightly darker red */
+  background-color: #D51232;
   transform: scale(1.05);
 }
 
-.playlist-selector {
-  position: absolute;
-  width: 100%;
-  background-color: #444;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  padding: 12px;
-  margin-top: 10px;
-  z-index: 30;
-  border: 1px solid #555;
-  max-height: 250px;
-  overflow-y: auto;
-  top: 100%;
-  left: 0;
-}
-
-.playlist-selector h4 {
-  margin-bottom: 10px;
-  font-size: 0.9rem;
-  color: #39ff14;
-  border-bottom: 1px solid #555;
-  padding-bottom: 8px;
-}
-
-.playlist-option {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: none;
-  padding: 10px;
-  margin-bottom: 5px;
-  border-radius: 4px;
-  cursor: pointer;
-  color: white;
-  font-size: 0.85rem;
-}
-
-.playlist-option:hover {
-  background-color: #555;
-}
-
-.cancel-btn {
-  width: 100%;
+.no-recommendation {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #333;
   border: 1px solid #555;
-  padding: 8px 12px;
-  border-radius: 4px;
-  margin-top: 10px;
-  cursor: pointer;
-  color: #ddd;
-  font-size: 0.85rem;
+  border-radius: 6px;
+  color: #999;
 }
 
-.cancel-btn:hover {
-  background-color: #3a3a3a;
+.no-playlists {
+  padding: 30px;
+  text-align: center;
+  background-color: #333;
+  border: 1px solid #555;
+  border-radius: 6px;
+  color: #999;
 }
 
 .notification {
@@ -226,16 +200,14 @@
   opacity: 0;
 }
 
+/* Responsive design for mobile devices */
 @media (max-width: 768px) {
-  .recommender-content {
+  .playlist-recommendation-pair {
     flex-direction: column;
   }
 
-  .playlists-section {
-    border-right: none;
-    border-bottom: 1px solid #555;
-    padding-right: 0;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
+  .playlist-section,
+  .recommendation-section {
+    width: 100%;
   }
 }
