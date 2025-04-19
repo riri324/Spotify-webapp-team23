@@ -91,7 +91,7 @@ export class MessagesComponent implements OnInit, AfterViewChecked {
     });
   }
   private loadAllMessages(): void {
-    this.messageService.query().subscribe((res: HttpResponse<IMessage[]>) => {
+    this.messageService.query({ eagerload: true }).subscribe((res: HttpResponse<IMessage[]>) => {
       this.allMessages = res.body ?? [];
       this.buildUserList();
     });
@@ -115,12 +115,12 @@ export class MessagesComponent implements OnInit, AfterViewChecked {
       this.conversationMessages = [];
       return;
     }
-    const meLogin = this.currentAccount.login;
+    const meLogin = this.currentAccount.id;
     this.conversationMessages = this.allMessages
       .filter(
         m =>
-          (m.sender?.login === meLogin && m.recipient?.login === this.selectedUser!.login) ||
-          (m.sender?.login === this.selectedUser!.login && m.recipient?.login === meLogin),
+          (m.sender?.id === meLogin && m.recipient?.id === this.selectedUser!.id) ||
+          (m.sender?.id === this.selectedUser!.id && m.recipient?.id === meLogin),
       )
 
       .sort((a, b) => (a.sent?.valueOf() ?? 0) - (b.sent?.valueOf() ?? 0));
