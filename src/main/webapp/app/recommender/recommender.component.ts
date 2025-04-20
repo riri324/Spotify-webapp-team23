@@ -6,7 +6,7 @@ import { AccountService } from '../core/auth/account.service';
 import { IPlaylist } from '../entities/playlist/playlist.model';
 import { ISong } from '../entities/song/song.model';
 import { CommonModule } from '@angular/common';
-import { HttpResponse, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ApplicationConfigService } from '../core/config/application-config.service';
 
 interface PlaylistRecommendation {
@@ -23,15 +23,31 @@ interface PlaylistRecommendation {
 })
 export class RecommenderComponent implements OnInit {
   userName: string | null = null;
-  currentUserId: number | null = null;
   playlists: IPlaylist[] = [];
-  allSongs?: ISong[]; // Store all songs from the database
+  allSongs?: ISong[];
   playlistCache: Map<number, ISong[]> = new Map<number, ISong[]>();
   playlistRecommendations: PlaylistRecommendation[] = [];
 
   public readonly router = inject(Router);
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
+
+  // Mainly going to just use the numerical features to start off
+  // Future implementations (If I bother, would do filters based on genre, artist and etc)
+  private songFeatures: (keyof ISong)[] = [
+    'danceability',
+    'energy',
+    'speechiness',
+    'acousticness',
+    'instrumentalness',
+    'liveness',
+    'valence',
+    'tempo',
+  ];
+
+  // KNN set to 1, just need 1 song to be returned
+  // Future case where you want to return 5 songs from one playlist
+  private k = 1;
 
   constructor(
     protected playlistService: PlaylistService,
@@ -83,7 +99,7 @@ export class RecommenderComponent implements OnInit {
 
     this.playlists.forEach(playlist => {
       if (playlist.id) {
-        const recommendedSong = this.getRandomSongForPlaylist(playlist.id);
+        const recommendedSong = this.getRecommendedSongForPlaylist(playlist.id, playlist);
 
         this.playlistRecommendations.push({
           playlist,
@@ -93,30 +109,42 @@ export class RecommenderComponent implements OnInit {
     });
   }
 
-  // For now, get random song, swap out to KNN later
-  getRandomSongForPlaylist(playlistId: number): ISong | null {
+  // KNN implementation to get a recommended song
+  getRecommendedSongForPlaylist(playlistId: number, playlist: IPlaylist): ISong | null {
     const availableSongs = this.playlistCache.get(playlistId);
+    const playlistSongs = playlist.songs;
 
-    if (availableSongs && availableSongs.length > 0) {
-      const randomIndex = Math.floor(Math.random() * availableSongs.length);
-      return availableSongs[randomIndex];
+    if (!availableSongs || availableSongs.length === 0 || !playlistSongs || playlistSongs.length === 0) {
+      return null;
     }
 
-    return null;
+    // Select a random song from the playlist as our reference point
+    const randomPlaylistSong = playlistSongs[Math.floor(Math.random() * playlistSongs.length)];
+
+    const songDistances = availableSongs
+      .map(song => ({
+        song,
+        distance: this.calculateDistance(randomPlaylistSong, song),
+      }))
+      .sort((a, b) => a.distance - b.distance);
+
+    // If no songs available, return null
+    if (songDistances.length === 0) {
+      return null;
+    }
+
+    const kNearest = songDistances.slice(0, Math.min(this.k, songDistances.length));
+
+    const randomIndex = Math.floor(Math.random() * kNearest.length);
+    return kNearest[randomIndex].song;
   }
 
   getNewRecommendation(playlistId: number): void {
     const pairIndex = this.playlistRecommendations.findIndex(pair => pair.playlist.id === playlistId);
 
     if (pairIndex !== -1) {
-      const newRecommendation = this.getRandomSongForPlaylist(playlistId);
-      this.playlistRecommendations[pairIndex].recommendedSong = newRecommendation;
-
-      if (newRecommendation) {
-        this.showNotification(`New recommendation generated for "${this.playlistRecommendations[pairIndex].playlist.name}"`);
-      } else {
-        this.showNotification(`No more recommendations available for "${this.playlistRecommendations[pairIndex].playlist.name}"`);
-      }
+      const playlist = this.playlistRecommendations[pairIndex].playlist;
+      this.playlistRecommendations[pairIndex].recommendedSong = this.getRecommendedSongForPlaylist(playlistId, playlist);
     }
   }
 
@@ -142,13 +170,11 @@ export class RecommenderComponent implements OnInit {
     // Call the service method to add the song to the playlist
     this.playlistService.addSongToPlaylist(playlist.id, song.id).subscribe({
       next: response => {
-        this.showNotification(`"${song.trackName}" added to "${playlist.name}" playlist`);
         this.removeSongFromCache(song.id, playlist.id);
-
         this.getNewRecommendation(playlist.id);
       },
       error: error => {
-        this.showNotification('Failed to add song to playlist. Please try again.', true);
+        // Comment so eslint doesnt break
       },
       complete() {
         // Comment so eslint doesnt break
@@ -166,19 +192,32 @@ export class RecommenderComponent implements OnInit {
     }
   }
 
-  // Simple notification function
-  private showNotification(message: string, isError = false): void {
-    const notificationElement = document.createElement('div');
-    notificationElement.className = `notification ${isError ? 'notification-error' : 'notification-success'}`;
-    notificationElement.textContent = message;
-    document.body.appendChild(notificationElement);
+  // Calculate Euclidean distance between two songs based on their features
+  private calculateDistance(song1: ISong, song2: ISong): number {
+    let sumSquaredDiffs = 0;
+    let validFeatureCount = 0;
 
-    // Auto remove after 3 seconds
-    setTimeout(() => {
-      notificationElement.classList.add('notification-hide');
-      setTimeout(() => {
-        document.body.removeChild(notificationElement);
-      }, 300);
-    }, 3000);
+    for (const feature of this.songFeatures) {
+      const value1 = song1[feature] as number | null;
+      const value2 = song2[feature] as number | null;
+
+      if (value1 !== null && value2 !== null) {
+        if (feature === 'tempo') {
+          const normalizedValue1 = value1 / 200;
+          const normalizedValue2 = value2 / 200;
+          sumSquaredDiffs += Math.pow(normalizedValue1 - normalizedValue2, 2);
+        } else {
+          sumSquaredDiffs += Math.pow(value1 - value2, 2);
+        }
+        validFeatureCount++;
+      }
+    }
+
+    // If we have no valid features to compare, return infinity (worst match)
+    if (validFeatureCount === 0) {
+      return Infinity;
+    }
+
+    return Math.sqrt(sumSquaredDiffs) / Math.sqrt(validFeatureCount);
   }
 }
