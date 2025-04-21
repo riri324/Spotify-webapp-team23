@@ -1,3 +1,3 @@
 id;login;password_hash;first_name;last_name;email;image_url;activated;lang_key;created_by;last_modified_by
-1;admin;$2a$10$dnpl/4ePsY60w.lcZq7rCuAZzwfQyrSLvN/iJjoGB.AeqsaqpzspG;Administrator;Administrator;admin@localhost;;true;en;system;system
-2;user;$2a$10$x0Fm5knRUq78cvqGqbXMlO/uSwq50B6vucR8MswfhqQRko6VILiGC;User;User;user@localhost;;true;en;system;system
+1;admin;$2a$10$Kh.sIV1RSgc4IHwEHsrCH.BHR3NhQCAkhwnUQEEZrdS9/xtHxPk5C;Administrator;Administrator;admin@localhost;;true;en;system;system
+2;user;$2a$10$a0xNDqjlqeTpsuOcPQeQZ.Gr1F/ZyztJo1n8rPA.e5jtXjAEuhFxy;User;User;user@localhost;;true;en;system;system
