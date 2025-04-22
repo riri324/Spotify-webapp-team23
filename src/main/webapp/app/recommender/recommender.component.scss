@@ -138,7 +138,7 @@
 }
 
 .reject-btn {
-  background-color: #FF1439;
+  background-color: #ff1439;
   color: #fff;
   border: none;
   padding: 6px 12px;
@@ -150,7 +150,7 @@
 }
 
 .reject-btn:hover {
-  background-color: #D51232;
+  background-color: #d51232;
   transform: scale(1.05);
 }
 
@@ -198,6 +198,19 @@
 
 .notification-hide {
   opacity: 0;
+}
+
+.keyboard-focus {
+  outline: 9px solid #0077ff;
+  box-shadow: 0 0 8px rgba(0, 119, 255, 0.6);
+  position: relative;
+  z-index: 10;
+}
+
+.playlist-button:focus,
+.add-to-playlist-btn:focus,
+.reject-btn:focus {
+  outline: none;
 }
 
 /* Responsive design for mobile devices */
