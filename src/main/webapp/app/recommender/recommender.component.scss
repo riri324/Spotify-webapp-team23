@@ -201,8 +201,9 @@
 }
 
 .keyboard-focus {
-  outline: 9px solid #0077ff;
+  outline: 3px solid #0077ff;
   box-shadow: 0 0 8px rgba(0, 119, 255, 0.6);
+  transform: scale(1.02);
   position: relative;
   z-index: 10;
 }
