@@ -6,11 +6,16 @@
     <div class="recommender-content">
       <!-- Playlist-Song Recommendation Pairs -->
       @if (playlistRecommendations.length > 0) {
-        @for (pair of playlistRecommendations; track pair.playlist.id) {
+        @for (pair of playlistRecommendations; track pair.playlist.id; let i = $index) {
           <div class="playlist-recommendation-pair">
             <div class="playlist-section">
               <div class="playlist-card">
-                <button class="playlist-button" (click)="navigateToPlaylist(pair.playlist.id)">
+                <button
+                  class="playlist-button"
+                  (click)="navigateToPlaylist(pair.playlist.id)"
+                  (keydown)="handleKeyDown($event)"
+                  [attr.data-index]="i"
+                  [attr.data-section]="'playlist'">
                   <h3>{{ pair.playlist.name }}</h3>
                   <p>{{ pair.playlist.description }}</p>
                 </button>
@@ -23,10 +28,20 @@
                   <h3>{{ pair.recommendedSong.trackName }}</h3>
                   <p>by {{ pair.recommendedSong.artist?.artistName || 'Unknown' }}</p>
                   <div class="song-actions">
-                    <button class="add-to-playlist-btn" (click)="addSongToPlaylist(pair.recommendedSong, pair.playlist)">
+                    <button
+                      class="add-to-playlist-btn"
+                      (click)="addSongToPlaylist(pair.recommendedSong, pair.playlist)"
+                      (keydown)="handleKeyDown($event)"
+                      [attr.data-index]="i"
+                      [attr.data-section]="'addButton'">
                       Add to Playlist
                     </button>
-                    <button class="reject-btn" (click)="rejectSong(pair.recommendedSong, pair.playlist.id)">
+                    <button
+                      class="reject-btn"
+                      (click)="rejectSong(pair.recommendedSong, pair.playlist.id)"
+                      (keydown)="handleKeyDown($event)"
+                      [attr.data-index]="i"
+                      [attr.data-section]="'rejectButton'">
                       Pick another recommendation
                     </button>
                   </div>

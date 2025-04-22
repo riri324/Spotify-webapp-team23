@@ -200,6 +200,19 @@
   opacity: 0;
 }
 
+.keyboard-focus {
+  outline: 3px solid #0077ff;
+  box-shadow: 0 0 8px rgba(0, 119, 255, 0.6);
+  position: relative;
+  z-index: 10;
+}
+
+.playlist-button:focus,
+.add-to-playlist-btn:focus,
+.reject-btn:focus {
+  outline: none;
+}
+
 /* Responsive design for mobile devices */
 @media (max-width: 768px) {
   .playlist-recommendation-pair {
