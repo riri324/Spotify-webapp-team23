@@ -5,44 +5,166 @@
 /* ==========================================================================
 Navbar
 ========================================================================== */
-
-.navbar-version {
-  font-size: 0.65em;
-  color: $navbar-dark-color;
-}
-
-.profile-image {
-  height: 1.75em;
-  width: 1.75em;
-}
-
 .navbar {
-  padding: 0.2rem 1rem;
-  .dropdown-item.active,
-  .dropdown-item.active:focus,
-  .dropdown-item.active:hover {
-    background-color: $dark;
+  padding: 0.75rem 1.5rem;
+  background-color: #121212 !important;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+  font-family: 'Circular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  .navbar-brand {
+    font-weight: 700;
+    letter-spacing: -0.5px;
+
+    .navbar-title {
+      color: #ffffff;
+      font-size: 1.5rem;
+    }
+
+    .navbar-version {
+      font-size: 0.65em;
+      color: #b3b3b3;
+      margin-left: 0.5rem;
+    }
   }
 
-  a.nav-link {
-    font-weight: 400;
+  .nav-item {
+    margin: 0 0.2rem;
+
+    .nav-link {
+      font-weight: 600;
+      padding: 0.6rem 0.8rem;
+      transition: color 0.2s ease;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #b3b3b3;
+
+      &:hover {
+        color: #ffffff;
+      }
+
+      &.active {
+        color: #1db954;
+        border-bottom: 2px solid #1db954;
+      }
+
+      fa-icon {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  .dropdown-menu {
+    background-color: #181818;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin-top: 0.7rem;
+    padding: 0.5rem 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+    .dropdown-item {
+      color: #b3b3b3;
+      padding: 0.65rem 1.5rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.15s ease;
+
+      fa-icon {
+        margin-right: 0.75rem;
+        font-size: 0.85rem;
+      }
+
+      &:hover {
+        color: #ffffff;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      &.active {
+        background-color: rgba(29, 185, 84, 0.3);
+        color: #ffffff;
+
+        &:hover {
+          background-color: rgba(29, 185, 84, 0.4);
+        }
+      }
+    }
   }
 
   .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.1);
+
     &:hover {
-      color: $navbar-dark-hover-color;
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
     }
   }
 }
 
-/* ==========================================================================
-Logo styles
-========================================================================== */
+.dropdown-toggle::after {
+  color: #b3b3b3;
+}
+
+.profile-image {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
 .logo-img {
-  height: 45px;
-  width: 45px;
+  height: 40px;
+  width: 40px;
   display: inline-block;
   vertical-align: middle;
   background: url('/content/images/logo-jhipster.png') no-repeat center center;
   background-size: contain;
+  margin-right: 0.75rem;
+  filter: brightness(0) invert(0.9);
+}
+
+.navbar-action-btn {
+  background-color: transparent;
+  border: 1px solid #b3b3b3;
+  color: #ffffff;
+  border-radius: 500px;
+  padding: 0.4rem 1.2rem;
+  margin-left: 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: scale(1.04);
+    border-color: #ffffff;
+  }
+}
+
+.premium-feature {
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #1db954;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.5rem 1rem;
+
+    .navbar-collapse {
+      background-color: #121212;
+      padding: 1rem;
+      margin: 0 -1rem;
+    }
+  }
 }
