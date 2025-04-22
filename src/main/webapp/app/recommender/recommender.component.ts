@@ -92,7 +92,7 @@ export class RecommenderComponent implements OnInit, OnDestroy {
         this.updateFocus();
         event.preventDefault();
         break;
-      case 'ArrowRight':
+      case 'ArrowRight': {
         const pair = this.playlistRecommendations[this.focusedIndex];
         if (pair.recommendedSong) {
           if (this.activeSection === 'playlist') {
@@ -104,6 +104,7 @@ export class RecommenderComponent implements OnInit, OnDestroy {
         }
         event.preventDefault();
         break;
+      }
       case 'Enter':
         this.performAction();
         event.preventDefault();
@@ -117,7 +118,6 @@ export class RecommenderComponent implements OnInit, OnDestroy {
     });
 
     const pairElement = document.querySelectorAll('.playlist-recommendation-pair')[this.focusedIndex];
-    if (!pairElement) return;
 
     let selector = '';
 
@@ -134,24 +134,21 @@ export class RecommenderComponent implements OnInit, OnDestroy {
     }
 
     const elementToFocus = pairElement.querySelector(selector) as HTMLElement;
-    if (elementToFocus) {
-      elementToFocus.classList.add('keyboard-focus');
-      elementToFocus.focus();
-    }
+    elementToFocus.classList.add('keyboard-focus');
+    elementToFocus.focus();
   }
 
   performAction(): void {
     const pair = this.playlistRecommendations[this.focusedIndex];
 
     if (this.activeSection === 'playlist') {
-      if (pair.playlist.id) {
-        this.navigateToPlaylist(pair.playlist.id);
-      }
+      this.navigateToPlaylist(pair.playlist.id);
     } else if (this.activeSection === 'addButton') {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (pair.recommendedSong && pair.playlist) {
         this.addSongToPlaylist(pair.recommendedSong, pair.playlist);
       }
-    } else if (this.activeSection === 'rejectButton') {
+    } else {
       if (pair.recommendedSong && pair.playlist.id) {
         this.rejectSong(pair.recommendedSong, pair.playlist.id);
       }
@@ -160,13 +157,15 @@ export class RecommenderComponent implements OnInit, OnDestroy {
 
   loadUserData(): void {
     const apiUrl = this.applicationConfigService.getEndpointFor('api/account');
-    this.http.get<any>(apiUrl)
+    this.http
+      .get<any>(apiUrl)
       .pipe(takeUntil(this.destroy$))
       .subscribe(userData => {
         if (userData) {
           this.userName = userData.firstName || userData.login;
           this.loadAllSongs(() => {
-            this.playlistService.queryUserPlaylists()
+            this.playlistService
+              .queryUserPlaylists()
               .pipe(takeUntil(this.destroy$))
               .subscribe(response => {
                 this.playlists = (response.body ?? []).filter(playlist => playlist.songs && playlist.songs.length > 0);
@@ -188,7 +187,8 @@ export class RecommenderComponent implements OnInit, OnDestroy {
   }
 
   loadAllSongs(callback: () => void): void {
-    this.songService.query()
+    this.songService
+      .query()
       .pipe(takeUntil(this.destroy$))
       .subscribe(response => {
         this.allSongs = response.body ?? [];
@@ -272,16 +272,17 @@ export class RecommenderComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.playlistService.addSongToPlaylist(playlist.id, song.id)
+    this.playlistService
+      .addSongToPlaylist(playlist.id, song.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
           this.removeSongFromCache(song.id, playlist.id);
           this.getNewRecommendation(playlist.id);
         },
-        error: () => {
+        error() {
           // Comment so eslint doesnt break
-        }
+        },
       });
   }
 
