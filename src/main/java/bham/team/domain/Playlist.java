@@ -59,9 +59,6 @@ public class Playlist implements Serializable {
     )
     private Set<Song> songs = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -162,19 +159,6 @@ public class Playlist implements Serializable {
 
     public Playlist removeSong(Song song) {
         this.songs.remove(song);
-        return this;
-    }
-
-    public User getUser() {
-        return this.user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Playlist user(User user) {
-        this.setUser(user);
         return this;
     }
 
