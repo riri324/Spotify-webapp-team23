@@ -13,7 +13,7 @@
     {
       "fieldName": "songTitle",
       "fieldType": "String",
-      "fieldValidateRules": ["required", "unique"]
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "artistName",
@@ -32,7 +32,7 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "year",
+      "fieldName": "songYear",
       "fieldType": "Integer",
       "fieldValidateRules": ["required", "min", "max"],
       "fieldValidateRulesMax": "2100",

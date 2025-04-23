@@ -11,31 +11,34 @@
     -->
     <changeSet id="20250205190206-1" author="jhipster">
         <createTable tableName="event">
-            <column name="id" type="integer">
+            <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="artist_id" type="integer">
-                <constraints nullable="false" />
+            <column name="event_id" type="integer">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_event__event_id" />
             </column>
             <column name="datetime" type="${datetimeType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="description" type="varchar(500)">
                 <constraints nullable="true" />
             </column>
-            <column name="description" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="title" type="varchar(100)">
+                <constraints nullable="false" />
             </column>
-            <column name="title" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="venue_name" type="varchar(100)">
+                <constraints nullable="false" />
             </column>
-            <column name="venue_name" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="city" type="varchar(50)">
+                <constraints nullable="false" />
             </column>
-            <column name="city" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="region" type="varchar(50)">
+                <constraints nullable="false" />
             </column>
-            <column name="region" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="country" type="varchar(50)">
+                <constraints nullable="false" />
             </column>
-            <column name="country" type="varchar(255)">
+            <column name="artist_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -60,7 +63,7 @@
                   tableName="event"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="artist_id" type="numeric"/>
+            <column name="event_id" type="numeric"/>
             <column name="datetime" type="date"/>
             <column name="description" type="string"/>
             <column name="title" type="string"/>

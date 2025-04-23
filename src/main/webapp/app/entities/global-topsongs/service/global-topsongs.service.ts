@@ -29,6 +29,7 @@ export class GlobalTopsongsService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
+  // protected resourceUrl = this.applicationConfigService.getEndpointFor('api/global-topsongs');
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/global-topsongs');
 
   create(globalTopsongs: NewGlobalTopsongs): Observable<EntityResponseType> {

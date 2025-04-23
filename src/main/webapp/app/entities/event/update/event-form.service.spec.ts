@@ -20,7 +20,7 @@ describe('Event Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            artistId: expect.any(Object),
+            eventID: expect.any(Object),
             datetime: expect.any(Object),
             description: expect.any(Object),
             title: expect.any(Object),
@@ -28,6 +28,7 @@ describe('Event Form Service', () => {
             city: expect.any(Object),
             region: expect.any(Object),
             country: expect.any(Object),
+            artist: expect.any(Object),
           }),
         );
       });
@@ -38,7 +39,7 @@ describe('Event Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            artistId: expect.any(Object),
+            eventID: expect.any(Object),
             datetime: expect.any(Object),
             description: expect.any(Object),
             title: expect.any(Object),
@@ -46,6 +47,7 @@ describe('Event Form Service', () => {
             city: expect.any(Object),
             region: expect.any(Object),
             country: expect.any(Object),
+            artist: expect.any(Object),
           }),
         );
       });

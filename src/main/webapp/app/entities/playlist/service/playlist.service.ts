@@ -40,6 +40,10 @@ export class PlaylistService {
     return this.http.get<IPlaylist[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
+  queryUserPlaylists(): Observable<EntityArrayResponseType> {
+    return this.http.get<IPlaylist[]>(`${this.resourceUrl}/user`, { observe: 'response' });
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
@@ -50,6 +54,11 @@ export class PlaylistService {
 
   comparePlaylist(o1: Pick<IPlaylist, 'id'> | null, o2: Pick<IPlaylist, 'id'> | null): boolean {
     return o1 && o2 ? this.getPlaylistIdentifier(o1) === this.getPlaylistIdentifier(o2) : o1 === o2;
+  }
+
+  // New method to add a song to a playlist
+  addSongToPlaylist(playlistId: number, songId: number): Observable<HttpResponse<IPlaylist>> {
+    return this.http.post<IPlaylist>(`${this.resourceUrl}/${playlistId}/songs/${songId}`, {}, { observe: 'response' });
   }
 
   addPlaylistToCollectionIfMissing<Type extends Pick<IPlaylist, 'id'>>(

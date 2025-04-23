@@ -363,10 +363,10 @@ class SongResourceIT {
 
         partialUpdatedSong
             .songId(UPDATED_SONG_ID)
-            .trackName(UPDATED_TRACK_NAME)
-            .speechiness(UPDATED_SPEECHINESS)
-            .acousticness(UPDATED_ACOUSTICNESS)
-            .liveness(UPDATED_LIVENESS);
+            .danceability(UPDATED_DANCEABILITY)
+            .energy(UPDATED_ENERGY)
+            .instrumentalness(UPDATED_INSTRUMENTALNESS)
+            .tempo(UPDATED_TEMPO);
 
         restSongMockMvc
             .perform(

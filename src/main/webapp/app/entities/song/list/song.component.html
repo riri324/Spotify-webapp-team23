@@ -8,15 +8,18 @@
         <span>Refresh list</span>
       </button>
 
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-song"
-        [routerLink]="['/song/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span>Create a new Song</span>
-      </button>
+      <!-- Only show Create button to admins -->
+      @if (isAdmin()) {
+        <button
+          id="jh-create-entity"
+          data-cy="entityCreateButton"
+          class="btn btn-primary jh-create-entity create-song"
+          [routerLink]="['/song/new']"
+        >
+          <fa-icon icon="plus"></fa-icon>
+          <span>Create a new Song</span>
+        </button>
+      }
     </div>
   </h2>
 
@@ -130,9 +133,15 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="playlists.id">
+            <th scope="col" jhiSortBy="playlist.id">
               <div class="d-flex">
-                <span>Playlists</span>
+                <span>Playlist</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="listeningHistory.id">
+              <div class="d-flex">
+                <span>Listening History</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
@@ -177,9 +186,19 @@
                 }
               </td>
               <td>
-                @for (playlists of song.playlists; track $index; let last = $last) {
+                @for (playlist of song.playlists; track $index; let last = $last) {
                   <span>
-                    <a class="form-control-static" [routerLink]="['/playlist', playlists.id, 'view']">{{ playlists.id }}</a
+                    <a class="form-control-static" [routerLink]="['/playlist', playlist.id, 'view']">{{ playlist.id }}</a
+                    >{{ last ? '' : ', ' }}
+                  </span>
+                }
+              </td>
+              <td>
+                @for (listeningHistory of song.listeningHistories; track $index; let last = $last) {
+                  <span>
+                    <a class="form-control-static" [routerLink]="['/listening-history', listeningHistory.id, 'view']">{{
+                      listeningHistory.id
+                    }}</a
                     >{{ last ? '' : ', ' }}
                   </span>
                 }
@@ -191,15 +210,21 @@
                     <span class="d-none d-md-inline">View</span>
                   </a>
 
-                  <a [routerLink]="['/song', song.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
-                    <fa-icon icon="pencil-alt"></fa-icon>
-                    <span class="d-none d-md-inline">Edit</span>
-                  </a>
+                  <!-- Only show Edit button to admins -->
+                  @if (isAdmin()) {
+                    <a [routerLink]="['/song', song.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                      <fa-icon icon="pencil-alt"></fa-icon>
+                      <span class="d-none d-md-inline">Edit</span>
+                    </a>
+                  }
 
-                  <button type="submit" (click)="delete(song)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                    <fa-icon icon="times"></fa-icon>
-                    <span class="d-none d-md-inline">Delete</span>
-                  </button>
+                  <!-- Only show Delete button to admins -->
+                  @if (isAdmin()) {
+                    <button type="submit" (click)="delete(song)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                      <fa-icon icon="times"></fa-icon>
+                      <span class="d-none d-md-inline">Delete</span>
+                    </button>
+                  }
                 </div>
               </td>
             </tr>

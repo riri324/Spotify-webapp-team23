@@ -77,6 +77,17 @@ public class Song implements Serializable {
     @JsonIgnoreProperties(value = { "user", "songs" }, allowSetters = true)
     private Set<Playlist> playlists = new HashSet<>();
 
+    /////////
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "song")
+    @JsonIgnoreProperties(value = { "song" }, allowSetters = true)
+    private LikedSongs likedSongs;
+
+    @ManyToMany(mappedBy = "songs")
+    @JsonIgnoreProperties(value = { "songs" }, allowSetters = true)
+    private Set<ListeningHistory> listeningHistories = new HashSet<>();
+
+    /////////
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -267,10 +278,10 @@ public class Song implements Serializable {
 
     public void setPlaylists(Set<Playlist> playlists) {
         if (this.playlists != null) {
-            this.playlists.forEach(i -> i.removeSongs(this));
+            this.playlists.forEach(i -> i.removeSong(this));
         }
         if (playlists != null) {
-            playlists.forEach(i -> i.addSongs(this));
+            playlists.forEach(i -> i.addSong(this));
         }
         this.playlists = playlists;
     }
@@ -291,6 +302,83 @@ public class Song implements Serializable {
         playlist.getSongs().remove(this);
         return this;
     }
+
+    ////////
+    public LikedSongs getLikedSongs() {
+        return this.likedSongs;
+    }
+
+    public void setLikedSongs(LikedSongs likedSongs) {
+        if (this.likedSongs != null) {
+            this.likedSongs.setSong(null);
+        }
+        if (likedSongs != null) {
+            likedSongs.setSong(this);
+        }
+        this.likedSongs = likedSongs;
+    }
+
+    public Song likedSongs(LikedSongs likedSongs) {
+        this.setLikedSongs(likedSongs);
+        return this;
+    }
+
+    @OneToMany(mappedBy = "song", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = { "song" }, allowSetters = true)
+    private Set<GlobalTopsongs> globalTopsongs = new HashSet<>();
+
+    public Set<GlobalTopsongs> getGlobalTopsongs() {
+        return this.globalTopsongs;
+    }
+
+    public Song addGlobalTopsongs(GlobalTopsongs globalTopsong) {
+        this.globalTopsongs.add(globalTopsong);
+        globalTopsong.setSong(this);
+        return this;
+    }
+
+    public Song removeGlobalTopsongs(GlobalTopsongs globalTopsong) {
+        this.globalTopsongs.remove(globalTopsong);
+        globalTopsong.setSong(null);
+        return this;
+    }
+
+    public void setGlobalTopsongs(Set<GlobalTopsongs> globalTopsongs) {
+        this.globalTopsongs = globalTopsongs;
+    }
+
+    public Set<ListeningHistory> getListeningHistories() {
+        return this.listeningHistories;
+    }
+
+    public void setListeningHistories(Set<ListeningHistory> listeningHistories) {
+        if (this.listeningHistories != null) {
+            this.listeningHistories.forEach(i -> i.getSongs().remove(this));
+        }
+        if (listeningHistories != null) {
+            listeningHistories.forEach(i -> i.getSongs().add(this));
+        }
+        this.listeningHistories = listeningHistories;
+    }
+
+    public Song listeningHistories(Set<ListeningHistory> listeningHistories) {
+        this.setListeningHistories(listeningHistories);
+        return this;
+    }
+
+    public Song addListeningHistory(ListeningHistory listeningHistory) {
+        this.listeningHistories.add(listeningHistory);
+        listeningHistory.getSongs().add(this);
+        return this;
+    }
+
+    public Song removeListeningHistory(ListeningHistory listeningHistory) {
+        this.listeningHistories.remove(listeningHistory);
+        listeningHistory.getSongs().remove(this);
+        return this;
+    }
+
+    //////////
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

@@ -359,7 +359,7 @@ class PlaylistResourceIT {
         Playlist partialUpdatedPlaylist = new Playlist();
         partialUpdatedPlaylist.setId(playlist.getId());
 
-        partialUpdatedPlaylist.name(UPDATED_NAME);
+        partialUpdatedPlaylist.playlistID(UPDATED_PLAYLIST_ID).name(UPDATED_NAME);
 
         restPlaylistMockMvc
             .perform(

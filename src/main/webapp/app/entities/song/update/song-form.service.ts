@@ -14,7 +14,7 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type SongFormGroupInput = ISong | PartialWithRequiredKeyOf<NewSong>;
 
-type SongFormDefaults = Pick<NewSong, 'id' | 'playlists'>;
+type SongFormDefaults = Pick<NewSong, 'id' | 'playlists' | 'listeningHistories'>;
 
 type SongFormGroupContent = {
   id: FormControl<ISong['id'] | NewSong['id']>;
@@ -32,6 +32,7 @@ type SongFormGroupContent = {
   genre: FormControl<ISong['genre']>;
   artist: FormControl<ISong['artist']>;
   playlists: FormControl<ISong['playlists']>;
+  listeningHistories: FormControl<ISong['listeningHistories']>;
 };
 
 export type SongFormGroup = FormGroup<SongFormGroupContent>;
@@ -69,6 +70,7 @@ export class SongFormService {
       genre: new FormControl(songRawValue.genre),
       artist: new FormControl(songRawValue.artist),
       playlists: new FormControl(songRawValue.playlists ?? []),
+      listeningHistories: new FormControl(songRawValue.listeningHistories ?? []),
     });
   }
 
@@ -90,6 +92,7 @@ export class SongFormService {
     return {
       id: null,
       playlists: [],
+      listeningHistories: [],
     };
   }
 }

@@ -2,9 +2,9 @@
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img"></span>
-      <span class="navbar-title">Teamproject24</span>
-      <span class="navbar-version">{{ version }}</span>
+      <span class="navbar-title">Tifopsy</span>
     </a>
+
     <a
       class="navbar-toggler d-lg-none"
       href="javascript:void(0);"
@@ -29,6 +29,166 @@
         </li>
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
         @if (account() !== null) {
+          <!-- Event Pages -->
+          <li
+            ngbDropdown
+            class="nav-item dropdown pointer"
+            display="dynamic"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="events-menu" data-cy="eventsMenu">
+            <span>
+              <fa-icon icon="calendar-alt"></fa-icon>
+              <span>Events</span>
+            </span>
+            </a>
+            <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="events-menu">
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/venue-recommendations"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Concerts</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <!-- Music Recommendations Pages -->
+          <li
+            ngbDropdown
+            class="nav-item dropdown pointer"
+            display="dynamic"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="music-menu" data-cy="musicMenu">
+            <span>
+              <span>Music</span>
+            </span>
+            </a>
+            <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="music-menu">
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/recommend"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>User Song Recommender</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/recommender"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>AI Song Recommender</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/topsongs"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Global Top Songs</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <!-- User Section Dropdown -->
+          <li
+            ngbDropdown
+            class="nav-item dropdown pointer"
+            display="dynamic"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="user-features-menu" data-cy="userFeaturesMenu">
+            <span>
+              <span>My Music</span>
+            </span>
+            </a>
+            <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="user-features-menu">
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/playlist"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Playlists</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/song"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Browse Songs</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/messages"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Messages</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/preferences"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Preferences</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/feedback-page"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Feedback</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
           <li
             ngbDropdown
             class="nav-item dropdown pointer"
@@ -106,16 +266,141 @@
               <li>
                 <a
                   class="dropdown-item"
-                  routerLink="/recommend"
+                  routerLink="/event"
                   routerLinkActive="active"
                   [routerLinkActiveOptions]="{ exact: true }"
                   (click)="collapseNavbar()"
                 >
                   <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                  <span>Recommend</span>
+                  <span>Event</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/user-preference"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>User Preference</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/global-topsongs"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Global Top Songs</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/feedback"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Feedback</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/message"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Message</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/listening-history"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Listening History</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/liked-songs"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Liked Songs</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/user-profile"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>User Profile</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/concert"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Concert</span>
                 </a>
               </li>
               <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
+            </ul>
+          </li>
+        } @else {
+          <li
+            ngbDropdown
+            class="nav-item dropdown pointer"
+            display="dynamic"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="guest-music-menu" data-cy="guestMusicMenu">
+              <span>
+                <fa-icon icon="music"></fa-icon>
+                <span>Explore Music</span>
+              </span>
+            </a>
+            <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="guest-music-menu">
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/venue-recommendations"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Concerts</span>
+                </a>
+              </li>
             </ul>
           </li>
         }

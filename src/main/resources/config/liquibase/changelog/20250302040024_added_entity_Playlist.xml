@@ -10,6 +10,7 @@
         Added the entity Playlist.
     -->
     <changeSet id="20250302040024-1" author="jhipster">
+        <validCheckSum>9:a72cb682e9a34cd30eee409849b27820</validCheckSum>
         <createTable tableName="playlist">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
@@ -34,9 +35,9 @@
     </changeSet>
 
     <changeSet id="20250302040024-1-relations" author="jhipster">
-
-        <createTable tableName="rel_playlist__songs">
-            <column name="songs_id" type="bigint">
+        <validCheckSum>9:4568b210677b7b0122be99d8a6bb8558</validCheckSum>
+        <createTable tableName="rel_playlist__song">
+            <column name="song_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
             <column name="playlist_id" type="bigint">
@@ -44,7 +45,7 @@
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="playlist_id, songs_id" tableName="rel_playlist__songs"/>
+        <addPrimaryKey columnNames="playlist_id, song_id" tableName="rel_playlist__song"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -57,9 +58,9 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-    <changeSet id="20250302040024-1-data" author="jhipster" context="faker">
+    <changeSet id="20250302040024-1-data" author="jhipster">
         <loadData
-                  file="config/liquibase/fake-data/playlist.csv"
+                  file="config/liquibase/data/playlist.csv"
                   separator=";"
                   tableName="playlist"
                   usePreparedStatements="true">

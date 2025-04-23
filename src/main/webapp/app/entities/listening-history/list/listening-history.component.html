@@ -1,0 +1,116 @@
+<div>
+  <h2 id="page-heading" data-cy="ListeningHistoryHeading">
+    <span>Listening Histories</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-listening-history"
+        [routerLink]="['/listening-history/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span>Create a new Listening History</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (listeningHistories?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span>No Listening Histories found</span>
+    </div>
+  }
+
+  @if (listeningHistories && listeningHistories.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span>ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="historyID">
+              <div class="d-flex">
+                <span>History ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="timestamp">
+              <div class="d-flex">
+                <span>Timestamp</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="song.id">
+              <div class="d-flex">
+                <span>Song</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (listeningHistory of listeningHistories; track trackId(listeningHistory)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/listening-history', listeningHistory.id, 'view']">{{ listeningHistory.id }}</a>
+              </td>
+              <td>{{ listeningHistory.historyID }}</td>
+              <td>{{ listeningHistory.timestamp | formatMediumDatetime }}</td>
+              <td>
+                @for (song of listeningHistory.songs; track $index; let last = $last) {
+                  <span>
+                    <a class="form-control-static" [routerLink]="['/song', song.id, 'view']">{{ song.id }}</a
+                    >{{ last ? '' : ', ' }}
+                  </span>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/listening-history', listeningHistory.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/listening-history', listeningHistory.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(listeningHistory)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

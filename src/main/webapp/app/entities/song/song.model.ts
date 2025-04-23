@@ -2,6 +2,7 @@ import { IAlbum } from 'app/entities/album/album.model';
 import { IGenre } from 'app/entities/genre/genre.model';
 import { IArtist } from 'app/entities/artist/artist.model';
 import { IPlaylist } from 'app/entities/playlist/playlist.model';
+import { IListeningHistory } from 'app/entities/listening-history/listening-history.model';
 
 export interface ISong {
   id: number;
@@ -19,6 +20,7 @@ export interface ISong {
   genre?: IGenre | null;
   artist?: IArtist | null;
   playlists?: IPlaylist[] | null;
+  listeningHistories?: IListeningHistory[] | null;
 }
 
 export type NewSong = Omit<ISong, 'id'> & { id: null };

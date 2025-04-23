@@ -23,16 +23,23 @@
   "name": "Artist",
   "relationships": [
     {
+      "otherEntityName": "event",
+      "otherEntityRelationshipName": "artist",
+      "relationshipName": "event",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityName": "album",
       "otherEntityRelationshipName": "artist",
-      "relationshipName": "albums",
+      "relationshipName": "album",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
     },
     {
       "otherEntityName": "song",
       "otherEntityRelationshipName": "artist",
-      "relationshipName": "songs",
+      "relationshipName": "song",
       "relationshipSide": "right",
       "relationshipType": "one-to-many"
     }

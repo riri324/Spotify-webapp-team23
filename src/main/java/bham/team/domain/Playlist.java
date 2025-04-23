@@ -48,13 +48,19 @@ public class Playlist implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "rel_playlist__songs",
+        name = "rel_playlist__song",
         joinColumns = @JoinColumn(name = "playlist_id"),
-        inverseJoinColumns = @JoinColumn(name = "songs_id")
+        inverseJoinColumns = @JoinColumn(name = "song_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "album", "genre", "artist", "playlists" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "globalTopsongs", "album", "genre", "artist", "likedSongs", "playlists", "listeningHistories" },
+        allowSetters = true
+    )
     private Set<Song> songs = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -149,13 +155,26 @@ public class Playlist implements Serializable {
         return this;
     }
 
-    public Playlist addSongs(Song song) {
+    public Playlist addSong(Song song) {
         this.songs.add(song);
         return this;
     }
 
-    public Playlist removeSongs(Song song) {
+    public Playlist removeSong(Song song) {
         this.songs.remove(song);
+        return this;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Playlist user(User user) {
+        this.setUser(user);
         return this;
     }
 

@@ -47,12 +47,15 @@ public class Album implements Serializable {
     private String imageContentType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "albums", "songs" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "events", "albums", "songs" }, allowSetters = true)
     private Artist artist;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "album")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "album", "genre", "artist", "playlists" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "globalTopsongs", "album", "genre", "artist", "likedSongs", "playlists", "listeningHistories" },
+        allowSetters = true
+    )
     private Set<Song> songs = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -167,13 +170,13 @@ public class Album implements Serializable {
         return this;
     }
 
-    public Album addSongs(Song song) {
+    public Album addSong(Song song) {
         this.songs.add(song);
         song.setAlbum(this);
         return this;
     }
 
-    public Album removeSongs(Song song) {
+    public Album removeSong(Song song) {
         this.songs.remove(song);
         song.setAlbum(null);
         return this;

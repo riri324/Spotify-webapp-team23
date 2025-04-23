@@ -18,8 +18,8 @@ services:
     image: postgres:14.5
     restart: always
     # to delete the database content between deployments, comment the following two lines
-    volumes:
-      - ~/prd/volumes/jhipster/teamproject/postgresql/:/var/lib/postgresql/data/
+    #    volumes:
+    #      - ~/prd/volumes/jhipster/teamproject/postgresql/:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=teamproject24
       - POSTGRES_PASSWORD=

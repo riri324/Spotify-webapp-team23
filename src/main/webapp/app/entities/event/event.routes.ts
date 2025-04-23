@@ -1,13 +1,16 @@
 import { Routes } from '@angular/router';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
+import { ASC } from 'app/config/navigation.constants';
 import EventResolve from './route/event-routing-resolve.service';
 
 const eventRoute: Routes = [
   {
     path: '',
     loadComponent: () => import('./list/event.component').then(m => m.EventComponent),
-    data: {},
+    data: {
+      defaultSort: `id,${ASC}`,
+    },
     canActivate: [UserRouteAccessService],
   },
   {

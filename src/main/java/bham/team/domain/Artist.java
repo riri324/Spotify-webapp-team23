@@ -44,12 +44,20 @@ public class Artist implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "artist")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "artist" }, allowSetters = true)
+    private Set<Event> events = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "artist")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "artist", "songs" }, allowSetters = true)
     private Set<Album> albums = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "artist")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "album", "genre", "artist", "playlists" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "globalTopsongs", "album", "genre", "artist", "likedSongs", "playlists", "listeningHistories" },
+        allowSetters = true
+    )
     private Set<Song> songs = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -119,6 +127,37 @@ public class Artist implements Serializable {
         this.imageContentType = imageContentType;
     }
 
+    public Set<Event> getEvents() {
+        return this.events;
+    }
+
+    public void setEvents(Set<Event> events) {
+        if (this.events != null) {
+            this.events.forEach(i -> i.setArtist(null));
+        }
+        if (events != null) {
+            events.forEach(i -> i.setArtist(this));
+        }
+        this.events = events;
+    }
+
+    public Artist events(Set<Event> events) {
+        this.setEvents(events);
+        return this;
+    }
+
+    public Artist addEvent(Event event) {
+        this.events.add(event);
+        event.setArtist(this);
+        return this;
+    }
+
+    public Artist removeEvent(Event event) {
+        this.events.remove(event);
+        event.setArtist(null);
+        return this;
+    }
+
     public Set<Album> getAlbums() {
         return this.albums;
     }
@@ -138,13 +177,13 @@ public class Artist implements Serializable {
         return this;
     }
 
-    public Artist addAlbums(Album album) {
+    public Artist addAlbum(Album album) {
         this.albums.add(album);
         album.setArtist(this);
         return this;
     }
 
-    public Artist removeAlbums(Album album) {
+    public Artist removeAlbum(Album album) {
         this.albums.remove(album);
         album.setArtist(null);
         return this;
@@ -169,13 +208,13 @@ public class Artist implements Serializable {
         return this;
     }
 
-    public Artist addSongs(Song song) {
+    public Artist addSong(Song song) {
         this.songs.add(song);
         song.setArtist(this);
         return this;
     }
 
-    public Artist removeSongs(Song song) {
+    public Artist removeSong(Song song) {
         this.songs.remove(song);
         song.setArtist(null);
         return this;

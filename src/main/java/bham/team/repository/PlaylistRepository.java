@@ -32,6 +32,7 @@ public interface PlaylistRepository extends PlaylistRepositoryWithBagRelationshi
         return this.fetchBagRelationships(this.findAllWithToOneRelationships(pageable));
     }
 
+    // Queries to fetch playlists with relationships (non-eager load)
     @Query(
         value = "select playlist from Playlist playlist left join fetch playlist.user",
         countQuery = "select count(playlist) from Playlist playlist"
@@ -43,4 +44,21 @@ public interface PlaylistRepository extends PlaylistRepositoryWithBagRelationshi
 
     @Query("select playlist from Playlist playlist left join fetch playlist.user where playlist.id =:id")
     Optional<Playlist> findOneWithToOneRelationships(@Param("id") Long id);
+
+    @Query("select p from Playlist p left join fetch p.songs where p.user.id = :userId")
+    List<Playlist> findAllByUserIdWithEagerRelationships(@Param("userId") Long userId);
+
+    List<Playlist> findAllByUserId(Long userId);
+
+    @Query("select p from Playlist p left join fetch p.songs where p.isPublic = true")
+    List<Playlist> findPublicWithEagerRelationships();
+
+    @Query("select p from Playlist p left join fetch p.songs where p.isPublic = true OR p.user.login = :userName")
+    List<Playlist> findPublicOrUserWithEagerRelationships(@Param("userName") String userName);
+
+    @Query("select p from Playlist p where p.isPublic = true")
+    List<Playlist> findPublic();
+
+    @Query("select p from Playlist p where p.isPublic = true OR p.user.login = :userName")
+    List<Playlist> findPublicOrUser(@Param("userName") String userName);
 }

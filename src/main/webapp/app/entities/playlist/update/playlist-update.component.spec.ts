@@ -75,10 +75,10 @@ describe('Playlist Management Update Component', () => {
 
     it('Should call Song query and add missing value', () => {
       const playlist: IPlaylist = { id: 456 };
-      const songs: ISong[] = [{ id: 6404 }];
+      const songs: ISong[] = [{ id: 5172 }];
       playlist.songs = songs;
 
-      const songCollection: ISong[] = [{ id: 10877 }];
+      const songCollection: ISong[] = [{ id: 1639 }];
       jest.spyOn(songService, 'query').mockReturnValue(of(new HttpResponse({ body: songCollection })));
       const additionalSongs = [...songs];
       const expectedCollection: ISong[] = [...additionalSongs, ...songCollection];

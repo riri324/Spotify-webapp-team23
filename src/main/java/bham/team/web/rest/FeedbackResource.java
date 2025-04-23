@@ -1,47 +1,194 @@
 package bham.team.web.rest;
 
 import bham.team.domain.Feedback;
-import bham.team.service.FeedbackService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import bham.team.repository.FeedbackRepository;
+import bham.team.web.rest.errors.BadRequestAlertException;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.ResponseUtil;
 
+/**
+ * REST controller for managing {@link bham.team.domain.Feedback}.
+ */
 @RestController
-@RequestMapping("/api/feedback")
+@RequestMapping("/api/feedbacks")
+@Transactional
 public class FeedbackResource {
 
-  private final FeedbackService feedbackService;
+    private static final Logger LOG = LoggerFactory.getLogger(FeedbackResource.class);
 
-  @Autowired
-  public FeedbackResource(FeedbackService feedbackService) {
-    this.feedbackService = feedbackService;
-  }
+    private static final String ENTITY_NAME = "feedback";
 
-  @PostMapping
-  public ResponseEntity<Feedback> createOrUpdateFeedback(@RequestBody Feedback feedback) {
-    Feedback savedFeedback = feedbackService.saveFeedback(feedback);
-    return ResponseEntity.status(HttpStatus.CREATED).body(savedFeedback);
-  }
+    @Value("${jhipster.clientApp.name}")
+    private String applicationName;
 
-  @GetMapping
-  public ResponseEntity<List<Feedback>> getAllFeedback() {
-    List<Feedback> feedbackList = feedbackService.getAllFeedback();
-    return ResponseEntity.ok(feedbackList);
-  }
+    private final FeedbackRepository feedbackRepository;
 
-  @GetMapping("/{id}")
-  public ResponseEntity<Feedback> getFeedbackById(@PathVariable Long id) {
-    Optional<Feedback> feedback = feedbackService.getFeedbackById(id);
-    return feedback.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-  }
+    public FeedbackResource(FeedbackRepository feedbackRepository) {
+        this.feedbackRepository = feedbackRepository;
+    }
 
-  @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteFeedback(@PathVariable Long id) {
-    feedbackService.deleteFeedback(id);
-    return ResponseEntity.noContent().build();
-  }
+    /**
+     * {@code POST  /feedbacks} : Create a new feedback.
+     *
+     * @param feedback the feedback to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new feedback, or with status {@code 400 (Bad Request)} if the feedback has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("")
+    public ResponseEntity<Feedback> createFeedback(@Valid @RequestBody Feedback feedback) throws URISyntaxException {
+        LOG.debug("REST request to save Feedback : {}", feedback);
+        if (feedback.getId() != null) {
+            throw new BadRequestAlertException("A new feedback cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        feedback = feedbackRepository.save(feedback);
+        return ResponseEntity.created(new URI("/api/feedbacks/" + feedback.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, feedback.getId().toString()))
+            .body(feedback);
+    }
+
+    /**
+     * {@code PUT  /feedbacks/:id} : Updates an existing feedback.
+     *
+     * @param id the id of the feedback to save.
+     * @param feedback the feedback to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated feedback,
+     * or with status {@code 400 (Bad Request)} if the feedback is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the feedback couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<Feedback> updateFeedback(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody Feedback feedback
+    ) throws URISyntaxException {
+        LOG.debug("REST request to update Feedback : {}, {}", id, feedback);
+        if (feedback.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, feedback.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!feedbackRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        feedback = feedbackRepository.save(feedback);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, feedback.getId().toString()))
+            .body(feedback);
+    }
+
+    /**
+     * {@code PATCH  /feedbacks/:id} : Partial updates given fields of an existing feedback, field will ignore if it is null
+     *
+     * @param id the id of the feedback to save.
+     * @param feedback the feedback to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated feedback,
+     * or with status {@code 400 (Bad Request)} if the feedback is not valid,
+     * or with status {@code 404 (Not Found)} if the feedback is not found,
+     * or with status {@code 500 (Internal Server Error)} if the feedback couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    public ResponseEntity<Feedback> partialUpdateFeedback(
+        @PathVariable(value = "id", required = false) final Long id,
+        @NotNull @RequestBody Feedback feedback
+    ) throws URISyntaxException {
+        LOG.debug("REST request to partial update Feedback partially : {}, {}", id, feedback);
+        if (feedback.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, feedback.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!feedbackRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        Optional<Feedback> result = feedbackRepository
+            .findById(feedback.getId())
+            .map(existingFeedback -> {
+                if (feedback.getFeedbackID() != null) {
+                    existingFeedback.setFeedbackID(feedback.getFeedbackID());
+                }
+                if (feedback.getUserName() != null) {
+                    existingFeedback.setUserName(feedback.getUserName());
+                }
+                if (feedback.getUserEmail() != null) {
+                    existingFeedback.setUserEmail(feedback.getUserEmail());
+                }
+                if (feedback.getUserPhoneNum() != null) {
+                    existingFeedback.setUserPhoneNum(feedback.getUserPhoneNum());
+                }
+                if (feedback.getMessage() != null) {
+                    existingFeedback.setMessage(feedback.getMessage());
+                }
+                if (feedback.getRating() != null) {
+                    existingFeedback.setRating(feedback.getRating());
+                }
+
+                return existingFeedback;
+            })
+            .map(feedbackRepository::save);
+
+        return ResponseUtil.wrapOrNotFound(
+            result,
+            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, feedback.getId().toString())
+        );
+    }
+
+    /**
+     * {@code GET  /feedbacks} : get all the feedbacks.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of feedbacks in body.
+     */
+    @GetMapping("")
+    public List<Feedback> getAllFeedbacks() {
+        LOG.debug("REST request to get all Feedbacks");
+        return feedbackRepository.findAll();
+    }
+
+    /**
+     * {@code GET  /feedbacks/:id} : get the "id" feedback.
+     *
+     * @param id the id of the feedback to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the feedback, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<Feedback> getFeedback(@PathVariable("id") Long id) {
+        LOG.debug("REST request to get Feedback : {}", id);
+        Optional<Feedback> feedback = feedbackRepository.findById(id);
+        return ResponseUtil.wrapOrNotFound(feedback);
+    }
+
+    /**
+     * {@code DELETE  /feedbacks/:id} : delete the "id" feedback.
+     *
+     * @param id the id of the feedback to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteFeedback(@PathVariable("id") Long id) {
+        LOG.debug("REST request to delete Feedback : {}", id);
+        feedbackRepository.deleteById(id);
+
+        return ResponseEntity.noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .build();
+    }
 }

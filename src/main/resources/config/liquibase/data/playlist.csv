@@ -1,0 +1,11 @@
+id;playlist_id;name;description;is_public;user_id
+1;101;Playlist 1;The first playlist;false;1
+2;102;Playlist 2;Big chungus;true;2
+3;103;Playlist 3;Song good;false;2
+4;104;Playlist 4;Running out of topics;false;2
+5;105;Playlist 5;next especially gladly;false;2
+6;106;Playlist 6;extremely;false;1
+7;107;Playlist 7;rekindle yum;false;1
+8;108;Playlist 8;gah easily;false;1
+9;109;Playlist 9;meh;true;2
+10;110;Playlist 10 yippee;partridge marketplace outside;false;1

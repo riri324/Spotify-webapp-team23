@@ -48,8 +48,8 @@ class GlobalTopsongsResourceIT {
     private static final Instant DEFAULT_MONTH_YEAR = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_MONTH_YEAR = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final Integer DEFAULT_YEAR = 2000;
-    private static final Integer UPDATED_YEAR = 2001;
+    private static final Integer DEFAULT_SONG_YEAR = 2000;
+    private static final Integer UPDATED_SONG_YEAR = 2001;
 
     private static final String ENTITY_API_URL = "/api/global-topsongs";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -88,7 +88,7 @@ class GlobalTopsongsResourceIT {
             .artistName(DEFAULT_ARTIST_NAME)
             .playCount(DEFAULT_PLAY_COUNT)
             .monthYear(DEFAULT_MONTH_YEAR)
-            .year(DEFAULT_YEAR);
+            .songYear(DEFAULT_SONG_YEAR);
     }
 
     /**
@@ -103,7 +103,7 @@ class GlobalTopsongsResourceIT {
             .artistName(UPDATED_ARTIST_NAME)
             .playCount(UPDATED_PLAY_COUNT)
             .monthYear(UPDATED_MONTH_YEAR)
-            .year(UPDATED_YEAR);
+            .songYear(UPDATED_SONG_YEAR);
     }
 
     @BeforeEach
@@ -231,10 +231,10 @@ class GlobalTopsongsResourceIT {
 
     @Test
     @Transactional
-    void checkYearIsRequired() throws Exception {
+    void checkSongYearIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
-        globalTopsongs.setYear(null);
+        globalTopsongs.setSongYear(null);
 
         // Create the GlobalTopsongs, which fails.
         GlobalTopsongsDTO globalTopsongsDTO = globalTopsongsMapper.toDto(globalTopsongs);
@@ -262,7 +262,7 @@ class GlobalTopsongsResourceIT {
             .andExpect(jsonPath("$.[*].artistName").value(hasItem(DEFAULT_ARTIST_NAME)))
             .andExpect(jsonPath("$.[*].playCount").value(hasItem(DEFAULT_PLAY_COUNT)))
             .andExpect(jsonPath("$.[*].monthYear").value(hasItem(DEFAULT_MONTH_YEAR.toString())))
-            .andExpect(jsonPath("$.[*].year").value(hasItem(DEFAULT_YEAR)));
+            .andExpect(jsonPath("$.[*].songYear").value(hasItem(DEFAULT_SONG_YEAR)));
     }
 
     @Test
@@ -281,7 +281,7 @@ class GlobalTopsongsResourceIT {
             .andExpect(jsonPath("$.artistName").value(DEFAULT_ARTIST_NAME))
             .andExpect(jsonPath("$.playCount").value(DEFAULT_PLAY_COUNT))
             .andExpect(jsonPath("$.monthYear").value(DEFAULT_MONTH_YEAR.toString()))
-            .andExpect(jsonPath("$.year").value(DEFAULT_YEAR));
+            .andExpect(jsonPath("$.songYear").value(DEFAULT_SONG_YEAR));
     }
 
     @Test
@@ -308,7 +308,7 @@ class GlobalTopsongsResourceIT {
             .artistName(UPDATED_ARTIST_NAME)
             .playCount(UPDATED_PLAY_COUNT)
             .monthYear(UPDATED_MONTH_YEAR)
-            .year(UPDATED_YEAR);
+            .songYear(UPDATED_SONG_YEAR);
         GlobalTopsongsDTO globalTopsongsDTO = globalTopsongsMapper.toDto(updatedGlobalTopsongs);
 
         restGlobalTopsongsMockMvc
@@ -398,11 +398,7 @@ class GlobalTopsongsResourceIT {
         GlobalTopsongs partialUpdatedGlobalTopsongs = new GlobalTopsongs();
         partialUpdatedGlobalTopsongs.setId(globalTopsongs.getId());
 
-        partialUpdatedGlobalTopsongs
-            .songTitle(UPDATED_SONG_TITLE)
-            .artistName(UPDATED_ARTIST_NAME)
-            .playCount(UPDATED_PLAY_COUNT)
-            .monthYear(UPDATED_MONTH_YEAR);
+        partialUpdatedGlobalTopsongs.songTitle(UPDATED_SONG_TITLE).artistName(UPDATED_ARTIST_NAME).songYear(UPDATED_SONG_YEAR);
 
         restGlobalTopsongsMockMvc
             .perform(
@@ -438,7 +434,7 @@ class GlobalTopsongsResourceIT {
             .artistName(UPDATED_ARTIST_NAME)
             .playCount(UPDATED_PLAY_COUNT)
             .monthYear(UPDATED_MONTH_YEAR)
-            .year(UPDATED_YEAR);
+            .songYear(UPDATED_SONG_YEAR);
 
         restGlobalTopsongsMockMvc
             .perform(

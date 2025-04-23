@@ -31,18 +31,18 @@
           <dd>
             <span>{{ playlistRef.isPublic }}</span>
           </dd>
-          <dt><span>User</span></dt>
+          <dt><span>Song</span></dt>
           <dd>
-            <span>{{ playlistRef.user?.login }}</span>
-          </dd>
-          <dt><span>Songs</span></dt>
-          <dd>
-            @for (songs of playlistRef.songs; track $index; let last = $last) {
+            @for (song of playlistRef.songs; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/song', songs.id, 'view']">{{ songs?.id }}</a
+                <a [routerLink]="['/song', song.id, 'view']">{{ song?.id }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }
+          </dd>
+          <dt><span>User</span></dt>
+          <dd>
+            <span>{{ playlistRef.user?.login }}</span>
           </dd>
         </dl>
 

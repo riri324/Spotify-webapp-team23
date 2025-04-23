@@ -1,26 +1,25 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-global-topsongs-heading" data-cy="GlobalTopsongsCreateUpdateHeading">Create or edit a Global Topsongs</h2>
+      <h2 id="jhi-global-topsongs-heading" data-cy="GlobalTopsongsCreateUpdateHeading">Create or edit b Global Topsongs</h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        @if (editForm.controls.id.value !== null) {
-          @let idRef = editForm.get('id')!;
-          <div class="mb-3">
-            <label class="form-label" for="field_id">Id</label>
-            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-            @if (idRef.invalid && (idRef.dirty || idRef.touched)) {
-              <div>
-                @if (editForm.get('id')?.errors?.required) {
-                  <small class="form-text text-danger">This field is required.</small>
-                }
-                <small class="form-text text-danger" [hidden]="!editForm.get('id')?.errors?.number">This field should be a number.</small>
-              </div>
-            }
-          </div>
-        }
+        @let idRef = editForm.get('id')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_id">Id</label>
+          <input
+            type="number"
+            class="form-control"
+            name="id"
+            id="field_id"
+            data-cy="id"
+            formControlName="id"
+            [readonly]="true"
+            [hidden]="idRef.value === null"
+          />
+        </div>
 
         @let songTitleRef = editForm.get('songTitle')!;
         <div class="mb-3">
@@ -100,22 +99,24 @@
           }
         </div>
 
-        @let yearRef = editForm.get('year')!;
+        @let songYearRef = editForm.get('songYear')!;
         <div class="mb-3">
-          <label class="form-label" for="field_year">Year</label>
-          <input type="number" class="form-control" name="year" id="field_year" data-cy="year" formControlName="year" />
-          @if (yearRef.invalid && (yearRef.dirty || yearRef.touched)) {
+          <label class="form-label" for="field_songYear">Song Year</label>
+          <input type="number" class="form-control" name="songYear" id="field_songYear" data-cy="songYear" formControlName="songYear" />
+          @if (songYearRef.invalid && (songYearRef.dirty || songYearRef.touched)) {
             <div>
-              @if (editForm.get('year')?.errors?.required) {
+              @if (editForm.get('songYear')?.errors?.required) {
                 <small class="form-text text-danger">This field is required.</small>
               }
-              @if (editForm.get('year')?.errors?.min) {
+              @if (editForm.get('songYear')?.errors?.min) {
                 <small class="form-text text-danger">This field should be at least 2000.</small>
               }
-              @if (editForm.get('year')?.errors?.max) {
+              @if (editForm.get('songYear')?.errors?.max) {
                 <small class="form-text text-danger">This field cannot be more than 2100.</small>
               }
-              <small class="form-text text-danger" [hidden]="!editForm.get('year')?.errors?.number">This field should be a number.</small>
+              <small class="form-text text-danger" [hidden]="!editForm.get('songYear')?.errors?.number"
+                >This field should be a number.</small
+              >
             </div>
           }
         </div>

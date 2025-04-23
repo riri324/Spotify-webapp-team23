@@ -39,15 +39,15 @@ class AlbumTest {
     }
 
     @Test
-    void songsTest() {
+    void songTest() {
         Album album = getAlbumRandomSampleGenerator();
         Song songBack = getSongRandomSampleGenerator();
 
-        album.addSongs(songBack);
+        album.addSong(songBack);
         assertThat(album.getSongs()).containsOnly(songBack);
         assertThat(songBack.getAlbum()).isEqualTo(album);
 
-        album.removeSongs(songBack);
+        album.removeSong(songBack);
         assertThat(album.getSongs()).doesNotContain(songBack);
         assertThat(songBack.getAlbum()).isNull();
 

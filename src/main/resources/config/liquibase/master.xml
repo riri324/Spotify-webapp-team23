@@ -23,10 +23,26 @@
     <include file="config/liquibase/changelog/20250320001859_added_entity_Album.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250320001900_added_entity_Genre.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250321215841_added_entity_Recommend.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250205190206_added_entity_Event.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250228002743_added_entity_UserPreference.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250228154741_added_entity_GlobalTopsongs.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250303014320_added_entity_Feedback.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250312145701_added_entity_Message.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250403234356_added_entity_ListeningHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250403234357_added_entity_LikedSongs.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250409144041_added_entity_UserProfile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250326134138_added_entity_Concert.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20250302040024_added_entity_constraints_Playlist.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250302040025_added_entity_constraints_Song.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250320001859_added_entity_constraints_Album.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250205190206_added_entity_constraints_Event.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250228154741_added_entity_constraints_GlobalTopsongs.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250403234356_added_entity_constraints_ListeningHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250403234357_added_entity_constraints_LikedSongs.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250312145701_added_entity_constraints_Message.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250409144041_added_entity_constraints_UserProfile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250228002743_added_entity_constraints_UserPreference.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

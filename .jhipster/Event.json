@@ -5,45 +5,61 @@
   "applications": "*",
   "fields": [
     {
-      "fieldName": "id",
+      "fieldName": "eventID",
       "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "artistId",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
+      "fieldValidateRules": ["required", "unique"]
     },
     {
       "fieldName": "datetime",
-      "fieldType": "Instant"
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "description",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "500"
     },
     {
       "fieldName": "title",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "100"
     },
     {
       "fieldName": "venueName",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "100"
     },
     {
       "fieldName": "city",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "50"
     },
     {
       "fieldName": "region",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "50"
     },
     {
       "fieldName": "country",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "50"
     }
   ],
   "name": "Event",
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "artist",
+      "otherEntityRelationshipName": "event",
+      "relationshipName": "artist",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
   "searchEngine": "no"
 }

@@ -52,7 +52,7 @@ export class MessageComponent implements OnInit {
   protected modalService = inject(NgbModal);
   protected ngZone = inject(NgZone);
 
-  trackId = (item: IMessage): number => this.messageService.getMessageIdentifier(item);
+  trackId = (item: IMessage): number | null => this.messageService.getMessageIdentifier(item);
 
   ngOnInit(): void {
     this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])

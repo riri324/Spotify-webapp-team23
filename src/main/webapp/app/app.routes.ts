@@ -1,9 +1,11 @@
 import { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 
 import { Authority } from 'app/config/authority.constants';
-
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { errorRoute } from './layouts/error/error.route';
+import { TopSongsComponent } from '../app/top-song/top-song.component';
 
 const routes: Routes = [
   {
@@ -61,6 +63,19 @@ const routes: Routes = [
     path: 'venue-recommendations',
     loadComponent: () => import('./venue-recc/venue-recc.component').then(m => m.VenueReccComponent),
     title: 'Venue Recommendations',
+    // Explicitly allow access without authentication by not including UserRouteAccessService
+    data: {
+      authorities: [], // Empty array means no specific authority required
+    },
+  },
+  {
+    path: 'recommender',
+    loadComponent: () => import('./recommender/recommender.component').then(m => m.RecommenderComponent),
+  },
+  {
+    path: 'feedback-page',
+    loadComponent: () => import('./feedback/feedback.component').then(m => m.FeedbackComponent),
+    title: 'Feedback',
   },
   {
     path: 'messages',
@@ -69,15 +84,24 @@ const routes: Routes = [
   },
   {
     path: 'global-top-songs',
-    data: { pageTitle: 'Global Top Songs' },
-    loadChildren: () => import('./top-song/top-song.routes').then(m => m.default),
+    loadChildren: () => import('./entities/global-topsongs/global-topsongs.routes').then(m => m.default),
   },
   {
     path: 'preferences',
     data: { pageTitle: 'Preferences' },
     loadChildren: () => import('./entities/preferences/preferences.routes').then(m => m.default),
   },
+  {
+    path: 'topsongs',
+    component: TopSongsComponent,
+    data: { pageTitle: 'globaltopsong' },
+  },
   ...errorRoute,
 ];
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule], // Make sure RouterModule is exported for usage in templates
+})
+export class TopSongRoutingModule {}
 
 export default routes;

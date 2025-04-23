@@ -2,22 +2,196 @@
 Main page styles
 ========================================================================== */
 
-.hipster {
-  display: inline-block;
-  width: 347px;
-  height: 497px;
-  background: url('../../content/images/jhipster_family_member_2.svg') no-repeat center top;
-  background-size: contain;
+.home-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: calc(100vh - 70px);
+  background-color: #121212;
+  color: #ffffff;
+  padding: 20px;
+  font-family: 'Circular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-/* wait autoprefixer update to allow simple generation of high pixel density media query */
-@media only screen and (-webkit-min-device-pixel-ratio: 2),
-  only screen and (-moz-min-device-pixel-ratio: 2),
-  only screen and (-o-min-device-pixel-ratio: 2/1),
-  only screen and (min-resolution: 192dpi),
-  only screen and (min-resolution: 2dppx) {
-  .hipster {
-    background: url('../../content/images/jhipster_family_member_2.svg') no-repeat center top;
-    background-size: contain;
+.main-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.content-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.content-container {
+  flex: 1;
+  background-color: #181818;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  h2 {
+    color: #fff;
+    margin-bottom: 16px;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+}
+
+.additional-links {
+  background-color: #181818;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  h2 {
+    color: #fff;
+    margin-bottom: 16px;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+}
+
+.welcome-section {
+  background-color: #181818;
+  border-radius: 8px;
+  padding: 40px 20px;
+  margin-bottom: 32px;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+
+  .welcome-subtitle {
+    font-size: 1.2rem;
+    color: #b3b3b3;
+    margin-bottom: 32px;
+  }
+
+  .welcome-buttons {
+    margin-bottom: 16px;
+
+    .btn {
+      margin: 0 8px;
+      border-radius: 500px;
+      padding: 12px 32px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background-color: #1db954;
+      border-color: #1db954;
+
+      &:hover {
+        background-color: #1ed760;
+        border-color: #1ed760;
+        transform: scale(1.05);
+      }
+    }
+
+    .btn-outline-light {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+.guest-features {
+  margin-bottom: 32px;
+}
+
+.list-group-item {
+  display: flex;
+  align-items: center;
+  background-color: #282828;
+  margin-bottom: 8px;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 16px;
+  transition: all 0.2s ease;
+  color: #fff;
+
+  &:hover,
+  &.active {
+    background-color: #333333;
+    transform: scale(1.01);
+  }
+
+  &.active {
+    border-left: 3px solid #1db954;
+  }
+}
+
+.item-icon {
+  font-size: 1.5rem;
+  margin-right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+}
+
+.item-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.item-description {
+  font-size: 0.85rem;
+  color: #b3b3b3;
+}
+
+@media (max-width: 992px) {
+  .main-container {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-container {
+    margin-bottom: 24px;
+  }
+
+  .welcome-section {
+    padding: 32px 16px;
+
+    h2 {
+      font-size: 2rem;
+    }
+  }
+
+  .welcome-buttons .btn {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
   }
 }

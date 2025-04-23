@@ -51,7 +51,7 @@ public class GlobalTopsongsAsserts {
             .satisfies(e -> assertThat(e.getArtistName()).as("check artistName").isEqualTo(actual.getArtistName()))
             .satisfies(e -> assertThat(e.getPlayCount()).as("check playCount").isEqualTo(actual.getPlayCount()))
             .satisfies(e -> assertThat(e.getMonthYear()).as("check monthYear").isEqualTo(actual.getMonthYear()))
-            .satisfies(e -> assertThat(e.getYear()).as("check year").isEqualTo(actual.getYear()));
+            .satisfies(e -> assertThat(e.getSongYear()).as("check songYear").isEqualTo(actual.getSongYear()));
     }
 
     /**

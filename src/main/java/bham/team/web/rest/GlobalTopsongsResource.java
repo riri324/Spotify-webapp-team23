@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -54,6 +55,7 @@ public class GlobalTopsongsResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new globalTopsongsDTO, or with status {@code 400 (Bad Request)} if the globalTopsongs has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("")
     public ResponseEntity<GlobalTopsongsDTO> createGlobalTopsongs(@Valid @RequestBody GlobalTopsongsDTO globalTopsongsDTO)
         throws URISyntaxException {
@@ -77,6 +79,7 @@ public class GlobalTopsongsResource {
      * or with status {@code 500 (Internal Server Error)} if the globalTopsongsDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<GlobalTopsongsDTO> updateGlobalTopsongs(
         @PathVariable(value = "id", required = false) final Long id,
@@ -111,6 +114,7 @@ public class GlobalTopsongsResource {
      * or with status {@code 500 (Internal Server Error)} if the globalTopsongsDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<GlobalTopsongsDTO> partialUpdateGlobalTopsongs(
         @PathVariable(value = "id", required = false) final Long id,
@@ -169,6 +173,7 @@ public class GlobalTopsongsResource {
      * @param id the id of the globalTopsongsDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGlobalTopsongs(@PathVariable("id") Long id) {
         LOG.debug("REST request to delete GlobalTopsongs : {}", id);

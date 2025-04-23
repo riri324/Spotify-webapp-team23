@@ -168,6 +168,38 @@ class UserPreferenceResourceIT {
 
     @Test
     @Transactional
+    void checkFavoriteGenreIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        userPreference.setFavoriteGenre(null);
+
+        // Create the UserPreference, which fails.
+
+        restUserPreferenceMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(userPreference)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkMusicPurposeIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        userPreference.setMusicPurpose(null);
+
+        // Create the UserPreference, which fails.
+
+        restUserPreferenceMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(userPreference)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllUserPreferences() throws Exception {
         // Initialize the database
         insertedUserPreference = userPreferenceRepository.saveAndFlush(userPreference);
@@ -318,7 +350,7 @@ class UserPreferenceResourceIT {
         partialUpdatedUserPreference.setId(userPreference.getId());
 
         partialUpdatedUserPreference
-            .vocalPreference(UPDATED_VOCAL_PREFERENCE)
+            .musicPurpose(UPDATED_MUSIC_PURPOSE)
             .listeningPattern(UPDATED_LISTENING_PATTERN)
             .songLength(UPDATED_SONG_LENGTH)
             .lyricsImportance(UPDATED_LYRICS_IMPORTANCE);

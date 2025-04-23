@@ -1,43 +1,44 @@
 <div>
   <h2 id="page-heading" data-cy="GlobalTopsongsHeading">
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <i class="fa-regular fa-rectangle-xmark heading-icon"></i>
+    <fa-icon [icon]="'rectangle-xmark'" class="heading-icon"></fa-icon>
     <span class="heading-text">Global Top Songs & Artists</span>
   </h2>
+
   <div class="top-controls">
-    <i class="fa-solid fa-house-user icon-button" (click)="goHome()"></i>
+    <fa-icon [icon]="'house-user'" class="icon-button" (click)="goHome()" aria-label="Go to Home Page"></fa-icon>
     <span class="custom-tab-1" [class.active]="currentView === 'month'" (click)="showChart('month')"> This Month </span>
     <span class="custom-tab" [class.active]="currentView === 'year'" (click)="showChart('year')"> This Year </span>
   </div>
+
   <div class="playlist-song">
     <table>
-      <tr>
-        <th>#</th>
-        <th>Album</th>
-        <th>Song</th>
-      </tr>
-      <tr *ngFor="let song of globalTopsongs; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td class="song-title">
-          <div class="song-image">
-            <i class="fa-regular fa-rectangle-xmark"></i>
-          </div>
-        </td>
-        <td class="song-name-artist">
-          <div class="song-name">
-            {{ song.songTitle }}
-          </div>
-          <div class="artist-name">
-            {{ song.artistName }}
-          </div>
-        </td>
-      </tr>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Album</th>
+          <th>Song</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let song of filteredSongs; let i = index">
+          <td>
+            <a [routerLink]="['/global-topsongs', song.id, 'view']" tabindex="0">{{ i + 1 }}</a>
+          </td>
+          <td class="song-title">
+            <div class="song-image">
+              <fa-icon [icon]="'rectangle-xmark'"></fa-icon>
+            </div>
+          </td>
+          <td class="song-name-artist">
+            <div class="song-name">
+              {{ song.songTitle }}
+            </div>
+            <div class="artist-name">
+              {{ song.artistName }}
+            </div>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </div>

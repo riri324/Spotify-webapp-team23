@@ -47,7 +47,7 @@ public class EventAsserts {
     public static void assertEventUpdatableFieldsEquals(Event expected, Event actual) {
         assertThat(expected)
             .as("Verify Event relevant properties")
-            .satisfies(e -> assertThat(e.getArtistId()).as("check artistId").isEqualTo(actual.getArtistId()))
+            .satisfies(e -> assertThat(e.getEventID()).as("check eventID").isEqualTo(actual.getEventID()))
             .satisfies(e -> assertThat(e.getDatetime()).as("check datetime").isEqualTo(actual.getDatetime()))
             .satisfies(e -> assertThat(e.getDescription()).as("check description").isEqualTo(actual.getDescription()))
             .satisfies(e -> assertThat(e.getTitle()).as("check title").isEqualTo(actual.getTitle()))
@@ -64,6 +64,8 @@ public class EventAsserts {
      * @param actual the actual entity
      */
     public static void assertEventUpdatableRelationshipsEquals(Event expected, Event actual) {
-        // empty method
+        assertThat(expected)
+            .as("Verify Event relationships")
+            .satisfies(e -> assertThat(e.getArtist()).as("check artist").isEqualTo(actual.getArtist()));
     }
 }

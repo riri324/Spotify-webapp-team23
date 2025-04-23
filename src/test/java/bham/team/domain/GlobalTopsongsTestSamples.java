@@ -12,11 +12,11 @@ public class GlobalTopsongsTestSamples {
     private static final AtomicInteger intCount = new AtomicInteger(random.nextInt() + (2 * Short.MAX_VALUE));
 
     public static GlobalTopsongs getGlobalTopsongsSample1() {
-        return new GlobalTopsongs().id(1L).songTitle("songTitle1").artistName("artistName1").playCount(1).year(1);
+        return new GlobalTopsongs().id(1L).songTitle("songTitle1").artistName("artistName1").playCount(1).songYear(1);
     }
 
     public static GlobalTopsongs getGlobalTopsongsSample2() {
-        return new GlobalTopsongs().id(2L).songTitle("songTitle2").artistName("artistName2").playCount(2).year(2);
+        return new GlobalTopsongs().id(2L).songTitle("songTitle2").artistName("artistName2").playCount(2).songYear(2);
     }
 
     public static GlobalTopsongs getGlobalTopsongsRandomSampleGenerator() {
@@ -25,6 +25,6 @@ public class GlobalTopsongsTestSamples {
             .songTitle(UUID.randomUUID().toString())
             .artistName(UUID.randomUUID().toString())
             .playCount(intCount.incrementAndGet())
-            .year(intCount.incrementAndGet());
+            .songYear(intCount.incrementAndGet());
     }
 }

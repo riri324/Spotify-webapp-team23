@@ -1,189 +1,227 @@
-.recommender-container {
-  background-color: #222222;
-  min-height: 100vh;
+.recommender-content {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  box-sizing: border-box;
-  color: white;
-}
-
-.recommender-card {
-  background-color: #333;
-  border-radius: 8px;
-  padding: 2rem;
-  width: 100%;
-  max-width: 800px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  text-align: center;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .recommender-card h1 {
-  margin-bottom: 0.5rem;
-  color: #39ff14; /* Neon green heading */
-  font-size: 32px;
-  font-weight: bold;
+  text-align: center;
+  color: #39ff14;
 }
 
-.recommender-card p {
-  font-size: 1.1rem;
-  color: #aaa;
+.recommender-card > p {
+  text-align: center;
+  color: #999;
 }
 
-.recommender-card hr {
-  margin: 1rem 0;
-  border: 0;
-  border-top: 1px solid #555;
-}
-
-.recommender-content {
+.playlist-recommendation-pair {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.playlists-section,
-.recommended-section {
-  flex: 1 1 45%;
-  background-color: #292929;
-  padding: 1rem;
+  flex-direction: row;
+  gap: 20px;
+  border: 1px solid #555;
   border-radius: 6px;
-  text-align: left;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  margin-bottom: 20px;
 }
 
-.playlists-section h2,
-.recommended-section h2 {
-  margin-top: 0;
-  color: #39ff14; /* Neon green */
-  font-size: 24px;
+.playlist-section {
+  flex: 1;
+  padding: 15px;
+  background-color: #2a2a2a;
 }
 
-.playlist-card,
-.song-card {
-  background-color: #444;
-  padding: 1rem;
-  border-radius: 6px;
-  margin-bottom: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  transition: transform 0.2s;
+.recommendation-section {
+  flex: 1;
+  padding: 15px;
+  background-color: #333;
 }
 
-.playlist-card:hover,
-.song-card:hover {
-  transform: scale(1.05);
-  background: #555;
+.playlist-section h2,
+.recommendation-section h2 {
+  color: #39ff14;
+}
+
+.playlist-card {
+  margin-bottom: 0;
 }
 
 .playlist-button {
-  background: none;
-  border: none;
   width: 100%;
+  height: 120px;
   text-align: left;
-  padding: 0;
-  color: inherit;
-  font-size: inherit;
+  background-color: #333;
+  border: 1px solid #555;
+  border-radius: 6px;
+  padding: 12px;
   cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
 }
 
-.playlist-card h3,
+.playlist-button:hover {
+  background-color: #444;
+  transform: scale(1.02);
+}
+
+.playlist-button h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.playlist-button p {
+  color: #999;
+  margin: 0;
+  font-size: 0.85rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.song-card {
+  background-color: #333;
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 0;
+  border: 1px solid #555;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
 .song-card h3 {
-  font-size: 18px;
-  color: white;
-  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.playlist-card p,
 .song-card p {
-  font-size: 14px;
-  color: #bbb;
+  margin: 0 0 8px 0;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-@media (max-width: 768px) {
-  .playlists-section,
-  .recommended-section {
-    flex: 1 1 100%;
-  }
+.song-actions {
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+  position: relative;
+  z-index: 10;
 }
 
-.playlist-song table {
-  width: 100%;
-  border-spacing: 0 5px;
-  border-collapse: separate;
-  margin-top: 10px;
+.add-to-playlist-btn {
+  background-color: #39ff14;
+  color: #000;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+  font-size: 0.85rem;
 }
 
-.playlist-song th {
-  text-align: left;
-  padding: 10px 16px;
-  font-size: 16px;
-  border-bottom: 1px solid grey;
-  color: white;
+.add-to-playlist-btn:hover {
+  background-color: #32d512;
+  transform: scale(1.05);
 }
 
-.playlist-song td {
-  padding: 9px 14px;
-  vertical-align: middle;
-  border-bottom: 0.5px solid grey;
-  color: white;
+.reject-btn {
+  background-color: #ff1439;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+  font-size: 0.85rem;
 }
 
-.playlist-song tr:last-child td {
-  border-bottom: none;
-  box-shadow: none;
+.reject-btn:hover {
+  background-color: #d51232;
+  transform: scale(1.05);
 }
 
-.playlist-song tr {
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
-}
-
-.song-title {
+.no-recommendation {
+  height: 120px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  background-color: #333;
+  border: 1px solid #555;
+  border-radius: 6px;
+  color: #999;
 }
 
-.song-name {
-  font-size: 15px;
-  font-weight: bold;
+.no-playlists {
+  padding: 30px;
+  text-align: center;
+  background-color: #333;
+  border: 1px solid #555;
+  border-radius: 6px;
+  color: #999;
+}
+
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   color: white;
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
-.artist-name {
-  font-size: 13px;
-  color: #bbb;
+.notification-success {
+  background-color: #39ff14;
+  color: #000;
 }
 
-.icon-button {
-  font-size: 18px;
-  cursor: pointer;
-  transition: transform 0.2s;
-  color: white;
+.notification-error {
+  background-color: #ff3939;
 }
 
-.icon-button:hover {
-  transform: scale(1.1);
+.notification-hide {
+  opacity: 0;
 }
 
-.custom-tab,
-.custom-tab-1 {
-  font-size: 15px;
-  cursor: pointer;
-  padding: 5px 10px;
-  border-radius: 5px;
-  transition: background 0.2s;
-  color: white;
+.keyboard-focus {
+  outline: 3px solid #0077ff;
+  box-shadow: 0 0 8px rgba(0, 119, 255, 0.6);
+  transform: scale(1.02);
+  position: relative;
+  z-index: 10;
 }
 
-.custom-tab:hover,
-.custom-tab-1:hover {
-  background: #333;
+.playlist-button:focus,
+.add-to-playlist-btn:focus,
+.reject-btn:focus {
+  outline: none;
 }
 
-.active {
-  font-weight: bold;
-  background: #39ff14;
-  color: black !important;
+/* Responsive design for mobile devices */
+@media (max-width: 768px) {
+  .playlist-recommendation-pair {
+    flex-direction: column;
+  }
+
+  .playlist-section,
+  .recommendation-section {
+    width: 100%;
+  }
 }

@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (likedSongs(); as likedSongsRef) {
+      <div>
+        <h2 data-cy="likedSongsDetailsHeading"><span>Liked Songs</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ likedSongsRef.id }}</span>
+          </dd>
+          <dt><span>Like ID</span></dt>
+          <dd>
+            <span>{{ likedSongsRef.likeID }}</span>
+          </dd>
+          <dt><span>Song</span></dt>
+          <dd>
+            @if (likedSongs()!.song) {
+              <div>
+                <a [routerLink]="['/song', likedSongs()!.song?.id, 'view']">{{ likedSongsRef.song?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/liked-songs', likedSongsRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

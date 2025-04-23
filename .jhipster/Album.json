@@ -29,7 +29,7 @@
   "relationships": [
     {
       "otherEntityName": "artist",
-      "otherEntityRelationshipName": "albums",
+      "otherEntityRelationshipName": "album",
       "relationshipName": "artist",
       "relationshipSide": "right",
       "relationshipType": "many-to-one"
@@ -37,7 +37,7 @@
     {
       "otherEntityName": "song",
       "otherEntityRelationshipName": "album",
-      "relationshipName": "songs",
+      "relationshipName": "song",
       "relationshipSide": "right",
       "relationshipType": "one-to-many"
     }

@@ -11,8 +11,8 @@ import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/service/user.service';
 import { ISong } from 'app/entities/song/song.model';
 import { SongService } from 'app/entities/song/service/song.service';
-import { PlaylistService } from '../service/playlist.service';
 import { IPlaylist } from '../playlist.model';
+import { PlaylistService } from '../service/playlist.service';
 import { PlaylistFormGroup, PlaylistFormService } from './playlist-form.service';
 
 @Component({
@@ -88,11 +88,11 @@ export class PlaylistUpdateComponent implements OnInit {
     this.playlist = playlist;
     this.playlistFormService.resetForm(this.editForm, playlist);
 
-    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, playlist.user);
     this.songsSharedCollection = this.songService.addSongToCollectionIfMissing<ISong>(
       this.songsSharedCollection,
       ...(playlist.songs ?? []),
     );
+    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, playlist.user);
   }
 
   protected loadRelationshipsOptions(): void {
