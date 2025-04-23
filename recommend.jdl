@@ -1,0 +1,16 @@
+/**
+ * Recommend Entity
+ * Shows a user similar users based on common songs (at least 5 in common).
+ */
+
+entity Recommend {
+  id Long required,
+  userId String required,
+  recommendedUserId String required,
+  commonSongsCount Integer required min(5)
+}
+
+
+dto Recommend with mapstruct
+service Recommend with serviceClass
+paginate Recommend with pagination

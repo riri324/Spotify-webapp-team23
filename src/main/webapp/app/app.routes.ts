@@ -50,6 +50,16 @@ const routes: Routes = [
     loadChildren: () => import(`./entities/entity.routes`),
   },
   {
+    path: 'recommend',
+    loadComponent: () => import('./recommend/recommend.component').then(m => m.RecommendComponent),
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'Recommendations',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+
+  {
     path: 'venue-recommendations',
     loadComponent: () => import('./venue-recc/venue-recc.component').then(m => m.VenueReccComponent),
     title: 'Venue Recommendations',

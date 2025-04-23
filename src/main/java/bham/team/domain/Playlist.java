@@ -43,6 +43,9 @@ public class Playlist implements Serializable {
     @Column(name = "is_public", nullable = false)
     private Boolean isPublic;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "rel_playlist__song",
@@ -55,9 +58,6 @@ public class Playlist implements Serializable {
         allowSetters = true
     )
     private Set<Song> songs = new HashSet<>();
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -126,6 +126,19 @@ public class Playlist implements Serializable {
         this.isPublic = isPublic;
     }
 
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Playlist user(User user) {
+        this.setUser(user);
+        return this;
+    }
+
     public Set<Song> getSongs() {
         return this.songs;
     }
@@ -146,19 +159,6 @@ public class Playlist implements Serializable {
 
     public Playlist removeSong(Song song) {
         this.songs.remove(song);
-        return this;
-    }
-
-    public User getUser() {
-        return this.user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Playlist user(User user) {
-        this.setUser(user);
         return this;
     }
 

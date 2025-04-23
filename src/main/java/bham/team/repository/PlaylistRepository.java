@@ -17,11 +17,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PlaylistRepository extends PlaylistRepositoryWithBagRelationships, JpaRepository<Playlist, Long> {
-    // Fetch playlists for the current logged-in user
     @Query("select playlist from Playlist playlist where playlist.user.login = ?#{authentication.name}")
     List<Playlist> findByUserIsCurrentUser();
 
-    // Eager load methods
     default Optional<Playlist> findOneWithEagerRelationships(Long id) {
         return this.fetchBagRelationships(this.findOneWithToOneRelationships(id));
     }

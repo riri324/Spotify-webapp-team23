@@ -36,6 +36,11 @@ const routes: Routes = [
     loadChildren: () => import('./genre/genre.routes'),
   },
   {
+    path: 'recommend',
+    data: { pageTitle: 'Recommends' },
+    loadChildren: () => import('./recommend/recommend.routes'),
+  },
+  {
     path: 'event',
     data: { pageTitle: 'Events' },
     loadChildren: () => import('./event/event.routes'),

@@ -61,6 +61,7 @@ public class CacheConfiguration {
             createCache(cm, bham.team.domain.Album.class.getName() + ".songs");
             createCache(cm, bham.team.domain.Genre.class.getName());
             createCache(cm, bham.team.domain.Genre.class.getName() + ".songs");
+            createCache(cm, bham.team.domain.Recommend.class.getName());
             createCache(cm, bham.team.domain.Event.class.getName());
             createCache(cm, bham.team.domain.UserPreference.class.getName());
             createCache(cm, bham.team.domain.GlobalTopsongs.class.getName());

@@ -31,6 +31,14 @@
   "name": "Playlist",
   "relationships": [
     {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipWithBuiltInEntity": true
+    },
+    {
       "otherEntityName": "song",
       "otherEntityRelationshipName": "playlist",
       "relationshipName": "song",
