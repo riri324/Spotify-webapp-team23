@@ -102,7 +102,6 @@ public class SecurityConfiguration {
                     .requestMatchers(mvc.pattern("/management/**")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(mvc.pattern("/api/playlists")).permitAll()
                     .requestMatchers(mvc.pattern("/api/songs")).permitAll()
-                    .requestMatchers(mvc.pattern("/api/global-top-songs")).permitAll()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .exceptionHandling(exceptions ->

@@ -47,7 +47,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
       icon: '📊',
     },
     {
-      label: 'Venue Recommendations',
+      label: 'Concerts',
       route: '/venue-recommendations',
       description: 'Find your local events that match your vibes',
       icon: '📍',
@@ -69,10 +69,16 @@ export default class HomeComponent implements OnInit, OnDestroy {
   // Features for guests
   guestFeatures = [
     {
-      label: 'Global Top Songs',
-      route: '/topsongs',
-      description: 'Discover the top global songs and artists currently!',
-      icon: '📊',
+      label: 'Concerts',
+      route: '/venue-recommendations',
+      description: 'Find your local events that match your vibes',
+      icon: '📍',
+    },
+    {
+      label: 'AI Song Recommender',
+      route: '/recommender',
+      description: 'Get personalized song recommendations from our AI',
+      icon: '🤖',
     },
   ];
 
