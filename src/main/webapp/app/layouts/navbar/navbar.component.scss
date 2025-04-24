@@ -157,6 +157,17 @@ Navbar
   }
 }
 
+.navbar a:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.dropdown-menu .dropdown-item:focus {
+  background-color: rgba(0, 123, 255, 0.2);
+  outline: 2px solid #007bff;
+}
+
 @media (max-width: 768px) {
   .navbar {
     padding: 0.5rem 1rem;
