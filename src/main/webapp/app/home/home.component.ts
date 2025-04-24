@@ -147,6 +147,12 @@ export default class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.focusElement(this.activeSection, this.focusedIndex);
             handled = true;
           }
+        } else if (this.activeSection === 'playlists' || this.activeSection === 'songs') {
+          const navbarLink = document.querySelector('nav a');
+          if (navbarLink instanceof HTMLElement) {
+            navbarLink.focus();
+            handled = true;
+          }
         }
         break;
 
