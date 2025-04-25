@@ -67,19 +67,18 @@
             @if (songRef.album) {
               <div>
                 <a [routerLink]="['/album', songRef.album?.id, 'view']">
-                  {{ isAdmin() ? songRef.album?.id : (songRef.album?.albumName || 'Unknown Album') }}
+                  {{ isAdmin() ? songRef.album?.id : (songRef.album.albumName || 'Unknown Album') }}
                 </a>
               </div>
             }
           </dd>
 
-          <!-- Everyone can see genre with link -->
           <dt><span>Genre</span></dt>
           <dd>
             @if (songRef.genre) {
               <div>
                 <a [routerLink]="['/genre', songRef.genre?.id, 'view']">
-                  {{ isAdmin() ? songRef.genre?.id : (songRef.genre?.songGenre || 'Unknown Genre') }}
+                  {{ isAdmin() ? songRef.genre?.id : (songRef.genre.songGenre || 'Unknown Genre') }}
                 </a>
               </div>
             }
@@ -90,7 +89,7 @@
             @if (songRef.artist) {
               <div>
                 <a [routerLink]="['/artist', songRef.artist?.id, 'view']">
-                  {{ isAdmin() ? songRef.artist?.id : (songRef.artist?.artistName || 'Unknown Artist') }}
+                  {{ isAdmin() ? songRef.artist?.id : (songRef.artist.artistName || 'Unknown Artist') }}
                 </a>
               </div>
             }
