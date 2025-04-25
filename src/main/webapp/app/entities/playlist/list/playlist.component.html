@@ -9,6 +9,7 @@
       </button>
 
       <button
+        *ngIf="currentUserId !== null"
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-playlist"
@@ -34,57 +35,57 @@
     <div class="table-responsive table-entities" id="entities">
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
-          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+        <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+          @if (userRole.includes('ROLE_ADMIN')) {
             <th scope="col" jhiSortBy="id">
               <div class="d-flex">
                 <span>ID</span>
-
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
             <th scope="col" jhiSortBy="playlistID">
               <div class="d-flex">
                 <span>Playlist ID</span>
-
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="name">
-              <div class="d-flex">
-                <span>Name</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="description">
-              <div class="d-flex">
-                <span>Description</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="songs.id">
-              <div class="d-flex">
-                <span>Songs</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="user.login">
-              <div class="d-flex">
-                <span>User</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col"></th>
-          </tr>
+          }
+          <th scope="col" jhiSortBy="name">
+            <div class="d-flex">
+              <span>Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="description">
+            <div class="d-flex">
+              <span>Description</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="songs.id">
+            <div class="d-flex">
+              <span>Songs</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="user.login">
+            <div class="d-flex">
+              <span>User</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
         </thead>
         <tbody>
           @for (playlist of playlists; track trackId(playlist)) {
             <tr data-cy="entityTable">
-              <td>
-                <a [routerLink]="['/playlist', playlist.id, 'view']">{{ playlist.id }}</a>
-              </td>
-              <td>{{ playlist.playlistID }}</td>
+              @if (userRole.includes('ROLE_ADMIN')) {
+                <td>
+                  <a [routerLink]="['/playlist', playlist.id, 'view']">{{ playlist.id }}</a>
+                </td>
+                <td>{{ playlist.playlistID }}</td>
+              }
               <td>{{ playlist.name }}</td>
               <td>{{ playlist.description }}</td>
               <td>
@@ -105,15 +106,17 @@
                     <span class="d-none d-md-inline">View</span>
                   </a>
 
-                  <a [routerLink]="['/playlist', playlist.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
-                    <fa-icon icon="pencil-alt"></fa-icon>
-                    <span class="d-none d-md-inline">Edit</span>
-                  </a>
+                  @if ((currentUserId !== null && playlist.user?.id === currentUserId) || userRole.includes('ROLE_ADMIN')) {
+                    <a [routerLink]="['/playlist', playlist.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                      <fa-icon icon="pencil-alt"></fa-icon>
+                      <span class="d-none d-md-inline">Edit</span>
+                    </a>
 
-                  <button type="submit" (click)="delete(playlist)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                    <fa-icon icon="times"></fa-icon>
-                    <span class="d-none d-md-inline">Delete</span>
-                  </button>
+                    <button type="submit" (click)="delete(playlist)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                      <fa-icon icon="times"></fa-icon>
+                      <span class="d-none d-md-inline">Delete</span>
+                    </button>
+                  }
                 </div>
               </td>
             </tr>

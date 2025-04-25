@@ -25,6 +25,9 @@ const songRoute: Routes = [
     resolve: {
       song: SongResolve,
     },
+    data: {
+      authorities: ['ROLE_ADMIN'],
+    },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -32,6 +35,9 @@ const songRoute: Routes = [
     loadComponent: () => import('./update/song-update.component').then(m => m.SongUpdateComponent),
     resolve: {
       song: SongResolve,
+    },
+    data: {
+      authorities: ['ROLE_ADMIN'],
     },
     canActivate: [UserRouteAccessService],
   },

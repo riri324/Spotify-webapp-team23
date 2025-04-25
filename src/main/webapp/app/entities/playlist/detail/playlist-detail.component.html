@@ -11,14 +11,16 @@
         <jhi-alert></jhi-alert>
 
         <dl class="row-md jh-entity-details">
-          <dt><span>ID</span></dt>
-          <dd>
-            <span>{{ playlistRef.id }}</span>
-          </dd>
-          <dt><span>Playlist ID</span></dt>
-          <dd>
-            <span>{{ playlistRef.playlistID }}</span>
-          </dd>
+          @if (userRole.includes('ROLE_ADMIN')) {
+            <dt><span>ID</span></dt>
+            <dd>
+              <span>{{ playlistRef.id }}</span>
+            </dd>
+            <dt><span>Playlist ID</span></dt>
+            <dd>
+              <span>{{ playlistRef.playlistID }}</span>
+            </dd>
+          }
           <dt><span>Name</span></dt>
           <dd>
             <span>{{ playlistRef.name }}</span>
@@ -50,9 +52,11 @@
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
         </button>
 
-        <button type="button" [routerLink]="['/playlist', playlistRef.id, 'edit']" class="btn btn-primary">
-          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
-        </button>
+        @if ((currentUserId !== null && playlistRef.user?.id === currentUserId) || userRole.includes('ROLE_ADMIN')) {
+          <button type="button" [routerLink]="['/playlist', playlistRef.id, 'edit']" class="btn btn-primary">
+            <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+          </button>
+        }
       </div>
     }
   </div>
