@@ -11,8 +11,29 @@ import { FormsModule } from '@angular/forms';
 })
 export class FeedbackComponent {
   isLoading: any;
-  feedback: any;
-  feedbacks: any;
+  feedback = {
+    userName: '',
+    userEmail: '',
+    userPhoneNum: '',
+    rating: 0,
+  };
+  feedbacks: any[] = [];
 
-  saveFeedback() {}
+  saveFeedback() {
+    if (!this.feedback.userName || !this.feedback.userEmail) {
+      alert('Please fill the required fields.');
+      return;
+    }
+
+    this.feedbacks.push({ ...this.feedback });
+    console.log('feedbacks:', this.feedbacks);
+    alert("Thanks for submitting your feeback, we'll get to you ASAP");
+
+    this.feedback = {
+      userName: '',
+      userEmail: '',
+      userPhoneNum: '',
+      rating: 0,
+    };
+  }
 }
