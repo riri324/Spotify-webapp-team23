@@ -85,16 +85,16 @@ export class SongComponent implements OnInit {
 
   protected loadUserData(): void {
     const apiUrl = this.applicationConfigService.getEndpointFor('api/account');
-    this.http.get<any>(apiUrl).subscribe(userData => {
-      if (userData) {
-        // Authenticated user
+
+    this.http.get<any>(apiUrl).subscribe({
+      next: userData => {
         this.userRole = userData.authorities ?? [];
-      } else {
-        // Unauthenticated user logic
+        this.load();
+      },
+      error: () => {
         this.userRole = [];
-      }
-      // Load the playlists after determining the user status
-      this.load();
+        this.load();
+      },
     });
   }
 
