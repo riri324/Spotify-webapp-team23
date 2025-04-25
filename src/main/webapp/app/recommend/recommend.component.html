@@ -1,51 +1,55 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Music & User Recommendations</title>
-    <link rel="stylesheet" href="recommend.component.scss" />
-  </head>
-  <body>
-    <div class="recommend-container">
-      <!-- Music Suggestions -->
-      <div class="suggestions-box">
-        <div class="suggestions-header">
-          <h3>🎶 Music Suggestions</h3>
-          <div class="search-icon">🔍</div>
-        </div>
-        <p class="subtitle">Similar users also listen to:</p>
-        <div class="music-list">
-          <div class="music-item">
-            <img src="artist.png" alt="Album Cover" class="album-art" />
-            <p class="album-info"><strong>Album</strong> <br />Artist</p>
-          </div>
-          <div class="music-item">
-            <img src="cover.png" alt="Album Cover" class="album-art" />
-            <p class="album-info"><strong>Album</strong> <br />Artist</p>
-          </div>
-        </div>
-        <div class="next-arrow">➡</div>
-      </div>
+<div class="recommend-container">
+  <section class="recommend-section">
+    <h2><i class="fa fa-music"></i> Music Suggestions</h2>
+    <p *ngIf="!isLoading && recommendedSongs.length > 0">Similar users also listen to:</p>
 
-      <!-- User Suggestions -->
-      <div class="suggestions-box">
-        <div class="suggestions-header">
-          <h3>👥 User Suggestions</h3>
-          <div class="search-icon">🔍</div>
+    <div class="card-grid" *ngIf="!isLoading && recommendedSongs.length > 0">
+      <div class="song-card" *ngFor="let song of recommendedSongs">
+        <div class="song-header">
+          <p class="song-title">{{ song.trackName }}</p>
+          <p class="song-artist">{{ song.artists }}</p>
         </div>
-        <p class="subtitle">Users with similar taste:</p>
-        <div class="user-list">
-          <div class="user-item">
-            <div class="user-avatar">👤</div>
-            <div class="user-info">
-              <p class="username">Username</p>
-              <button class="follow-btn">Follow</button>
-            </div>
-            <div class="similar-artists">🎵 Artist 🎵 Artist 🎵 Artist</div>
-          </div>
+        <div class="card-buttons">
+          <button title="Add to Playlist" class="icon-button add">
+            <i class="fa fa-plus"></i>
+          </button>
+          <button title="Not Interested" class="icon-button dismiss" (click)="dismissSong(song)">
+            <i class="fa fa-times"></i>
+          </button>
         </div>
       </div>
     </div>
-  </body>
-</html>
+
+    <p class="no-recommend" *ngIf="!isLoading && recommendedSongs.length === 0 && !errorMessage">No song recommendations found.</p>
+  </section>
+
+  <section class="recommend-section">
+    <h2>👥 User Suggestions</h2>
+    <p *ngIf="!isLoading && recommendedUsers.length > 0">Users with similar taste:</p>
+
+    <div *ngIf="!isLoading && recommendedUsers.length > 0" class="user-list">
+      <div class="user-card" *ngFor="let user of recommendedUsers">
+        <div class="user-name">
+          <span>👤 {{ user.recommendedUserId }}</span>
+        </div>
+        <div class="user-common">
+          <span>🎵 {{ user.commonSongsCount }} songs in common</span>
+        </div>
+        <div class="user-actions">
+          <button class="follow-button">Follow</button>
+          <button class="not-interested-button" (click)="removeUser(user.recommendedUserId)">Not Interested</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="no-recommend" *ngIf="!isLoading && recommendedUsers.length === 0 && !errorMessage">No user recommendations found.</p>
+  </section>
+
+  <div class="generate-wrap">
+    <button class="generate-button" (click)="generateRecommendations()" [disabled]="isLoading">
+      {{ isLoading ? 'Generating...' : 'Generate Recommendations' }}
+    </button>
+  </div>
+
+  <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+</div>

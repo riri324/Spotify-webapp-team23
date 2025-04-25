@@ -84,11 +84,16 @@ export class PlaylistComponent implements OnInit {
     const apiUrl = this.applicationConfigService.getEndpointFor('api/account');
     this.http.get<any>(apiUrl).subscribe(userData => {
       if (userData) {
+        // Authenticated user
         this.userRole = userData.authorities ?? [];
         this.currentUserId = userData.id;
-        // Once we have user data, load playlist
-        this.load();
+      } else {
+        // Unauthenticated user logic
+        this.userRole = [];
+        this.currentUserId = null; // Or handle as needed
       }
+      // Load the playlists after determining the user status
+      this.load();
     });
   }
 

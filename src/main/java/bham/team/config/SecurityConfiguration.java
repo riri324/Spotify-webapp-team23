@@ -52,12 +52,24 @@ public class SecurityConfiguration {
             .addFilterAfter(new SpaWebFilter(), BasicAuthenticationFilter.class)
             .headers(headers ->
                 headers
-                    .contentSecurityPolicy(csp -> csp.policyDirectives(jHipsterProperties.getSecurity().getContentSecurityPolicy()))
+                    .contentSecurityPolicy(csp ->
+                        csp.policyDirectives(
+                            "default-src 'self'; " +
+                            "base-uri 'self'; " +
+                            "connect-src 'self' https://api.spotify.com https://nominatim.openstreetmap.org; " +
+                            "img-src 'self' data: https://s1.ticketm.net https://*.ticketm.net https://images.universe.com; " +
+                            "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'report-sample'; " +
+                            "style-src 'self' 'unsafe-inline' 'report-sample' https://fonts.googleapis.com; " +
+                            "font-src 'self' data: https://fonts.gstatic.com; " +
+                            "frame-src 'self'; " +
+                            "worker-src 'self'"
+                        )
+                    )
                     .frameOptions(FrameOptionsConfig::sameOrigin)
                     .referrerPolicy(referrer -> referrer.policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN))
                     .permissionsPolicy(permissions ->
                         permissions.policy(
-                            "camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"
+                            "camera=(), fullscreen=(self), geolocation=(self), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"
                         )
                     )
             )
@@ -70,6 +82,10 @@ public class SecurityConfiguration {
                     .requestMatchers(mvc.pattern("/i18n/**")).permitAll()
                     .requestMatchers(mvc.pattern("/content/**")).permitAll()
                     .requestMatchers(mvc.pattern("/swagger-ui/**")).permitAll()
+                    .requestMatchers(mvc.pattern("/venue-recommendations"), mvc.pattern("/venue-recommendations/**")).permitAll()
+                    .requestMatchers(mvc.pattern("/api/ticketmaster/**")).permitAll()
+                    .requestMatchers(mvc.pattern("/api/concerts/**")).permitAll()
+                    .requestMatchers(mvc.pattern("/api/spotify/**")).permitAll()
                     .requestMatchers(mvc.pattern(HttpMethod.POST, "/api/authenticate")).permitAll()
                     .requestMatchers(mvc.pattern(HttpMethod.GET, "/api/authenticate")).permitAll()
                     .requestMatchers(mvc.pattern("/api/register")).permitAll()

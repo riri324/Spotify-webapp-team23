@@ -2,52 +2,59 @@
   <div class="messages-card">
     <header class="header">
       <h1>Messages</h1>
-      <p>Welcome, Custom User!</p>
+      <p>Welcome, {{ currentAccount?.login }}!</p>
       <hr />
       <div class="messages-actions">
         <div class="search-user">
-          <label for="searchInput">Search for a user:</label>
-          <input id="searchInput" type="text" placeholder="Enter user name" />
-          <button>Search</button>
+          <div class="search-user">
+            <label for="searchInput">Search for a user:</label>
+            <input id="searchInput" type="text" placeholder="Enter user name" [(ngModel)]="searchTerm" />
+            <button type="button" (click)="onSearch()">Search</button>
+          </div>
         </div>
-        <button class="create-message-button">Create a New Message</button>
       </div>
     </header>
-
-    <!-- Main Content Area with Sidebar and Chat -->
     <div class="messages-main">
-      <!-- Sidebar for User List -->
       <aside class="users-sidebar">
         <h2>Users</h2>
-        <ul>
-          <li class="active">john_doe</li>
-          <li>jane_doe</li>
-          <li>alice</li>
+        <ul role="listbox" aria-label="Conversation partners" tabindex="0">
+          <!--          <li *ngFor="let u of users" (click)="selectUser(u)" [class.active]="u === selectedUser">-->
+          <li
+            *ngFor="let u of users"
+            role="option"
+            [attr.aria-selected]="u === selectedUser"
+            tabindex="-1"
+            (click)="selectUser(u)"
+            (keydown.enter)="selectUser(u)"
+            (keydown.space)="selectUser(u)"
+            [class.active]="u === selectedUser"
+          >
+            {{ u.login }}
+          </li>
         </ul>
       </aside>
-
-      <!-- Chat Section -->
       <section class="messages-content">
-        <div class="messages-thread">
-          <!-- Hardcoded chat bubbles -->
-          <div class="message-bubble sender">
-            <p>Hello, how are you?</p>
-            <span class="timestamp">10:31</span>
-          </div>
-          <div class="message-bubble recipient">
-            <p>I’m good, thanks! Working on our new playlist project.</p>
-            <span class="timestamp">10:32</span>
-          </div>
-          <div class="message-bubble sender">
-            <p>Great to hear! Let's catch up later.</p>
-            <span class="timestamp">10:33</span>
+        <div class="messages-thread" #thread aria-live="polite" aria-atomic="false">
+          <div
+            *ngFor="let msg of conversationMessages"
+            class="message-bubble"
+            [class.sent]="msg.sender?.login === currentAccount?.login"
+            [class.received]="msg.sender?.login !== currentAccount?.login"
+          >
+            <div class="message-header">
+              <strong>{{ msg.sender?.login }}</strong>
+              <span class="timestamp">
+                {{ msg.sent?.toDate() | date: 'shortTime' }}
+              </span>
+            </div>
+            <div class="message-body">
+              {{ msg.content }}
+            </div>
           </div>
         </div>
-
-        <!-- Send Message Box -->
         <div class="send-message-box">
-          <textarea rows="2" placeholder="Type your message here..."></textarea>
-          <button class="send-button">Send</button>
+          <textarea rows="2" [(ngModel)]="newMessageContent" placeholder="Type your message here..."></textarea>
+          <button class="send-button" (click)="sendMessage()">Send</button>
         </div>
       </section>
     </div>

@@ -4,5 +4,5 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class PreferencesService {
-  constructor() {}
+  // Constructor removed to fix linting issues
 }

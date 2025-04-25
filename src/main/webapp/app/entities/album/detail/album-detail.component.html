@@ -31,10 +31,10 @@
           <dd>
             @if (albumRef.image) {
               <div>
-                <a (click)="openFile(albumRef.image ?? '', albumRef.imageContentType)">
+                <a (click)="openFile(albumRef.image, albumRef.imageContentType)">
                   <img [src]="'data:' + albumRef.imageContentType + ';base64,' + albumRef.image" style="max-width: 100%" alt="album" />
                 </a>
-                {{ albumRef.imageContentType }}, {{ byteSize(albumRef.image ?? '') }}
+                {{ albumRef.imageContentType }}, {{ byteSize(albumRef.image) }}
               </div>
             }
           </dd>

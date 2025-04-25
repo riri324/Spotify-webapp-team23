@@ -21,6 +21,9 @@ logging:
     bham.team: DEBUG
 
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
   devtools:
     restart:
       enabled: true
@@ -48,8 +51,8 @@ spring:
       # JHipster uses a custom h2-console initializer
       enabled: true
   liquibase:
-    # Remove 'faker' if you do not want the sample data to be loaded automatically
-    contexts: dev, faker
+    contexts: dev
+    drop-first: true
   mail:
     host: localhost
     port: 25
@@ -88,6 +91,8 @@ jhipster:
     allow-credentials: true
     max-age: 1800
   security:
+    # Add the content security policy to allow images from Ticketmaster
+    content-security-policy: "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://*.ticketm.net https://*.universe.com; font-src 'self' data: https://fonts.gstatic.com;"
     authentication:
       jwt:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
@@ -113,4 +118,6 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+  ticketmaster:
+    api-key: NOa1G8utoWSrmii8EzUh7NFkMoKnd2Ax

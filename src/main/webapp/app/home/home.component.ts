@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, signal, AfterViewInit, ElementRef } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -14,13 +14,17 @@ import { Account } from 'app/core/auth/account.model';
   styleUrl: './home.component.scss',
   imports: [SharedModule, RouterModule],
 })
-export default class HomeComponent implements OnInit, OnDestroy {
-  // Track active section for better keyboard navigation
+export default class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
+  private elementRef = inject(ElementRef);
+  private readonly accountService = inject(AccountService);
+  private readonly router = inject(Router);
+  private readonly destroy$ = new Subject<void>();
+
+  account = signal<Account | null>(null);
   activeSection: 'playlists' | 'songs' | 'features' = 'playlists';
   focusedIndex = 0;
-  account = signal<Account | null>(null);
+  lastHorizontalSection: 'playlists' | 'songs' = 'playlists';
 
-  // Features links for logged-in users
   featuresLinks = [
     {
       label: 'Create a Playlist now',
@@ -42,12 +46,12 @@ export default class HomeComponent implements OnInit, OnDestroy {
     },
     {
       label: 'Global Top Songs',
-      route: '/global-top-songs',
+      route: '/topsongs',
       description: 'Discover the top global songs and artists currently!',
       icon: '📊',
     },
     {
-      label: 'Venue Recommendations',
+      label: 'Concerts',
       route: '/venue-recommendations',
       description: 'Find your local events that match your vibes',
       icon: '📍',
@@ -66,19 +70,20 @@ export default class HomeComponent implements OnInit, OnDestroy {
     },
   ];
 
-  // Features for guests
   guestFeatures = [
     {
-      label: 'Global Top Songs',
-      route: '/global-top-songs',
-      description: 'Discover the top global songs and artists currently!',
-      icon: '📊',
+      label: 'Concerts',
+      route: '/venue-recommendations',
+      description: 'Find your local events that match your vibes',
+      icon: '📍',
+    },
+    {
+      label: 'AI Song Recommender',
+      route: '/recommender',
+      description: 'Get personalized song recommendations from our AI',
+      icon: '🤖',
     },
   ];
-
-  private readonly accountService = inject(AccountService);
-  private readonly router = inject(Router);
-  private readonly destroy$ = new Subject<void>();
 
   ngOnInit(): void {
     this.accountService
@@ -86,10 +91,12 @@ export default class HomeComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(account => {
         this.account.set(account);
-        // Reset focus when login state changes
-        this.focusedIndex = 0;
-        this.activeSection = 'playlists';
+        this.resetFocusState();
       });
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => this.focusElement(this.activeSection, this.focusedIndex), 0);
   }
 
   ngOnDestroy(): void {
@@ -97,54 +104,155 @@ export default class HomeComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  resetFocusState(): void {
+    this.activeSection = 'playlists';
+    this.focusedIndex = 0;
+    this.lastHorizontalSection = 'playlists';
+  }
+
   login(): void {
     this.router.navigate(['/login']);
   }
 
-  // Updated keyboard navigation with sections
-  handleKeyDown(event: KeyboardEvent, section: string): void {
-    this.activeSection = section as any;
-    const links = this.getLinksBySection(section);
-    const max = links.length - 1;
+  handleKeyDown(event: KeyboardEvent): void {
+    let handled = false;
+    const currentFeatures = this.getLinksBySection('features');
+    const maxFeatureIndex = currentFeatures.length - 1;
 
     switch (event.key) {
       case 'ArrowDown':
-        this.focusedIndex = this.focusedIndex + 1 > max ? 0 : this.focusedIndex + 1;
-        this.focusElement(section, this.focusedIndex);
-        event.preventDefault();
+        if (this.activeSection === 'playlists' || this.activeSection === 'songs') {
+          this.lastHorizontalSection = this.activeSection;
+          this.activeSection = 'features';
+          this.focusedIndex = 0;
+          this.focusElement(this.activeSection, this.focusedIndex);
+          handled = true;
+        } else if (this.activeSection === 'features') {
+          this.focusedIndex = this.focusedIndex >= maxFeatureIndex ? 0 : this.focusedIndex + 1;
+          this.focusElement(this.activeSection, this.focusedIndex);
+          handled = true;
+        }
         break;
+
       case 'ArrowUp':
-        this.focusedIndex = this.focusedIndex - 1 < 0 ? max : this.focusedIndex - 1;
-        this.focusElement(section, this.focusedIndex);
-        event.preventDefault();
+        if (this.activeSection === 'features') {
+          if (this.focusedIndex === 0) {
+            this.activeSection = this.lastHorizontalSection;
+            this.focusedIndex = 0;
+            this.focusElement(this.activeSection, this.focusedIndex);
+            handled = true;
+          } else {
+            this.focusedIndex = this.focusedIndex - 1;
+            this.focusElement(this.activeSection, this.focusedIndex);
+            handled = true;
+          }
+        } else if (this.activeSection === 'playlists' || this.activeSection === 'songs') {
+          const navbarLink = document.querySelector('nav a');
+          if (navbarLink instanceof HTMLElement) {
+            navbarLink.focus();
+            handled = true;
+          }
+        }
         break;
+
+      case 'ArrowLeft':
+        if (this.activeSection === 'songs') {
+          this.activeSection = 'playlists';
+          this.focusedIndex = 0;
+          this.focusElement(this.activeSection, this.focusedIndex);
+          handled = true;
+        }
+        break;
+
+      case 'ArrowRight':
+        if (this.activeSection === 'playlists') {
+          this.activeSection = 'songs';
+          this.focusedIndex = 0;
+          this.focusElement(this.activeSection, this.focusedIndex);
+          handled = true;
+        }
+        break;
+
       case 'Enter':
-        this.navigateTo(links[this.focusedIndex].route);
+      case ' ':
+        const links = this.getLinksBySection(this.activeSection);
+        if (this.activeSection === 'features') {
+          if (links[this.focusedIndex]) {
+            this.navigateTo(links[this.focusedIndex].route);
+            handled = true;
+          }
+        } else if (links.length > 0) {
+          this.navigateTo(links[0].route);
+          handled = true;
+        }
         break;
       case 'Tab':
-        // Allow tab navigation without interference
+        // Default Tab Behaviour
         break;
+    }
+
+    if (handled) {
+      event.preventDefault();
     }
   }
 
-  getLinksBySection(section: string): any[] {
+  getLinksBySection(section: 'playlists' | 'songs' | 'features'): any[] {
     switch (section) {
       case 'features':
         return this.account() ? this.featuresLinks : this.guestFeatures;
       case 'playlists':
+        return [{ route: '/playlist', id: 'playlist-link' }];
       case 'songs':
+        return [{ route: '/song', id: 'song-link' }];
       default:
-        return [{ route: section === 'playlists' ? '/playlist' : '/song' }];
+        return []; // Should not happen
     }
   }
 
-  focusElement(section: string, index: number): void {
-    const selector = section === 'features' ? `[data-index="${index}"]` : `.${section}-container .list-group-item`;
-    const el = document.querySelector(selector) as HTMLElement;
-    el.focus();
+  focusElement(section: 'playlists' | 'songs' | 'features', index: number): void {
+    let element: HTMLElement | null = null;
+    const host = this.elementRef.nativeElement;
+
+    try {
+      if (section === 'features') {
+        element = host.querySelector(`[data-section="features"] [data-index="${index}"]`);
+      } else {
+        const linkData = this.getLinksBySection(section);
+        if (linkData.length > 0) {
+          const elementId = linkData[0].id;
+          element = host.querySelector(`#${elementId}`);
+        }
+      }
+
+      if (element) {
+        element.focus();
+        this.activeSection = section;
+        if (section === 'features') {
+          this.focusedIndex = index;
+        } else {
+          this.focusedIndex = 0;
+        }
+      } else {
+        console.warn(`Could not find element to focus for section: ${section}, index: ${index}`);
+      }
+    } catch (error) {
+      console.error('Error focusing element:', error);
+    }
+  }
+
+  updateFocusState(section: 'playlists' | 'songs' | 'features', index: number = 0): void {
+    this.activeSection = section;
+    if (section === 'features') {
+      this.focusedIndex = index;
+    } else {
+      this.focusedIndex = 0;
+      this.lastHorizontalSection = section;
+    }
   }
 
   navigateTo(route: string): void {
-    this.router.navigate([route]);
+    if (route) {
+      this.router.navigate([route]);
+    }
   }
 }

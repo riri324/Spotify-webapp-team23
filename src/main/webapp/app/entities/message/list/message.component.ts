@@ -52,7 +52,7 @@ export class MessageComponent implements OnInit {
   protected modalService = inject(NgbModal);
   protected ngZone = inject(NgZone);
 
-  trackId = (item: IMessage): number => this.messageService.getMessageIdentifier(item);
+  trackId = (item: IMessage): number | null => this.messageService.getMessageIdentifier(item);
 
   ngOnInit(): void {
     this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])
@@ -127,6 +127,7 @@ export class MessageComponent implements OnInit {
     const queryObject: any = {
       page: pageToLoad - 1,
       size: this.itemsPerPage,
+      eagerload: true,
       sort: this.sortService.buildSortParam(this.sortState()),
     };
     return this.messageService.query(queryObject).pipe(tap(() => (this.isLoading = false)));

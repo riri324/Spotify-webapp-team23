@@ -2,6 +2,8 @@ import { Component, NgZone, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Data, ParamMap, Router, RouterModule } from '@angular/router';
 import { Observable, Subscription, combineLatest, filter, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HttpResponse, HttpClient } from '@angular/common/http';
+import { ApplicationConfigService } from '../../../core/config/application-config.service';
 
 import SharedModule from 'app/shared/shared.module';
 import { SortByDirective, SortDirective, SortService, type SortState, sortStateSignal } from 'app/shared/sort';
@@ -31,6 +33,7 @@ export class SongComponent implements OnInit {
   subscription: Subscription | null = null;
   songs?: ISong[];
   isLoading = false;
+  userRole: string[] = [];
 
   sortState = sortStateSignal({});
 
@@ -38,21 +41,17 @@ export class SongComponent implements OnInit {
   protected readonly songService = inject(SongService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly sortService = inject(SortService);
+  protected readonly http = inject(HttpClient);
+  protected readonly applicationConfigService = inject(ApplicationConfigService);
   protected modalService = inject(NgbModal);
   protected ngZone = inject(NgZone);
 
   trackId = (item: ISong): number => this.songService.getSongIdentifier(item);
 
   ngOnInit(): void {
+    this.loadUserData();
     this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])
-      .pipe(
-        tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
-        tap(() => {
-          if (!this.songs || this.songs.length === 0) {
-            this.load();
-          }
-        }),
-      )
+      .pipe(tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)))
       .subscribe();
   }
 
@@ -78,6 +77,25 @@ export class SongComponent implements OnInit {
 
   navigateToWithComponentValues(event: SortState): void {
     this.handleNavigation(event);
+  }
+
+  isAdmin(): boolean {
+    return this.userRole.includes('ROLE_ADMIN');
+  }
+
+  protected loadUserData(): void {
+    const apiUrl = this.applicationConfigService.getEndpointFor('api/account');
+    this.http.get<any>(apiUrl).subscribe(userData => {
+      if (userData) {
+        // Authenticated user
+        this.userRole = userData.authorities ?? [];
+      } else {
+        // Unauthenticated user logic
+        this.userRole = [];
+      }
+      // Load the playlists after determining the user status
+      this.load();
+    });
   }
 
   protected fillComponentAttributeFromRoute(params: ParamMap, data: Data): void {

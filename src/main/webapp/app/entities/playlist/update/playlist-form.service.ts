@@ -22,8 +22,8 @@ type PlaylistFormGroupContent = {
   name: FormControl<IPlaylist['name']>;
   description: FormControl<IPlaylist['description']>;
   isPublic: FormControl<IPlaylist['isPublic']>;
-  songs: FormControl<IPlaylist['songs']>;
   user: FormControl<IPlaylist['user']>;
+  songs: FormControl<IPlaylist['songs']>;
 };
 
 export type PlaylistFormGroup = FormGroup<PlaylistFormGroupContent>;
@@ -55,8 +55,8 @@ export class PlaylistFormService {
       isPublic: new FormControl(playlistRawValue.isPublic, {
         validators: [Validators.required],
       }),
-      songs: new FormControl(playlistRawValue.songs ?? []),
       user: new FormControl(playlistRawValue.user),
+      songs: new FormControl(playlistRawValue.songs ?? []),
     });
   }
 

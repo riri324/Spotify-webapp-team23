@@ -1,0 +1,102 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-recommend-heading" data-cy="RecommendCreateUpdateHeading">Create or edit a Recommend</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          @let idRef = editForm.get('id')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_id">Id</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+            @if (idRef.invalid && (idRef.dirty || idRef.touched)) {
+              <div>
+                @if (editForm.get('id')?.errors?.required) {
+                  <small class="form-text text-danger">This field is required.</small>
+                }
+                <small class="form-text text-danger" [hidden]="!editForm.get('id')?.errors?.number">This field should be a number.</small>
+              </div>
+            }
+          </div>
+        }
+
+        @let userIdRef = editForm.get('userId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_userId">User Id</label>
+          <input type="text" class="form-control" name="userId" id="field_userId" data-cy="userId" formControlName="userId" />
+          @if (userIdRef.invalid && (userIdRef.dirty || userIdRef.touched)) {
+            <div>
+              @if (editForm.get('userId')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let recommendedUserIdRef = editForm.get('recommendedUserId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_recommendedUserId">Recommended User Id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="recommendedUserId"
+            id="field_recommendedUserId"
+            data-cy="recommendedUserId"
+            formControlName="recommendedUserId"
+          />
+          @if (recommendedUserIdRef.invalid && (recommendedUserIdRef.dirty || recommendedUserIdRef.touched)) {
+            <div>
+              @if (editForm.get('recommendedUserId')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let commonSongsCountRef = editForm.get('commonSongsCount')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_commonSongsCount">Common Songs Count</label>
+          <input
+            type="number"
+            class="form-control"
+            name="commonSongsCount"
+            id="field_commonSongsCount"
+            data-cy="commonSongsCount"
+            formControlName="commonSongsCount"
+          />
+          @if (commonSongsCountRef.invalid && (commonSongsCountRef.dirty || commonSongsCountRef.touched)) {
+            <div>
+              @if (editForm.get('commonSongsCount')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (editForm.get('commonSongsCount')?.errors?.min) {
+                <small class="form-text text-danger">This field should be at least 5.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('commonSongsCount')?.errors?.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

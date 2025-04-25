@@ -36,6 +36,11 @@ const routes: Routes = [
     loadChildren: () => import('./genre/genre.routes'),
   },
   {
+    path: 'recommend',
+    data: { pageTitle: 'Recommends' },
+    loadChildren: () => import('./recommend/recommend.routes'),
+  },
+  {
     path: 'event',
     data: { pageTitle: 'Events' },
     loadChildren: () => import('./event/event.routes'),
@@ -86,6 +91,11 @@ const routes: Routes = [
     component: StudentProfileComponent,
     data: { pageTitle: 'Profile' },
     canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'concert',
+    data: { pageTitle: 'Concerts' },
+    loadChildren: () => import('./concert/concert.routes'),
   },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];

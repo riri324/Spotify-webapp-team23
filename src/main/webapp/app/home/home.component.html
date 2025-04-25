@@ -1,53 +1,72 @@
-<div class="home-content">
+<div class="home-content" (keydown)="handleKeyDown($event)" tabindex="0">
   <div class="main-container">
-    @if (account() !== null) {
-      <div class="content-row">
-        <!-- Playlists Container -->
-        <div class="content-container playlists-container">
-          <h2>Playlists</h2>
-          <div class="list-group" (keydown)="handleKeyDown($event, 'playlists')">
-            <a
-              class="list-group-item list-group-item-action"
-              routerLink="/playlist"
-              tabindex="0"
-              [class.active]="activeSection === 'playlists'"
-              (focus)="activeSection = 'playlists'"
-              (click)="navigateTo('/playlist')"
-            >
-              <div class="item-icon">📂</div>
-              <div class="item-content">
-                <div class="item-title">Browse Playlists</div>
-                <div class="item-description">Explore all your curated playlists</div>
+    <div class="content-row">
+      <div class="content-container playlists-container">
+        <h2>Playlists</h2>
+        <div class="list-group">
+          <a
+            id="playlist-link"
+            class="list-group-item list-group-item-action"
+            routerLink="/playlist"
+            tabindex="0"
+            [class.active]="activeSection === 'playlists'"
+            (focus)="updateFocusState('playlists')"
+            (click)="navigateTo(account() ? '/playlist' : '/playlist')"
+            data-section="playlists"
+          >
+            <div class="item-icon">📂</div>
+            <div class="item-content">
+              <div class="item-title">
+                @if (account()) {
+                  Browse Playlists
+                } @else {
+                  Browse Public Playlists
+                }
               </div>
-            </a>
-          </div>
-        </div>
-
-        <!-- Songs Container -->
-        <div class="content-container songs-container">
-          <h2>Songs</h2>
-          <div class="list-group" (keydown)="handleKeyDown($event, 'songs')">
-            <a
-              class="list-group-item list-group-item-action"
-              routerLink="/song"
-              tabindex="0"
-              [class.active]="activeSection === 'songs'"
-              (focus)="activeSection = 'songs'"
-              (click)="navigateTo('/song')"
-            >
-              <div class="item-icon">🎵</div>
-              <div class="item-content">
-                <div class="item-title">Browse Songs</div>
-                <div class="item-description">Check out all songs in your library</div>
+              <div class="item-description">
+                @if (account()) {
+                  Explore all your curated playlists
+                } @else {
+                  Explore playlists created by our community
+                }
               </div>
-            </a>
-          </div>
+            </div>
+          </a>
         </div>
       </div>
 
-      <!-- Features section for logged-in users -->
+      <div class="content-container songs-container">
+        <h2>Songs</h2>
+        <div class="list-group">
+          <a
+            id="song-link"
+            class="list-group-item list-group-item-action"
+            routerLink="/song"
+            tabindex="0"
+            [class.active]="activeSection === 'songs'"
+            (focus)="updateFocusState('songs')"
+            (click)="navigateTo('/song')"
+            data-section="songs"
+          >
+            <div class="item-icon">🎵</div>
+            <div class="item-content">
+              <div class="item-title">Browse Songs</div>
+              <div class="item-description">
+                @if (account()) {
+                  Check out all songs in your library
+                } @else {
+                  Check out our music collection
+                }
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    @if (account() !== null) {
       <div class="additional-links">
-        <div class="list-group" (keydown)="handleKeyDown($event, 'features')">
+        <h2>Features</h2>
+        <div class="list-group" data-section="features">
           <ng-container *ngFor="let link of featuresLinks; let i = index">
             <a
               class="list-group-item list-group-item-action"
@@ -55,7 +74,7 @@
               tabindex="0"
               [attr.data-index]="i"
               [class.active]="activeSection === 'features' && i === focusedIndex"
-              (focus)="focusedIndex = i; activeSection = 'features'"
+              (focus)="updateFocusState('features', i)"
               (click)="navigateTo(link.route)"
             >
               <div class="item-icon">{{ link.icon }}</div>
@@ -68,11 +87,9 @@
         </div>
       </div>
     } @else {
-      <!-- Welcome section comes first for guests -->
       <div class="welcome-section">
         <h2>Welcome to Tifopsy</h2>
         <p class="welcome-subtitle">Your personal music companion</p>
-
         <div class="welcome-buttons">
           <a class="btn btn-primary" routerLink="/account/register">Sign Up</a>
           <a class="btn btn-outline-light" (click)="login()">Log In</a>
@@ -81,7 +98,7 @@
 
       <div class="additional-links guest-features">
         <h2>Discover</h2>
-        <div class="list-group" (keydown)="handleKeyDown($event, 'features')">
+        <div class="list-group" data-section="features">
           <ng-container *ngFor="let link of guestFeatures; let i = index">
             <a
               class="list-group-item list-group-item-action"
@@ -89,7 +106,7 @@
               tabindex="0"
               [attr.data-index]="i"
               [class.active]="activeSection === 'features' && i === focusedIndex"
-              (focus)="focusedIndex = i; activeSection = 'features'"
+              (focus)="updateFocusState('features', i)"
               (click)="navigateTo(link.route)"
             >
               <div class="item-icon">{{ link.icon }}</div>
@@ -99,49 +116,6 @@
               </div>
             </a>
           </ng-container>
-        </div>
-      </div>
-
-      <!-- Playlists and Songs containers side by side (shown below welcome for guests) -->
-      <div class="content-row">
-        <div class="content-container playlists-container">
-          <h2>Playlists</h2>
-          <div class="list-group" (keydown)="handleKeyDown($event, 'playlists')">
-            <a
-              class="list-group-item list-group-item-action"
-              routerLink="/playlist"
-              tabindex="0"
-              [class.active]="activeSection === 'playlists'"
-              (focus)="activeSection = 'playlists'"
-              (click)="navigateTo('/playlist')"
-            >
-              <div class="item-icon">📂</div>
-              <div class="item-content">
-                <div class="item-title">Browse Public Playlists</div>
-                <div class="item-description">Explore playlists created by our community</div>
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <div class="content-container songs-container">
-          <h2>Songs</h2>
-          <div class="list-group" (keydown)="handleKeyDown($event, 'songs')">
-            <a
-              class="list-group-item list-group-item-action"
-              routerLink="/song"
-              tabindex="0"
-              [class.active]="activeSection === 'songs'"
-              (focus)="activeSection = 'songs'"
-              (click)="navigateTo('/song')"
-            >
-              <div class="item-icon">🎵</div>
-              <div class="item-content">
-                <div class="item-title">Browse Songs</div>
-                <div class="item-description">Check out our music collection</div>
-              </div>
-            </a>
-          </div>
         </div>
       </div>
     }

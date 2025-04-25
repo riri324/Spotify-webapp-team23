@@ -30,7 +30,10 @@
       "Genre",
       "ListeningHistory",
       "LikedSongs",
-      "UserProfile"
+      "UserProfile",
+      "Concert",
+      "Recommend",
+      "lastLiquibaseTimestamp"
     ],
     "feignClient": null,
     "jhipsterVersion": "8.7.3",

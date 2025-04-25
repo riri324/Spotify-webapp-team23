@@ -34,6 +34,10 @@ export class GlobalTopsongsComponent implements OnInit {
 
   sortState = sortStateSignal({});
 
+  page = 1;
+  itemsPerPage = 20;
+  totalItems = 0;
+
   public readonly router = inject(Router);
   protected readonly globalTopsongsService = inject(GlobalTopsongsService);
   protected readonly activatedRoute = inject(ActivatedRoute);
@@ -76,6 +80,11 @@ export class GlobalTopsongsComponent implements OnInit {
     });
   }
 
+  navigateToPage(pageNumber: number): void {
+    this.page = pageNumber;
+    this.load();
+  }
+
   navigateToWithComponentValues(event: SortState): void {
     this.handleNavigation(event);
   }
@@ -87,6 +96,7 @@ export class GlobalTopsongsComponent implements OnInit {
   protected onResponseSuccess(response: EntityArrayResponseType): void {
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
     this.globalTopsongs = this.refineData(dataFromBody);
+    this.totalItems = this.globalTopsongs.length;
   }
 
   protected refineData(data: IGlobalTopsongs[]): IGlobalTopsongs[] {
