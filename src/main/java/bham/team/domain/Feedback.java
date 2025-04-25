@@ -24,12 +24,12 @@ public class Feedback implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "feedback_id", nullable = false, unique = true)
+    @Column(name = "feedback_id", nullable = false)
     private Long feedbackID;
 
     @NotNull(message = "Please enter your username")
     @Size(max = 100)
-    @Column(name = "user_name", length = 100, nullable = false, unique = true)
+    @Column(name = "user_name", length = 100, nullable = false)
     private String userName;
 
     @NotNull(message = "Please enter your Email")
@@ -44,7 +44,7 @@ public class Feedback implements Serializable {
 
     @NotBlank(message = "Please enter your feedback")
     @Size(max = 2048)
-    @Column(name = "message", length = 2048, columnDefinition = "TEXT")
+    @Column(name = "message", length = 2048, columnDefinition = "TEXT", nullable = false)
     private String message;
 
     @NotNull
