@@ -57,7 +57,7 @@ public class FeedbackResource {
      */
     @PostMapping("")
     public ResponseEntity<Feedback> createFeedback(@Valid @RequestBody Feedback feedback) throws URISyntaxException {
-      Feedback savedFeedback = feedbackService.saveFeedback(feedback); //k
+      Feedback savedFeedback = feedbackService.save(feedback); //k
 
       LOG.debug("REST request to save Feedback : {}", feedback);
         if (feedback.getId() != null) {
