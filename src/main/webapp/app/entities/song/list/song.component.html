@@ -8,7 +8,6 @@
         <span>Refresh list</span>
       </button>
 
-      <!-- Only show Create button to admins -->
       @if (isAdmin()) {
         <button
           id="jh-create-entity"
@@ -37,172 +36,165 @@
     <div class="table-responsive table-entities" id="entities">
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
-          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+        <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+          @if (isAdmin()) {
             <th scope="col" jhiSortBy="id">
               <div class="d-flex">
                 <span>ID</span>
-
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
             <th scope="col" jhiSortBy="songId">
               <div class="d-flex">
                 <span>Song Id</span>
-
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="trackName">
-              <div class="d-flex">
-                <span>Track Name</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
+          }
+          <th scope="col" jhiSortBy="trackName">
+            <div class="d-flex">
+              <span>Track Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          @if (isAdmin()) {
             <th scope="col" jhiSortBy="danceability">
               <div class="d-flex">
                 <span>Danceability</span>
-
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
             <th scope="col" jhiSortBy="energy">
               <div class="d-flex">
                 <span>Energy</span>
-
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
             <th scope="col" jhiSortBy="speechiness">
               <div class="d-flex">
                 <span>Speechiness</span>
-
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
             <th scope="col" jhiSortBy="acousticness">
               <div class="d-flex">
                 <span>Acousticness</span>
-
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
             <th scope="col" jhiSortBy="instrumentalness">
               <div class="d-flex">
                 <span>Instrumentalness</span>
-
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
             <th scope="col" jhiSortBy="liveness">
               <div class="d-flex">
                 <span>Liveness</span>
-
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
             <th scope="col" jhiSortBy="valence">
               <div class="d-flex">
                 <span>Valence</span>
-
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
             <th scope="col" jhiSortBy="tempo">
               <div class="d-flex">
                 <span>Tempo</span>
-
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="album.id">
+          }
+          <th scope="col" jhiSortBy="album.id">
+            <div class="d-flex">
+              <span>Album</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="genre.id">
+            <div class="d-flex">
+              <span>Genre</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="artist.id">
+            <div class="d-flex">
+              <span>Artist</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          @if (isAdmin()) {
+            <th scope="col" jhiSortBy="playlists.id">
               <div class="d-flex">
-                <span>Album</span>
+                <span>Playlists</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="genre.id">
-              <div class="d-flex">
-                <span>Genre</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="artist.id">
-              <div class="d-flex">
-                <span>Artist</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="playlist.id">
-              <div class="d-flex">
-                <span>Playlist</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="listeningHistory.id">
-              <div class="d-flex">
-                <span>Listening History</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col"></th>
-          </tr>
+          }
+          <th scope="col"></th>
+        </tr>
         </thead>
         <tbody>
           @for (song of songs; track trackId(song)) {
             <tr data-cy="entityTable">
+              @if (isAdmin()) {
+                <td>
+                  <a [routerLink]="['/song', song.id, 'view']">{{ song.id }}</a>
+                </td>
+                <td>{{ song.songId }}</td>
+              }
               <td>
-                <a [routerLink]="['/song', song.id, 'view']">{{ song.id }}</a>
+                <a [routerLink]="['/song', song.id, 'view']">{{ song.trackName }}</a>
               </td>
-              <td>{{ song.songId }}</td>
-              <td>{{ song.trackName }}</td>
-              <td>{{ song.danceability }}</td>
-              <td>{{ song.energy }}</td>
-              <td>{{ song.speechiness }}</td>
-              <td>{{ song.acousticness }}</td>
-              <td>{{ song.instrumentalness }}</td>
-              <td>{{ song.liveness }}</td>
-              <td>{{ song.valence }}</td>
-              <td>{{ song.tempo }}</td>
+              @if (isAdmin()) {
+                <td>{{ song.danceability }}</td>
+                <td>{{ song.energy }}</td>
+                <td>{{ song.speechiness }}</td>
+                <td>{{ song.acousticness }}</td>
+                <td>{{ song.instrumentalness }}</td>
+                <td>{{ song.liveness }}</td>
+                <td>{{ song.valence }}</td>
+                <td>{{ song.tempo }}</td>
+              }
               <td>
                 @if (song.album) {
                   <div>
-                    <a [routerLink]="['/album', song.album.id, 'view']">{{ song.album.id }}</a>
+                    <a [routerLink]="['/album', song.album.id, 'view']">
+                      {{ isAdmin() ? song.album.id : (song.album.albumName || 'Unknown Album') }}
+                    </a>
                   </div>
                 }
               </td>
               <td>
                 @if (song.genre) {
                   <div>
-                    <a [routerLink]="['/genre', song.genre.id, 'view']">{{ song.genre.id }}</a>
+                    <a [routerLink]="['/genre', song.genre.id, 'view']">
+                      {{ isAdmin() ? song.genre.id : (song.genre.songGenre || 'Unknown Genre') }}
+                    </a>
                   </div>
                 }
               </td>
               <td>
                 @if (song.artist) {
                   <div>
-                    <a [routerLink]="['/artist', song.artist.id, 'view']">{{ song.artist.id }}</a>
+                    <a [routerLink]="['/artist', song.artist.id, 'view']">
+                      {{ isAdmin() ? song.artist.id : (song.artist.artistName || 'Unknown Artist') }}
+                    </a>
                   </div>
                 }
               </td>
-              <td>
-                @for (playlist of song.playlists; track $index; let last = $last) {
-                  <span>
-                    <a class="form-control-static" [routerLink]="['/playlist', playlist.id, 'view']">{{ playlist.id }}</a
-                    >{{ last ? '' : ', ' }}
-                  </span>
-                }
-              </td>
-              <td>
-                @for (listeningHistory of song.listeningHistories; track $index; let last = $last) {
-                  <span>
-                    <a class="form-control-static" [routerLink]="['/listening-history', listeningHistory.id, 'view']">{{
-                      listeningHistory.id
-                    }}</a
-                    >{{ last ? '' : ', ' }}
-                  </span>
-                }
-              </td>
+              @if (isAdmin()) {
+                <td>
+                  @for (playlists of song.playlists; track $index; let last = $last) {
+                    <span>
+                      <a class="form-control-static" [routerLink]="['/playlist', playlists.id, 'view']">{{ playlists.id }}</a
+                      >{{ last ? '' : ', ' }}
+                    </span>
+                  }
+                </td>
+              }
               <td class="text-end">
                 <div class="btn-group">
                   <a [routerLink]="['/song', song.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
@@ -210,7 +202,6 @@
                     <span class="d-none d-md-inline">View</span>
                   </a>
 
-                  <!-- Only show Edit button to admins -->
                   @if (isAdmin()) {
                     <a [routerLink]="['/song', song.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                       <fa-icon icon="pencil-alt"></fa-icon>
@@ -218,7 +209,6 @@
                     </a>
                   }
 
-                  <!-- Only show Delete button to admins -->
                   @if (isAdmin()) {
                     <button type="submit" (click)="delete(song)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                       <fa-icon icon="times"></fa-icon>
