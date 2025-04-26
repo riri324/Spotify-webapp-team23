@@ -20,14 +20,14 @@ export class FeedbackComponent {
   };
   feedbacks: any[] = [];
 
-  saveFeedback() {
+  saveFeedback(): void {
     if (!this.feedback.userName || !this.feedback.userEmail) {
       alert('Please fill the required fields.');
       return;
     }
 
     this.feedbacks.push({ ...this.feedback });
-    console.log('feedbacks:', this.feedbacks);
+    // console.log('feedbacks:', this.feedbacks);
     alert("Thanks for submitting your feeback, we'll get to you ASAP");
 
     this.feedback = {

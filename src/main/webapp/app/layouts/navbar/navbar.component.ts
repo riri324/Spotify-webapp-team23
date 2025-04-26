@@ -92,13 +92,13 @@ export default class NavbarComponent implements OnInit {
           setTimeout(() => {
             const dropdown = this.findDropdownMenu(target);
             const firstItem = dropdown?.querySelector('a.dropdown-item') as HTMLElement;
-            firstItem?.focus();
+            firstItem.focus();
           }, 10);
 
           event.preventDefault();
         } else if (this.isInDropdown(target)) {
           const nextItem = target.parentElement?.nextElementSibling?.querySelector('a') as HTMLElement;
-          nextItem?.focus();
+          nextItem.focus();
           event.preventDefault();
         }
         break;

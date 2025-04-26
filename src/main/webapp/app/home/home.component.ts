@@ -240,7 +240,7 @@ export default class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  updateFocusState(section: 'playlists' | 'songs' | 'features', index: number = 0): void {
+  updateFocusState(section: 'playlists' | 'songs' | 'features', index = 0): void {
     this.activeSection = section;
     if (section === 'features') {
       this.focusedIndex = index;
