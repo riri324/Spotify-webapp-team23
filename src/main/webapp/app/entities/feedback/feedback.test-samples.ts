@@ -5,6 +5,7 @@ export const sampleWithRequiredData: IFeedback = {
   feedbackID: 4452,
   userName: 'kookily aw boo',
   userEmail: 'gee meanwhile where',
+  message: 'a feed',
   rating: 8,
 };
 
@@ -32,6 +33,7 @@ export const sampleWithNewData: NewFeedback = {
   feedbackID: 24355,
   userName: 'before faithfully strait',
   userEmail: 'ack',
+  message: 'kki',
   rating: 3,
   id: null,
 };

@@ -32,6 +32,15 @@ export class FeedbackComponent implements OnInit {
   feedbacks?: IFeedback[];
   isLoading = false;
 
+  feedback: IFeedback = {
+    id: 0,
+    userName: '',
+    userEmail: '',
+    userPhoneNum: '',
+    message: '',
+    rating: 0,
+  };
+
   sortState = sortStateSignal({});
 
   public readonly router = inject(Router);

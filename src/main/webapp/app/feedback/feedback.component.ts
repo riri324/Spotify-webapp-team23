@@ -15,6 +15,7 @@ export class FeedbackComponent {
     userName: '',
     userEmail: '',
     userPhoneNum: '',
+    message: '',
     rating: 0,
   };
   feedbacks: any[] = [];
@@ -33,6 +34,7 @@ export class FeedbackComponent {
       userName: '',
       userEmail: '',
       userPhoneNum: '',
+      message: '',
       rating: 0,
     };
   }
