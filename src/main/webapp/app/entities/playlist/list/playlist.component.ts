@@ -18,7 +18,6 @@ import { PlaylistDeleteDialogComponent } from '../delete/playlist-delete-dialog.
   standalone: true,
   selector: 'jhi-playlist',
   templateUrl: './playlist.component.html',
-  styleUrl: './playlist.component.scss',
   imports: [
     RouterModule,
     FormsModule,

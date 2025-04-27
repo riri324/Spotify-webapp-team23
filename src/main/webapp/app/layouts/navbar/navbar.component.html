@@ -474,19 +474,6 @@
               <li>
                 <a
                   class="dropdown-item"
-                  routerLink="/feedback-page"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                  tabindex="0"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                  <span>Feedback</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
                   routerLink="/recommender"
                   routerLinkActive="active"
                   [routerLinkActiveOptions]="{ exact: true }"
@@ -495,6 +482,19 @@
                 >
                   <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                   <span>AI Song Recommender</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/feedback-page"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Feedback</span>
                 </a>
               </li>
             </ul>
