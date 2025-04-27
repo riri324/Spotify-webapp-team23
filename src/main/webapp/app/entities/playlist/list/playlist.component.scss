@@ -1,80 +1,190 @@
-.playlist-list-container {
-  padding: 20px;
-  color: white;
-  background-color: #222; /* Dark background for contrast */
+.table-responsive {
+  margin-top: 20px;
 }
 
-.playlist-list-container h1,
-.playlist-list-container h2 {
-  color: #39ff14; /* Neon green */
+#page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
-  text-align: center;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: #333;
-  border: 1px solid #555;
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-}
-
-.table th, .table td {
-  padding: 12px 16px;
-  text-align: left;
+  padding: 10px 0;
   border-bottom: 1px solid #555;
-  font-size: 0.95rem;
-  color: #ddd;
 }
 
-.table th {
-  background-color: #2a2a2a;
+#page-heading span {
   color: #39ff14;
-  text-transform: uppercase;
-}
-
-.table tr:hover {
-  background-color: #444;
-  transition: background-color 0.2s ease;
-}
-
-.alert-warning {
-  background-color: #444;
-  border: 1px solid #999;
-  color: #f5c542;
-  padding: 12px;
-  border-radius: 6px;
-  margin-bottom: 15px;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .btn {
-  padding: 6px 12px;
-  border-radius: 4px;
+  transition: all 0.2s;
   font-weight: bold;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.btn-primary {
+  background-color: #39ff14;
+  color: #000;
   border: none;
 }
 
-.btn-update {
-  background-color: #39ff14;
+.btn-primary:hover {
+  background-color: #32d512;
   color: #000;
 }
 
-.btn-update:hover {
-  background-color: #32d512;
-  transform: scale(1.05);
+.btn-info {
+  background-color: #0077ff;
+  border: none;
 }
 
-.btn-delete {
-  background-color: #FF1439;
-  color: #fff;
+.btn-info:hover {
+  background-color: #0066dd;
 }
 
-.btn-delete:hover {
-  background-color: #D51232;
-  transform: scale(1.05);
+.btn-danger {
+  background-color: #ff1439;
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: #d51232;
+}
+
+table {
+  background-color: #2a2a2a;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #555;
+}
+
+thead {
+  background-color: #333;
+}
+
+th {
+  color: #39ff14;
+  font-weight: bold;
+  padding: 12px !important;
+  border-bottom: 1px solid #555 !important;
+}
+
+td {
+  padding: 12px !important;
+  border-bottom: 1px solid #444 !important;
+  vertical-align: middle;
+}
+
+tr:hover {
+  background-color: #333;
+}
+
+a {
+  color: #0077ff;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+a:hover {
+  color: #39ff14;
+  text-decoration: none;
+}
+
+.alert {
+  border-radius: 6px;
+  padding: 15px;
+  margin: 20px 0;
+}
+
+.alert-warning {
+  background-color: #333;
+  border: 1px solid #555;
+  color: #999;
+  text-align: center;
+}
+
+fa-icon {
+  margin-right: 5px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 5px;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+button:focus, a:focus {
+  outline: 3px solid #0077ff;
+  box-shadow: 0 0 8px rgba(0, 119, 255, 0.6);
+}
+
+td span a {
+  display: inline-block;
+  margin-right: 2px;
+}
+
+@media (max-width: 768px) {
+  #page-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  #page-heading .d-flex {
+    width: 100%;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .btn-sm {
+    padding: 4px 8px;
+  }
+
+  .d-none.d-md-inline {
+    display: none;
+  }
+
+  .btn-group {
+    flex-direction: column;
+  }
+}
+
+[data-cy="entityEditButton"],
+[data-cy="entityDeleteButton"] {
+  opacity: 0.9;
+}
+
+[data-cy="entityEditButton"]:hover,
+[data-cy="entityDeleteButton"]:hover {
+  opacity: 1;
+}
+
+[jhiSort] .d-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+[jhiSortBy="playlistID"] {
+  min-width: 120px;
+}
+
+[jhiSortBy="description"] {
+  min-width: 200px;
+}
+
+tr.selected {
+  background-color: rgba(57, 255, 20, 0.1);
+  border-left: 3px solid #39ff14;
 }

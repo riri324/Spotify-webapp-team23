@@ -18,6 +18,7 @@ import { SongDeleteDialogComponent } from '../delete/song-delete-dialog.componen
   standalone: true,
   selector: 'jhi-song',
   templateUrl: './song.component.html',
+  styleUrl: './song.component.scss',
   imports: [
     RouterModule,
     FormsModule,
