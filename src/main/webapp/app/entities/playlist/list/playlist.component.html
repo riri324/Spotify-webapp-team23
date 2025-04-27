@@ -9,7 +9,6 @@
       </button>
 
       <button
-        *ngIf="currentUserId !== null"
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-playlist"
@@ -36,29 +35,31 @@
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
         <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
-          @if (userRole.includes('ROLE_ADMIN')) {
-            <th scope="col" jhiSortBy="id">
-              <div class="d-flex">
-                <span>ID</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="playlistID">
-              <div class="d-flex">
-                <span>Playlist ID</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-          }
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="playlistID">
+            <div class="d-flex">
+              <span>Playlist ID</span>
+
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col" jhiSortBy="name">
             <div class="d-flex">
               <span>Name</span>
+
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" jhiSortBy="description">
             <div class="d-flex">
               <span>Description</span>
+
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -80,12 +81,10 @@
         <tbody>
           @for (playlist of playlists; track trackId(playlist)) {
             <tr data-cy="entityTable">
-              @if (userRole.includes('ROLE_ADMIN')) {
-                <td>
-                  <a [routerLink]="['/playlist', playlist.id, 'view']">{{ playlist.id }}</a>
-                </td>
-                <td>{{ playlist.playlistID }}</td>
-              }
+              <td>
+                <a [routerLink]="['/playlist', playlist.id, 'view']">{{ playlist.id }}</a>
+              </td>
+              <td>{{ playlist.playlistID }}</td>
               <td>{{ playlist.name }}</td>
               <td>{{ playlist.description }}</td>
               <td>

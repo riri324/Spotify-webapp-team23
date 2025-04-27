@@ -68,6 +68,12 @@ export default class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       description: 'Customize your app experience',
       icon: '🤔',
     },
+    {
+      label: 'Feedback',
+      route: '/feedback-page',
+      description: 'Give us your feedback!',
+      icon: '📝',
+    },
   ];
 
   guestFeatures = [
@@ -82,6 +88,12 @@ export default class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       route: '/recommender',
       description: 'Get personalized song recommendations from our AI',
       icon: '🤖',
+    },
+    {
+      label: 'Feedback',
+      route: '/feedback-page',
+      description: 'Give us your feedback!',
+      icon: '📝',
     },
   ];
 

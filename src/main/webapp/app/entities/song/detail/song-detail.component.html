@@ -11,113 +11,94 @@
         <jhi-alert></jhi-alert>
 
         <dl class="row-md jh-entity-details">
-          @if (isAdmin()) {
-            <dt><span>ID</span></dt>
-            <dd>
-              <span>{{ songRef.id }}</span>
-            </dd>
-            <dt><span>Song Id</span></dt>
-            <dd>
-              <span>{{ songRef.songId }}</span>
-            </dd>
-          }
-
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ songRef.id }}</span>
+          </dd>
+          <dt><span>Song Id</span></dt>
+          <dd>
+            <span>{{ songRef.songId }}</span>
+          </dd>
           <dt><span>Track Name</span></dt>
           <dd>
             <span>{{ songRef.trackName }}</span>
           </dd>
-
-          @if (isAdmin()) {
-            <dt><span>Danceability</span></dt>
-            <dd>
-              <span>{{ songRef.danceability }}</span>
-            </dd>
-            <dt><span>Energy</span></dt>
-            <dd>
-              <span>{{ songRef.energy }}</span>
-            </dd>
-            <dt><span>Speechiness</span></dt>
-            <dd>
-              <span>{{ songRef.speechiness }}</span>
-            </dd>
-            <dt><span>Acousticness</span></dt>
-            <dd>
-              <span>{{ songRef.acousticness }}</span>
-            </dd>
-            <dt><span>Instrumentalness</span></dt>
-            <dd>
-              <span>{{ songRef.instrumentalness }}</span>
-            </dd>
-            <dt><span>Liveness</span></dt>
-            <dd>
-              <span>{{ songRef.liveness }}</span>
-            </dd>
-            <dt><span>Valence</span></dt>
-            <dd>
-              <span>{{ songRef.valence }}</span>
-            </dd>
-            <dt><span>Tempo</span></dt>
-            <dd>
-              <span>{{ songRef.tempo }}</span>
-            </dd>
-          }
-
+          <dt><span>Danceability</span></dt>
+          <dd>
+            <span>{{ songRef.danceability }}</span>
+          </dd>
+          <dt><span>Energy</span></dt>
+          <dd>
+            <span>{{ songRef.energy }}</span>
+          </dd>
+          <dt><span>Speechiness</span></dt>
+          <dd>
+            <span>{{ songRef.speechiness }}</span>
+          </dd>
+          <dt><span>Acousticness</span></dt>
+          <dd>
+            <span>{{ songRef.acousticness }}</span>
+          </dd>
+          <dt><span>Instrumentalness</span></dt>
+          <dd>
+            <span>{{ songRef.instrumentalness }}</span>
+          </dd>
+          <dt><span>Liveness</span></dt>
+          <dd>
+            <span>{{ songRef.liveness }}</span>
+          </dd>
+          <dt><span>Valence</span></dt>
+          <dd>
+            <span>{{ songRef.valence }}</span>
+          </dd>
+          <dt><span>Tempo</span></dt>
+          <dd>
+            <span>{{ songRef.tempo }}</span>
+          </dd>
           <dt><span>Album</span></dt>
           <dd>
-            @if (songRef.album) {
+            @if (song()!.album) {
               <div>
-                <a [routerLink]="['/album', songRef.album?.id, 'view']">
-                  {{ isAdmin() ? songRef.album?.id : (songRef.album.albumName || 'Unknown Album') }}
-                </a>
+                <a [routerLink]="['/album', song()!.album?.id, 'view']">{{ songRef.album?.id }}</a>
               </div>
             }
           </dd>
-
           <dt><span>Genre</span></dt>
           <dd>
-            @if (songRef.genre) {
+            @if (song()!.genre) {
               <div>
-                <a [routerLink]="['/genre', songRef.genre?.id, 'view']">
-                  {{ isAdmin() ? songRef.genre?.id : (songRef.genre.songGenre || 'Unknown Genre') }}
-                </a>
+                <a [routerLink]="['/genre', song()!.genre?.id, 'view']">{{ songRef.genre?.id }}</a>
               </div>
             }
           </dd>
-
           <dt><span>Artist</span></dt>
           <dd>
-            @if (songRef.artist) {
+            @if (song()!.artist) {
               <div>
-                <a [routerLink]="['/artist', songRef.artist?.id, 'view']">
-                  {{ isAdmin() ? songRef.artist?.id : (songRef.artist.artistName || 'Unknown Artist') }}
-                </a>
+                <a [routerLink]="['/artist', song()!.artist?.id, 'view']">{{ songRef.artist?.id }}</a>
               </div>
             }
           </dd>
-
-          @if (isAdmin()) {
-            <dt><span>Playlists</span></dt>
-            <dd>
-              @for (playlists of songRef.playlists; track $index; let last = $last) {
-                <span>
-                  <a [routerLink]="['/playlist', playlists.id, 'view']">{{ playlists?.id }}</a
-                  >{{ last ? '' : ', ' }}
-                </span>
-              }
-            </dd>
-          }
+          <dt><span>Playlists</span></dt>
+          <dd>
+            @for (playlists of songRef.playlists; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/playlist', playlists.id, 'view']">{{ playlists?.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
         </button>
 
-        @if (isAdmin()) {
-          <button type="button" [routerLink]="['/song', songRef.id, 'edit']" class="btn btn-primary">
-            <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
-          </button>
-        }
+        <button type="button" [routerLink]="['/song', songRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
       </div>
     }
   </div>
 </div>
+
