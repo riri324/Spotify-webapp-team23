@@ -1,0 +1,58 @@
+@Spotify // we are working on a playlist app
+
+entity Playlist {
+  playlistID Integer required unique,
+  name String required maxlength(50),
+  description String maxlength(100),
+  isPublic Boolean required
+}
+
+// Song entity
+entity Song {
+  songId String required unique maxlength(50),
+  trackName String required maxlength(150),
+  danceability Float,
+  energy Float,
+  speechiness Float,
+  acousticness Float,
+  instrumentalness Float,
+  liveness Float,
+  valence Float,
+  tempo Float
+}
+
+// Artist entity
+entity Artist {
+  artistName String required maxlength(100),
+  followers Integer required,
+  image ImageBlob
+}
+
+// Album entity
+entity Album {
+  albumID Integer required unique,
+  albumName String required maxlength(150),
+  numberOfSongs Integer required,
+  image ImageBlob
+}
+
+// Genre entity
+entity Genre {
+  genreID Integer required unique,
+  songGenre String required maxlength(50)
+}
+
+relationship ManyToMany {
+  Playlist{songs} to Song{playlists}
+}
+
+relationship ManyToOne {
+  Playlist{user(login)} to User with builtInEntity,
+  Song{album} to Album{songs},
+  Song{genre} to Genre{songs},
+  Song{artist} to Artist{songs}
+}
+
+relationship OneToMany {
+  Artist{albums} to Album{artist}
+}

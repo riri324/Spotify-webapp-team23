@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (event(); as eventRef) {
+      <div>
+        <h2 data-cy="eventDetailsHeading"><span>Event</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ eventRef.id }}</span>
+          </dd>
+          <dt><span>Event ID</span></dt>
+          <dd>
+            <span>{{ eventRef.eventID }}</span>
+          </dd>
+          <dt><span>Datetime</span></dt>
+          <dd>
+            <span>{{ eventRef.datetime | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span>Description</span></dt>
+          <dd>
+            <span>{{ eventRef.description }}</span>
+          </dd>
+          <dt><span>Title</span></dt>
+          <dd>
+            <span>{{ eventRef.title }}</span>
+          </dd>
+          <dt><span>Venue Name</span></dt>
+          <dd>
+            <span>{{ eventRef.venueName }}</span>
+          </dd>
+          <dt><span>City</span></dt>
+          <dd>
+            <span>{{ eventRef.city }}</span>
+          </dd>
+          <dt><span>Region</span></dt>
+          <dd>
+            <span>{{ eventRef.region }}</span>
+          </dd>
+          <dt><span>Country</span></dt>
+          <dd>
+            <span>{{ eventRef.country }}</span>
+          </dd>
+          <dt><span>Artist</span></dt>
+          <dd>
+            @if (event()!.artist) {
+              <div>
+                <a [routerLink]="['/artist', event()!.artist?.id, 'view']">{{ eventRef.artist?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/event', eventRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

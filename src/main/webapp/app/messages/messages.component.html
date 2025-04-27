@@ -1,0 +1,62 @@
+<div class="messages-container">
+  <div class="messages-card">
+    <header class="header">
+      <h1>Messages</h1>
+      <p>Welcome, {{ currentAccount?.login }}!</p>
+      <hr />
+      <div class="messages-actions">
+        <div class="search-user">
+          <div class="search-user">
+            <label for="searchInput">Search for a user:</label>
+            <input id="searchInput" type="text" placeholder="Enter user name" [(ngModel)]="searchTerm" />
+            <button type="button" (click)="onSearch()">Search</button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="messages-main">
+      <aside class="users-sidebar">
+        <h2>Users</h2>
+        <ul role="listbox" aria-label="Conversation partners" tabindex="0">
+          <!--          <li *ngFor="let u of users" (click)="selectUser(u)" [class.active]="u === selectedUser">-->
+          <li
+            *ngFor="let u of users"
+            role="option"
+            [attr.aria-selected]="u === selectedUser"
+            tabindex="-1"
+            (click)="selectUser(u)"
+            (keydown.enter)="selectUser(u)"
+            (keydown.space)="selectUser(u)"
+            [class.active]="u === selectedUser"
+          >
+            {{ u.login }}
+          </li>
+        </ul>
+      </aside>
+      <section class="messages-content">
+        <div class="messages-thread" #thread aria-live="polite" aria-atomic="false">
+          <div
+            *ngFor="let msg of conversationMessages"
+            class="message-bubble"
+            [class.sent]="msg.sender?.login === currentAccount?.login"
+            [class.received]="msg.sender?.login !== currentAccount?.login"
+          >
+            <div class="message-header">
+              <strong>{{ msg.sender?.login }}</strong>
+              <span class="timestamp">
+                {{ msg.sent?.toDate() | date: 'shortTime' }}
+              </span>
+            </div>
+            <div class="message-body">
+              {{ msg.content }}
+            </div>
+          </div>
+        </div>
+        <div class="send-message-box">
+          <textarea rows="2" [(ngModel)]="newMessageContent" placeholder="Type your message here..."></textarea>
+          <button class="send-button" (click)="sendMessage()">Send</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<div class="recommender-container">
+  <div class="recommender-card">
+    <h1>Song Recommender</h1>
+    <p>Welcome, {{ userName }}!</p>
+    <hr />
+    <div class="recommender-content">
+      <!-- Playlist-Song Recommendation Pairs -->
+      @if (playlistRecommendations.length > 0) {
+        @for (pair of playlistRecommendations; track pair.playlist.id; let i = $index) {
+          <div class="playlist-recommendation-pair">
+            <div class="playlist-section">
+              <div class="playlist-card">
+                <button
+                  class="playlist-button"
+                  (click)="navigateToPlaylist(pair.playlist.id)"
+                  (keydown)="handleKeyDown($event)"
+                  [attr.data-index]="i"
+                  [attr.data-section]="'playlist'"
+                >
+                  <h3>{{ pair.playlist.name }}</h3>
+                  <p>{{ pair.playlist.description }}</p>
+                </button>
+              </div>
+            </div>
+
+            <div class="recommendation-section">
+              @if (pair.recommendedSong) {
+                <div class="song-card">
+                  <h3>{{ pair.recommendedSong.trackName }}</h3>
+                  <p>by {{ pair.recommendedSong.artist?.artistName || 'Unknown' }}</p>
+                  <div class="song-actions">
+                    <button
+                      class="add-to-playlist-btn"
+                      (click)="addSongToPlaylist(pair.recommendedSong, pair.playlist)"
+                      (keydown)="handleKeyDown($event)"
+                      [attr.data-index]="i"
+                      [attr.data-section]="'addButton'"
+                    >
+                      Add to Playlist
+                    </button>
+                    <button
+                      class="reject-btn"
+                      (click)="rejectSong(pair.recommendedSong, pair.playlist.id)"
+                      (keydown)="handleKeyDown($event)"
+                      [attr.data-index]="i"
+                      [attr.data-section]="'rejectButton'"
+                    >
+                      Pick another recommendation
+                    </button>
+                  </div>
+                </div>
+              } @else {
+                <div class="no-recommendation">
+                  <p>No more recommendations available for this playlist</p>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      } @else {
+        <div class="no-playlists">
+          <p>No playlists found. Create a playlist to get song recommendations!</p>
+        </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <!-- Use *ngIf for conditional rendering instead of @if -->
+    <div *ngIf="globalTopsongs; else noData">
+      <div>
+        <h2 data-cy="globalTopsongsDetailsHeading"><span>Global Topsongs</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>Id</span></dt>
+          <dd>
+            <span>{{ globalTopsongs.id }}</span>
+          </dd>
+          <dt><span>Song Title</span></dt>
+          <dd>
+            <span>{{ globalTopsongs.songTitle }}</span>
+          </dd>
+          <dt><span>Artist Name</span></dt>
+          <dd>
+            <span>{{ globalTopsongs.artistName }}</span>
+          </dd>
+          <dt><span>Play Count</span></dt>
+          <dd>
+            <span>{{ globalTopsongs.playCount }}</span>
+          </dd>
+          <dt><span>Month Year</span></dt>
+          <dd>
+            <span>{{ globalTopsongs.monthYear | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span>Song Year</span></dt>
+          <dd>
+            <span>{{ globalTopsongs.songYear }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/global-topsongs', globalTopsongs.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Show this template if globalTopsongs is null or undefined -->
+    <ng-template #noData>
+      <p>No data available.</p>
+    </ng-template>
+  </div>
+</div>

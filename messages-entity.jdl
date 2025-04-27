@@ -1,0 +1,19 @@
+entity Message {
+  subject String required minlength(1) maxlength(20),
+  content TextBlob required,
+  sent LocalDate required,
+  seen Boolean
+}
+
+relationship ManyToOne {
+  Message{sender(id)} to User with builtInEntity,
+  Message{recipient(id)} to User with builtInEntity
+}
+
+enum MessageStatus {
+  DELIVERED, READ, FAILED
+}
+
+dto Message with mapstruct
+service Message with serviceClass
+paginate Message with pagination

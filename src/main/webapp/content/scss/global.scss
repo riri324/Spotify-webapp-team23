@@ -7,12 +7,16 @@
 Bootstrap tweaks
 ===============================================================*/
 
-body,
+body {
+  background-color: black;
+  color: white;
+}
+
 h1,
 h2,
 h3,
 h4 {
-  font-weight: 300;
+  color: white;
 }
 
 a:hover {
@@ -41,6 +45,8 @@ Generic styles
 /* other generic styles */
 
 .jh-card {
+  background-color: #121212;
+  color: white;
   padding: 1.5%;
   margin-top: 20px;
   border: none;
@@ -69,7 +75,18 @@ Generic styles
 }
 
 .form-control {
-  background-color: #fff;
+  background-color: #282828;
+  color: white;
+  border: 1px solid #3e3e3e;
+}
+
+.form-control::placeholder {
+  color: #b3b3b3;
+}
+
+.form-control:focus {
+  background-color: #383838;
+  border-color: #1db954;
 }
 
 .readonly {
@@ -207,4 +224,5 @@ angular-cli removes postcss-rtl processed inline css, processed rules must be ad
     }
   }
 }
+
 /* jhipster-needle-scss-add-main JHipster will add new css style */

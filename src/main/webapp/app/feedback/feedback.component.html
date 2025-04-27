@@ -1,0 +1,89 @@
+<p>feedback works!</p>
+<div class="feedback-container">
+  <h2>Submit Your Feedback</h2>
+
+  <!-- Display loading message while submitting -->
+  <div *ngIf="isLoading" class="loading">Submitting feedback...</div>
+
+  <!-- Feedback Form -->
+  <form (ngSubmit)="saveFeedback()">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        id="username"
+        [(ngModel)]="feedback.username"
+        name="username"
+        required
+        class="form-control"
+        placeholder="Enter your username"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="userEmail">Email</label>
+      <input
+        type="email"
+        id="userEmail"
+        [(ngModel)]="feedback.userEmail"
+        name="userEmail"
+        required
+        class="form-control"
+        placeholder="Enter your email"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="userPhoneNum">Phone Number</label>
+      <input
+        type="number"
+        id="userPhoneNum"
+        [(ngModel)]="feedback.userPhoneNum"
+        name="userPhoneNum"
+        class="form-control"
+        placeholder="Enter your phone number"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="message">Message</label>
+      <textarea
+        id="message"
+        [(ngModel)]="feedback.message"
+        name="message"
+        required
+        class="form-control"
+        placeholder="Enter your feedback message"
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="rating">Rating (1-5)</label>
+      <input
+        type="number"
+        id="rating"
+        [(ngModel)]="feedback.rating"
+        name="rating"
+        min="1"
+        max="5"
+        class="form-control"
+        placeholder="Rate from 1 to 5"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Feedback</button>
+  </form>
+
+  <!-- Display submitted feedbacks -->
+  <div class="feedback-list" *ngIf="feedbacks.length > 0">
+    <h3>All Feedback</h3>
+    <ul>
+      <li *ngFor="let fb of feedbacks">
+        <p>
+          <strong>{{ fb.username }}</strong> ({{ fb.userEmail }}) - Rating: {{ fb.rating }}
+        </p>
+        <p>{{ fb.message }}</p>
+      </li>
+    </ul>
+  </div>
+</div>

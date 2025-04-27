@@ -1,0 +1,112 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (song(); as songRef) {
+      <div>
+        <h2 data-cy="songDetailsHeading"><span>Song</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ songRef.id }}</span>
+          </dd>
+          <dt><span>Song Id</span></dt>
+          <dd>
+            <span>{{ songRef.songId }}</span>
+          </dd>
+          <dt><span>Track Name</span></dt>
+          <dd>
+            <span>{{ songRef.trackName }}</span>
+          </dd>
+          <dt><span>Danceability</span></dt>
+          <dd>
+            <span>{{ songRef.danceability }}</span>
+          </dd>
+          <dt><span>Energy</span></dt>
+          <dd>
+            <span>{{ songRef.energy }}</span>
+          </dd>
+          <dt><span>Speechiness</span></dt>
+          <dd>
+            <span>{{ songRef.speechiness }}</span>
+          </dd>
+          <dt><span>Acousticness</span></dt>
+          <dd>
+            <span>{{ songRef.acousticness }}</span>
+          </dd>
+          <dt><span>Instrumentalness</span></dt>
+          <dd>
+            <span>{{ songRef.instrumentalness }}</span>
+          </dd>
+          <dt><span>Liveness</span></dt>
+          <dd>
+            <span>{{ songRef.liveness }}</span>
+          </dd>
+          <dt><span>Valence</span></dt>
+          <dd>
+            <span>{{ songRef.valence }}</span>
+          </dd>
+          <dt><span>Tempo</span></dt>
+          <dd>
+            <span>{{ songRef.tempo }}</span>
+          </dd>
+          <dt><span>Album</span></dt>
+          <dd>
+            @if (song()!.album) {
+              <div>
+                <a [routerLink]="['/album', song()!.album?.id, 'view']">{{ songRef.album?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span>Genre</span></dt>
+          <dd>
+            @if (song()!.genre) {
+              <div>
+                <a [routerLink]="['/genre', song()!.genre?.id, 'view']">{{ songRef.genre?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span>Artist</span></dt>
+          <dd>
+            @if (song()!.artist) {
+              <div>
+                <a [routerLink]="['/artist', song()!.artist?.id, 'view']">{{ songRef.artist?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span>Playlist</span></dt>
+          <dd>
+            @for (playlist of songRef.playlists; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/playlist', playlist.id, 'view']">{{ playlist?.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+          <dt><span>Listening History</span></dt>
+          <dd>
+            @for (listeningHistory of songRef.listeningHistories; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/listening-history', listeningHistory.id, 'view']">{{ listeningHistory?.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/song', songRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

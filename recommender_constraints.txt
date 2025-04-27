@@ -1,0 +1,6 @@
+1. Users can only delete their own playlists.
+2. Every playlist must contain at least one song.
+3. A song can appear in multiple playlists.
+4. Each playlist must have a unique id.
+5. Playlists can optionally include a description.
+6. A song must have its own unique id.

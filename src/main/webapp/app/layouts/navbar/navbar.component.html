@@ -1,10 +1,10 @@
 <nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
+    <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()" tabindex="0">
       <span class="logo-img"></span>
-      <span class="navbar-title">Teamproject24</span>
-      <span class="navbar-version">{{ version }}</span>
+      <span class="navbar-title">Tifopsy</span>
     </a>
+
     <a
       class="navbar-toggler d-lg-none"
       href="javascript:void(0);"
@@ -14,13 +14,14 @@
       aria-expanded="false"
       aria-label="Toggle navigation"
       (click)="toggleNavbar()"
+      tabindex="0"
     >
       <fa-icon icon="bars"></fa-icon>
     </a>
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed()">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
+          <a class="nav-link" routerLink="/" (click)="collapseNavbar()" tabindex="0">
             <span>
               <fa-icon icon="home"></fa-icon>
               <span>Home</span>
@@ -29,6 +30,7 @@
         </li>
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
         @if (account() !== null) {
+          <!-- Event Pages -->
           <li
             ngbDropdown
             class="nav-item dropdown pointer"
@@ -36,7 +38,211 @@
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
+            <a
+              class="nav-link dropdown-toggle"
+              ngbDropdownToggle
+              href="javascript:void(0);"
+              id="events-menu"
+              data-cy="eventsMenu"
+              tabindex="0"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <span>
+                <fa-icon icon="calendar-alt"></fa-icon>
+                <span>Events</span>
+              </span>
+            </a>
+            <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="events-menu">
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/venue-recommendations"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Concerts</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <!-- Music Recommendations Pages -->
+          <li
+            ngbDropdown
+            class="nav-item dropdown pointer"
+            display="dynamic"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a
+              class="nav-link dropdown-toggle"
+              ngbDropdownToggle
+              href="javascript:void(0);"
+              id="music-menu"
+              data-cy="musicMenu"
+              tabindex="0"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <span>
+                <span>Music</span>
+              </span>
+            </a>
+            <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="music-menu">
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/recommend"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>User Song Recommender</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/recommender"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>AI Song Recommender</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/topsongs"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Global Top Songs</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <!-- User Section Dropdown -->
+          <li
+            ngbDropdown
+            class="nav-item dropdown pointer"
+            display="dynamic"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a
+              class="nav-link dropdown-toggle"
+              ngbDropdownToggle
+              href="javascript:void(0);"
+              id="user-features-menu"
+              data-cy="userFeaturesMenu"
+              tabindex="0"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <span>
+                <span>My Music</span>
+              </span>
+            </a>
+            <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="user-features-menu">
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/playlist"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Playlists</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/song"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Browse Songs</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/messages"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Messages</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/preferences"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Preferences</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/feedback-page"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Feedback</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li
+            ngbDropdown
+            class="nav-item dropdown pointer"
+            display="dynamic"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a
+              class="nav-link dropdown-toggle"
+              ngbDropdownToggle
+              href="javascript:void(0);"
+              id="entity-menu"
+              data-cy="entity"
+              tabindex="0"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
               <span>
                 <fa-icon icon="th-list"></fa-icon>
                 <span>Entities</span>
@@ -46,16 +252,225 @@
               <li>
                 <a
                   class="dropdown-item"
+                  routerLink="/playlist"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Playlist</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/song"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Song</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/artist"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Artist</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/album"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Album</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/genre"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Genre</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/event"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Event</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/user-preference"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>User Preference</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/global-topsongs"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Global Top Songs</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
                   routerLink="/feedback"
                   routerLinkActive="active"
                   [routerLinkActiveOptions]="{ exact: true }"
                   (click)="collapseNavbar()"
+                  tabindex="0"
                 >
                   <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                   <span>Feedback</span>
                 </a>
               </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/message"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Message</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/listening-history"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Listening History</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/liked-songs"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Liked Songs</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/user-profile"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>User Profile</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/concert"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Concert</span>
+                </a>
+              </li>
               <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
+            </ul>
+          </li>
+        } @else {
+          <li
+            ngbDropdown
+            class="nav-item dropdown pointer"
+            display="dynamic"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a
+              class="nav-link dropdown-toggle"
+              ngbDropdownToggle
+              href="javascript:void(0);"
+              id="guest-music-menu"
+              data-cy="guestMusicMenu"
+              tabindex="0"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <span>
+                <fa-icon icon="music"></fa-icon>
+                <span>Explore Music</span>
+              </span>
+            </a>
+            <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="guest-music-menu">
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="/venue-recommendations"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="collapseNavbar()"
+                  tabindex="0"
+                >
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                  <span>Concerts</span>
+                </a>
+              </li>
             </ul>
           </li>
         }
@@ -67,7 +482,16 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu" data-cy="adminMenu">
+          <a
+            class="nav-link dropdown-toggle"
+            ngbDropdownToggle
+            href="javascript:void(0);"
+            id="admin-menu"
+            data-cy="adminMenu"
+            tabindex="0"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
             <span>
               <fa-icon icon="users-cog"></fa-icon>
               <span>Administration</span>
@@ -81,6 +505,7 @@
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
                 (click)="collapseNavbar()"
+                tabindex="0"
               >
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span>Authority</span>
@@ -88,38 +513,44 @@
             </li>
             <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
             <li>
-              <a class="dropdown-item" routerLink="/admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
+              <a
+                class="dropdown-item"
+                routerLink="/admin/user-management"
+                routerLinkActive="active"
+                (click)="collapseNavbar()"
+                tabindex="0"
+              >
                 <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
                 <span>User management</span>
               </a>
             </li>
             <li>
-              <a class="dropdown-item" routerLink="/admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">
+              <a class="dropdown-item" routerLink="/admin/metrics" routerLinkActive="active" (click)="collapseNavbar()" tabindex="0">
                 <fa-icon icon="tachometer-alt" [fixedWidth]="true"></fa-icon>
                 <span>Metrics</span>
               </a>
             </li>
             <li>
-              <a class="dropdown-item" routerLink="/admin/health" routerLinkActive="active" (click)="collapseNavbar()">
+              <a class="dropdown-item" routerLink="/admin/health" routerLinkActive="active" (click)="collapseNavbar()" tabindex="0">
                 <fa-icon icon="heart" [fixedWidth]="true"></fa-icon>
                 <span>Health</span>
               </a>
             </li>
             <li>
-              <a class="dropdown-item" routerLink="/admin/configuration" routerLinkActive="active" (click)="collapseNavbar()">
+              <a class="dropdown-item" routerLink="/admin/configuration" routerLinkActive="active" (click)="collapseNavbar()" tabindex="0">
                 <fa-icon icon="cogs" [fixedWidth]="true"></fa-icon>
                 <span>Configuration</span>
               </a>
             </li>
             <li>
-              <a class="dropdown-item" routerLink="/admin/logs" routerLinkActive="active" (click)="collapseNavbar()">
+              <a class="dropdown-item" routerLink="/admin/logs" routerLinkActive="active" (click)="collapseNavbar()" tabindex="0">
                 <fa-icon icon="tasks" [fixedWidth]="true"></fa-icon>
                 <span>Logs</span>
               </a>
             </li>
             @if (openAPIEnabled) {
               <li>
-                <a class="dropdown-item" routerLink="/admin/docs" routerLinkActive="active" (click)="collapseNavbar()">
+                <a class="dropdown-item" routerLink="/admin/docs" routerLinkActive="active" (click)="collapseNavbar()" tabindex="0">
                   <fa-icon icon="book" [fixedWidth]="true"></fa-icon>
                   <span>API</span>
                 </a>
@@ -127,7 +558,7 @@
             }
             @if (!inProduction) {
               <li>
-                <a class="dropdown-item" href="./h2-console/" target="_tab" (click)="collapseNavbar()">
+                <a class="dropdown-item" href="./h2-console/" target="_tab" (click)="collapseNavbar()" tabindex="0">
                   <fa-icon icon="database" [fixedWidth]="true"></fa-icon>
                   <span>Database</span>
                 </a>
@@ -143,7 +574,16 @@
           [routerLinkActiveOptions]="{ exact: true }"
         >
           @let accountRef = account();
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu" data-cy="accountMenu">
+          <a
+            class="nav-link dropdown-toggle"
+            ngbDropdownToggle
+            href="javascript:void(0);"
+            id="account-menu"
+            data-cy="accountMenu"
+            tabindex="0"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
             @if (!accountRef?.imageUrl) {
               <span>
                 <fa-icon icon="user"></fa-icon>
@@ -164,6 +604,7 @@
                   routerLinkActive="active"
                   (click)="collapseNavbar()"
                   data-cy="settings"
+                  tabindex="0"
                 >
                   <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
                   <span>Settings</span>
@@ -176,20 +617,21 @@
                   routerLinkActive="active"
                   (click)="collapseNavbar()"
                   data-cy="passwordItem"
+                  tabindex="0"
                 >
                   <fa-icon icon="lock" [fixedWidth]="true"></fa-icon>
                   <span>Password</span>
                 </a>
               </li>
               <li>
-                <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
+                <a class="dropdown-item" (click)="logout()" (keydown.enter)="logout()" id="logout" data-cy="logout" tabindex="0">
                   <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
                   <span>Sign out</span>
                 </a>
               </li>
             } @else {
               <li>
-                <a class="dropdown-item" (click)="login()" id="login" data-cy="login">
+                <a class="dropdown-item" (click)="login()" (keydown.enter)="login()" id="login" data-cy="login" tabindex="0">
                   <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>
                   <span>Sign in</span>
                 </a>
@@ -201,6 +643,7 @@
                   routerLinkActive="active"
                   (click)="collapseNavbar()"
                   data-cy="register"
+                  tabindex="0"
                 >
                   <fa-icon icon="user-plus" [fixedWidth]="true"></fa-icon>
                   <span>Register</span>

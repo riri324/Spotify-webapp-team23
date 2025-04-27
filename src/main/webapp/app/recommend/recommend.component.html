@@ -1,0 +1,55 @@
+<div class="recommend-container">
+  <section class="recommend-section">
+    <h2><i class="fa fa-music"></i> Music Suggestions</h2>
+    <p *ngIf="!isLoading && recommendedSongs.length > 0">Similar users also listen to:</p>
+
+    <div class="card-grid" *ngIf="!isLoading && recommendedSongs.length > 0">
+      <div class="song-card" *ngFor="let song of recommendedSongs">
+        <div class="song-header">
+          <p class="song-title">{{ song.trackName }}</p>
+          <p class="song-artist">{{ song.artists }}</p>
+        </div>
+        <div class="card-buttons">
+          <button title="Add to Playlist" class="icon-button add">
+            <i class="fa fa-plus"></i>
+          </button>
+          <button title="Not Interested" class="icon-button dismiss" (click)="dismissSong(song)">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <p class="no-recommend" *ngIf="!isLoading && recommendedSongs.length === 0 && !errorMessage">No song recommendations found.</p>
+  </section>
+
+  <section class="recommend-section">
+    <h2>👥 User Suggestions</h2>
+    <p *ngIf="!isLoading && recommendedUsers.length > 0">Users with similar taste:</p>
+
+    <div *ngIf="!isLoading && recommendedUsers.length > 0" class="user-list">
+      <div class="user-card" *ngFor="let user of recommendedUsers">
+        <div class="user-name">
+          <span>👤 {{ user.recommendedUserId }}</span>
+        </div>
+        <div class="user-common">
+          <span>🎵 {{ user.commonSongsCount }} songs in common</span>
+        </div>
+        <div class="user-actions">
+          <button class="follow-button">Follow</button>
+          <button class="not-interested-button" (click)="removeUser(user.recommendedUserId)">Not Interested</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="no-recommend" *ngIf="!isLoading && recommendedUsers.length === 0 && !errorMessage">No user recommendations found.</p>
+  </section>
+
+  <div class="generate-wrap">
+    <button class="generate-button" (click)="generateRecommendations()" [disabled]="isLoading">
+      {{ isLoading ? 'Generating...' : 'Generate Recommendations' }}
+    </button>
+  </div>
+
+  <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+</div>

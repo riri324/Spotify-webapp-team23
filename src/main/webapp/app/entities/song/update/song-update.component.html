@@ -1,0 +1,205 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-song-heading" data-cy="SongCreateUpdateHeading">Create or edit a Song</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let songIdRef = editForm.get('songId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_songId">Song Id</label>
+          <input type="text" class="form-control" name="songId" id="field_songId" data-cy="songId" formControlName="songId" />
+          @if (songIdRef.invalid && (songIdRef.dirty || songIdRef.touched)) {
+            <div>
+              @if (editForm.get('songId')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (editForm.get('songId')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 50 characters.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let trackNameRef = editForm.get('trackName')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_trackName">Track Name</label>
+          <input type="text" class="form-control" name="trackName" id="field_trackName" data-cy="trackName" formControlName="trackName" />
+          @if (trackNameRef.invalid && (trackNameRef.dirty || trackNameRef.touched)) {
+            <div>
+              @if (editForm.get('trackName')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (editForm.get('trackName')?.errors?.maxlength) {
+                <small class="form-text text-danger">This field cannot be longer than 150 characters.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_danceability">Danceability</label>
+          <input
+            type="number"
+            class="form-control"
+            name="danceability"
+            id="field_danceability"
+            data-cy="danceability"
+            formControlName="danceability"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_energy">Energy</label>
+          <input type="number" class="form-control" name="energy" id="field_energy" data-cy="energy" formControlName="energy" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_speechiness">Speechiness</label>
+          <input
+            type="number"
+            class="form-control"
+            name="speechiness"
+            id="field_speechiness"
+            data-cy="speechiness"
+            formControlName="speechiness"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_acousticness">Acousticness</label>
+          <input
+            type="number"
+            class="form-control"
+            name="acousticness"
+            id="field_acousticness"
+            data-cy="acousticness"
+            formControlName="acousticness"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_instrumentalness">Instrumentalness</label>
+          <input
+            type="number"
+            class="form-control"
+            name="instrumentalness"
+            id="field_instrumentalness"
+            data-cy="instrumentalness"
+            formControlName="instrumentalness"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_liveness">Liveness</label>
+          <input type="number" class="form-control" name="liveness" id="field_liveness" data-cy="liveness" formControlName="liveness" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_valence">Valence</label>
+          <input type="number" class="form-control" name="valence" id="field_valence" data-cy="valence" formControlName="valence" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_tempo">Tempo</label>
+          <input type="number" class="form-control" name="tempo" id="field_tempo" data-cy="tempo" formControlName="tempo" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_album">Album</label>
+          <select class="form-control" id="field_album" data-cy="album" name="album" formControlName="album" [compareWith]="compareAlbum">
+            <option [ngValue]="null"></option>
+            @for (albumOption of albumsSharedCollection; track $index) {
+              <option [ngValue]="albumOption">{{ albumOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_genre">Genre</label>
+          <select class="form-control" id="field_genre" data-cy="genre" name="genre" formControlName="genre" [compareWith]="compareGenre">
+            <option [ngValue]="null"></option>
+            @for (genreOption of genresSharedCollection; track $index) {
+              <option [ngValue]="genreOption">{{ genreOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_artist">Artist</label>
+          <select
+            class="form-control"
+            id="field_artist"
+            data-cy="artist"
+            name="artist"
+            formControlName="artist"
+            [compareWith]="compareArtist"
+          >
+            <option [ngValue]="null"></option>
+            @for (artistOption of artistsSharedCollection; track $index) {
+              <option [ngValue]="artistOption">{{ artistOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="field_playlists">Playlist</label>
+          <select
+            class="form-control"
+            id="field_playlists"
+            data-cy="playlist"
+            multiple
+            name="playlists"
+            formControlName="playlists"
+            [compareWith]="comparePlaylist"
+          >
+            @for (playlistOption of playlistsSharedCollection; track $index) {
+              <option [ngValue]="playlistOption">{{ playlistOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="field_listeningHistories">Listening History</label>
+          <select
+            class="form-control"
+            id="field_listeningHistories"
+            data-cy="listeningHistory"
+            multiple
+            name="listeningHistories"
+            formControlName="listeningHistories"
+            [compareWith]="compareListeningHistory"
+          >
+            @for (listeningHistoryOption of listeningHistoriesSharedCollection; track $index) {
+              <option [ngValue]="listeningHistoryOption">{{ listeningHistoryOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
