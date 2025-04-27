@@ -106,6 +106,7 @@ export default class NavbarComponent implements OnInit {
       case 'ArrowUp':
         if (this.isInDropdown(target)) {
           const prevItem = target.parentElement?.previousElementSibling?.querySelector('a') as HTMLElement;
+          // eslint-disable-next-line
           if (prevItem) {
             prevItem.focus();
           } else {
@@ -166,14 +167,14 @@ export default class NavbarComponent implements OnInit {
 
   private findDropdownMenu(toggleElement: HTMLElement): HTMLElement | null {
     const parentLi = toggleElement.closest('li');
-    return parentLi?.querySelector('.dropdown-menu') || null;
+    return parentLi?.querySelector('.dropdown-menu') ?? null;
   }
 
   private findParentDropdownToggle(element: HTMLElement): HTMLElement | null {
     const dropdownMenu = element.closest('.dropdown-menu');
     if (dropdownMenu) {
       const parentLi = dropdownMenu.closest('li');
-      return parentLi?.querySelector('.dropdown-toggle') || null;
+      return parentLi?.querySelector('.dropdown-toggle') ?? null;
     }
     return null;
   }

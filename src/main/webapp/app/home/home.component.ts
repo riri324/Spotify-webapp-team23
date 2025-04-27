@@ -15,11 +15,6 @@ import { Account } from 'app/core/auth/account.model';
   imports: [SharedModule, RouterModule],
 })
 export default class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
-  private elementRef = inject(ElementRef);
-  private readonly accountService = inject(AccountService);
-  private readonly router = inject(Router);
-  private readonly destroy$ = new Subject<void>();
-
   account = signal<Account | null>(null);
   activeSection: 'playlists' | 'songs' | 'features' = 'playlists';
   focusedIndex = 0;
@@ -97,6 +92,11 @@ export default class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     },
   ];
 
+  private elementRef = inject(ElementRef);
+  private readonly accountService = inject(AccountService);
+  private readonly router = inject(Router);
+  private readonly destroy$ = new Subject<void>();
+
   ngOnInit(): void {
     this.accountService
       .getAuthenticationState()
@@ -139,6 +139,7 @@ export default class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.focusedIndex = 0;
           this.focusElement(this.activeSection, this.focusedIndex);
           handled = true;
+          // eslint-disable-next-line
         } else if (this.activeSection === 'features') {
           this.focusedIndex = this.focusedIndex >= maxFeatureIndex ? 0 : this.focusedIndex + 1;
           this.focusElement(this.activeSection, this.focusedIndex);
@@ -158,6 +159,7 @@ export default class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.focusElement(this.activeSection, this.focusedIndex);
             handled = true;
           }
+          // eslint-disable-next-line
         } else if (this.activeSection === 'playlists' || this.activeSection === 'songs') {
           const navbarLink = document.querySelector('nav a');
           if (navbarLink instanceof HTMLElement) {
@@ -187,6 +189,7 @@ export default class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
       case 'Enter':
       case ' ':
+        // eslint-disable-next-line
         const links = this.getLinksBySection(this.activeSection);
         if (this.activeSection === 'features') {
           if (links[this.focusedIndex]) {

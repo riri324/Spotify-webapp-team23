@@ -43,7 +43,8 @@ public class Playlist implements Serializable {
     @Column(name = "is_public", nullable = false)
     private Boolean isPublic;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
+    @NotNull
     private User user;
 
     @ManyToMany(fetch = FetchType.LAZY)
