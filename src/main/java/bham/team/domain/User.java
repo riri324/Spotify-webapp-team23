@@ -81,15 +81,6 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     private Instant resetDate = null;
 
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Userid;
-
-    @NotBlank
-    private String username;
-
-
   @JsonIgnore
     @ManyToMany
     @JoinTable(
@@ -97,9 +88,6 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
         joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
         inverseJoinColumns = { @JoinColumn(name = "authority_name", referencedColumnName = "name") }
     )
-
-
-
 
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @BatchSize(size = 20)
@@ -242,3 +230,6 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
             "}";
     }
 }
+
+
+
