@@ -126,7 +126,7 @@ jobs:
                CI_REGISTRY_IMAGE=${{ env.CI_REGISTRY_IMAGE }} \
                CI_COMMIT_TAG=${{ github.sha }} \
                CI_REGISTRY=${{ env.CI_REGISTRY }} \
-               ACME=${{ env.ACME }} \
+               ACME=${{ env.ACME_STAGING }} \
                DEVURL=${{ env.DEVURL }} \
                URL=${{ env.URL }} \
                DEPLOY_IP=${{ secrets.DEPLOY_IP }} \
@@ -196,5 +196,3 @@ jobs:
             docker compose -f ~/team-project/prd.yml up -d
             docker system prune --force --filter 'until=24h'
           "
-
-# Test comment for git commit
