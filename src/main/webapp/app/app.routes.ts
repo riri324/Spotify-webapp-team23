@@ -9,6 +9,11 @@ import { TopSongsComponent } from '../app/top-song/top-song.component';
 
 const routes: Routes = [
   {
+    path: 'gdpr-policy',
+    loadComponent: () => import('./gdpr-policy/gdpr-policy.component'),
+    title: 'GDPR Policy',
+  },
+  {
     path: '',
     loadComponent: () => import('./home/home.component'),
     title: 'home.title',
