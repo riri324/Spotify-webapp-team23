@@ -1,3 +1,33 @@
+
+## 🎵 담당 개발 기능 – Global Top Songs
+
+### 프로젝트 소개
+버밍엄대학교 팀 프로젝트로 Spotify를 모티브로 한 음악 스트리밍 웹 애플리케이션을 개발했습니다.
+
+저는 **Global Top Songs 기능의 프론트엔드 및 백엔드 개발**을 담당했습니다. 사용자가 월별·연도별 인기 음악을 조회하고, 관리자가 음악 데이터를 관리할 수 있는 기능을 구현했습니다.
+
+### 🛠 주요 구현 기능
+
+**1. 프론트엔드 개발**
+- 월별·연도별 인기 음악 목록 조회 기능 구현
+- 음악 데이터 정렬 및 페이지네이션 구현
+- 음악 선택 시 상세 정보 페이지로 이동하는 기능 구현
+- 텍스트 명암 대비 및 ARIA 라벨 적용을 통한 웹 접근성 개선
+
+**2. 백엔드 개발 및 데이터 연동**
+- CSV 음악 데이터와 프론트엔드·백엔드 연동
+- 음악 데이터 CRUD(생성·조회·수정·삭제) API 구현
+- 관리자 권한에 따른 데이터 수정 및 삭제 기능 설정
+- 데이터 유효성 검증을 통한 데이터 무결성 관리
+
+### 📄 프로젝트 상세 보고서
+
+아래 보고서에서 실제 구현 화면, 주요 기능, GitHub 커밋 기록, 백엔드 제약 조건 및 웹 접근성 개선 내용을 확인할 수 있습니다.
+
+📎 [Global Top Songs 개발 보고서 보기](docs/GlobalTopSongs_Report.pdf)
+
+
+
 # teamproject23 template application
 
 This application was generated using JHipster 8.7.3 for the team project 2024-2025 module at the university of Birmingham.
